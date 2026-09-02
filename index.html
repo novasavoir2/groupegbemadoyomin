@@ -409,9 +409,11 @@ section { padding-block: var(--espace-xl); }
   background: linear-gradient(135deg, var(--or-clair), var(--or-fonce));
 }
 .hero-sigle span {
-  font-family: var(--font-titres); font-weight: 700; font-size: 20px; color: var(--noir);
+  font-family: var(--font-titres); font-weight: 700; font-size: 20px;
+  color: var(--or-clair); /* ← au lieu de var(--noir) */
   background: var(--noir-2); width: 62px; height: 62px; border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
+  text-shadow: 0 0 10px rgba(184,146,46,0.3); /* ← ajout pour lisibilité */
 }
 .hero-eyebrow { font-family: var(--font-accent); font-style: italic; font-size: 1.05rem; color: var(--or-clair); margin-bottom: var(--espace-xs); }
 .hero-titre { margin-bottom: var(--espace-sm); }
@@ -449,6 +451,16 @@ section { padding-block: var(--espace-xl); }
   font-family: var(--font-titres); font-weight: 700; font-size: 10.5px; color: var(--blanc);
   text-align: center; line-height: 1.2; padding: 6px;
 }
+  
+.entite-logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 50%;
+}  
+
+  
+  
 .entite-carte.cabinet .entite-logo { background: linear-gradient(150deg, var(--bleu), var(--noir)); }
 .entite-carte.ong .entite-logo { background: linear-gradient(150deg, var(--rouge), #a83030); }
 .entite-carte.shop .entite-logo { background: linear-gradient(150deg, var(--or-fonce), var(--or)); }
@@ -649,28 +661,36 @@ section { padding-block: var(--espace-xl); }
     <div class="entites-grille">
 
       <a class="entite-carte cabinet reveal-stagger" href="le-professeur.html">
-        <div class="entite-logo">CABINET<br>GBÊMADOYOMIN</div>
+        <div class="entite-logo">
+          <img src="logo-cabinet.png" alt="Cabinet Gbêmadoyomin" class="entite-logo-img">
+        </div>
         <div class="entite-nom">Cabinet Gbêmadoyomin</div>
         <p class="entite-desc">Consultations du Fa, orientation et accompagnement traditionnel, avec le Professeur.</p>
         <span class="entite-lien">Découvrir →</span>
       </a>
 
       <a class="entite-carte ong reveal-stagger" href="ong.html">
-        <div class="entite-logo">O.N.G<br>GBÊMADOYOMIN</div>
+        <div class="entite-logo">
+          <img src="logo-ong.png" alt="ONG Gbêmadoyomin" class="entite-logo-img">
+        </div>
         <div class="entite-nom">ONG Gbêmadoyomin</div>
         <p class="entite-desc">Le volet social du Groupe : solidarité, accompagnement des personnes vulnérables, actions communautaires.</p>
         <span class="entite-lien">Découvrir →</span>
       </a>
 
       <a class="entite-carte shop reveal-stagger" href="boutique.html">
-        <div class="entite-logo">TODAAA<br>SHOP</div>
+        <div class="entite-logo">
+          <img src="logo-todaaa.png" alt="TODAAA SHOP" class="entite-logo-img">
+        </div>
         <div class="entite-nom">TODAAA SHOP</div>
         <p class="entite-desc">Le volet commercial : ouvrages, mode, objets traditionnels et créations de la marque TODAAA..!</p>
         <span class="entite-lien">Découvrir →</span>
       </a>
 
       <a class="entite-carte vibration reveal-stagger" href="vibration-sacree.html">
-        <div class="entite-logo">VIBRATION<br>SACRÉE</div>
+        <div class="entite-logo">
+          <img src="logo-vibration.png" alt="Vibration Sacrée" class="entite-logo-img">
+        </div>
         <div class="entite-nom">Vibration Sacrée</div>
         <p class="entite-desc">La communauté du Groupe : fraternité, loyauté, connaissance, solidarité et prospérité.</p>
         <span class="entite-lien">Découvrir →</span>
