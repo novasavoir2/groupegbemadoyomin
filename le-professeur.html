@@ -650,10 +650,12 @@ section { padding-block: var(--espace-xl); }
     <a class="nav-lien actif" href="le-professeur.html">Le Professeur</a>
     <a class="nav-lien" href="consultations.html">Cabinet</a>
     <a class="nav-lien" href="ong.html">ONG</a>
+    <a class="nav-lien" href="decouvrir.html">Découvrir</a>
     <a class="nav-lien" href="boutique.html">TODAAA SHOP</a>
     <a class="nav-lien" href="evenements.html">Événements</a>
     <a class="nav-lien" href="vibration-sacree.html">Vibration Sacrée</a>
     <a class="nav-lien" href="medias.html">Médias</a>
+    <a class="nav-lien" href="contact.html">Contact</a>
     <a class="btn-or nav-rdv-mobile" href="https://wa.me/22967668799?text=Bonjour%2C%20je%20souhaite%20prendre%20rendez-vous." target="_blank" rel="noopener">Prendre RDV</a>
   </div>
   <a class="nav-rdv" href="https://wa.me/22967668799?text=Bonjour%2C%20je%20souhaite%20prendre%20rendez-vous." target="_blank" rel="noopener">Prendre RDV</a>
@@ -949,7 +951,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
   document.querySelectorAll('.reveal, .reveal-stagger').forEach(el => observateur.observe(el));
 
-  // ---- CHATBOT ----
+  // ---- CHATBOT (corrigé : reste ouvert après chaque clic) ----
   const toggleBtn = document.getElementById('chatbotToggle');
   const panel = document.getElementById('chatbotPanel');
   const closeBtn = document.getElementById('chatbotClose');
@@ -967,23 +969,26 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   const responses = {
-    'consultation': '🔸 Je vous propose une consultation du Fa. Souhaitez-vous un RDV en présentiel ou à distance ?',
-    'rdv': '📅 Prendre rendez-vous est simple. Utilisez WhatsApp pour fixer un RDV : +229 01 67 66 87 99',
-    'livres': '📚 Nos livres sont disponibles sur TODAAA SHOP : Le Livre du Fa, Le Code de Vie, Vodoun Dan, Le Livre d\'Astuces et bien d\'autres.',
-    'vibration': '💜 Vibration Sacrée est une communauté de fraternité et de partage. Contactez-nous sur WhatsApp pour rejoindre.',
-    'don': '❤️ Merci pour votre générosité ! Vous pouvez faire un don directement via WhatsApp ou payer via MoMo Pay.',
-    'contact': '📞 Vous pouvez nous contacter par WhatsApp : +229 01 67 66 87 99 ou par email : cabinetgbemadoyomin@gmail.com'
+    'consultation': '🔸 Je vous propose une consultation du Fa. Nous avons deux formats : en présentiel à Abomey-Calavi (Bénin) ou à distance (WhatsApp / appel). Le Professeur Gbêmadoyômin vous accompagne avec écoute et tradition. Souhaitez-vous un RDV ?',
+    'rdv': '📅 Prendre rendez-vous est simple. Contactez-nous directement sur WhatsApp : +229 01 67 66 87 99. Nous vous répondrons dans les meilleurs délais pour fixer un créneau selon vos disponibilités.',
+    'livres': '📚 Découvrez les ouvrages du Professeur sur TODAAA SHOP : "Le Livre du Fa", "Le Code de Vie", "Vodoun Dan", "Le Livre d\'Astuces", et bien d\'autres. Chaque livre est une porte vers la connaissance traditionnelle.',
+    'vibration': '💜 Vibration Sacrée est une communauté de fraternité, de loyauté et de partage. Contactez-nous sur WhatsApp (+229 01 67 66 87 99) pour rejoindre cet espace de transmission et de solidarité.',
+    'don': '❤️ Merci pour votre générosité ! Vous pouvez faire un don directement via WhatsApp ou payer via MoMo Pay. Chaque contribution aide à soutenir les actions sociales du Groupe et à diffuser les traditions.',
+    'contact': '📞 Pour toute question, contactez-nous par WhatsApp : +229 01 67 66 87 99 ou par email : cabinetgbemadoyomin@gmail.com. Nous vous répondons dans les meilleurs délais.'
   };
 
+  // Gestion des clics sur les options (le panneau reste ouvert après chaque clic)
   document.querySelectorAll('.chatbot-option').forEach(btn => {
     btn.addEventListener('click', () => {
       const action = btn.dataset.action;
       const label = btn.textContent.trim();
       addMessage(label, 'user');
+
       setTimeout(() => {
         addMessage(responses[action] || 'Je peux vous aider avec autre chose.', 'bot');
       }, 400);
-      panel.classList.remove('open');
+
+      // ✅ Le panneau RESTE OUVERT — on ne fait plus panel.classList.remove('open')
     });
   });
 
