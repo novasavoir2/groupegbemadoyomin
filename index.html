@@ -225,7 +225,7 @@ section { padding-block: var(--espace-xl); }
 .filet { height: 1px; background: linear-gradient(to right, transparent, var(--border), transparent); }
 
 /* ===================================================================
-   BANDEAU DÉFILANT — Nouvelle édition / Promotions
+   BANDEAU DÉFILANT AMÉLIORÉ — INTERACTIF
    =================================================================== */
 .bandeau-defilant {
   position: sticky;
@@ -233,25 +233,54 @@ section { padding-block: var(--espace-xl); }
   z-index: 50;
   background: linear-gradient(135deg, var(--rouge), var(--noir-2));
   color: var(--blanc);
-  padding: 10px 0;
+  padding: 8px 0;
   overflow: hidden;
-  white-space: nowrap;
   border-bottom: 1px solid var(--or);
   font-family: var(--font-titres);
   font-size: clamp(0.7rem, 1.2vw, 0.95rem);
   letter-spacing: 0.05em;
 }
 .bandeau-defilant-inner {
-  display: inline-block;
-  animation: defilement 25s linear infinite;
+  display: inline-flex;
+  align-items: center;
+  animation: defilement 30s linear infinite;
   padding-left: 100%;
+  white-space: nowrap;
+  transition: animation-play-state 0.3s ease;
+}
+.bandeau-defilant:hover .bandeau-defilant-inner {
+  animation-play-state: paused;
 }
 .bandeau-defilant-inner span {
-  margin: 0 60px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 30px;
 }
 .bandeau-defilant-inner .highlight {
   color: var(--or-clair);
   font-weight: 700;
+}
+.bandeau-defilant-inner .bandeau-lien {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--blanc);
+  text-decoration: none;
+  transition: color 0.3s ease;
+  padding: 4px 8px;
+  border-radius: 3px;
+}
+.bandeau-defilant-inner .bandeau-lien:hover {
+  color: var(--or-clair);
+  background: rgba(255,255,255,0.05);
+}
+.bandeau-defilant-inner .bandeau-lien img {
+  width: 24px;
+  height: 30px;
+  object-fit: cover;
+  border-radius: 2px;
+  border: 1px solid rgba(255,255,255,0.2);
 }
 @keyframes defilement {
   0% { transform: translateX(0); }
@@ -349,7 +378,7 @@ section { padding-block: var(--espace-xl); }
 }
 
 /* ===================================================================
-   CHATBOT (assistant conversationnel)
+   CHATBOT PERSONNALISÉ (style Gemini/ChatGPT)
    =================================================================== */
 .chatbot-container {
   position: fixed;
@@ -365,29 +394,37 @@ section { padding-block: var(--espace-xl); }
   width: 54px;
   height: 54px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--or-clair), var(--or-fonce));
-  color: var(--noir);
-  font-size: 24px;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: white;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 20px rgba(184,146,46,0.4);
+  box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
   cursor: pointer;
   transition: transform 0.3s ease;
   border: none;
 }
 .chatbot-btn:hover { transform: scale(1.05); }
+.chatbot-btn svg {
+  width: 28px;
+  height: 28px;
+  fill: none;
+  stroke: white;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
 
 .chatbot-panel {
   position: fixed;
   bottom: 160px;
   left: 20px;
   z-index: 97;
-  width: 320px;
+  width: 340px;
   max-width: 90vw;
   background: var(--noir-2);
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: 16px;
   padding: 20px;
   box-shadow: 0 20px 60px rgba(0,0,0,0.6);
   transform: translateY(20px) scale(0.95);
@@ -404,23 +441,54 @@ section { padding-block: var(--espace-xl); }
   font-family: var(--font-titres);
   font-size: 0.9rem;
   color: var(--or);
+  margin-bottom: 4px;
+}
+.chatbot-panel .chatbot-sub {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 14px;
+}
+.chatbot-messages {
+  max-height: 200px;
+  overflow-y: auto;
   margin-bottom: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.chatbot-msg {
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  max-width: 85%;
+}
+.chatbot-msg.bot {
+  background: var(--noir-3);
+  color: var(--blanc-doux);
+  align-self: flex-start;
+  border-bottom-left-radius: 2px;
+}
+.chatbot-msg.user {
+  background: linear-gradient(135deg, var(--or-clair), var(--or-fonce));
+  color: var(--noir);
+  align-self: flex-end;
+  border-bottom-right-radius: 2px;
 }
 .chatbot-options {
   display: flex;
-  flex-direction: column;
-  gap: 8px;
+  flex-wrap: wrap;
+  gap: 6px;
 }
 .chatbot-option {
   background: var(--noir-3);
   border: 1px solid var(--border-discret);
   border-radius: 6px;
-  padding: 10px 14px;
-  font-size: 0.85rem;
+  padding: 8px 14px;
+  font-size: 0.8rem;
   color: var(--blanc-doux);
   transition: border-color var(--vitesse), background var(--vitesse);
   cursor: pointer;
-  text-align: left;
+  flex: 1 0 auto;
 }
 .chatbot-option:hover {
   border-color: var(--or);
@@ -438,7 +506,8 @@ section { padding-block: var(--espace-xl); }
 }
 @media (max-width: 640px) {
   .chatbot-panel { width: 280px; bottom: 150px; left: 10px; }
-  .chatbot-btn { width: 48px; height: 48px; font-size: 20px; }
+  .chatbot-btn { width: 48px; height: 48px; }
+  .chatbot-btn svg { width: 24px; height: 24px; }
 }
 
 /* ===================================================================
@@ -800,15 +869,80 @@ section { padding-block: var(--espace-xl); }
   <span class="loader-trait"></span>
 </div>
 
-<!-- ===================== BANDEAU DÉFILANT ===================== -->
+<!-- ===================== BANDEAU DÉFILANT INTERACTIF ===================== -->
 <div class="bandeau-defilant" aria-hidden="true">
   <div class="bandeau-defilant-inner">
-    <span>🔥 <span class="highlight">PROCHAINE ÉDITION 2027</span> — Restez connectés !</span>
-    <span>📚 Nouveaux livres à venir — Abonnez-vous</span>
-    <span>👕 Collection TODAAA 2026 — Édition actuelle</span>
-    <span>🔥 <span class="highlight">PROCHAINE ÉDITION 2027</span> — Restez connectés !</span>
-    <span>📚 Nouveaux livres à venir — Abonnez-vous</span>
-    <span>👕 Collection TODAAA 2026 — Édition actuelle</span>
+    <!-- Lien vers Événements -->
+    <span>
+      <a class="bandeau-lien" href="evenements.html">
+        🔥 <span class="highlight">PROCHAINE ÉDITION 2027</span> — Restez connectés !
+      </a>
+    </span>
+    <!-- Liens vers Boutique avec images de livres -->
+    <span>
+      <a class="bandeau-lien" href="boutique.html#livres">
+        <img src="livre-du-fa.jpeg" alt="Le Livre du Fa" loading="lazy">
+        Le Livre du Fa
+      </a>
+    </span>
+    <span>
+      <a class="bandeau-lien" href="boutique.html#livres">
+        <img src="code-de-vie.jpeg" alt="Le Code de Vie" loading="lazy">
+        Le Code de Vie
+      </a>
+    </span>
+    <span>
+      <a class="bandeau-lien" href="boutique.html#livres">
+        <img src="vodoun-dan.jpeg" alt="Vodoun Dan" loading="lazy">
+        Vodoun Dan
+      </a>
+    </span>
+    <span>
+      <a class="bandeau-lien" href="boutique.html#livres">
+        <img src="livre-astuces.jpeg" alt="Le Livre d'Astuces" loading="lazy">
+        Le Livre d'Astuces
+      </a>
+    </span>
+    <span>
+      <a class="bandeau-lien" href="boutique.html#mode">
+        👕 Collection TODAAA 2026 — Édition actuelle
+      </a>
+    </span>
+    <!-- Répétition pour le défilement continu -->
+    <span>
+      <a class="bandeau-lien" href="evenements.html">
+        🔥 <span class="highlight">PROCHAINE ÉDITION 2027</span> — Restez connectés !
+      </a>
+    </span>
+    <span>
+      <a class="bandeau-lien" href="boutique.html#livres">
+        <img src="livre-du-fa.jpeg" alt="Le Livre du Fa" loading="lazy">
+        Le Livre du Fa
+      </a>
+    </span>
+    <span>
+      <a class="bandeau-lien" href="boutique.html#livres">
+        <img src="code-de-vie.jpeg" alt="Le Code de Vie" loading="lazy">
+        Le Code de Vie
+      </a>
+    </span>
+    <span>
+      <a class="bandeau-lien" href="boutique.html#livres">
+        <img src="vodoun-dan.jpeg" alt="Vodoun Dan" loading="lazy">
+        Vodoun Dan
+      </a>
+    </span>
+    <span>
+      <a class="bandeau-lien" href="boutique.html#livres">
+        <img src="livre-astuces.jpeg" alt="Le Livre d'Astuces" loading="lazy">
+        Le Livre d'Astuces
+      </a>
+    </span>
+    <span>
+      <a class="bandeau-lien" href="boutique.html#mode">
+        👕 Collection TODAAA 2026 — Édition actuelle
+      </a>
+    </span>
   </div>
 </div>
 
@@ -1096,20 +1230,29 @@ section { padding-block: var(--espace-xl); }
   <a class="flottant-rdv" href="https://wa.me/22967668799?text=Bonjour%2C%20je%20souhaite%20prendre%20rendez-vous." target="_blank" rel="noopener">Prendre RDV</a>
 </div>
 
-<!-- ===================== CHATBOT ===================== -->
+<!-- ===================== CHATBOT PERSONNALISÉ ===================== -->
 <div class="chatbot-container">
-  <button class="chatbot-btn" id="chatbotToggle" aria-label="Ouvrir l'assistant">💬</button>
+  <button class="chatbot-btn" id="chatbotToggle" aria-label="Ouvrir l'assistant">
+    <svg viewBox="0 0 24 24">
+      <path d="M12 2a10 10 0 0 0-10 10 10 10 0 0 0 10 10 10 10 0 0 0 10-10 10 10 0 0 0-10-10z"/>
+      <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+      <line x1="12" y1="17" x2="12.01" y2="17"/>
+    </svg>
+  </button>
   <div class="chatbot-panel" id="chatbotPanel">
     <button class="chatbot-close" id="chatbotClose" aria-label="Fermer l'assistant">✕</button>
     <h3>🤖 Assistant Gbêmadoyomin</h3>
-    <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:12px;">Que recherchez-vous ?</p>
-    <div class="chatbot-options">
-      <button class="chatbot-option" data-action="consultation">🔸 Consultation du Fa</button>
-      <button class="chatbot-option" data-action="rdv">📅 Prendre rendez-vous</button>
-      <button class="chatbot-option" data-action="livres">📚 Commander un livre</button>
-      <button class="chatbot-option" data-action="vibration">💜 Rejoindre Vibration Sacrée</button>
-      <button class="chatbot-option" data-action="don">❤️ Faire un don</button>
-      <button class="chatbot-option" data-action="contact">📞 Contacter le Groupe</button>
+    <p class="chatbot-sub">Poser une question</p>
+    <div class="chatbot-messages" id="chatbotMessages">
+      <div class="chatbot-msg bot">Bonjour ! Je suis l'assistant du Groupe Gbêmadoyomin. Que recherchez-vous ?</div>
+    </div>
+    <div class="chatbot-options" id="chatbotOptions">
+      <button class="chatbot-option" data-action="consultation">🔸 Consultation</button>
+      <button class="chatbot-option" data-action="rdv">📅 RDV</button>
+      <button class="chatbot-option" data-action="livres">📚 Livres</button>
+      <button class="chatbot-option" data-action="vibration">💜 Vibration Sacrée</button>
+      <button class="chatbot-option" data-action="don">❤️ Don</button>
+      <button class="chatbot-option" data-action="contact">📞 Contact</button>
     </div>
   </div>
 </div>
@@ -1117,7 +1260,7 @@ section { padding-block: var(--espace-xl); }
 <!-- ===================== FIREBASE CONFIG ===================== -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js";
-  import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js";
+  import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyBkn-26DnNoQBBfiR4-rRrPfOszW24KRRc",
@@ -1130,10 +1273,6 @@ section { padding-block: var(--espace-xl); }
 
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
-
-  // Exemple de lecture des événements (pour la suite)
-  // const snapshot = await getDocs(collection(db, "evenements"));
-  // snapshot.forEach(doc => console.log(doc.id, doc.data()));
 
   console.log("✅ Firebase connecté avec succès !");
 </script>
@@ -1221,41 +1360,58 @@ document.addEventListener('DOMContentLoaded', () => {
     majParallax();
   }
 
-  // ---- CHATBOT ----
+  // ---- CHATBOT PERSONNALISÉ ----
   const toggleBtn = document.getElementById('chatbotToggle');
   const panel = document.getElementById('chatbotPanel');
   const closeBtn = document.getElementById('chatbotClose');
+  const messagesContainer = document.getElementById('chatbotMessages');
+  const optionsContainer = document.getElementById('chatbotOptions');
 
   toggleBtn.addEventListener('click', () => panel.classList.toggle('open'));
   closeBtn.addEventListener('click', () => panel.classList.remove('open'));
 
+  // Ajouter un message dans le chat
+  function addMessage(text, sender) {
+    const msg = document.createElement('div');
+    msg.className = `chatbot-msg ${sender}`;
+    msg.textContent = text;
+    messagesContainer.appendChild(msg);
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+  }
+
+  // Réponses personnalisées
+  const responses = {
+    'consultation': '🔸 Je vous propose une consultation du Fa. Souhaitez-vous un RDV en présentiel ou à distance ?',
+    'rdv': '📅 Prendre rendez-vous est simple. Utilisez WhatsApp pour fixer un RDV : +229 01 67 66 87 99',
+    'livres': '📚 Nos livres sont disponibles sur TODAAA SHOP : Le Livre du Fa, Le Code de Vie, Vodoun Dan, Le Livre d\'Astuces et bien d\'autres.',
+    'vibration': '💜 Vibration Sacrée est une communauté de fraternité et de partage. Contactez-nous sur WhatsApp pour rejoindre.',
+    'don': '❤️ Merci pour votre générosité ! Vous pouvez faire un don directement via WhatsApp ou payer via MoMo Pay.',
+    'contact': '📞 Vous pouvez nous contacter par WhatsApp : +229 01 67 66 87 99 ou par email : cabinetgbemadoyomin@gmail.com'
+  };
+
+  // Gestion des clics sur les options
   document.querySelectorAll('.chatbot-option').forEach(btn => {
     btn.addEventListener('click', () => {
       const action = btn.dataset.action;
-      const messages = {
-        'consultation': 'Bonjour%2C%20je%20souhaite%20prendre%20rendez-vous%20pour%20une%20consultation%20du%20Fa.',
-        'rdv': 'Bonjour%2C%20je%20souhaite%20prendre%20rendez-vous.',
-        'livres': 'Bonjour%2C%20je%20souhaite%20commander%20un%20livre.',
-        'vibration': 'Bonjour%2C%20je%20souhaite%20int%C3%A9grer%20Vibration%20Sacr%C3%A9e.',
-        'don': 'Bonjour%2C%20je%20souhaite%20faire%20un%20don.',
-        'contact': 'Bonjour%2C%20je%20souhaite%20contacter%20le%20Groupe.'
-      };
-      const url = `https://wa.me/22967668799?text=${messages[action] || 'Bonjour.'}`;
-      window.open(url, '_blank');
+      const label = btn.textContent.trim();
+      addMessage(label, 'user');
+
+      setTimeout(() => {
+        addMessage(responses[action] || 'Je peux vous aider avec autre chose.', 'bot');
+      }, 400);
+
       panel.classList.remove('open');
     });
   });
 
 });
-</script>
 
-<!-- ===================== SERVICE WORKER (PWA) ===================== -->
-<script>
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('service-worker.js')
-      .then(() => console.log('✅ Service Worker enregistré'))
-      .catch(() => console.log('⚠️ Service Worker non enregistré'));
-  }
+// ---- SERVICE WORKER (PWA) ----
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('service-worker.js')
+    .then(() => console.log('✅ Service Worker enregistré'))
+    .catch(() => console.log('⚠️ Service Worker non enregistré'));
+}
 </script>
 
 </body>
