@@ -1,1454 +1,1452 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Administration — Groupe Gbêmadoyomin</title>
-    <meta name="robots" content="noindex, nofollow">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,400;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Administration — Groupe Gbêmadoyomin</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,400;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
 
-    <style>
-        :root {
-            --noir: #0d0d0d;
-            --noir-2: #111111;
-            --noir-3: #161616;
-            --or: #b8922e;
-            --or-clair: #d4af5a;
-            --or-fonce: #8a6a1f;
-            --rouge: #7a1515;
-            --blanc: #f0ebe0;
-            --blanc-doux: #c8c0b0;
-            --bleu: #0d1f3c;
-            --text-principal: #f0ebe0;
-            --text-muted: #9a9080;
-            --text-discret: #7a7060;
-            --border: rgba(184, 146, 46, 0.2);
-            --border-discret: rgba(184, 146, 46, 0.1);
-            --font-titres: 'Cinzel', serif;
-            --font-accent: 'Cormorant Garamond', serif;
-            --font-corps: 'Lato', sans-serif;
-            --rayon: 3px;
-            --vitesse: 0.35s cubic-bezier(.4, 0, .2, 1);
-        }
+<style>
+:root {
+  --noir: #0d0d0d;
+  --noir-2: #111111;
+  --noir-3: #161616;
+  --or: #b8922e;
+  --or-clair: #d4af5a;
+  --or-fonce: #8a6a1f;
+  --rouge: #7a1515;
+  --rouge-clair: #a83030;
+  --vert: #22c55e;
+  --blanc: #f0ebe0;
+  --blanc-doux: #c8c0b0;
+  --text-muted: #9a9080;
+  --text-discret: #7a7060;
+  --border: rgba(184, 146, 46, 0.2);
+  --border-discret: rgba(184, 146, 46, 0.1);
+  --font-titres: 'Cinzel', serif;
+  --font-accent: 'Cormorant Garamond', serif;
+  --font-corps: 'Lato', sans-serif;
+  --rayon: 4px;
+  --vitesse: 0.3s ease;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--noir);
+  color: var(--blanc);
+  font-family: var(--font-corps);
+  font-weight: 300;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+a { color: inherit; text-decoration: none; }
+button { font: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+input, textarea, select { font: inherit; }
+h1, h2, h3 { font-family: var(--font-titres); font-weight: 700; color: var(--blanc); }
 
-        *,
-        *::before,
-        *::after {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-        html {
-            scroll-behavior: smooth;
-        }
-        body {
-            background: var(--noir);
-            color: var(--text-principal);
-            font-family: var(--font-corps);
-            font-weight: 300;
-            line-height: 1.65;
-            -webkit-font-smoothing: antialiased;
-            overflow-x: hidden;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-        a {
-            color: inherit;
-            text-decoration: none;
-        }
-        button {
-            font: inherit;
-            color: inherit;
-            background: none;
-            border: none;
-            cursor: pointer;
-        }
-        h1,
-        h2,
-        h3,
-        h4 {
-            font-family: var(--font-titres);
-            font-weight: 700;
-            color: var(--blanc);
-            line-height: 1.25;
-        }
-        h1 {
-            font-size: clamp(2rem, 4vw, 3rem);
-            letter-spacing: 0.02em;
-        }
-        h2 {
-            font-size: clamp(1.4rem, 2.5vw, 2rem);
-            letter-spacing: 0.02em;
-        }
-        h3 {
-            font-size: clamp(1.1rem, 1.8vw, 1.3rem);
-        }
-        p {
-            max-width: 68ch;
-        }
-        :focus-visible {
-            outline: 2px solid var(--or);
-            outline-offset: 3px;
-        }
+.conteneur { max-width: 1180px; margin-inline: auto; padding-inline: clamp(16px, 4vw, 32px); }
 
-        .conteneur {
-            width: 100%;
-            max-width: 1180px;
-            margin-inline: auto;
-            padding-inline: clamp(20px, 5vw, 48px);
-        }
+/* ============================================================
+   BOUTONS
+   ============================================================ */
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 10px 20px; border-radius: var(--rayon);
+  font-family: var(--font-corps); font-weight: 700; font-size: 0.82rem;
+  letter-spacing: 0.03em; transition: all var(--vitesse); cursor: pointer;
+}
+.btn-or {
+  background: linear-gradient(135deg, var(--or-clair), var(--or-fonce));
+  color: var(--noir); border: none;
+}
+.btn-or:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(184,146,46,0.35); }
+.btn-or:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
 
-        .btn-or {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: linear-gradient(135deg, var(--or-clair), var(--or-fonce));
-            color: var(--noir);
-            font-family: var(--font-titres);
-            font-size: 0.78rem;
-            font-weight: 700;
-            letter-spacing: 0.08em;
-            padding: 14px 30px;
-            border-radius: var(--rayon);
-            box-shadow: 0 4px 24px rgba(184, 146, 46, 0.25);
-            transition: transform var(--vitesse), box-shadow var(--vitesse);
-            cursor: pointer;
-            border: none;
-        }
-        .btn-or:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(184, 146, 46, .4);
-        }
+.btn-outline {
+  background: transparent; color: var(--blanc-doux);
+  border: 1px solid var(--border);
+}
+.btn-outline:hover { border-color: var(--or); color: var(--or-clair); }
 
-        .btn-contour {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            border: 1px solid var(--border);
-            color: var(--blanc-doux);
-            font-family: var(--font-titres);
-            font-size: 0.72rem;
-            font-weight: 700;
-            letter-spacing: 0.08em;
-            padding: 12px 26px;
-            border-radius: var(--rayon);
-            transition: border-color var(--vitesse), color var(--vitesse);
-            background: transparent;
-        }
-        .btn-contour:hover {
-            border-color: var(--or);
-            color: var(--or-clair);
-        }
+.btn-danger { border-color: var(--rouge) !important; color: #ff8888 !important; }
+.btn-danger:hover { background: rgba(122,21,21,0.2) !important; }
 
-        .btn-danger {
-            border-color: var(--rouge) !important;
-            color: var(--rouge) !important;
-        }
-        .btn-danger:hover {
-            background: rgba(122, 21, 21, 0.15);
-        }
+.btn-vert { background: linear-gradient(135deg, #22c55e, #16a34a); color: white; }
+.btn-vert:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(34,197,94,0.35); }
 
-        .btn-sm {
-            padding: 8px 16px;
-            font-size: 0.68rem;
-        }
+.btn-sm { padding: 6px 12px; font-size: 0.72rem; }
 
-        .eyebrow {
-            font-family: var(--font-accent);
-            font-style: italic;
-            font-size: 0.95rem;
-            color: var(--text-muted);
-            margin-bottom: 0.5rem;
-        }
+.btn-tool {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 6px 10px; border-radius: 3px; font-size: 0.72rem;
+  background: rgba(184,146,46,0.1); border: 1px solid var(--border-discret);
+  color: var(--or-clair); transition: all var(--vitesse);
+}
+.btn-tool:hover { background: rgba(184,146,46,0.2); border-color: var(--or); }
 
-        /* ============================================================
-           ADMIN HEADER
-           ============================================================ */
-        .admin-header {
-            background: var(--noir-2);
-            border-bottom: 1px solid var(--border);
-            padding: 16px 0;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            backdrop-filter: blur(12px);
-        }
-        .admin-header-inner {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 12px;
-        }
-        .admin-header .logo {
-            font-family: var(--font-titres);
-            font-size: 14px;
-            color: var(--or);
-            letter-spacing: 0.08em;
-        }
-        .admin-header .logo small {
-            font-size: 10px;
-            color: var(--text-discret);
-            letter-spacing: 0.05em;
-            display: block;
-            font-family: var(--font-corps);
-        }
-        .admin-header .user-info {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            font-size: 0.85rem;
-            color: var(--text-muted);
-        }
-        .admin-header .user-info .email {
-            color: var(--blanc-doux);
-        }
+.btn-add {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 8px 14px; border-radius: 4px; font-size: 0.78rem;
+  background: rgba(34,197,94,0.1); border: 1px dashed rgba(34,197,94,0.4);
+  color: #4ade80; font-weight: 600;
+}
+.btn-add:hover { background: rgba(34,197,94,0.2); border-style: solid; }
 
-        /* ============================================================
-           ADMIN BODY
-           ============================================================ */
-        .admin-body {
-            flex: 1;
-            padding: var(--espace-lg) 0;
-        }
+.btn-remove {
+  width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
+  background: rgba(122,21,21,0.15); border: 1px solid rgba(122,21,21,0.4);
+  color: #ff8888; font-size: 0.9rem; display: flex; align-items: center; justify-content: center;
+  transition: all var(--vitesse);
+}
+.btn-remove:hover { background: rgba(122,21,21,0.3); }
 
-        /* ============================================================
-           LOGIN FORM
-           ============================================================ */
-        .login-box {
-            max-width: 420px;
-            margin: 40px auto;
-            background: var(--noir-2);
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            padding: 40px 32px;
-            text-align: center;
-        }
-        .login-box h2 {
-            margin-bottom: 8px;
-        }
-        .login-box p {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            margin-bottom: 24px;
-        }
-        .login-box .form-group {
-            text-align: left;
-            margin-bottom: 16px;
-        }
-        .login-box label {
-            display: block;
-            font-size: 0.8rem;
-            font-weight: 700;
-            color: var(--text-muted);
-            margin-bottom: 4px;
-            letter-spacing: 0.05em;
-        }
-        .login-box input {
-            width: 100%;
-            padding: 12px 14px;
-            background: var(--noir-3);
-            border: 1px solid var(--border-discret);
-            border-radius: 3px;
-            color: var(--blanc);
-            font-size: 0.95rem;
-            transition: border-color var(--vitesse);
-        }
-        .login-box input:focus {
-            border-color: var(--or);
-            outline: none;
-        }
-        .login-box .error-msg {
-            color: var(--rouge);
-            font-size: 0.85rem;
-            margin-top: 12px;
-            min-height: 1.5em;
-        }
+/* ============================================================
+   HEADER
+   ============================================================ */
+.admin-header {
+  background: rgba(8,8,8,0.95); backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 14px 0; position: sticky; top: 0; z-index: 100;
+}
+.admin-header-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 16px; flex-wrap: wrap;
+}
+.admin-logo { display: flex; align-items: center; gap: 10px; }
+.admin-logo img { height: 36px; width: auto; border-radius: 4px; }
+.admin-logo-texte { display: flex; flex-direction: column; }
+.admin-logo-title { font-family: var(--font-titres); font-size: 13px; color: var(--or); font-weight: 700; letter-spacing: 0.08em; }
+.admin-logo-sub { font-size: 10px; color: var(--text-discret); letter-spacing: 0.05em; }
+.admin-user { display: flex; align-items: center; gap: 12px; font-size: 0.82rem; color: var(--text-muted); }
+.admin-user strong { color: var(--blanc-doux); }
 
-        /* ============================================================
-           DASHBOARD
-           ============================================================ */
-        .dashboard-tabs {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-            border-bottom: 1px solid var(--border-discret);
-            padding-bottom: 12px;
-            margin-bottom: 24px;
-        }
-        .dashboard-tabs .tab-btn {
-            padding: 10px 18px;
-            font-family: var(--font-titres);
-            font-size: 0.75rem;
-            font-weight: 700;
-            letter-spacing: 0.05em;
-            color: var(--text-muted);
-            border: 1px solid transparent;
-            border-radius: 3px;
-            transition: color var(--vitesse), border-color var(--vitesse);
-        }
-        .dashboard-tabs .tab-btn:hover {
-            color: var(--blanc-doux);
-        }
-        .dashboard-tabs .tab-btn.active {
-            color: var(--or);
-            border-color: var(--border);
-        }
+/* ============================================================
+   LOGIN
+   ============================================================ */
+.login-wrap { min-height: calc(100vh - 70px); display: flex; align-items: center; justify-content: center; padding: 20px; }
+.login-box {
+  width: 100%; max-width: 420px;
+  background: var(--noir-2); border: 1px solid var(--border);
+  border-radius: 8px; padding: 40px 32px;
+}
+.login-box h2 { margin-bottom: 8px; font-size: 1.5rem; }
+.login-box p { color: var(--text-muted); font-size: 0.88rem; margin-bottom: 24px; }
 
-        .tab-content {
-            display: none;
-            animation: fadeIn 0.3s ease;
-        }
-        .tab-content.active {
-            display: block;
-        }
+/* ============================================================
+   FORMULAIRES
+   ============================================================ */
+.form-group { margin-bottom: 16px; }
+.form-group label {
+  display: block; font-size: 0.75rem; font-weight: 700;
+  color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em;
+  margin-bottom: 6px;
+}
+.form-group label .req { color: var(--or); margin-left: 2px; }
+.form-group .hint { font-size: 0.72rem; color: var(--text-discret); margin-top: 4px; font-style: italic; }
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%; padding: 11px 14px;
+  background: var(--noir-3); border: 1px solid var(--border-discret);
+  border-radius: 4px; color: var(--blanc); font-size: 0.9rem;
+  transition: border-color var(--vitesse);
+}
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus { outline: none; border-color: var(--or); }
+.form-group textarea { resize: vertical; min-height: 80px; font-family: var(--font-corps); }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.form-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+@media (max-width: 640px) { .form-row, .form-row-3 { grid-template-columns: 1fr; } }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(12px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+/* Ligne d'URL avec outils */
+.url-row {
+  display: flex; gap: 8px; align-items: stretch; margin-bottom: 8px;
+}
+.url-row input { flex: 1; }
+.url-row .url-tools {
+  display: flex; gap: 4px; flex-wrap: wrap; align-items: center;
+}
 
-        /* ============================================================
-           FORMULAIRE
-           ============================================================ */
-        .admin-form {
-            background: var(--noir-2);
-            border: 1px solid var(--border-discret);
-            border-radius: 4px;
-            padding: 24px;
-            margin-bottom: 32px;
-        }
-        .admin-form .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-        }
-        .admin-form .form-group {
-            margin-bottom: 14px;
-        }
-        .admin-form .form-group.full {
-            grid-column: 1 / -1;
-        }
-        .admin-form label {
-            display: block;
-            font-size: 0.78rem;
-            font-weight: 700;
-            color: var(--text-muted);
-            margin-bottom: 4px;
-            letter-spacing: 0.05em;
-        }
-        .admin-form label .required {
-            color: var(--rouge);
-            margin-left: 2px;
-        }
-        .admin-form input,
-        .admin-form textarea,
-        .admin-form select {
-            width: 100%;
-            padding: 10px 12px;
-            background: var(--noir-3);
-            border: 1px solid var(--border-discret);
-            border-radius: 3px;
-            color: var(--blanc);
-            font-size: 0.9rem;
-            transition: border-color var(--vitesse);
-            font-family: var(--font-corps);
-        }
-        .admin-form input:focus,
-        .admin-form textarea:focus,
-        .admin-form select:focus {
-            border-color: var(--or);
-            outline: none;
-        }
-        .admin-form textarea {
-            min-height: 80px;
-            resize: vertical;
-        }
-        .admin-form .form-actions {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-            margin-top: 8px;
-        }
+/* Liste dynamique */
+.dyn-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; }
 
-        /* ============================================================
-           LISTE DES DOCUMENTS
-           ============================================================ */
-        .items-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-        .item-card {
-            background: var(--noir-2);
-            border: 1px solid var(--border-discret);
-            border-radius: 4px;
-            padding: 16px 18px;
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-            transition: border-color var(--vitesse);
-        }
-        .item-card:hover {
-            border-color: var(--border);
-        }
-        .item-card .item-info {
-            flex: 1;
-            min-width: 150px;
-        }
-        .item-card .item-info .item-title {
-            font-family: var(--font-titres);
-            font-size: 0.9rem;
-            color: var(--blanc);
-        }
-        .item-card .item-info .item-meta {
-            font-size: 0.78rem;
-            color: var(--text-muted);
-        }
-        .item-card .item-actions {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
+/* ============================================================
+   TABS
+   ============================================================ */
+.tabs {
+  display: flex; gap: 4px; flex-wrap: wrap;
+  border-bottom: 1px solid var(--border-discret);
+  margin-bottom: 24px; padding-bottom: 8px;
+}
+.tab-btn {
+  padding: 10px 18px; border-radius: 4px; font-size: 0.82rem;
+  font-weight: 600; color: var(--text-muted);
+  border: 1px solid transparent; transition: all var(--vitesse);
+}
+.tab-btn:hover { color: var(--blanc-doux); }
+.tab-btn.active {
+  color: var(--or); border-color: var(--or);
+  background: rgba(184,146,46,0.08);
+}
 
-        .empty-msg {
-            color: var(--text-discret);
-            font-size: 0.9rem;
-            text-align: center;
-            padding: 32px 0;
-        }
+.tab-pane { display: none; }
+.tab-pane.active { display: block; animation: fadeIn 0.3s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* ============================================================
-           LIVE SECTION
-           ============================================================ */
-        .live-preview {
-            background: var(--noir-3);
-            border: 1px solid var(--border);
-            border-radius: 4px;
-            padding: 20px;
-            margin-top: 16px;
-        }
-        .live-preview .live-status {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 12px;
-        }
-        .live-preview .live-dot {
-            display: inline-block;
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: #22c55e;
-            animation: clignote 1.2s ease-in-out infinite;
-        }
-        .live-preview .live-dot.inactive {
-            background: var(--text-discret);
-            animation: none;
-        }
-        @keyframes clignote {
-            0%,
-            100% {
-                opacity: 1;
-                transform: scale(1);
-            }
-            50% {
-                opacity: 0.3;
-                transform: scale(0.85);
-            }
-        }
+/* ============================================================
+   CARTES DE SECTION
+   ============================================================ */
+.card {
+  background: var(--noir-2); border: 1px solid var(--border-discret);
+  border-radius: 6px; padding: 24px; margin-bottom: 24px;
+}
+.card-title {
+  font-family: var(--font-titres); font-size: 1rem; color: var(--or);
+  margin-bottom: 4px; display: flex; align-items: center; gap: 8px;
+}
+.card-sub { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 20px; }
 
-        /* ============================================================
-           LOADER
-           ============================================================ */
-        .loader-mini {
-            display: inline-block;
-            width: 18px;
-            height: 18px;
-            border: 2px solid var(--border);
-            border-top-color: var(--or);
-            border-radius: 50%;
-            animation: spin 0.7s linear infinite;
-        }
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
+/* ============================================================
+   LISTE D'ÉLÉMENTS
+   ============================================================ */
+.items-list { display: flex; flex-direction: column; gap: 10px; }
+.item-row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 16px; background: var(--noir-3);
+  border: 1px solid var(--border-discret); border-radius: 4px;
+  transition: border-color var(--vitesse);
+}
+.item-row:hover { border-color: var(--border); }
+.item-thumb {
+  width: 44px; height: 44px; border-radius: 4px; flex-shrink: 0;
+  background: var(--noir); border: 1px solid var(--border-discret);
+  background-size: cover; background-position: center;
+}
+.item-info { flex: 1; min-width: 0; }
+.item-title { font-size: 0.88rem; color: var(--blanc); font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.item-meta { font-size: 0.72rem; color: var(--text-discret); margin-top: 2px; }
+.item-actions { display: flex; gap: 6px; flex-shrink: 0; }
 
-        /* ============================================================
-           RESPONSIVE
-           ============================================================ */
-        @media (max-width: 780px) {
-            .admin-form .form-row {
-                grid-template-columns: 1fr;
-            }
-            .admin-header-inner {
-                flex-direction: column;
-                align-items: stretch;
-                text-align: center;
-            }
-            .admin-header .user-info {
-                justify-content: center;
-                flex-wrap: wrap;
-            }
-            .dashboard-tabs {
-                justify-content: center;
-            }
-            .item-card {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            .item-card .item-actions {
-                justify-content: flex-start;
-            }
-        }
-        @media (max-width: 480px) {
-            .login-box {
-                padding: 24px 16px;
-                margin: 20px 10px;
-            }
-            .admin-form {
-                padding: 16px;
-            }
-            .dashboard-tabs .tab-btn {
-                font-size: 0.65rem;
-                padding: 8px 12px;
-            }
-        }
-    </style>
+.empty-state {
+  text-align: center; padding: 40px 20px; color: var(--text-discret);
+  border: 1px dashed var(--border-discret); border-radius: 4px;
+  font-size: 0.85rem;
+}
+
+/* ============================================================
+   TOAST (notifications)
+   ============================================================ */
+.toast-container {
+  position: fixed; bottom: 24px; right: 24px; z-index: 9999;
+  display: flex; flex-direction: column; gap: 10px; max-width: 360px;
+}
+.toast {
+  padding: 14px 18px; border-radius: 6px;
+  font-size: 0.88rem; color: white;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  display: flex; align-items: flex-start; gap: 10px;
+  animation: slideIn 0.3s ease;
+  border-left: 4px solid;
+}
+.toast.success { background: #14532d; border-color: #22c55e; }
+.toast.error { background: #7f1d1d; border-color: #ef4444; }
+.toast.info { background: #1e3a8a; border-color: #3b82f6; }
+.toast.warning { background: #78350f; border-color: #f59e0b; }
+.toast-icon { font-size: 1.1rem; flex-shrink: 0; }
+.toast-content { flex: 1; }
+.toast-title { font-weight: 700; margin-bottom: 2px; }
+.toast-msg { font-size: 0.82rem; opacity: 0.9; }
+@keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+
+/* ============================================================
+   SPINNER
+   ============================================================ */
+.spinner {
+  display: inline-block; width: 16px; height: 16px;
+  border: 2px solid currentColor; border-top-color: transparent;
+  border-radius: 50%; animation: spin 0.7s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ============================================================
+   LIVE STATUS
+   ============================================================ */
+.live-status-box {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 18px; border-radius: 6px;
+  background: var(--noir-3); border: 1px solid var(--border-discret);
+  margin-bottom: 16px;
+}
+.live-dot {
+  width: 12px; height: 12px; border-radius: 50%; background: #555;
+  flex-shrink: 0;
+}
+.live-dot.on { background: #ff2d2d; animation: pulseLive 1.2s ease-in-out infinite; box-shadow: 0 0 12px #ff2d2d; }
+@keyframes pulseLive {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(0.85); opacity: 0.6; }
+}
+.live-status-text { font-size: 0.88rem; color: var(--blanc-doux); }
+
+/* ============================================================
+   AVERTISSEMENT
+   ============================================================ */
+.alert {
+  padding: 12px 16px; border-radius: 4px; font-size: 0.82rem;
+  margin-bottom: 16px; display: flex; gap: 10px; align-items: flex-start;
+}
+.alert-info { background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.3); color: #93c5fd; }
+.alert-warn { background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.3); color: #fcd34d; }
+.alert-tip { background: rgba(34,197,94,0.08); border: 1px solid rgba(34,197,94,0.3); color: #86efac; }
+</style>
 </head>
 <body>
 
-    <!-- ============================================================
-    ADMIN HEADER
-    ============================================================ -->
-    <header class="admin-header" id="adminHeader">
-        <div class="conteneur admin-header-inner">
-            <div class="logo">
-                🛠️ Administration
-                <small>Groupe Gbêmadoyomin</small>
-            </div>
-            <div class="user-info" id="userInfo">
-                <span class="email" id="userEmail">Non connecté</span>
-                <button class="btn-contour btn-sm" id="logoutBtn" style="display:none;">Se déconnecter</button>
-            </div>
+<!-- ============================================================
+     HEADER
+     ============================================================ -->
+<header class="admin-header">
+  <div class="conteneur admin-header-inner">
+    <div class="admin-logo">
+      <img src="logo-gg.jpeg" alt="GG">
+      <div class="admin-logo-texte">
+        <span class="admin-logo-title">ADMINISTRATION</span>
+        <span class="admin-logo-sub">Groupe Gbêmadoyomin</span>
+      </div>
+    </div>
+    <div class="admin-user" id="adminUser" style="display:none;">
+      <span>Connecté : <strong id="userEmailDisplay"></strong></span>
+      <button class="btn btn-outline btn-sm" id="btnLogout">🚪 Déconnexion</button>
+    </div>
+  </div>
+</header>
+
+<!-- ============================================================
+     LOGIN
+     ============================================================ -->
+<div class="login-wrap" id="loginWrap">
+  <div class="login-box">
+    <h2>🔐 Accès administration</h2>
+    <p>Connectez-vous pour gérer le contenu du site.</p>
+    <form id="loginForm">
+      <div class="form-group">
+        <label for="loginEmail">Adresse email</label>
+        <input type="email" id="loginEmail" placeholder="clavier12541@gmail.com" required autocomplete="username">
+      </div>
+      <div class="form-group">
+        <label for="loginPassword">Mot de passe</label>
+        <input type="password" id="loginPassword" placeholder="••••••••" required autocomplete="current-password">
+      </div>
+      <button type="submit" class="btn btn-or" id="btnLogin" style="width:100%; justify-content:center; padding: 14px;">
+        <span class="btn-text">Se connecter</span>
+      </button>
+    </form>
+  </div>
+</div>
+
+<!-- ============================================================
+     DASHBOARD
+     ============================================================ -->
+<div class="conteneur" id="dashboard" style="display:none; padding-block: 32px;">
+
+  <div style="margin-bottom: 24px;">
+    <h1 style="font-size: 1.8rem; margin-bottom: 4px;">📊 Tableau de bord</h1>
+    <p style="color: var(--text-muted); font-size: 0.9rem;">Gérez les contenus du site en temps réel.</p>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="evenements">📅 Événements</button>
+    <button class="tab-btn" data-tab="photos">🖼️ Photos</button>
+    <button class="tab-btn" data-tab="videos">🎬 Vidéos</button>
+    <button class="tab-btn" data-tab="presse">📰 Presse</button>
+    <button class="tab-btn" data-tab="live">🔴 Live</button>
+  </div>
+
+  <!-- ============================================================
+       TAB ÉVÉNEMENTS
+       ============================================================ -->
+  <div class="tab-pane active" id="pane-evenements">
+
+    <div class="alert alert-info">
+      <span>💡</span>
+      <span><strong>Astuce :</strong> Utilisez les boutons <em>PostImage</em> / <em>Cloudinary</em> / <em>ImgBB</em> pour héberger vos images gratuitement et coller le lien direct dans le champ.</span>
+    </div>
+
+    <div class="card">
+      <div class="card-title">➕ Ajouter / modifier un événement</div>
+      <div class="card-sub">Tous les champs marqués d'un <span style="color: var(--or);">*</span> sont obligatoires.</div>
+
+      <form id="formEvenement" autocomplete="off">
+        <input type="hidden" id="evId" value="">
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Titre <span class="req">*</span></label>
+            <input type="text" id="evTitre" required placeholder="Ex: Séminaire sur le Fa">
+          </div>
+          <div class="form-group">
+            <label>Slug (identifiant URL) <span class="req">*</span></label>
+            <input type="text" id="evSlug" required placeholder="Ex: seminaire-fa-2026">
+            <div class="hint">Utilisé pour l'URL : article.html?slug=…</div>
+          </div>
         </div>
-    </header>
 
-    <!-- ============================================================
-    ADMIN BODY
-    ============================================================ -->
-    <main class="admin-body" id="adminBody">
-        <div class="conteneur">
-
-            <!-- ===== LOGIN ===== -->
-            <div id="loginSection">
-                <div class="login-box">
-                    <h2>🔐 Accès administration</h2>
-                    <p>Connectez-vous avec votre compte Firebase.</p>
-                    <form id="loginForm">
-                        <div class="form-group">
-                            <label for="loginEmail">Email</label>
-                            <input type="email" id="loginEmail" placeholder="admin@votre-email.com" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="loginPassword">Mot de passe</label>
-                            <input type="password" id="loginPassword" placeholder="••••••••" required>
-                        </div>
-                        <button type="submit" class="btn-or" style="width:100%; justify-content:center;">Se connecter</button>
-                        <div class="error-msg" id="loginError"></div>
-                    </form>
-                </div>
-            </div>
-
-            <!-- ===== DASHBOARD ===== -->
-            <div id="dashboardSection" style="display:none;">
-
-                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:20px;">
-                    <div>
-                        <h1>📊 Administration</h1>
-                        <p class="eyebrow" style="margin-bottom:0;">Gérez les contenus du site en temps réel</p>
-                    </div>
-                </div>
-
-                <!-- Tabs -->
-                <div class="dashboard-tabs" id="tabsContainer">
-                    <button class="tab-btn active" data-tab="evenements">📅 Événements</button>
-                    <button class="tab-btn" data-tab="photos">🖼️ Photos</button>
-                    <button class="tab-btn" data-tab="videos">🎬 Vidéos</button>
-                    <button class="tab-btn" data-tab="presse">📰 Presse</button>
-                    <button class="tab-btn" data-tab="live">🔴 Live</button>
-                </div>
-
-                <!-- ===== TAB: ÉVÉNEMENTS ===== -->
-                <div class="tab-content active" id="tab-evenements">
-                    <h2>📅 Événements & Actualités</h2>
-                    <div class="admin-form" id="evenementForm">
-                        <h3 style="margin-bottom:12px;" id="evenementFormTitle">➕ Ajouter un événement</h3>
-                        <input type="hidden" id="evenementId" value="">
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Titre <span class="required">*</span></label>
-                                <input type="text" id="evTitre" placeholder="Titre de l'événement" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Slug (URL) <span class="required">*</span></label>
-                                <input type="text" id="evSlug" placeholder="ex: seminaire-fa-2026" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Date <span class="required">*</span></label>
-                                <input type="date" id="evDate" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Heure</label>
-                                <input type="text" id="evHeure" placeholder="10h00">
-                            </div>
-                            <div class="form-group">
-                                <label>Lieu</label>
-                                <input type="text" id="evLieu" placeholder="Abomey-Calavi, Bénin">
-                            </div>
-                            <div class="form-group">
-                                <label>Participation</label>
-                                <input type="text" id="evParticipation" placeholder="Sur inscription">
-                            </div>
-                            <div class="form-group">
-                                <label>Catégorie</label>
-                                <input type="text" id="evCategorie" placeholder="séminaire, conférence, célébration">
-                            </div>
-                            <div class="form-group">
-                                <label>À la une ?</label>
-                                <select id="evALaUne">
-                                    <option value="false">Non</option>
-                                    <option value="true">Oui</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Archivé ?</label>
-                                <select id="evArchive">
-                                    <option value="false">Non (à venir)</option>
-                                    <option value="true">Oui (passé)</option>
-                                </select>
-                            </div>
-                            <div class="form-group full">
-                                <label>Résumé (description courte)</label>
-                                <textarea id="evDescription" rows="2" placeholder="Courte description pour l'affichage en liste"></textarea>
-                            </div>
-                            <div class="form-group full">
-                                <label>Contenu complet (article) <span class="required">*</span></label>
-                                <textarea id="evContenu" rows="6" placeholder="Texte complet de l'article / événement"></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label>URL de l'affiche (image)</label>
-                                <input type="url" id="evAfficheURL" placeholder="https://i.postimg.cc/... ou Cloudinary">
-                            </div>
-                            <div class="form-group">
-                                <label>URL de la vidéo (intégration)</label>
-                                <input type="url" id="evVideoURL" placeholder="https://www.youtube.com/embed/...">
-                            </div>
-                        </div>
-                        <div class="form-actions">
-                            <button class="btn-or" id="evSaveBtn">💾 Enregistrer</button>
-                            <button class="btn-contour" id="evCancelBtn" style="display:none;">Annuler</button>
-                        </div>
-                    </div>
-
-                    <div id="evenementsList" class="items-list">
-                        <div class="empty-msg">Chargement des événements...</div>
-                    </div>
-                </div>
-
-                <!-- ===== TAB: PHOTOS ===== -->
-                <div class="tab-content" id="tab-photos">
-                    <h2>🖼️ Galerie photos</h2>
-                    <div class="admin-form" id="photoForm">
-                        <h3 style="margin-bottom:12px;" id="photoFormTitle">➕ Ajouter une photo</h3>
-                        <input type="hidden" id="photoId" value="">
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Titre <span class="required">*</span></label>
-                                <input type="text" id="phTitre" placeholder="Titre de la photo" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Catégorie</label>
-                                <input type="text" id="phCategorie" placeholder="galerie, portfolio, evenement">
-                            </div>
-                            <div class="form-group full">
-                                <label>URL de l'image <span class="required">*</span></label>
-                                <input type="url" id="phUrl" placeholder="https://i.postimg.cc/..." required>
-                            </div>
-                        </div>
-                        <div class="form-actions">
-                            <button class="btn-or" id="phSaveBtn">💾 Enregistrer</button>
-                            <button class="btn-contour" id="phCancelBtn" style="display:none;">Annuler</button>
-                        </div>
-                    </div>
-                    <div id="photosList" class="items-list">
-                        <div class="empty-msg">Chargement des photos...</div>
-                    </div>
-                </div>
-
-                <!-- ===== TAB: VIDÉOS ===== -->
-                <div class="tab-content" id="tab-videos">
-                    <h2>🎬 Vidéos</h2>
-                    <div class="admin-form" id="videoForm">
-                        <h3 style="margin-bottom:12px;" id="videoFormTitle">➕ Ajouter une vidéo</h3>
-                        <input type="hidden" id="videoId" value="">
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Titre <span class="required">*</span></label>
-                                <input type="text" id="viTitre" placeholder="Titre de la vidéo" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Catégorie</label>
-                                <input type="text" id="viCategorie" placeholder="intervention, cérémonie, documentaire">
-                            </div>
-                            <div class="form-group full">
-                                <label>URL d'intégration <span class="required">*</span></label>
-                                <input type="url" id="viUrl" placeholder="https://www.youtube.com/embed/..." required>
-                            </div>
-                            <div class="form-group full">
-                                <label>URL de la vignette (image miniature)</label>
-                                <input type="url" id="viVignetteURL" placeholder="https://i.postimg.cc/...">
-                            </div>
-                        </div>
-                        <div class="form-actions">
-                            <button class="btn-or" id="viSaveBtn">💾 Enregistrer</button>
-                            <button class="btn-contour" id="viCancelBtn" style="display:none;">Annuler</button>
-                        </div>
-                    </div>
-                    <div id="videosList" class="items-list">
-                        <div class="empty-msg">Chargement des vidéos...</div>
-                    </div>
-                </div>
-
-                <!-- ===== TAB: PRESSE ===== -->
-                <div class="tab-content" id="tab-presse">
-                    <h2>📰 Presse & Interviews</h2>
-                    <div class="admin-form" id="presseForm">
-                        <h3 style="margin-bottom:12px;" id="presseFormTitle">➕ Ajouter un article de presse</h3>
-                        <input type="hidden" id="presseId" value="">
-                        <div class="form-row">
-                            <div class="form-group full">
-                                <label>Titre <span class="required">*</span></label>
-                                <input type="text" id="prTitre" placeholder="Titre de l'article" required>
-                            </div>
-                            <div class="form-group full">
-                                <label>Résumé</label>
-                                <textarea id="prDescription" rows="2" placeholder="Extrait ou description de l'article"></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label>URL de l'article <span class="required">*</span></label>
-                                <input type="url" id="prUrl" placeholder="https://site-presse.com/article" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Date de publication</label>
-                                <input type="date" id="prDate">
-                            </div>
-                        </div>
-                        <div class="form-actions">
-                            <button class="btn-or" id="prSaveBtn">💾 Enregistrer</button>
-                            <button class="btn-contour" id="prCancelBtn" style="display:none;">Annuler</button>
-                        </div>
-                    </div>
-                    <div id="presseList" class="items-list">
-                        <div class="empty-msg">Chargement des articles...</div>
-                    </div>
-                </div>
-
-                <!-- ===== TAB: LIVE ===== -->
-                <div class="tab-content" id="tab-live">
-                    <h2>🔴 Live en cours</h2>
-                    <p style="color:var(--text-muted); margin-bottom:20px;">Configurez le live actuel. Un seul live peut être actif à la fois.</p>
-
-                    <div class="admin-form" id="liveForm">
-                        <input type="hidden" id="liveId" value="">
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Actif ?</label>
-                                <select id="liveActif">
-                                    <option value="true">✅ Oui (live en cours)</option>
-                                    <option value="false">❌ Non (pas de live)</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Plateforme</label>
-                                <select id="livePlateforme">
-                                    <option value="youtube">YouTube</option>
-                                    <option value="facebook">Facebook</option>
-                                    <option value="tiktok">TikTok</option>
-                                </select>
-                            </div>
-                            <div class="form-group full">
-                                <label>URL d'intégration du live <span class="required">*</span></label>
-                                <input type="url" id="liveEmbedURL" placeholder="https://www.youtube.com/embed/..." required>
-                            </div>
-                            <div class="form-group full">
-                                <label>Titre du live</label>
-                                <input type="text" id="liveTitre" placeholder="Live – Cérémonie 2026">
-                            </div>
-                        </div>
-                        <div class="form-actions">
-                            <button class="btn-or" id="liveSaveBtn">💾 Enregistrer</button>
-                        </div>
-                    </div>
-
-                    <div class="live-preview">
-                        <div class="live-status">
-                            <span class="live-dot" id="liveDot"></span>
-                            <strong id="liveStatusText">Inactif</strong>
-                        </div>
-                        <div id="livePreviewEmbed">
-                            <p style="color:var(--text-discret); font-size:0.85rem;">Aucun live configuré</p>
-                        </div>
-                    </div>
-                </div>
-
-            </div><!-- fin dashboard -->
-
+        <div class="form-row-3">
+          <div class="form-group">
+            <label>Date <span class="req">*</span></label>
+            <input type="date" id="evDate" required>
+          </div>
+          <div class="form-group">
+            <label>Heure</label>
+            <input type="text" id="evHeure" placeholder="10h00">
+          </div>
+          <div class="form-group">
+            <label>Catégorie</label>
+            <select id="evCategorie">
+              <option value="">— Choisir —</option>
+              <option value="séminaire">Séminaire</option>
+              <option value="conférence">Conférence</option>
+              <option value="célébration">Célébration traditionnelle</option>
+              <option value="actualité">Actualité</option>
+              <option value="événement">Autre événement</option>
+            </select>
+          </div>
         </div>
-    </main>
 
-    <!-- ============================================================
-    FIREBASE SDK + CONFIG
-    ============================================================ -->
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js">
-    </script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js">
-    </script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js">
-    </script>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Lieu</label>
+            <input type="text" id="evLieu" placeholder="Abomey-Calavi, Bénin">
+          </div>
+          <div class="form-group">
+            <label>Participation</label>
+            <input type="text" id="evParticipation" placeholder="Sur inscription / Gratuit / Payant">
+          </div>
+        </div>
 
-    <script>
-        // ============================================================
-        // CONFIGURATION FIREBASE
-        // ============================================================
-        const firebaseConfig = {
-            apiKey: "AIzaSyBkn-26DnNoQBBfiR4-rRrPfOszW24KRRc",
-            authDomain: "groupe-gbemadoyomin.firebaseapp.com",
-            projectId: "groupe-gbemadoyomin",
-            storageBucket: "groupe-gbemadoyomin.firebasestorage.app",
-            messagingSenderId: "113133757650",
-            appId: "1:113133757650:web:71a07f05cca0e78e28390b"
-        };
+        <div class="form-row">
+          <div class="form-group">
+            <label>À la une ?</label>
+            <select id="evALaUne">
+              <option value="false">Non</option>
+              <option value="true">Oui</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Archivé ?</label>
+            <select id="evArchive">
+              <option value="false">Non (à venir)</option>
+              <option value="true">Oui (passé)</option>
+            </select>
+          </div>
+        </div>
 
-        firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-        const db = firebase.firestore();
+        <div class="form-group">
+          <label>Résumé court (pour la liste)</label>
+          <textarea id="evDescription" rows="2" placeholder="Brève description affichée dans les listes"></textarea>
+        </div>
 
-        // Pour utiliser les timestamps Firestore
-        const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp;
+        <div class="form-group">
+          <label>Contenu complet <span class="req">*</span></label>
+          <textarea id="evContenu" rows="6" required placeholder="Texte complet de l'article / événement"></textarea>
+        </div>
 
-        // ============================================================
-        // ÉTAT DE L'APPLICATION
-        // ============================================================
-        let currentUser = null;
-        let currentCollection = 'evenements'; // par défaut
-        let editingId = null;
+        <!-- ----- AFFICHES (plusieurs) ----- -->
+        <div class="form-group">
+          <label>🖼️ Affiches / Images (plusieurs possibles)</label>
+          <div class="dyn-list" id="evImagesList"></div>
+          <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
+            <button type="button" class="btn-add" id="evAddImage">➕ Ajouter une image</button>
+            <a class="btn-tool" href="https://postimages.org/fr/" target="_blank" rel="noopener">📤 Ouvrir PostImage</a>
+            <a class="btn-tool" href="https://console.cloudinary.com/" target="_blank" rel="noopener">☁️ Ouvrir Cloudinary</a>
+            <a class="btn-tool" href="https://imgbb.com/" target="_blank" rel="noopener">🖼️ Ouvrir ImgBB</a>
+          </div>
+          <div class="hint">La première image servira d'affiche principale.</div>
+        </div>
 
-        // Références DOM
-        const loginSection = document.getElementById('loginSection');
-        const dashboardSection = document.getElementById('dashboardSection');
-        const userEmail = document.getElementById('userEmail');
-        const logoutBtn = document.getElementById('logoutBtn');
-        const loginForm = document.getElementById('loginForm');
-        const loginEmail = document.getElementById('loginEmail');
-        const loginPassword = document.getElementById('loginPassword');
-        const loginError = document.getElementById('loginError');
+        <!-- ----- VIDÉOS (plusieurs) ----- -->
+        <div class="form-group">
+          <label>🎬 Vidéos (plusieurs possibles)</label>
+          <div class="dyn-list" id="evVideosList"></div>
+          <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
+            <button type="button" class="btn-add" id="evAddVideo">➕ Ajouter une vidéo</button>
+            <a class="btn-tool" href="https://www.youtube.com/" target="_blank" rel="noopener">▶️ Ouvrir YouTube</a>
+            <a class="btn-tool" href="https://drive.google.com/" target="_blank" rel="noopener">📁 Ouvrir Google Drive</a>
+          </div>
+          <div class="hint">Format attendu : https://www.youtube.com/embed/ID_VIDEO</div>
+        </div>
 
-        // Tous les onglets
-        const tabBtns = document.querySelectorAll('.tab-btn');
-        const tabContents = document.querySelectorAll('.tab-content');
+        <div style="display:flex; gap:12px; margin-top:20px; flex-wrap:wrap;">
+          <button type="submit" class="btn btn-or" id="btnSaveEv">
+            <span class="btn-text">💾 Enregistrer l'événement</span>
+          </button>
+          <button type="button" class="btn btn-outline" id="btnCancelEv" style="display:none;">
+            ❌ Annuler la modification
+          </button>
+        </div>
+      </form>
+    </div>
 
-        // Références des formulaires
-        const evForm = document.getElementById('evenementForm');
-        const phForm = document.getElementById('photoForm');
-        const viForm = document.getElementById('videoForm');
-        const prForm = document.getElementById('presseForm');
-        const liveForm = document.getElementById('liveForm');
+    <div class="card">
+      <div class="card-title">📋 Événements enregistrés</div>
+      <div class="card-sub">Total : <span id="evCount">0</span></div>
+      <div class="items-list" id="evList">
+        <div class="empty-state">Chargement…</div>
+      </div>
+    </div>
+  </div>
 
-        // ============================================================
-        // AUTHENTIFICATION
-        // ============================================================
-        function showLogin() {
-            loginSection.style.display = 'block';
-            dashboardSection.style.display = 'none';
-            userEmail.textContent = 'Non connecté';
-            logoutBtn.style.display = 'none';
-        }
+  <!-- ============================================================
+       TAB PHOTOS
+       ============================================================ -->
+  <div class="tab-pane" id="pane-photos">
+    <div class="alert alert-info">
+      <span>💡</span>
+      <span><strong>Astuce :</strong> Hébergez vos photos sur PostImage / Cloudinary / ImgBB puis collez le lien direct.</span>
+    </div>
 
-        function showDashboard(user) {
-            loginSection.style.display = 'none';
-            dashboardSection.style.display = 'block';
-            userEmail.textContent = user.email;
-            logoutBtn.style.display = 'inline-flex';
-            currentUser = user;
-            chargerCollection('evenements');
-        }
+    <div class="card">
+      <div class="card-title">➕ Ajouter / modifier une photo</div>
+      <form id="formPhoto" autocomplete="off">
+        <input type="hidden" id="phId" value="">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Titre <span class="req">*</span></label>
+            <input type="text" id="phTitre" required placeholder="Ex: Cérémonie 2025">
+          </div>
+          <div class="form-group">
+            <label>Catégorie</label>
+            <select id="phCategorie">
+              <option value="galerie">Galerie</option>
+              <option value="portfolio">Portfolio</option>
+              <option value="evenement">Événement</option>
+              <option value="formation">Formation</option>
+              <option value="cérémonie">Cérémonie</option>
+            </select>
+          </div>
+        </div>
 
-        // Connexion
-        loginForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            loginError.textContent = '';
-            const email = loginEmail.value.trim();
-            const password = loginPassword.value.trim();
-            if (!email || !password) {
-                loginError.textContent = 'Veuillez remplir tous les champs.';
-                return;
-            }
-            try {
-                const cred = await auth.signInWithEmailAndPassword(email, password);
-                showDashboard(cred.user);
-            } catch (err) {
-                loginError.textContent = 'Erreur : ' + err.message;
-            }
-        });
+        <div class="form-group">
+          <label>URL de l'image <span class="req">*</span></label>
+          <div class="url-row">
+            <input type="url" id="phUrl" required placeholder="https://i.postimg.cc/... ou Cloudinary">
+            <div class="url-tools">
+              <a class="btn-tool" href="https://postimages.org/fr/" target="_blank" rel="noopener">PostImage</a>
+              <a class="btn-tool" href="https://console.cloudinary.com/" target="_blank" rel="noopener">Cloudinary</a>
+              <a class="btn-tool" href="https://imgbb.com/" target="_blank" rel="noopener">ImgBB</a>
+            </div>
+          </div>
+        </div>
 
-        // Déconnexion
-        logoutBtn.addEventListener('click', async () => {
-            await auth.signOut();
-            showLogin();
-        });
+        <div style="display:flex; gap:12px; margin-top:16px; flex-wrap:wrap;">
+          <button type="submit" class="btn btn-or" id="btnSavePh">
+            <span class="btn-text">💾 Enregistrer la photo</span>
+          </button>
+          <button type="button" class="btn btn-outline" id="btnCancelPh" style="display:none;">❌ Annuler</button>
+        </div>
+      </form>
+    </div>
 
-        // Écouteur d'état d'authentification
-        auth.onAuthStateChanged((user) => {
-            if (user) {
-                showDashboard(user);
-            } else {
-                showLogin();
-            }
-        });
+    <div class="card">
+      <div class="card-title">📋 Photos enregistrées</div>
+      <div class="card-sub">Total : <span id="phCount">0</span></div>
+      <div class="items-list" id="phList">
+        <div class="empty-state">Chargement…</div>
+      </div>
+    </div>
+  </div>
 
-        // ============================================================
-        // NAVIGATION PAR ONGLETS
-        // ============================================================
-        tabBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                tabBtns.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                const tabName = btn.dataset.tab;
-                tabContents.forEach(tc => tc.classList.remove('active'));
-                document.getElementById('tab-' + tabName).classList.add('active');
-                currentCollection = tabName;
-                // Charger les données de la collection
-                switch (tabName) {
-                    case 'evenements':
-                        chargerCollection('evenements');
-                        break;
-                    case 'photos':
-                        chargerCollection('medias_photos');
-                        break;
-                    case 'videos':
-                        chargerCollection('medias_videos');
-                        break;
-                    case 'presse':
-                        chargerCollection('presse');
-                        break;
-                    case 'live':
-                        chargerLive();
-                        break;
-                }
-            });
-        });
+  <!-- ============================================================
+       TAB VIDÉOS
+       ============================================================ -->
+  <div class="tab-pane" id="pane-videos">
+    <div class="alert alert-info">
+      <span>💡</span>
+      <span><strong>Format :</strong> collez le lien d'intégration YouTube (<code>https://www.youtube.com/embed/ID</code>) ou Google Drive.</span>
+    </div>
 
-        // ============================================================
-        // FONCTIONS UTILITAIRES
-        // ============================================================
-        function formaterDate(date) {
-            if (!date) return '';
-            const d = new Date(date);
-            return d.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
-        }
+    <div class="card">
+      <div class="card-title">➕ Ajouter / modifier une vidéo</div>
+      <form id="formVideo" autocomplete="off">
+        <input type="hidden" id="viId" value="">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Titre <span class="req">*</span></label>
+            <input type="text" id="viTitre" required placeholder="Ex: Intervention du Professeur">
+          </div>
+          <div class="form-group">
+            <label>Catégorie</label>
+            <select id="viCategorie">
+              <option value="intervention">Intervention</option>
+              <option value="cérémonie">Cérémonie</option>
+              <option value="documentaire">Documentaire</option>
+              <option value="formation">Formation</option>
+              <option value="reportage">Reportage</option>
+            </select>
+          </div>
+        </div>
 
-        function formatDateInput(date) {
-            if (!date) return '';
-            if (date instanceof Date) {
-                return date.toISOString().slice(0, 10);
-            }
-            if (typeof date === 'string' && date.includes('-')) {
-                return date.slice(0, 10);
-            }
-            return '';
-        }
+        <div class="form-group">
+          <label>URL d'intégration <span class="req">*</span></label>
+          <div class="url-row">
+            <input type="url" id="viUrl" required placeholder="https://www.youtube.com/embed/ID">
+            <div class="url-tools">
+              <a class="btn-tool" href="https://www.youtube.com/" target="_blank" rel="noopener">YouTube</a>
+              <a class="btn-tool" href="https://drive.google.com/" target="_blank" rel="noopener">Drive</a>
+            </div>
+          </div>
+          <div class="hint">Pour YouTube, remplacez "watch?v=" par "embed/".</div>
+        </div>
 
-        function cloudinaryUrl(url, width = 400) {
-            if (!url) return '';
-            const cloudName = 'bvcdjwg7';
-            return `https://res.cloudinary.com/${cloudName}/image/fetch/w_${width},f_auto/${encodeURIComponent(url)}`;
-        }
+        <div class="form-group">
+          <label>Vignette (image miniature)</label>
+          <div class="url-row">
+            <input type="url" id="viVignetteURL" placeholder="https://i.postimg.cc/... (optionnel)">
+            <div class="url-tools">
+              <a class="btn-tool" href="https://postimages.org/fr/" target="_blank" rel="noopener">PostImage</a>
+              <a class="btn-tool" href="https://imgbb.com/" target="_blank" rel="noopener">ImgBB</a>
+            </div>
+          </div>
+        </div>
 
-        function getCollectionName(tab) {
-            const map = {
-                'evenements': 'evenements',
-                'photos': 'medias_photos',
-                'videos': 'medias_videos',
-                'presse': 'presse',
-                'live': 'live'
-            };
-            return map[tab] || tab;
-        }
+        <div style="display:flex; gap:12px; margin-top:16px; flex-wrap:wrap;">
+          <button type="submit" class="btn btn-or" id="btnSaveVi">
+            <span class="btn-text">💾 Enregistrer la vidéo</span>
+          </button>
+          <button type="button" class="btn btn-outline" id="btnCancelVi" style="display:none;">❌ Annuler</button>
+        </div>
+      </form>
+    </div>
 
-        // ============================================================
-        // CHARGER UNE COLLECTION (LISTE)
-        // ============================================================
-        async function chargerCollection(collectionKey) {
-            const collectionName = getCollectionName(collectionKey);
-            const listId = collectionKey + 'List';
-            const listEl = document.getElementById(listId);
-            if (!listEl) return;
-            listEl.innerHTML = '<div class="empty-msg">Chargement...</div>';
+    <div class="card">
+      <div class="card-title">📋 Vidéos enregistrées</div>
+      <div class="card-sub">Total : <span id="viCount">0</span></div>
+      <div class="items-list" id="viList">
+        <div class="empty-state">Chargement…</div>
+      </div>
+    </div>
+  </div>
 
-            try {
-                const snapshot = await db.collection(collectionName).orderBy('dateAjout', 'desc').get();
-                if (snapshot.empty) {
-                    listEl.innerHTML = '<div class="empty-msg">Aucun élément trouvé.</div>';
-                    return;
-                }
+  <!-- ============================================================
+       TAB PRESSE
+       ============================================================ -->
+  <div class="tab-pane" id="pane-presse">
+    <div class="card">
+      <div class="card-title">➕ Ajouter / modifier un article de presse</div>
+      <form id="formPresse" autocomplete="off">
+        <input type="hidden" id="prId" value="">
+        <div class="form-group">
+          <label>Titre <span class="req">*</span></label>
+          <input type="text" id="prTitre" required placeholder="Titre de l'article">
+        </div>
+        <div class="form-group">
+          <label>Résumé</label>
+          <textarea id="prDescription" rows="2" placeholder="Extrait de l'article"></textarea>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>URL de l'article <span class="req">*</span></label>
+            <input type="url" id="prUrl" required placeholder="https://site-presse.com/article">
+          </div>
+          <div class="form-group">
+            <label>Date de publication</label>
+            <input type="date" id="prDate">
+          </div>
+        </div>
+        <div style="display:flex; gap:12px; margin-top:16px; flex-wrap:wrap;">
+          <button type="submit" class="btn btn-or" id="btnSavePr">
+            <span class="btn-text">💾 Enregistrer l'article</span>
+          </button>
+          <button type="button" class="btn btn-outline" id="btnCancelPr" style="display:none;">❌ Annuler</button>
+        </div>
+      </form>
+    </div>
 
-                let html = '';
-                snapshot.forEach(doc => {
-                    const data = doc.data();
-                    const id = doc.id;
-                    html += `
-                            <div class="item-card" data-id="${id}">
-                                <div class="item-info">
-                                    <div class="item-title">${data.titre || 'Sans titre'}</div>
-                                    <div class="item-meta">
-                                        ${data.date ? formaterDate(data.date) : ''}
-                                        ${data.lieu ? ' • ' + data.lieu : ''}
-                                        ${data.categorie ? ' • ' + data.categorie : ''}
-                                    </div>
-                                </div>
-                                <div class="item-actions">
-                                    <button class="btn-contour btn-sm edit-btn" data-collection="${collectionKey}" data-id="${id}">✏️ Modifier</button>
-                                    <button class="btn-contour btn-danger btn-sm delete-btn" data-collection="${collectionKey}" data-id="${id}">🗑️ Supprimer</button>
-                                </div>
-                            </div>
-                        `;
-                });
-                listEl.innerHTML = html;
+    <div class="card">
+      <div class="card-title">📋 Articles enregistrés</div>
+      <div class="card-sub">Total : <span id="prCount">0</span></div>
+      <div class="items-list" id="prList">
+        <div class="empty-state">Chargement…</div>
+      </div>
+    </div>
+  </div>
 
-                // Événements des boutons d'édition et suppression
-                listEl.querySelectorAll('.edit-btn').forEach(btn => {
-                    btn.addEventListener('click', () => {
-                        const id = btn.dataset.id;
-                        const col = btn.dataset.collection;
-                        editerDocument(col, id);
-                    });
-                });
-                listEl.querySelectorAll('.delete-btn').forEach(btn => {
-                    btn.addEventListener('click', () => {
-                        const id = btn.dataset.id;
-                        const col = btn.dataset.collection;
-                        supprimerDocument(col, id);
-                    });
-                });
+  <!-- ============================================================
+       TAB LIVE
+       ============================================================ -->
+  <div class="tab-pane" id="pane-live">
+    <div class="alert alert-warn">
+      <span>⚠️</span>
+      <span>Un <strong>seul live</strong> peut être actif à la fois. Désactivez-le quand le direct est terminé.</span>
+    </div>
 
-            } catch (err) {
-                listEl.innerHTML = `<div class="empty-msg">Erreur : ${err.message}</div>`;
-            }
-        }
+    <div class="card">
+      <div class="card-title">🔴 Gestion du live</div>
+      <div class="card-sub">Configurez le live en cours. Il apparaîtra automatiquement sur l'accueil, les événements, médias, etc.</div>
 
-        // ============================================================
-        // ÉDITER UN DOCUMENT (remplit le formulaire)
-        // ============================================================
-        async function editerDocument(collectionKey, docId) {
-            const collectionName = getCollectionName(collectionKey);
-            try {
-                const doc = await db.collection(collectionName).doc(docId).get();
-                if (!doc.exists) return;
-                const data = doc.data();
+      <div class="live-status-box">
+        <span class="live-dot" id="liveDot"></span>
+        <span class="live-status-text" id="liveStatusText">Aucun live configuré</span>
+      </div>
 
-                // Déterminer quel formulaire remplir
-                const formMap = {
-                    'evenements': { form: evForm, idField: 'evenementId', prefix: 'ev' },
-                    'medias_photos': { form: phForm, idField: 'photoId', prefix: 'ph' },
-                    'medias_videos': { form: viForm, idField: 'videoId', prefix: 'vi' },
-                    'presse': { form: prForm, idField: 'presseId', prefix: 'pr' },
-                };
+      <form id="formLive" autocomplete="off">
+        <input type="hidden" id="liId" value="">
 
-                const config = formMap[collectionName];
-                if (!config) return;
+        <div class="form-row">
+          <div class="form-group">
+            <label>État du live</label>
+            <select id="liActif">
+              <option value="false">❌ Inactif (aucun live)</option>
+              <option value="true">✅ Actif (live en cours)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Plateforme</label>
+            <select id="liPlateforme">
+              <option value="youtube">YouTube</option>
+              <option value="facebook">Facebook</option>
+              <option value="tiktok">TikTok</option>
+            </select>
+          </div>
+        </div>
 
-                const form = config.form;
-                const idField = document.getElementById(config.idField);
-                idField.value = docId;
+        <div class="form-group">
+          <label>Titre du live</label>
+          <input type="text" id="liTitre" placeholder="Ex: Live – Cérémonie 2026">
+        </div>
 
-                // Remplir les champs
-                const prefix = config.prefix;
-                const fields = {
-                    [`${prefix}Titre`]: data.titre || '',
-                    [`${prefix}Slug`]: data.slug || '',
-                    [`${prefix}Date`]: formatDateInput(data.date),
-                    [`${prefix}Heure`]: data.heure || '',
-                    [`${prefix}Lieu`]: data.lieu || '',
-                    [`${prefix}Participation`]: data.participation || '',
-                    [`${prefix}Categorie`]: data.categorie || '',
-                    [`${prefix}Description`]: data.description || '',
-                    [`${prefix}Contenu`]: data.contenu || '',
-                    [`${prefix}AfficheURL`]: data.afficheURL || '',
-                    [`${prefix}VideoURL`]: data.videoURL || '',
-                    [`${prefix}Url`]: data.url || '',
-                    [`${prefix}VignetteURL`]: data.vignetteURL || '',
-                };
+        <div class="form-group">
+          <label>URL d'intégration du live <span class="req">*</span></label>
+          <div class="url-row">
+            <input type="url" id="liEmbedURL" placeholder="https://www.youtube.com/embed/ID_LIVE" required>
+            <div class="url-tools">
+              <a class="btn-tool" href="https://www.youtube.com/" target="_blank" rel="noopener">YouTube</a>
+              <a class="btn-tool" href="https://www.facebook.com/" target="_blank" rel="noopener">Facebook</a>
+            </div>
+          </div>
+          <div class="hint">
+            YouTube : <code>https://www.youtube.com/embed/ID</code><br>
+            Facebook : <code>https://www.facebook.com/plugins/video.php?href=URL_VIDEO</code>
+          </div>
+        </div>
 
-                // Pour les select
-                if (document.getElementById(`${prefix}ALaUne`)) {
-                    document.getElementById(`${prefix}ALaUne`).value = data.aLaUne ? 'true' : 'false';
-                }
-                if (document.getElementById(`${prefix}Archive`)) {
-                    document.getElementById(`${prefix}Archive`).value = data.archive ? 'true' : 'false';
-                }
+        <div style="display:flex; gap:12px; margin-top:20px; flex-wrap:wrap;">
+          <button type="submit" class="btn btn-or" id="btnSaveLive">
+            <span class="btn-text">💾 Enregistrer le live</span>
+          </button>
+          <button type="button" class="btn btn-outline btn-danger" id="btnDeleteLive" style="display:none;">
+            🗑️ Supprimer le live
+          </button>
+        </div>
+      </form>
 
-                // Pour la presse
-                if (document.getElementById(`${prefix}Date`)) {
-                    document.getElementById(`${prefix}Date`).value = formatDateInput(data.datePublication);
-                }
+      <div id="livePreview" style="display:none; margin-top:20px;">
+        <label style="display:block; margin-bottom:8px; font-size:0.78rem; color:var(--text-muted); text-transform:uppercase;">Prévisualisation</label>
+        <div style="aspect-ratio:16/9; background:var(--noir); border:1px solid var(--border); border-radius:4px; overflow:hidden;">
+          <iframe id="liveFrame" style="width:100%; height:100%; border:none;" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
 
-                // Remplir les inputs texte
-                Object.keys(fields).forEach(key => {
-                    const el = document.getElementById(key);
-                    if (el) el.value = fields[key] || '';
-                });
+</div>
 
-                // Changer le titre du formulaire
-                const titleEl = form.querySelector('h3');
-                if (titleEl) {
-                    titleEl.textContent = '✏️ Modifier ' + (data.titre || 'l\'élément');
-                }
+<!-- ============================================================
+     TOASTS
+     ============================================================ -->
+<div class="toast-container" id="toastContainer"></div>
 
-                // Afficher le bouton Annuler
-                const cancelBtn = form.querySelector('[id$="CancelBtn"]');
-                if (cancelBtn) cancelBtn.style.display = 'inline-flex';
+<!-- ============================================================
+     SCRIPTS FIREBASE
+     ============================================================ -->
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 
-                // Changer le texte du bouton Enregistrer
-                const saveBtn = form.querySelector('[id$="SaveBtn"]');
-                if (saveBtn) saveBtn.textContent = '💾 Mettre à jour';
+<script>
+// ============================================================
+// CONFIG FIREBASE
+// ============================================================
+const firebaseConfig = {
+  apiKey: "AIzaSyBkn-26DnNoQBBfiR4-rRrPfOszW24KRRc",
+  authDomain: "groupe-gbemadoyomin.firebaseapp.com",
+  projectId: "groupe-gbemadoyomin",
+  storageBucket: "groupe-gbemadoyomin.firebasestorage.app",
+  messagingSenderId: "113133757650",
+  appId: "1:113133757650:web:71a07f05cca0e78e28390b"
+};
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.firestore();
 
-                // Stocker l'état d'édition
-                editingId = docId;
+// ============================================================
+// HELPERS — TOASTS
+// ============================================================
+function toast(type, title, msg) {
+  const icons = { success: '✅', error: '❌', info: 'ℹ️', warning: '⚠️' };
+  const container = document.getElementById('toastContainer');
+  const el = document.createElement('div');
+  el.className = 'toast ' + type;
+  el.innerHTML = `
+    <span class="toast-icon">${icons[type] || 'ℹ️'}</span>
+    <div class="toast-content">
+      <div class="toast-title">${title}</div>
+      ${msg ? `<div class="toast-msg">${msg}</div>` : ''}
+    </div>`;
+  container.appendChild(el);
+  setTimeout(() => {
+    el.style.transition = 'all 0.4s ease';
+    el.style.opacity = '0';
+    el.style.transform = 'translateX(100%)';
+    setTimeout(() => el.remove(), 400);
+  }, 4500);
+}
 
-                // Scroller vers le formulaire
-                form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+// ============================================================
+// HELPERS — LOADING BUTTON
+// ============================================================
+function setLoading(btn, isLoading, textLoading = 'Enregistrement…') {
+  if (!btn) return;
+  const textEl = btn.querySelector('.btn-text');
+  if (isLoading) {
+    btn.disabled = true;
+    btn.dataset.originalText = textEl ? textEl.textContent : btn.textContent;
+    if (textEl) textEl.innerHTML = `<span class="spinner"></span> ${textLoading}`;
+    else btn.innerHTML = `<span class="spinner"></span> ${textLoading}`;
+  } else {
+    btn.disabled = false;
+    if (textEl) textEl.textContent = btn.dataset.originalText || 'Enregistrer';
+    else btn.textContent = btn.dataset.originalText || 'Enregistrer';
+  }
+}
 
-            } catch (err) {
-                alert('Erreur lors du chargement : ' + err.message);
-            }
-        }
+// ============================================================
+// HELPERS — DATE
+// ============================================================
+function formatDateInput(d) {
+  if (!d) return '';
+  if (typeof d === 'string') return d.slice(0, 10);
+  return '';
+}
+function formatDateReadable(d) {
+  if (!d) return '';
+  const dt = new Date(d + 'T00:00:00');
+  return dt.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short', year: 'numeric' });
+}
 
-        // ============================================================
-        // SUPPRIMER UN DOCUMENT
-        // ============================================================
-        async function supprimerDocument(collectionKey, docId) {
-            if (!confirm('Voulez-vous vraiment supprimer cet élément ? Cette action est irréversible.')) return;
-            const collectionName = getCollectionName(collectionKey);
-            try {
-                await db.collection(collectionName).doc(docId).delete();
-                alert('Élément supprimé avec succès.');
-                // Recharger la liste
-                chargerCollection(collectionKey);
-                // Si le formulaire est en mode édition, on réinitialise
-                if (editingId === docId) {
-                    resetForm(collectionKey);
-                }
-            } catch (err) {
-                alert('Erreur : ' + err.message);
-            }
-        }
+// ============================================================
+// AUTH
+// ============================================================
+const loginWrap = document.getElementById('loginWrap');
+const dashboard = document.getElementById('dashboard');
+const adminUser = document.getElementById('adminUser');
+const userEmailDisplay = document.getElementById('userEmailDisplay');
 
-        // ============================================================
-        // RÉINITIALISER UN FORMULAIRE
-        // ============================================================
-        function resetForm(collectionKey) {
-            const formMap = {
-                'evenements': { form: evForm, idField: 'evenementId', prefix: 'ev' },
-                'medias_photos': { form: phForm, idField: 'photoId', prefix: 'ph' },
-                'medias_videos': { form: viForm, idField: 'videoId', prefix: 'vi' },
-                'presse': { form: prForm, idField: 'presseId', prefix: 'pr' },
-            };
-            const config = formMap[collectionKey] || formMap['evenements'];
-            const form = config.form;
-            const idField = document.getElementById(config.idField);
-            idField.value = '';
-            editingId = null;
+document.getElementById('loginForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = document.getElementById('btnLogin');
+  const email = document.getElementById('loginEmail').value.trim();
+  const password = document.getElementById('loginPassword').value;
+  if (!email || !password) { toast('warning', 'Champs manquants', 'Remplissez tous les champs.'); return; }
+  setLoading(btn, true, 'Connexion…');
+  try {
+    await auth.signInWithEmailAndPassword(email, password);
+    toast('success', 'Connexion réussie', 'Bienvenue !');
+  } catch (err) {
+    toast('error', 'Connexion échouée', err.message);
+  } finally {
+    setLoading(btn, false);
+  }
+});
 
-            // Vider les champs
-            const inputs = form.querySelectorAll('input, textarea, select');
-            inputs.forEach(el => {
-                if (el.type === 'select-one') {
-                    // Garder la première option par défaut
-                } else if (el.type === 'date') {
-                    el.value = '';
-                } else if (el.type === 'checkbox') {
-                    el.checked = false;
-                } else if (el.tagName === 'SELECT') {
-                    el.selectedIndex = 0;
-                } else {
-                    el.value = '';
-                }
-            });
+document.getElementById('btnLogout').addEventListener('click', async () => {
+  await auth.signOut();
+  toast('info', 'Déconnecté', 'À bientôt !');
+});
 
-            // Réinitialiser les select spécifiques
-            if (document.getElementById('evALaUne')) document.getElementById('evALaUne').value = 'false';
-            if (document.getElementById('evArchive')) document.getElementById('evArchive').value = 'false';
+auth.onAuthStateChanged((user) => {
+  if (user) {
+    loginWrap.style.display = 'none';
+    dashboard.style.display = 'block';
+    adminUser.style.display = 'flex';
+    userEmailDisplay.textContent = user.email;
+    loadAll();
+  } else {
+    loginWrap.style.display = 'flex';
+    dashboard.style.display = 'none';
+    adminUser.style.display = 'none';
+  }
+});
 
-            const titleEl = form.querySelector('h3');
-            if (titleEl) {
-                const map = {
-                    'evenements': '➕ Ajouter un événement',
-                    'medias_photos': '➕ Ajouter une photo',
-                    'medias_videos': '➕ Ajouter une vidéo',
-                    'presse': '➕ Ajouter un article de presse',
-                };
-                titleEl.textContent = map[collectionKey] || '➕ Ajouter';
-            }
+// ============================================================
+// TABS
+// ============================================================
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('pane-' + btn.dataset.tab).classList.add('active');
+  });
+});
 
-            const cancelBtn = form.querySelector('[id$="CancelBtn"]');
-            if (cancelBtn) cancelBtn.style.display = 'none';
+// ============================================================
+// DYNAMIC LISTS (images/videos)
+// ============================================================
+function addImageRow(container, value = '') {
+  const row = document.createElement('div');
+  row.className = 'url-row';
+  row.innerHTML = `
+    <input type="url" class="img-input" placeholder="https://i.postimg.cc/..." value="${value}">
+    <button type="button" class="btn-remove" title="Supprimer">✕</button>`;
+  row.querySelector('.btn-remove').addEventListener('click', () => row.remove());
+  container.appendChild(row);
+}
 
-            const saveBtn = form.querySelector('[id$="SaveBtn"]');
-            if (saveBtn) saveBtn.textContent = '💾 Enregistrer';
-        }
+function addVideoRow(container, value = '') {
+  const row = document.createElement('div');
+  row.className = 'url-row';
+  row.innerHTML = `
+    <input type="url" class="vid-input" placeholder="https://www.youtube.com/embed/..." value="${value}">
+    <button type="button" class="btn-remove" title="Supprimer">✕</button>`;
+  row.querySelector('.btn-remove').addEventListener('click', () => row.remove());
+  container.appendChild(row);
+}
 
-        // Boutons Annuler
-        document.querySelectorAll('[id$="CancelBtn"]').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const collectionKey = btn.id.replace('CancelBtn', '');
-                // Trouver l'onglet actif
-                let col = 'evenements';
-                if (btn.id.includes('ph')) col = 'medias_photos';
-                else if (btn.id.includes('vi')) col = 'medias_videos';
-                else if (btn.id.includes('pr')) col = 'presse';
-                else col = 'evenements';
-                resetForm(col);
-                chargerCollection(col);
-            });
-        });
+document.getElementById('evAddImage').addEventListener('click', () => addImageRow(document.getElementById('evImagesList')));
+document.getElementById('evAddVideo').addEventListener('click', () => addVideoRow(document.getElementById('evVideosList')));
 
-        // ============================================================
-        // ENREGISTRER UN DOCUMENT (AJOUT / MODIFICATION)
-        // ============================================================
-        async function saveDocument(collectionKey, data, docId) {
-            const collectionName = getCollectionName(collectionKey);
-            try {
-                if (docId) {
-                    // Mise à jour
-                    await db.collection(collectionName).doc(docId).update(data);
-                    alert('Élément mis à jour avec succès.');
-                } else {
-                    // Ajout
-                    data.dateAjout = firebase.firestore.FieldValue.serverTimestamp();
-                    await db.collection(collectionName).add(data);
-                    alert('Élément ajouté avec succès.');
-                }
-                // Recharger la liste et réinitialiser le formulaire
-                chargerCollection(collectionKey);
-                resetForm(collectionKey);
-            } catch (err) {
-                alert('Erreur : ' + err.message);
-            }
-        }
+function getImages(containerId) {
+  return Array.from(document.querySelectorAll(`#${containerId} .img-input`))
+    .map(i => i.value.trim()).filter(Boolean);
+}
+function getVideos(containerId) {
+  return Array.from(document.querySelectorAll(`#${containerId} .vid-input`))
+    .map(i => i.value.trim()).filter(Boolean);
+}
+function clearImages(containerId) { document.getElementById(containerId).innerHTML = ''; }
+function clearVideos(containerId) { document.getElementById(containerId).innerHTML = ''; }
 
-        // ============================================================
-        // FORMULAIRE ÉVÉNEMENTS
-        // ============================================================
-        evForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const id = document.getElementById('evenementId').value;
-            const data = {
-                titre: document.getElementById('evTitre').value.trim(),
-                slug: document.getElementById('evSlug').value.trim(),
-                date: document.getElementById('evDate').value,
-                heure: document.getElementById('evHeure').value.trim(),
-                lieu: document.getElementById('evLieu').value.trim(),
-                participation: document.getElementById('evParticipation').value.trim(),
-                categorie: document.getElementById('evCategorie').value.trim(),
-                description: document.getElementById('evDescription').value.trim(),
-                contenu: document.getElementById('evContenu').value.trim(),
-                afficheURL: document.getElementById('evAfficheURL').value.trim(),
-                videoURL: document.getElementById('evVideoURL').value.trim(),
-                aLaUne: document.getElementById('evALaUne').value === 'true',
-                archive: document.getElementById('evArchive').value === 'true',
-            };
-            if (!data.titre || !data.slug || !data.date || !data.contenu) {
-                alert('Veuillez remplir les champs obligatoires : Titre, Slug, Date, Contenu.');
-                return;
-            }
-            await saveDocument('evenements', data, id || null);
-        });
+// ============================================================
+// LOAD ALL
+// ============================================================
+function loadAll() {
+  loadEvenements();
+  loadPhotos();
+  loadVideos();
+  loadPresse();
+  loadLive();
+}
 
-        // ============================================================
-        // FORMULAIRE PHOTOS
-        // ============================================================
-        phForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const id = document.getElementById('photoId').value;
-            const data = {
-                titre: document.getElementById('phTitre').value.trim(),
-                categorie: document.getElementById('phCategorie').value.trim(),
-                url: document.getElementById('phUrl').value.trim(),
-            };
-            if (!data.titre || !data.url) {
-                alert('Veuillez remplir les champs obligatoires : Titre et URL.');
-                return;
-            }
-            await saveDocument('medias_photos', data, id || null);
-        });
+// ============================================================
+// ÉVÉNEMENTS
+// ============================================================
+async function loadEvenements() {
+  const list = document.getElementById('evList');
+  list.innerHTML = '<div class="empty-state">Chargement…</div>';
+  try {
+    const snap = await db.collection('evenements').orderBy('date', 'desc').get();
+    document.getElementById('evCount').textContent = snap.size;
+    if (snap.empty) {
+      list.innerHTML = '<div class="empty-state">Aucun événement pour le moment.</div>';
+      return;
+    }
+    list.innerHTML = '';
+    snap.forEach(doc => {
+      const d = doc.data();
+      const affiche = (d.images && d.images[0]) || d.afficheURL || '';
+      const thumb = affiche ? `style="background-image:url('${affiche}')"` : '';
+      const row = document.createElement('div');
+      row.className = 'item-row';
+      row.innerHTML = `
+        <div class="item-thumb" ${thumb}></div>
+        <div class="item-info">
+          <div class="item-title">${d.titre || 'Sans titre'}</div>
+          <div class="item-meta">
+            ${d.date ? formatDateReadable(d.date) : ''}
+            ${d.lieu ? ' • ' + d.lieu : ''}
+            ${d.categorie ? ' • ' + d.categorie : ''}
+            ${d.archive ? ' • <span style="color:#f59e0b;">Archivé</span>' : ''}
+          </div>
+        </div>
+        <div class="item-actions">
+          <a class="btn btn-outline btn-sm" href="article.html?slug=${encodeURIComponent(d.slug || doc.id)}" target="_blank">👁 Voir</a>
+          <button class="btn btn-outline btn-sm" data-edit="${doc.id}">✏️ Modifier</button>
+          <button class="btn btn-outline btn-danger btn-sm" data-del="${doc.id}">🗑️</button>
+        </div>`;
+      row.querySelector('[data-edit]').addEventListener('click', () => editEvenement(doc.id));
+      row.querySelector('[data-del]').addEventListener('click', () => deleteEvenement(doc.id));
+      list.appendChild(row);
+    });
+  } catch (err) {
+    list.innerHTML = `<div class="empty-state">Erreur : ${err.message}</div>`;
+  }
+}
 
-        // ============================================================
-        // FORMULAIRE VIDÉOS
-        // ============================================================
-        viForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const id = document.getElementById('videoId').value;
-            const data = {
-                titre: document.getElementById('viTitre').value.trim(),
-                categorie: document.getElementById('viCategorie').value.trim(),
-                url: document.getElementById('viUrl').value.trim(),
-                vignetteURL: document.getElementById('viVignetteURL').value.trim(),
-            };
-            if (!data.titre || !data.url) {
-                alert('Veuillez remplir les champs obligatoires : Titre et URL.');
-                return;
-            }
-            await saveDocument('medias_videos', data, id || null);
-        });
+async function editEvenement(id) {
+  try {
+    const doc = await db.collection('evenements').doc(id).get();
+    if (!doc.exists) { toast('error', 'Introuvable'); return; }
+    const d = doc.data();
+    document.getElementById('evId').value = id;
+    document.getElementById('evTitre').value = d.titre || '';
+    document.getElementById('evSlug').value = d.slug || '';
+    document.getElementById('evDate').value = formatDateInput(d.date);
+    document.getElementById('evHeure').value = d.heure || '';
+    document.getElementById('evCategorie').value = d.categorie || '';
+    document.getElementById('evLieu').value = d.lieu || '';
+    document.getElementById('evParticipation').value = d.participation || '';
+    document.getElementById('evALaUne').value = d.aLaUne ? 'true' : 'false';
+    document.getElementById('evArchive').value = d.archive ? 'true' : 'false';
+    document.getElementById('evDescription').value = d.description || '';
+    document.getElementById('evContenu').value = d.contenu || '';
 
-        // ============================================================
-        // FORMULAIRE PRESSE
-        // ============================================================
-        prForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const id = document.getElementById('presseId').value;
-            const data = {
-                titre: document.getElementById('prTitre').value.trim(),
-                description: document.getElementById('prDescription').value.trim(),
-                url: document.getElementById('prUrl').value.trim(),
-                datePublication: document.getElementById('prDate').value,
-            };
-            if (!data.titre || !data.url) {
-                alert('Veuillez remplir les champs obligatoires : Titre et URL.');
-                return;
-            }
-            await saveDocument('presse', data, id || null);
-        });
+    clearImages('evImagesList');
+    const imgs = d.images && d.images.length ? d.images : (d.afficheURL ? [d.afficheURL] : []);
+    if (imgs.length === 0) addImageRow(document.getElementById('evImagesList'));
+    else imgs.forEach(u => addImageRow(document.getElementById('evImagesList'), u));
 
-        // ============================================================
-        // FORMULAIRE LIVE
-        // ============================================================
-        liveForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const id = document.getElementById('liveId').value;
-            const data = {
-                actif: document.getElementById('liveActif').value === 'true',
-                plateforme: document.getElementById('livePlateforme').value,
-                embedURL: document.getElementById('liveEmbedURL').value.trim(),
-                titre: document.getElementById('liveTitre').value.trim(),
-            };
-            if (!data.embedURL) {
-                alert('Veuillez renseigner l\'URL d\'intégration du live.');
-                return;
-            }
-            try {
-                const collectionName = 'live';
-                if (id) {
-                    await db.collection(collectionName).doc(id).update(data);
-                    alert('Live mis à jour.');
-                } else {
-                    // Vérifier s'il existe déjà un document
-                    const snap = await db.collection(collectionName).get();
-                    if (!snap.empty) {
-                        // Mettre à jour le premier document
-                        const doc = snap.docs[0];
-                        await db.collection(collectionName).doc(doc.id).update(data);
-                        alert('Live mis à jour.');
-                    } else {
-                        await db.collection(collectionName).add(data);
-                        alert('Live ajouté.');
-                    }
-                }
-                chargerLive();
-            } catch (err) {
-                alert('Erreur : ' + err.message);
-            }
-        });
+    clearVideos('evVideosList');
+    const vids = d.videos && d.videos.length ? d.videos : (d.videoURL ? [d.videoURL] : []);
+    if (vids.length === 0) addVideoRow(document.getElementById('evVideosList'));
+    else vids.forEach(u => addVideoRow(document.getElementById('evVideosList'), u));
 
-        // ============================================================
-        // CHARGER LE LIVE
-        // ============================================================
-        async function chargerLive() {
-            try {
-                const snap = await db.collection('live').get();
-                const listEl = document.getElementById('liveForm');
-                const idField = document.getElementById('liveId');
-                const dot = document.getElementById('liveDot');
-                const statusText = document.getElementById('liveStatusText');
-                const previewEmbed = document.getElementById('livePreviewEmbed');
+    document.getElementById('btnCancelEv').style.display = 'inline-flex';
+    document.getElementById('btnSaveEv').querySelector('.btn-text').textContent = '💾 Mettre à jour';
+    document.getElementById('formEvenement').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    toast('info', 'Mode modification', 'Modifiez puis enregistrez.');
+  } catch (err) {
+    toast('error', 'Erreur', err.message);
+  }
+}
 
-                if (snap.empty) {
-                    // Pas de live configuré
-                    idField.value = '';
-                    document.getElementById('liveActif').value = 'false';
-                    document.getElementById('livePlateforme').value = 'youtube';
-                    document.getElementById('liveEmbedURL').value = '';
-                    document.getElementById('liveTitre').value = '';
-                    dot.className = 'live-dot inactive';
-                    statusText.textContent = 'Inactif';
-                    previewEmbed.innerHTML = '<p style="color:var(--text-discret); font-size:0.85rem;">Aucun live configuré</p>';
-                    return;
-                }
+async function deleteEvenement(id) {
+  if (!confirm('Confirmer la suppression de cet événement ?')) return;
+  try {
+    await db.collection('evenements').doc(id).delete();
+    toast('success', 'Événement supprimé');
+    loadEvenements();
+  } catch (err) {
+    toast('error', 'Erreur', err.message);
+  }
+}
 
-                const doc = snap.docs[0];
-                const data = doc.data();
-                idField.value = doc.id;
+document.getElementById('formEvenement').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = document.getElementById('btnSaveEv');
+  const id = document.getElementById('evId').value;
+  const images = getImages('evImagesList');
+  const videos = getVideos('evVideosList');
+  const data = {
+    titre: document.getElementById('evTitre').value.trim(),
+    slug: document.getElementById('evSlug').value.trim(),
+    date: document.getElementById('evDate').value,
+    heure: document.getElementById('evHeure').value.trim(),
+    categorie: document.getElementById('evCategorie').value,
+    lieu: document.getElementById('evLieu').value.trim(),
+    participation: document.getElementById('evParticipation').value.trim(),
+    aLaUne: document.getElementById('evALaUne').value === 'true',
+    archive: document.getElementById('evArchive').value === 'true',
+    description: document.getElementById('evDescription').value.trim(),
+    contenu: document.getElementById('evContenu').value.trim(),
+    images: images,
+    videos: videos,
+    afficheURL: images[0] || '',
+    videoURL: videos[0] || '',
+    dateAjout: firebase.firestore.FieldValue.serverTimestamp()
+  };
+  if (!data.titre || !data.slug || !data.date || !data.contenu) {
+    toast('warning', 'Champs manquants', 'Titre, slug, date et contenu sont obligatoires.');
+    return;
+  }
+  setLoading(btn, true);
+  try {
+    if (id) {
+      delete data.dateAjout;
+      await db.collection('evenements').doc(id).update(data);
+      toast('success', 'Événement mis à jour ✅');
+    } else {
+      await db.collection('evenements').add(data);
+      toast('success', 'Événement ajouté ✅');
+    }
+    resetEvenementForm();
+    loadEvenements();
+  } catch (err) {
+    toast('error', 'Erreur d\'enregistrement', err.message);
+  } finally {
+    setLoading(btn, false);
+  }
+});
 
-                document.getElementById('liveActif').value = data.actif ? 'true' : 'false';
-                document.getElementById('livePlateforme').value = data.plateforme || 'youtube';
-                document.getElementById('liveEmbedURL').value = data.embedURL || '';
-                document.getElementById('liveTitre').value = data.titre || '';
+document.getElementById('btnCancelEv').addEventListener('click', () => {
+  resetEvenementForm();
+  toast('info', 'Modification annulée');
+});
 
-                // Prévisualisation
-                if (data.actif && data.embedURL) {
-                    dot.className = 'live-dot';
-                    statusText.textContent = '🔴 EN DIRECT — ' + (data.titre || 'Live en cours');
-                    previewEmbed.innerHTML = `
-                            <div style="aspect-ratio:16/9; background:var(--noir-3); border-radius:4px; overflow:hidden;">
-                                <iframe src="${data.embedURL}" style="width:100%;height:100%;border:none;" allowfullscreen></iframe>
-                            </div>
-                            <p style="color:var(--text-muted); font-size:0.8rem; margin-top:8px;">Plateforme : ${data.plateforme}</p>
-                        `;
-                } else {
-                    dot.className = 'live-dot inactive';
-                    statusText.textContent = 'Inactif';
-                    previewEmbed.innerHTML = '<p style="color:var(--text-discret); font-size:0.85rem;">Live désactivé</p>';
-                }
+function resetEvenementForm() {
+  document.getElementById('formEvenement').reset();
+  document.getElementById('evId').value = '';
+  clearImages('evImagesList'); addImageRow(document.getElementById('evImagesList'));
+  clearVideos('evVideosList'); addVideoRow(document.getElementById('evVideosList'));
+  document.getElementById('btnCancelEv').style.display = 'none';
+  document.getElementById('btnSaveEv').querySelector('.btn-text').textContent = '💾 Enregistrer l\'événement';
+}
 
-            } catch (err) {
-                console.error('Erreur live :', err);
-            }
-        }
+// Initialiser avec une ligne vide
+addImageRow(document.getElementById('evImagesList'));
+addVideoRow(document.getElementById('evVideosList'));
 
-        // ============================================================
-        // INITIALISATION
-        // ============================================================
-        // L'état d'authentification est géré par le listener ci-dessus.
-        // Au démarrage, on charge la collection evenements si connecté.
+// ============================================================
+// PHOTOS
+// ============================================================
+async function loadPhotos() {
+  const list = document.getElementById('phList');
+  list.innerHTML = '<div class="empty-state">Chargement…</div>';
+  try {
+    const snap = await db.collection('medias_photos').orderBy('dateAjout', 'desc').get();
+    document.getElementById('phCount').textContent = snap.size;
+    if (snap.empty) { list.innerHTML = '<div class="empty-state">Aucune photo.</div>'; return; }
+    list.innerHTML = '';
+    snap.forEach(doc => {
+      const d = doc.data();
+      const row = document.createElement('div');
+      row.className = 'item-row';
+      row.innerHTML = `
+        <div class="item-thumb" style="background-image:url('${d.url || ''}')"></div>
+        <div class="item-info">
+          <div class="item-title">${d.titre || 'Sans titre'}</div>
+          <div class="item-meta">${d.categorie || ''}</div>
+        </div>
+        <div class="item-actions">
+          <button class="btn btn-outline btn-sm" data-edit="${doc.id}">✏️</button>
+          <button class="btn btn-outline btn-danger btn-sm" data-del="${doc.id}">🗑️</button>
+        </div>`;
+      row.querySelector('[data-edit]').addEventListener('click', () => editPhoto(doc.id));
+      row.querySelector('[data-del]').addEventListener('click', () => deletePhoto(doc.id));
+      list.appendChild(row);
+    });
+  } catch (err) {
+    list.innerHTML = `<div class="empty-state">Erreur : ${err.message}</div>`;
+  }
+}
 
-        console.log('✅ Admin page chargée');
-        console.log('📦 Cloudinary cloud name : bvcdjwg7');
-        console.log('📧 Admin email : clavier12541@gmail.com');
-    </script>
+async function editPhoto(id) {
+  const doc = await db.collection('medias_photos').doc(id).get();
+  if (!doc.exists) return;
+  const d = doc.data();
+  document.getElementById('phId').value = id;
+  document.getElementById('phTitre').value = d.titre || '';
+  document.getElementById('phCategorie').value = d.categorie || 'galerie';
+  document.getElementById('phUrl').value = d.url || '';
+  document.getElementById('btnCancelPh').style.display = 'inline-flex';
+  document.getElementById('btnSavePh').querySelector('.btn-text').textContent = '💾 Mettre à jour';
+  document.getElementById('formPhoto').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+async function deletePhoto(id) {
+  if (!confirm('Supprimer cette photo ?')) return;
+  await db.collection('medias_photos').doc(id).delete();
+  toast('success', 'Photo supprimée');
+  loadPhotos();
+}
+
+document.getElementById('formPhoto').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = document.getElementById('btnSavePh');
+  const id = document.getElementById('phId').value;
+  const data = {
+    titre: document.getElementById('phTitre').value.trim(),
+    categorie: document.getElementById('phCategorie').value,
+    url: document.getElementById('phUrl').value.trim(),
+    dateAjout: firebase.firestore.FieldValue.serverTimestamp()
+  };
+  if (!data.titre || !data.url) { toast('warning', 'Champs manquants', 'Titre et URL obligatoires.'); return; }
+  setLoading(btn, true);
+  try {
+    if (id) { delete data.dateAjout; await db.collection('medias_photos').doc(id).update(data); toast('success', 'Photo mise à jour ✅'); }
+    else { await db.collection('medias_photos').add(data); toast('success', 'Photo ajoutée ✅'); }
+    resetPhotoForm(); loadPhotos();
+  } catch (err) { toast('error', 'Erreur', err.message); }
+  finally { setLoading(btn, false); }
+});
+
+document.getElementById('btnCancelPh').addEventListener('click', () => { resetPhotoForm(); toast('info', 'Annulé'); });
+function resetPhotoForm() {
+  document.getElementById('formPhoto').reset();
+  document.getElementById('phId').value = '';
+  document.getElementById('btnCancelPh').style.display = 'none';
+  document.getElementById('btnSavePh').querySelector('.btn-text').textContent = '💾 Enregistrer la photo';
+}
+
+// ============================================================
+// VIDÉOS
+// ============================================================
+async function loadVideos() {
+  const list = document.getElementById('viList');
+  list.innerHTML = '<div class="empty-state">Chargement…</div>';
+  try {
+    const snap = await db.collection('medias_videos').orderBy('dateAjout', 'desc').get();
+    document.getElementById('viCount').textContent = snap.size;
+    if (snap.empty) { list.innerHTML = '<div class="empty-state">Aucune vidéo.</div>'; return; }
+    list.innerHTML = '';
+    snap.forEach(doc => {
+      const d = doc.data();
+      const row = document.createElement('div');
+      row.className = 'item-row';
+      row.innerHTML = `
+        <div class="item-thumb" style="background-image:url('${d.vignetteURL || ''}')"></div>
+        <div class="item-info">
+          <div class="item-title">${d.titre || 'Sans titre'}</div>
+          <div class="item-meta">${d.categorie || ''}</div>
+        </div>
+        <div class="item-actions">
+          <button class="btn btn-outline btn-sm" data-edit="${doc.id}">✏️</button>
+          <button class="btn btn-outline btn-danger btn-sm" data-del="${doc.id}">🗑️</button>
+        </div>`;
+      row.querySelector('[data-edit]').addEventListener('click', () => editVideo(doc.id));
+      row.querySelector('[data-del]').addEventListener('click', () => deleteVideo(doc.id));
+      list.appendChild(row);
+    });
+  } catch (err) {
+    list.innerHTML = `<div class="empty-state">Erreur : ${err.message}</div>`;
+  }
+}
+
+async function editVideo(id) {
+  const doc = await db.collection('medias_videos').doc(id).get();
+  if (!doc.exists) return;
+  const d = doc.data();
+  document.getElementById('viId').value = id;
+  document.getElementById('viTitre').value = d.titre || '';
+  document.getElementById('viCategorie').value = d.categorie || 'intervention';
+  document.getElementById('viUrl').value = d.url || '';
+  document.getElementById('viVignetteURL').value = d.vignetteURL || '';
+  document.getElementById('btnCancelVi').style.display = 'inline-flex';
+  document.getElementById('btnSaveVi').querySelector('.btn-text').textContent = '💾 Mettre à jour';
+  document.getElementById('formVideo').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+async function deleteVideo(id) {
+  if (!confirm('Supprimer cette vidéo ?')) return;
+  await db.collection('medias_videos').doc(id).delete();
+  toast('success', 'Vidéo supprimée');
+  loadVideos();
+}
+
+document.getElementById('formVideo').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = document.getElementById('btnSaveVi');
+  const id = document.getElementById('viId').value;
+  const data = {
+    titre: document.getElementById('viTitre').value.trim(),
+    categorie: document.getElementById('viCategorie').value,
+    url: document.getElementById('viUrl').value.trim(),
+    vignetteURL: document.getElementById('viVignetteURL').value.trim(),
+    dateAjout: firebase.firestore.FieldValue.serverTimestamp()
+  };
+  if (!data.titre || !data.url) { toast('warning', 'Champs manquants', 'Titre et URL obligatoires.'); return; }
+  setLoading(btn, true);
+  try {
+    if (id) { delete data.dateAjout; await db.collection('medias_videos').doc(id).update(data); toast('success', 'Vidéo mise à jour ✅'); }
+    else { await db.collection('medias_videos').add(data); toast('success', 'Vidéo ajoutée ✅'); }
+    resetVideoForm(); loadVideos();
+  } catch (err) { toast('error', 'Erreur', err.message); }
+  finally { setLoading(btn, false); }
+});
+
+document.getElementById('btnCancelVi').addEventListener('click', () => { resetVideoForm(); toast('info', 'Annulé'); });
+function resetVideoForm() {
+  document.getElementById('formVideo').reset();
+  document.getElementById('viId').value = '';
+  document.getElementById('btnCancelVi').style.display = 'none';
+  document.getElementById('btnSaveVi').querySelector('.btn-text').textContent = '💾 Enregistrer la vidéo';
+}
+
+// ============================================================
+// PRESSE
+// ============================================================
+async function loadPresse() {
+  const list = document.getElementById('prList');
+  list.innerHTML = '<div class="empty-state">Chargement…</div>';
+  try {
+    const snap = await db.collection('presse').orderBy('dateAjout', 'desc').get();
+    document.getElementById('prCount').textContent = snap.size;
+    if (snap.empty) { list.innerHTML = '<div class="empty-state">Aucun article.</div>'; return; }
+    list.innerHTML = '';
+    snap.forEach(doc => {
+      const d = doc.data();
+      const row = document.createElement('div');
+      row.className = 'item-row';
+      row.innerHTML = `
+        <div class="item-info">
+          <div class="item-title">${d.titre || 'Sans titre'}</div>
+          <div class="item-meta">${d.datePublication ? formatDateReadable(d.datePublication) : ''}</div>
+        </div>
+        <div class="item-actions">
+          <a class="btn btn-outline btn-sm" href="${d.url || '#'}" target="_blank">🔗 Ouvrir</a>
+          <button class="btn btn-outline btn-sm" data-edit="${doc.id}">✏️</button>
+          <button class="btn btn-outline btn-danger btn-sm" data-del="${doc.id}">🗑️</button>
+        </div>`;
+      row.querySelector('[data-edit]').addEventListener('click', () => editPresse(doc.id));
+      row.querySelector('[data-del]').addEventListener('click', () => deletePresse(doc.id));
+      list.appendChild(row);
+    });
+  } catch (err) {
+    list.innerHTML = `<div class="empty-state">Erreur : ${err.message}</div>`;
+  }
+}
+
+async function editPresse(id) {
+  const doc = await db.collection('presse').doc(id).get();
+  if (!doc.exists) return;
+  const d = doc.data();
+  document.getElementById('prId').value = id;
+  document.getElementById('prTitre').value = d.titre || '';
+  document.getElementById('prDescription').value = d.description || '';
+  document.getElementById('prUrl').value = d.url || '';
+  document.getElementById('prDate').value = formatDateInput(d.datePublication);
+  document.getElementById('btnCancelPr').style.display = 'inline-flex';
+  document.getElementById('btnSavePr').querySelector('.btn-text').textContent = '💾 Mettre à jour';
+  document.getElementById('formPresse').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+async function deletePresse(id) {
+  if (!confirm('Supprimer cet article ?')) return;
+  await db.collection('presse').doc(id).delete();
+  toast('success', 'Article supprimé');
+  loadPresse();
+}
+
+document.getElementById('formPresse').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = document.getElementById('btnSavePr');
+  const id = document.getElementById('prId').value;
+  const data = {
+    titre: document.getElementById('prTitre').value.trim(),
+    description: document.getElementById('prDescription').value.trim(),
+    url: document.getElementById('prUrl').value.trim(),
+    datePublication: document.getElementById('prDate').value,
+    dateAjout: firebase.firestore.FieldValue.serverTimestamp()
+  };
+  if (!data.titre || !data.url) { toast('warning', 'Champs manquants', 'Titre et URL obligatoires.'); return; }
+  setLoading(btn, true);
+  try {
+    if (id) { delete data.dateAjout; await db.collection('presse').doc(id).update(data); toast('success', 'Article mis à jour ✅'); }
+    else { await db.collection('presse').add(data); toast('success', 'Article ajouté ✅'); }
+    resetPresseForm(); loadPresse();
+  } catch (err) { toast('error', 'Erreur', err.message); }
+  finally { setLoading(btn, false); }
+});
+
+document.getElementById('btnCancelPr').addEventListener('click', () => { resetPresseForm(); toast('info', 'Annulé'); });
+function resetPresseForm() {
+  document.getElementById('formPresse').reset();
+  document.getElementById('prId').value = '';
+  document.getElementById('btnCancelPr').style.display = 'none';
+  document.getElementById('btnSavePr').querySelector('.btn-text').textContent = '💾 Enregistrer l\'article';
+}
+
+// ============================================================
+// LIVE
+// ============================================================
+async function loadLive() {
+  try {
+    const snap = await db.collection('live').get();
+    const dot = document.getElementById('liveDot');
+    const statusText = document.getElementById('liveStatusText');
+    const preview = document.getElementById('livePreview');
+    const previewFrame = document.getElementById('liveFrame');
+    const deleteBtn = document.getElementById('btnDeleteLive');
+
+    if (snap.empty) {
+      document.getElementById('liId').value = '';
+      document.getElementById('liActif').value = 'false';
+      document.getElementById('liPlateforme').value = 'youtube';
+      document.getElementById('liTitre').value = '';
+      document.getElementById('liEmbedURL').value = '';
+      dot.classList.remove('on');
+      statusText.textContent = 'Aucun live configuré';
+      preview.style.display = 'none';
+      deleteBtn.style.display = 'none';
+      return;
+    }
+    const doc = snap.docs[0];
+    const d = doc.data();
+    document.getElementById('liId').value = doc.id;
+    document.getElementById('liActif').value = d.actif ? 'true' : 'false';
+    document.getElementById('liPlateforme').value = d.plateforme || 'youtube';
+    document.getElementById('liTitre').value = d.titre || '';
+    document.getElementById('liEmbedURL').value = d.embedURL || '';
+
+    if (d.actif && d.embedURL) {
+      dot.classList.add('on');
+      statusText.innerHTML = `🔴 <strong>EN DIRECT</strong> — ${d.titre || 'Live en cours'}`;
+      preview.style.display = 'block';
+      previewFrame.src = d.embedURL;
+    } else {
+      dot.classList.remove('on');
+      statusText.textContent = 'Live désactivé';
+      preview.style.display = 'none';
+      previewFrame.src = '';
+    }
+    deleteBtn.style.display = 'inline-flex';
+  } catch (err) {
+    console.error('Erreur live:', err);
+  }
+}
+
+document.getElementById('formLive').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = document.getElementById('btnSaveLive');
+  const id = document.getElementById('liId').value;
+  const data = {
+    actif: document.getElementById('liActif').value === 'true',
+    plateforme: document.getElementById('liPlateforme').value,
+    titre: document.getElementById('liTitre').value.trim(),
+    embedURL: document.getElementById('liEmbedURL').value.trim()
+  };
+  if (data.actif && !data.embedURL) {
+    toast('warning', 'URL manquante', 'Un live actif doit avoir une URL d\'intégration.');
+    return;
+  }
+  setLoading(btn, true);
+  try {
+    if (id) {
+      await db.collection('live').doc(id).update(data);
+      toast('success', 'Live mis à jour ✅');
+    } else {
+      await db.collection('live').add(data);
+      toast('success', 'Live créé ✅');
+    }
+    loadLive();
+  } catch (err) {
+    toast('error', 'Erreur', err.message);
+  } finally {
+    setLoading(btn, false);
+  }
+});
+
+document.getElementById('btnDeleteLive').addEventListener('click', async () => {
+  const id = document.getElementById('liId').value;
+  if (!id) return;
+  if (!confirm('Supprimer la configuration du live ?')) return;
+  try {
+    await db.collection('live').doc(id).delete();
+    toast('success', 'Live supprimé');
+    loadLive();
+  } catch (err) {
+    toast('error', 'Erreur', err.message);
+  }
+});
+
+console.log('✅ Admin prête');
+</script>
 
 </body>
 </html>
