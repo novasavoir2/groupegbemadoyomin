@@ -8,12 +8,12 @@
 <meta name="keywords" content="médias, photos, vidéos, presse, interventions, Groupe Gbêmadoyomin, GG, Professeur Gbêmadoyômin, Cabinet Gbêmadoyomin">
 <meta name="author" content="Groupe Gbêmadoyomin">
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
-<link rel="canonical" href="https://www.groupegbemadoyomin.com/medias.html">
+<link rel="canonical" href="https://groupegbemadoyomin.com/medias.html">
 
 <meta property="og:type" content="website">
 <meta property="og:title" content="Médias — Photos, Vidéos & Presse | Groupe Gbêmadoyomin">
 <meta property="og:description" content="Photos, vidéos et interventions du Professeur et du Groupe Gbêmadoyomin.">
-<meta property="og:url" content="https://www.groupegbemadoyomin.com/medias.html">
+<meta property="og:url" content="https://groupegbemadoyomin.com/medias.html">
 <meta property="og:locale" content="fr_FR">
 <meta property="og:image" content="logo-gg.jpeg">
 <meta property="og:image:width" content="1200">
@@ -26,19 +26,15 @@
 <meta name="twitter:image" content="logo-gg.jpeg">
 
 <meta name="theme-color" content="#0D0D0D">
+<link rel="manifest" href="manifest.json">
 
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "CollectionPage",
-  "name": "Médias du Groupe Gbêmadoyomin",
-  "description": "Photos, vidéos et interventions du Professeur Bokônon Gbêmadoyômin et du Groupe Gbêmadoyomin.",
-  "url": "https://www.groupegbemadoyomin.com/medias.html",
-  "about": {
-    "@type": "Organization",
-    "name": "Groupe Gbêmadoyomin"
-  }
-}
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XXXXXXXXXX');
 </script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -87,18 +83,49 @@ section { padding-block: var(--espace-xl); }
   background: linear-gradient(135deg, var(--or-clair), var(--or-fonce)); color: var(--noir);
   font-family: var(--font-titres); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em;
   padding: 14px 30px; border-radius: var(--rayon); box-shadow: var(--lueur-or);
-  transition: transform var(--vitesse), box-shadow var(--vitesse);
+  transition: transform var(--vitesse), box-shadow var(--vitesse); border: none;
 }
 .btn-or:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(184,146,46,.4); }
 .btn-contour {
   display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--border); color: var(--blanc-doux);
   font-family: var(--font-titres); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em;
   padding: 12px 26px; border-radius: var(--rayon); transition: border-color var(--vitesse), color var(--vitesse);
+  background: transparent;
 }
 .btn-contour:hover { border-color: var(--or); color: var(--or-clair); }
+.btn-sm { padding: 8px 16px; font-size: 0.68rem; }
 
 /* ============================================================
-   LOADER PREMIUM AVEC LOGO
+   BANDEAU DÉFILANT
+   ============================================================ */
+.bandeau-defilant {
+  position: sticky; top: 0; z-index: 50;
+  background: linear-gradient(135deg, var(--rouge), var(--noir-2));
+  color: var(--blanc); padding: 8px 0; overflow: hidden;
+  border-bottom: 1px solid var(--or);
+  font-family: var(--font-titres);
+  font-size: clamp(0.7rem, 1.2vw, 0.95rem); letter-spacing: 0.05em;
+}
+.bandeau-defilant-inner {
+  display: inline-flex; align-items: center;
+  animation: defilement 30s linear infinite;
+  padding-left: 100%; white-space: nowrap;
+  transition: animation-play-state 0.3s ease;
+}
+.bandeau-defilant:hover .bandeau-defilant-inner { animation-play-state: paused; }
+.bandeau-defilant-inner span { display: inline-flex; align-items: center; gap: 8px; margin: 0 30px; }
+.bandeau-defilant-inner .highlight { color: var(--or-clair); font-weight: 700; }
+.bandeau-defilant-inner .bandeau-lien {
+  display: inline-flex; align-items: center; gap: 8px;
+  color: var(--blanc); text-decoration: none;
+  transition: color 0.3s ease; padding: 4px 8px; border-radius: 3px;
+}
+.bandeau-defilant-inner .bandeau-lien:hover { color: var(--or-clair); background: rgba(255,255,255,0.05); }
+.bandeau-defilant-inner .bandeau-lien img { width: 24px; height: 30px; object-fit: cover; border-radius: 2px; border: 1px solid rgba(255,255,255,0.2); }
+@keyframes defilement { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+
+/* ============================================================
+   LOADER
    ============================================================ */
 .loader {
   position: fixed; inset: 0; z-index: 999; background: var(--noir);
@@ -106,23 +133,10 @@ section { padding-block: var(--espace-xl); }
   transition: opacity 0.8s ease, visibility 0.8s ease;
 }
 .loader.cache { opacity: 0; visibility: hidden; pointer-events: none; }
-.loader-logo {
-  width: 90px; height: auto;
-  animation: pulse-logo 2s ease-in-out infinite;
-  filter: drop-shadow(0 0 30px rgba(184,146,46,0.3));
-}
-@keyframes pulse-logo {
-  0%, 100% { transform: scale(0.95) rotate(-2deg); opacity: 0.8; }
-  50% { transform: scale(1.08) rotate(2deg); opacity: 1; }
-}
-.loader-trait {
-  width: 60px; height: 2px; background: var(--or);
-  animation: etirer 1.7s ease-in-out infinite;
-}
-@keyframes etirer {
-  0%, 100% { width: 30px; opacity: 0.3; }
-  50% { width: 80px; opacity: 1; }
-}
+.loader-logo { width: 90px; height: auto; animation: pulse-logo 2s ease-in-out infinite; filter: drop-shadow(0 0 30px rgba(184,146,46,0.3)); }
+@keyframes pulse-logo { 0%, 100% { transform: scale(0.95) rotate(-2deg); opacity: 0.8; } 50% { transform: scale(1.08) rotate(2deg); opacity: 1; } }
+.loader-trait { width: 60px; height: 2px; background: var(--or); animation: etirer 1.7s ease-in-out infinite; }
+@keyframes etirer { 0%, 100% { width: 30px; opacity: 0.3; } 50% { width: 80px; opacity: 1; } }
 
 /* ============================================================
    NAVIGATION
@@ -159,6 +173,48 @@ section { padding-block: var(--espace-xl); }
 }
 
 /* ============================================================
+   CHATBOT
+   ============================================================ */
+.chatbot-container { position: fixed; bottom: 100px; left: 20px; z-index: 98; display: flex; flex-direction: column; align-items: flex-start; gap: 10px; }
+.chatbot-btn {
+  width: 54px; height: 54px; border-radius: 50%;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: white; display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
+  cursor: pointer; transition: transform 0.3s ease; border: none;
+}
+.chatbot-btn:hover { transform: scale(1.05); }
+.chatbot-btn svg { width: 28px; height: 28px; fill: none; stroke: white; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.chatbot-panel {
+  position: fixed; bottom: 160px; left: 20px; z-index: 97;
+  width: 340px; max-width: 90vw;
+  background: var(--noir-2); border: 1px solid var(--border); border-radius: 16px;
+  padding: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+  transform: translateY(20px) scale(0.95); opacity: 0; pointer-events: none;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+.chatbot-panel.open { transform: translateY(0) scale(1); opacity: 1; pointer-events: auto; }
+.chatbot-panel h3 { font-family: var(--font-titres); font-size: 0.9rem; color: var(--or); margin-bottom: 4px; }
+.chatbot-panel .chatbot-sub { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 14px; }
+.chatbot-messages { max-height: 200px; overflow-y: auto; margin-bottom: 12px; display: flex; flex-direction: column; gap: 6px; }
+.chatbot-msg { padding: 8px 12px; border-radius: 8px; font-size: 0.85rem; max-width: 85%; }
+.chatbot-msg.bot { background: var(--noir-3); color: var(--blanc-doux); align-self: flex-start; border-bottom-left-radius: 2px; }
+.chatbot-msg.user { background: linear-gradient(135deg, var(--or-clair), var(--or-fonce)); color: var(--noir); align-self: flex-end; border-bottom-right-radius: 2px; }
+.chatbot-options { display: flex; flex-wrap: wrap; gap: 6px; }
+.chatbot-option {
+  background: var(--noir-3); border: 1px solid var(--border-discret); border-radius: 6px;
+  padding: 8px 14px; font-size: 0.8rem; color: var(--blanc-doux);
+  transition: border-color var(--vitesse), background var(--vitesse); cursor: pointer; flex: 1 0 auto;
+}
+.chatbot-option:hover { border-color: var(--or); background: rgba(184,146,46,0.08); }
+.chatbot-close { position: absolute; top: 8px; right: 12px; font-size: 1.2rem; color: var(--text-discret); cursor: pointer; background: none; border: none; }
+@media (max-width: 640px) {
+  .chatbot-panel { width: 280px; bottom: 150px; left: 10px; }
+  .chatbot-btn { width: 48px; height: 48px; }
+  .chatbot-btn svg { width: 24px; height: 24px; }
+}
+
+/* ============================================================
    FLOTTANTS
    ============================================================ */
 .flottants { position: fixed; right: 20px; bottom: 20px; z-index: 90; display: flex; flex-direction: column; align-items: flex-end; gap: 12px; }
@@ -173,7 +229,6 @@ section { padding-block: var(--espace-xl); }
    ============================================================ */
 .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.8s ease, transform 0.8s ease; }
 .reveal.est-visible { opacity: 1; transform: translateY(0); }
-
 .reveal-stagger { opacity: 0; transform: translateY(28px); transition: opacity 0.8s ease, transform 0.8s ease; }
 .reveal-stagger.est-visible { opacity: 1; transform: translateY(0); }
 .reveal-stagger:nth-child(1) { transition-delay: 0.04s; }
@@ -184,40 +239,119 @@ section { padding-block: var(--espace-xl); }
 .reveal-stagger:nth-child(6) { transition-delay: 0.24s; }
 .reveal-stagger:nth-child(7) { transition-delay: 0.28s; }
 .reveal-stagger:nth-child(8) { transition-delay: 0.32s; }
-
 .pulse-doux { animation: pulse-doux 2.6s ease-in-out infinite; }
 @keyframes pulse-doux { 0%, 100% { box-shadow: 0 0 0 0 rgba(184,146,46,.35); } 50% { box-shadow: 0 0 0 10px rgba(184,146,46,0); } }
-
 .shine { position: relative; overflow: hidden; }
 .shine::before { content: ''; position: absolute; z-index: 5; inset: -30% -80%; background: linear-gradient(105deg, transparent 43%, rgba(255,255,255,0.12) 50%, transparent 57%); transform: translateX(-45%); transition: transform 1s ease; pointer-events: none; }
 .shine:hover::before { transform: translateX(45%); }
-
 @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } .reveal-stagger { opacity: 1; transform: none; transition: none; } .pulse-doux { animation: none; } }
 
 /* ============================================================
-   HERO MÉDIAS
+   LIVE BANNER
+   ============================================================ */
+.live-banner {
+  background: linear-gradient(135deg, #7a1515, #4a0d0d);
+  border-bottom: 1px solid var(--or);
+  padding: 10px 0;
+  display: none;
+}
+.live-banner.actif { display: block; }
+.live-banner-inner { display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; text-align: center; }
+.live-dot { display: inline-block; width: 12px; height: 12px; border-radius: 50%; background: #ff2d2d; animation: clignote 1.2s ease-in-out infinite; flex-shrink: 0; }
+@keyframes clignote {
+  0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 8px #ff2d2d; }
+  50% { opacity: 0.3; transform: scale(0.8); box-shadow: 0 0 20px #ff2d2d; }
+}
+.live-banner strong { color: var(--blanc); font-family: var(--font-titres); letter-spacing: 0.05em; font-size: 0.9rem; }
+.live-banner a { color: var(--or-clair); font-size: 0.82rem; border-bottom: 1px solid var(--or-clair); transition: color 0.3s ease; }
+.live-banner a:hover { color: var(--blanc); }
+
+/* ============================================================
+   HERO
    ============================================================ */
 .med-hero {
   min-height: 40vh; display: flex; align-items: center; text-align: center;
   background: radial-gradient(circle at 78% 20%, rgba(184,146,46,.12), transparent 55%), linear-gradient(150deg, var(--noir-2), var(--noir));
   padding-block: calc(var(--espace-xl) + 72px) var(--espace-md);
-  position: relative;
-  overflow: hidden;
+  position: relative; overflow: hidden;
 }
 .med-hero .conteneur { margin-inline: auto; position: relative; z-index: 1; }
 .med-hero p { color: var(--blanc-doux); margin-inline: auto; }
 
 /* ============================================================
-   GALERIE
+   GALERIE PHOTOS
    ============================================================ */
 .galerie-grille { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
 .galerie-item {
   aspect-ratio: 1; background: var(--noir-2); border: 1px solid var(--border-discret); border-radius: 4px;
   background-size: cover; background-position: center;
   cursor: pointer; transition: border-color var(--vitesse), transform var(--vitesse), box-shadow var(--vitesse);
+  position: relative;
 }
 .galerie-item:hover { border-color: var(--or); transform: translateY(-4px); box-shadow: 0 12px 30px rgba(0,0,0,0.3); }
+.galerie-item:hover::after {
+  content: '🔍';
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.5);
+  font-size: 1.6rem;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
 @media (max-width: 860px) { .galerie-grille { grid-template-columns: repeat(2, 1fr); } }
+
+/* ============================================================
+   LIGHTBOX
+   ============================================================ */
+.lightbox {
+  position: fixed; inset: 0; z-index: 2000;
+  background: rgba(0, 0, 0, 0.95);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: fadeIn 0.3s ease;
+}
+.lightbox.open { display: flex; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+.lightbox-img {
+  max-width: 90vw;
+  max-height: 85vh;
+  object-fit: contain;
+  border-radius: 4px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+}
+.lightbox-close {
+  position: absolute; top: 20px; right: 24px;
+  font-size: 2rem; color: var(--blanc);
+  cursor: pointer; background: none; border: none;
+  width: 44px; height: 44px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.3s ease;
+}
+.lightbox-close:hover { background: rgba(255,255,255,0.1); }
+.lightbox-nav {
+  position: absolute;
+  top: 50%; transform: translateY(-50%);
+  width: 50px; height: 50px;
+  background: rgba(184, 146, 46, 0.8);
+  color: var(--noir); border-radius: 50%;
+  font-size: 1.4rem;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: background 0.3s ease;
+}
+.lightbox-nav:hover { background: var(--or); }
+.lightbox-prev { left: 20px; }
+.lightbox-next { right: 20px; }
+.lightbox-caption {
+  position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
+  color: var(--blanc-doux); font-size: 0.85rem; font-style: italic;
+  background: rgba(0,0,0,0.6); padding: 8px 16px; border-radius: 4px;
+  max-width: 80vw; text-align: center;
+}
 
 /* ============================================================
    VIDÉOS
@@ -233,16 +367,20 @@ section { padding-block: var(--espace-xl); }
   aspect-ratio: 16/9; background: var(--noir-3);
   background-size: cover; background-position: center;
   display: flex; align-items: center; justify-content: center;
-  color: var(--text-discret); font-size: .78rem; text-align: center; padding: 14px; position: relative;
+  color: var(--text-discret); font-size: .78rem; text-align: center; padding: 14px;
+  position: relative; cursor: pointer;
 }
 .video-play {
-  width: 44px; height: 44px; border-radius: 50%; background: rgba(184,146,46,.9);
-  display: flex; align-items: center; justify-content: center; color: var(--noir); font-size: 1rem;
-  position: absolute;
-  transition: transform 0.3s ease;
+  width: 50px; height: 50px; border-radius: 50%; background: rgba(184,146,46,.9);
+  display: flex; align-items: center; justify-content: center; color: var(--noir); font-size: 1.1rem;
+  position: absolute; transition: transform 0.3s ease;
 }
-.video-carte:hover .video-play { transform: scale(1.1); }
-.video-titre { padding: 12px 14px; font-family: var(--font-titres); font-size: .82rem; color: var(--blanc); }
+.video-carte:hover .video-play { transform: scale(1.15); }
+.video-corps { padding: 14px 16px; }
+.video-titre { font-family: var(--font-titres); font-size: .85rem; color: var(--blanc); margin-bottom: 6px; }
+.video-categorie { font-size: .72rem; color: var(--text-discret); margin-bottom: 10px; }
+.video-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.video-actions a, .video-actions button { flex: 1; text-align: center; font-size: .68rem; }
 @media (max-width: 860px) { .videos-grille { grid-template-columns: 1fr; } }
 
 /* ============================================================
@@ -256,7 +394,9 @@ section { padding-block: var(--espace-xl); }
 }
 .presse-item:hover { border-color: var(--or); transform: translateY(-3px); }
 .presse-item h3 { font-size: .95rem; margin-bottom: 6px; }
-.presse-item p { font-size: .85rem; color: var(--text-muted); }
+.presse-item p { font-size: .85rem; color: var(--text-muted); margin-bottom: 10px; }
+.presse-item .presse-meta { font-size: .75rem; color: var(--text-discret); }
+.presse-item .presse-lien { color: var(--or); font-size: .78rem; font-weight: 700; letter-spacing: .05em; display: inline-block; margin-top: 8px; }
 
 /* ============================================================
    RÉSEAUX
@@ -279,6 +419,17 @@ section { padding-block: var(--espace-xl); }
   background: var(--noir-2);
 }
 .groupe-bandeau p { color: var(--text-muted); font-size: .92rem; margin: 0; }
+
+/* ============================================================
+   ÉTAT VIDE
+   ============================================================ */
+.etat-vide {
+  text-align: center;
+  color: var(--text-discret);
+  padding: var(--espace-lg) 0;
+  font-size: 0.9rem;
+  grid-column: 1 / -1;
+}
 
 /* ============================================================
    FOOTER
@@ -305,7 +456,10 @@ section { padding-block: var(--espace-xl); }
 .footer-bas { padding-top: 22px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
 .f-copy { font-size: 11px; color: var(--text-discret); opacity: 0.8; }
 .f-gg { font-family: var(--font-titres); font-size: 12px; color: var(--or); letter-spacing: 0.2em; opacity: 0.7; }
-
+.footer-dev { margin-top: 10px; padding-top: 14px; border-top: 1px solid var(--border-discret); display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; font-size: 11px; color: var(--text-discret); }
+.footer-dev .dev-link { display: inline-flex; align-items: center; gap: 6px; color: var(--or); font-weight: 600; transition: color 0.3s ease; }
+.footer-dev .dev-link:hover { color: var(--or-clair); }
+.footer-dev .dev-link svg { width: 14px; height: 14px; fill: currentColor; }
 @media (max-width: 900px) { .footer-grille { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 560px) { .footer-grille { grid-template-columns: 1fr; gap: 32px; } .footer-bas { flex-direction: column; align-items: flex-start; } }
 </style>
@@ -313,11 +467,42 @@ section { padding-block: var(--espace-xl); }
 <body data-page="medias">
 
 <!-- ============================================================
-   LOADER PREMIUM
+   LOADER
    ============================================================ -->
 <div class="loader" id="loader" aria-hidden="true">
   <img src="logo-gg.jpeg" alt="Groupe Gbêmadoyomin" class="loader-logo" loading="eager">
   <span class="loader-trait"></span>
+</div>
+
+<!-- ============================================================
+   BANDEAU DÉFILANT
+   ============================================================ -->
+<div class="bandeau-defilant" aria-hidden="true">
+  <div class="bandeau-defilant-inner">
+    <span><a class="bandeau-lien" href="evenements.html">🔥 <span class="highlight">PROCHAINE ÉDITION 2027</span> — Restez connectés !</a></span>
+    <span><a class="bandeau-lien" href="boutique.html#livres"><img src="livre-du-fa.jpeg" alt="Le Livre du Fa" loading="lazy">Le Livre du Fa</a></span>
+    <span><a class="bandeau-lien" href="boutique.html#livres"><img src="code-de-vie.jpeg" alt="Le Code de Vie" loading="lazy">Le Code de Vie</a></span>
+    <span><a class="bandeau-lien" href="boutique.html#livres"><img src="vodoun-dan.jpeg" alt="Vodoun Dan" loading="lazy">Vodoun Dan</a></span>
+    <span><a class="bandeau-lien" href="boutique.html#livres"><img src="livre-astuces.jpeg" alt="Le Livre d'Astuces" loading="lazy">Le Livre d'Astuces</a></span>
+    <span><a class="bandeau-lien" href="boutique.html#mode">👕 Collection TODAAA 2026 — Édition actuelle</a></span>
+    <span><a class="bandeau-lien" href="evenements.html">🔥 <span class="highlight">PROCHAINE ÉDITION 2027</span> — Restez connectés !</a></span>
+    <span><a class="bandeau-lien" href="boutique.html#livres"><img src="livre-du-fa.jpeg" alt="Le Livre du Fa" loading="lazy">Le Livre du Fa</a></span>
+    <span><a class="bandeau-lien" href="boutique.html#livres"><img src="code-de-vie.jpeg" alt="Le Code de Vie" loading="lazy">Le Code de Vie</a></span>
+    <span><a class="bandeau-lien" href="boutique.html#livres"><img src="vodoun-dan.jpeg" alt="Vodoun Dan" loading="lazy">Vodoun Dan</a></span>
+    <span><a class="bandeau-lien" href="boutique.html#livres"><img src="livre-astuces.jpeg" alt="Le Livre d'Astuces" loading="lazy">Le Livre d'Astuces</a></span>
+    <span><a class="bandeau-lien" href="boutique.html#mode">👕 Collection TODAAA 2026 — Édition actuelle</a></span>
+  </div>
+</div>
+
+<!-- ============================================================
+   LIVE BANNER
+   ============================================================ -->
+<div class="live-banner" id="liveBanner">
+  <div class="conteneur live-banner-inner">
+    <span class="live-dot"></span>
+    <strong id="liveBannerText">🔴 EN DIRECT — Live en cours</strong>
+    <a href="#live-embed" id="liveBannerLink">Rejoindre le live →</a>
+  </div>
 </div>
 
 <!-- ============================================================
@@ -336,10 +521,12 @@ section { padding-block: var(--espace-xl); }
     <a class="nav-lien" href="le-professeur.html">Le Professeur</a>
     <a class="nav-lien" href="consultations.html">Cabinet</a>
     <a class="nav-lien" href="ong.html">ONG</a>
+    <a class="nav-lien" href="decouvrir.html">Découvrir</a>
     <a class="nav-lien" href="boutique.html">TODAAA SHOP</a>
     <a class="nav-lien" href="evenements.html">Événements</a>
     <a class="nav-lien" href="vibration-sacree.html">Vibration Sacrée</a>
     <a class="nav-lien actif" href="medias.html">Médias</a>
+    <a class="nav-lien" href="contact.html">Contact</a>
     <a class="btn-or nav-rdv-mobile" href="https://wa.me/22967668799?text=Bonjour%2C%20je%20souhaite%20prendre%20rendez-vous." target="_blank" rel="noopener">Prendre RDV</a>
   </div>
   <a class="nav-rdv" href="https://wa.me/22967668799?text=Bonjour%2C%20je%20souhaite%20prendre%20rendez-vous." target="_blank" rel="noopener">Prendre RDV</a>
@@ -349,7 +536,7 @@ section { padding-block: var(--espace-xl); }
 </nav>
 
 <!-- ============================================================
-   HERO MÉDIAS
+   HERO
    ============================================================ -->
 <header class="med-hero">
   <div class="conteneur">
@@ -360,21 +547,29 @@ section { padding-block: var(--espace-xl); }
 </header>
 
 <!-- ============================================================
+   LIVE EMBED (si actif)
+   ============================================================ -->
+<section id="live-embed" style="display:none; padding-block: var(--espace-md);">
+  <div class="conteneur">
+    <div style="border: 1px solid var(--or); border-radius: 6px; overflow: hidden; background: var(--noir-2);">
+      <div style="padding: 12px 20px; background: linear-gradient(135deg, var(--rouge), var(--noir-2)); display: flex; align-items: center; gap: 12px; border-bottom: 1px solid var(--or);">
+        <span class="live-dot"></span>
+        <strong style="color: var(--blanc); font-family: var(--font-titres); font-size: 0.9rem;" id="liveEmbedTitle">🔴 EN DIRECT</strong>
+      </div>
+      <div style="aspect-ratio: 16/9; background: var(--noir-3);" id="liveEmbedZone"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
    GALERIE PHOTOS
    ============================================================ -->
 <section>
   <div class="conteneur">
     <p class="eyebrow reveal">Galerie</p>
     <h2 class="reveal" style="margin-bottom: var(--espace-md);">Photos</h2>
-    <div class="galerie-grille">
-      <div class="galerie-item reveal-stagger shine" style="background-image:url('media-photo-1.jpeg');" role="img" aria-label="Photo du Groupe 1"></div>
-      <div class="galerie-item reveal-stagger shine" style="background-image:url('media-photo-2.jpeg');" role="img" aria-label="Photo du Groupe 2"></div>
-      <div class="galerie-item reveal-stagger shine" style="background-image:url('media-photo-3.jpeg');" role="img" aria-label="Photo du Groupe 3"></div>
-      <div class="galerie-item reveal-stagger shine" style="background-image:url('media-photo-4.jpeg');" role="img" aria-label="Photo du Groupe 4"></div>
-      <div class="galerie-item reveal-stagger shine" style="background-image:url('media-photo-5.jpeg');" role="img" aria-label="Photo du Groupe 5"></div>
-      <div class="galerie-item reveal-stagger shine" style="background-image:url('media-photo-6.jpeg');" role="img" aria-label="Photo du Groupe 6"></div>
-      <div class="galerie-item reveal-stagger shine" style="background-image:url('media-photo-7.jpeg');" role="img" aria-label="Photo du Groupe 7"></div>
-      <div class="galerie-item reveal-stagger shine" style="background-image:url('media-photo-8.jpeg');" role="img" aria-label="Photo du Groupe 8"></div>
+    <div class="galerie-grille" id="galerie-grille">
+      <div class="etat-vide">Chargement de la galerie...</div>
     </div>
   </div>
 </section>
@@ -386,25 +581,8 @@ section { padding-block: var(--espace-xl); }
   <div class="conteneur">
     <p class="eyebrow reveal">Interventions</p>
     <h2 class="reveal" style="margin-bottom: var(--espace-md);">Vidéos</h2>
-    <div class="videos-grille">
-      <div class="video-carte reveal-stagger">
-        <div class="video-vignette shine" style="background-image:url('video-1.jpeg');" role="img" aria-label="Vidéo 1">
-          <span class="video-play">▶</span>
-        </div>
-        <div class="video-titre">Intervention à venir</div>
-      </div>
-      <div class="video-carte reveal-stagger">
-        <div class="video-vignette shine" style="background-image:url('video-2.jpeg');" role="img" aria-label="Vidéo 2">
-          <span class="video-play">▶</span>
-        </div>
-        <div class="video-titre">Intervention à venir</div>
-      </div>
-      <div class="video-carte reveal-stagger">
-        <div class="video-vignette shine" style="background-image:url('video-3.jpeg');" role="img" aria-label="Vidéo 3">
-          <span class="video-play">▶</span>
-        </div>
-        <div class="video-titre">Intervention à venir</div>
-      </div>
+    <div class="videos-grille" id="videos-grille">
+      <div class="etat-vide">Chargement des vidéos...</div>
     </div>
   </div>
 </section>
@@ -416,11 +594,8 @@ section { padding-block: var(--espace-xl); }
   <div class="conteneur">
     <p class="eyebrow reveal">Presse</p>
     <h2 class="reveal" style="margin-bottom: var(--espace-md);">Interventions & articles</h2>
-    <div class="presse-liste">
-      <div class="presse-item reveal-stagger">
-        <h3>À compléter avec les parutions du Professeur</h3>
-        <p>Articles de presse, interviews et interventions médiatiques seront listés ici au fil de leur publication.</p>
-      </div>
+    <div class="presse-liste" id="presse-liste">
+      <div class="etat-vide">Chargement des articles...</div>
     </div>
   </div>
 </section>
@@ -432,8 +607,8 @@ section { padding-block: var(--espace-xl); }
   <div class="conteneur">
     <p class="eyebrow reveal" style="text-align:center;">Suivez le Groupe</p>
     <div class="reseaux-ligne reveal">
-      <a class="reseau-lien" href="#" target="_blank" rel="noopener">📘 Facebook</a>
-      <a class="reseau-lien" href="#" target="_blank" rel="noopener">🎵 TikTok</a>
+      <a class="reseau-lien" href="https://www.facebook.com/share/1KLJbHgA74/?mibextid=wwXIfr" target="_blank" rel="noopener">📘 Facebook</a>
+      <a class="reseau-lien" href="https://www.tiktok.com/@bokonon.gbemadoyomin" target="_blank" rel="noopener">🎵 TikTok</a>
       <a class="reseau-lien" href="#" target="_blank" rel="noopener">▶️ YouTube</a>
     </div>
   </div>
@@ -465,9 +640,9 @@ section { padding-block: var(--espace-xl); }
         <div class="f-sigle">GG — SARL multisectorielle</div>
         <p class="f-desc">Cabinet Gbêmadoyomin, ONG Gbêmadoyomin, TODAAA SHOP et Vibration Sacrée — quatre entités réunies autour d'une même vision : savoir, transmission, héritage et innovation.</p>
         <div class="f-socials">
-          <a class="f-social" href="#" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
-          <a class="f-social" href="#" aria-label="TikTok"><svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V9.97a8.16 8.16 0 004.77 1.52V8.05a4.85 4.85 0 01-1-.36z"/></svg></a>
-          <a class="f-social" href="#" aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 00-1.94-1.96C18.88 4 12 4 12 4s-6.88 0-8.6.46A2.78 2.78 0 001.46 6.42 29 29 0 001 12a29 29 0 00.46 5.58A2.78 2.78 0 003.4 19.54C5.12 20 12 20 12 20s6.88 0 8.6-.46a2.78 2.78 0 001.94-1.96A29 29 0 0023 12a29 29 0 00-.46-5.58zM9.75 15.02V8.98L15.5 12l-5.75 3.02z"/></svg></a>
+          <a class="f-social" href="https://www.facebook.com/share/1KLJbHgA74/?mibextid=wwXIfr" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
+          <a class="f-social" href="https://www.tiktok.com/@bokonon.gbemadoyomin" target="_blank" rel="noopener" aria-label="TikTok"><svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V9.97a8.16 8.16 0 004.77 1.52V8.05a4.85 4.85 0 01-1-.36z"/></svg></a>
+          <a class="f-social" href="#" target="_blank" rel="noopener" aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 00-1.94-1.96C18.88 4 12 4 12 4s-6.88 0-8.6.46A2.78 2.78 0 001.46 6.42 29 29 0 001 12a29 29 0 00.46 5.58A2.78 2.78 0 003.4 19.54C5.12 20 12 20 12 20s6.88 0 8.6-.46a2.78 2.78 0 001.94-1.96A29 29 0 0023 12a29 29 0 00-.46-5.58zM9.75 15.02V8.98L15.5 12l-5.75 3.02z"/></svg></a>
         </div>
       </div>
       <div>
@@ -493,7 +668,7 @@ section { padding-block: var(--espace-xl); }
       </div>
       <div>
         <div class="f-col-titre">Contact officiel</div>
-        <div class="f-contact-item"><span class="f-contact-icon">📱</span><div class="f-contact-texte"><strong>WhatsApp</strong><a href="https://wa.me/22967668799" target="_blank" rel="noopener">+229 67 66 87 99</a></div></div>
+        <div class="f-contact-item"><span class="f-contact-icon">📱</span><div class="f-contact-texte"><strong>WhatsApp</strong><a href="https://wa.me/22967668799" target="_blank" rel="noopener">+229 01 67 66 87 99</a></div></div>
         <div class="f-contact-item"><span class="f-contact-icon">✉️</span><div class="f-contact-texte"><strong>Email</strong><a href="mailto:cabinetgbemadoyomin@gmail.com">cabinetgbemadoyomin@gmail.com</a></div></div>
         <div class="f-contact-item"><span class="f-contact-icon">📍</span><div class="f-contact-texte"><strong>Localisation</strong>Abomey-Calavi, Bénin</div></div>
       </div>
@@ -502,11 +677,34 @@ section { padding-block: var(--espace-xl); }
       <span class="f-copy">© 2026 Groupe Gbêmadoyomin SARL. Tous droits réservés.</span>
       <span class="f-gg">GG</span>
     </div>
+    <div class="footer-dev">
+      <span>Développé par</span>
+      <a class="dev-link" href="https://wa.me/229015252106?text=Bonjour%20Novasavoir%2C%20je%20souhaite%20en%20savoir%20plus%20sur%20vos%20services." target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+        Novasavoir
+      </a>
+      <span>|</span>
+      <a class="dev-link" href="https://wa.me/229015252106?text=Bonjour%20Novasavoir%2C%20je%20souhaite%20en%20savoir%20plus%20sur%20vos%20services." target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+        +229 01 52 52 106
+      </a>
+    </div>
   </div>
 </footer>
 
 <!-- ============================================================
-   BOUTONS FLOTTANTS
+   LIGHTBOX
+   ============================================================ -->
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightboxClose" aria-label="Fermer">✕</button>
+  <button class="lightbox-nav lightbox-prev" id="lightboxPrev" aria-label="Précédent">‹</button>
+  <img class="lightbox-img" id="lightboxImg" src="" alt="">
+  <button class="lightbox-nav lightbox-next" id="lightboxNext" aria-label="Suivant">›</button>
+  <div class="lightbox-caption" id="lightboxCaption"></div>
+</div>
+
+<!-- ============================================================
+   FLOTTANTS
    ============================================================ -->
 <div class="flottants">
   <a class="flottant-wa pulse-doux" href="https://wa.me/22967668799?text=Bonjour%2C%20je%20souhaite%20prendre%20rendez-vous." target="_blank" rel="noopener" aria-label="Contacter sur WhatsApp">
@@ -516,15 +714,260 @@ section { padding-block: var(--espace-xl); }
 </div>
 
 <!-- ============================================================
-   JAVASCRIPT
+   CHATBOT
    ============================================================ -->
+<div class="chatbot-container">
+  <button class="chatbot-btn" id="chatbotToggle" aria-label="Ouvrir l'assistant">
+    <svg viewBox="0 0 24 24">
+      <path d="M12 2a10 10 0 0 0-10 10 10 10 0 0 0 10 10 10 10 0 0 0 10-10 10 10 0 0 0-10-10z"/>
+      <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+      <line x1="12" y1="17" x2="12.01" y2="17"/>
+    </svg>
+  </button>
+  <div class="chatbot-panel" id="chatbotPanel">
+    <button class="chatbot-close" id="chatbotClose" aria-label="Fermer l'assistant">✕</button>
+    <h3>🤖 Assistant Gbêmadoyomin</h3>
+    <p class="chatbot-sub">Poser une question</p>
+    <div class="chatbot-messages" id="chatbotMessages">
+      <div class="chatbot-msg bot">Bonjour ! Je suis l'assistant du Groupe Gbêmadoyomin. Que recherchez-vous ?</div>
+    </div>
+    <div class="chatbot-options" id="chatbotOptions">
+      <button class="chatbot-option" data-action="consultation">🔸 Consultation</button>
+      <button class="chatbot-option" data-action="rdv">📅 RDV</button>
+      <button class="chatbot-option" data-action="livres">📚 Livres</button>
+      <button class="chatbot-option" data-action="vibration">💜 Vibration Sacrée</button>
+      <button class="chatbot-option" data-action="don">❤️ Don</button>
+      <button class="chatbot-option" data-action="contact">📞 Contact</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+   FIREBASE
+   ============================================================ -->
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+
 <script>
+// ============================================================
+// CONFIGURATION FIREBASE
+// ============================================================
+const firebaseConfig = {
+  apiKey: "AIzaSyBkn-26DnNoQBBfiR4-rRrPfOszW24KRRc",
+  authDomain: "groupe-gbemadoyomin.firebaseapp.com",
+  projectId: "groupe-gbemadoyomin",
+  storageBucket: "groupe-gbemadoyomin.firebasestorage.app",
+  messagingSenderId: "113133757650",
+  appId: "1:113133757650:web:71a07f05cca0e78e28390b"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+const cloudName = 'bvcdjwg7';
+
+// ============================================================
+// UTILITAIRES
+// ============================================================
+function cloudinaryUrl(url, width = 600) {
+  if (!url) return '';
+  return `https://res.cloudinary.com/${cloudName}/image/fetch/w_${width},f_auto/${encodeURIComponent(url)}`;
+}
+
+function extractYoutubeId(url) {
+  if (!url) return null;
+  const m = url.match(/(?:embed\/|watch\?v=|youtu\.be\/)([^?&]+)/);
+  return m ? m[1] : null;
+}
+
+function formatDate(dateStr) {
+  if (!dateStr) return '';
+  const d = new Date(dateStr + 'T00:00:00');
+  return d.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+}
+
+let observateurReveal;
+function reprendreReveal() {
+  document.querySelectorAll('.reveal:not(.est-visible), .reveal-stagger:not(.est-visible)').forEach(el => {
+    if (observateurReveal) observateurReveal.observe(el);
+  });
+}
+
+// ============================================================
+// CHARGER LES PHOTOS
+// ============================================================
+let toutesPhotos = [];
+
+async function chargerPhotos() {
+  const grille = document.getElementById('galerie-grille');
+  try {
+    const snap = await db.collection('medias_photos').orderBy('dateAjout', 'desc').get();
+    if (snap.empty) {
+      grille.innerHTML = '<div class="etat-vide">Aucune photo pour le moment.</div>';
+      return;
+    }
+
+    toutesPhotos = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+    grille.innerHTML = toutesPhotos.map((p, i) => `
+      <div class="galerie-item reveal-stagger shine"
+           style="background-image:url('${cloudinaryUrl(p.url, 500)}');"
+           data-index="${i}"
+           role="img"
+           aria-label="${p.titre || 'Photo'}">
+      </div>
+    `).join('');
+
+    // Lightbox
+    grille.querySelectorAll('.galerie-item').forEach(el => {
+      el.addEventListener('click', () => {
+        ouvrirLightbox(parseInt(el.dataset.index, 10));
+      });
+    });
+    reprendreReveal();
+  } catch (err) {
+    console.error('Erreur photos:', err);
+    grille.innerHTML = '<div class="etat-vide">Erreur de chargement des photos.</div>';
+  }
+}
+
+// ============================================================
+// LIGHTBOX
+// ============================================================
+let lightboxIndex = 0;
+
+function ouvrirLightbox(index) {
+  lightboxIndex = index;
+  const photo = toutesPhotos[index];
+  if (!photo) return;
+
+  const lb = document.getElementById('lightbox');
+  document.getElementById('lightboxImg').src = cloudinaryUrl(photo.url, 1600);
+  document.getElementById('lightboxImg').alt = photo.titre || 'Photo';
+  document.getElementById('lightboxCaption').textContent = photo.titre || '';
+  lb.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function fermerLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function naviguerLightbox(direction) {
+  if (!toutesPhotos.length) return;
+  lightboxIndex = (lightboxIndex + direction + toutesPhotos.length) % toutesPhotos.length;
+  const photo = toutesPhotos[lightboxIndex];
+  document.getElementById('lightboxImg').src = cloudinaryUrl(photo.url, 1600);
+  document.getElementById('lightboxImg').alt = photo.titre || 'Photo';
+  document.getElementById('lightboxCaption').textContent = photo.titre || '';
+}
+
+// ============================================================
+// CHARGER LES VIDÉOS
+// ============================================================
+async function chargerVideos() {
+  const grille = document.getElementById('videos-grille');
+  try {
+    const snap = await db.collection('medias_videos').orderBy('dateAjout', 'desc').get();
+    if (snap.empty) {
+      grille.innerHTML = '<div class="etat-vide">Aucune vidéo pour le moment.</div>';
+      return;
+    }
+
+    grille.innerHTML = snap.docs.map(doc => {
+      const v = doc.data();
+      const ytId = extractYoutubeId(v.url);
+      const vignette = v.vignetteURL
+        ? cloudinaryUrl(v.vignetteURL, 600)
+        : (ytId ? `https://img.youtube.com/vi/${ytId}/hqdefault.jpg` : 'video-1.jpeg');
+
+      return `
+        <div class="video-carte reveal-stagger">
+          <div class="video-vignette shine" style="background-image:url('${vignette}');" data-video-url="${v.url}">
+            <span class="video-play">▶</span>
+          </div>
+          <div class="video-corps">
+            <div class="video-titre">${v.titre || 'Vidéo'}</div>
+            <div class="video-categorie">${v.categorie || ''}</div>
+            <div class="video-actions">
+              <a class="btn-contour btn-sm" href="${v.url}" target="_blank" rel="noopener">▶ Regarder</a>
+              ${ytId ? `<a class="btn-or btn-sm" href="https://www.y2mate.com/youtube/${ytId}" target="_blank" rel="noopener">⬇ Télécharger</a>` : ''}
+            </div>
+          </div>
+        </div>
+      `;
+    }).join('');
+    reprendreReveal();
+  } catch (err) {
+    console.error('Erreur vidéos:', err);
+    grille.innerHTML = '<div class="etat-vide">Erreur de chargement des vidéos.</div>';
+  }
+}
+
+// ============================================================
+// CHARGER LA PRESSE
+// ============================================================
+async function chargerPresse() {
+  const liste = document.getElementById('presse-liste');
+  try {
+    const snap = await db.collection('presse').orderBy('dateAjout', 'desc').get();
+    if (snap.empty) {
+      liste.innerHTML = '<div class="etat-vide">Aucun article de presse pour le moment.</div>';
+      return;
+    }
+
+    liste.innerHTML = snap.docs.map(doc => {
+      const p = doc.data();
+      return `
+        <div class="presse-item reveal-stagger">
+          <h3>${p.titre || 'Sans titre'}</h3>
+          ${p.description ? `<p>${p.description}</p>` : ''}
+          <div class="presse-meta">${p.datePublication ? '📅 ' + formatDate(p.datePublication) : ''}</div>
+          <a class="presse-lien" href="${p.url}" target="_blank" rel="noopener">Lire l'article →</a>
+        </div>
+      `;
+    }).join('');
+    reprendreReveal();
+  } catch (err) {
+    console.error('Erreur presse:', err);
+    liste.innerHTML = '<div class="etat-vide">Erreur de chargement de la presse.</div>';
+  }
+}
+
+// ============================================================
+// CHARGER LE LIVE
+// ============================================================
+async function chargerLive() {
+  try {
+    const snap = await db.collection('live').get();
+    if (snap.empty) return;
+    const data = snap.docs[0].data();
+    if (!data.actif || !data.embedURL) return;
+
+    const banner = document.getElementById('liveBanner');
+    banner.classList.add('actif');
+    document.getElementById('liveBannerText').textContent = '🔴 EN DIRECT — ' + (data.titre || 'Live en cours');
+
+    const embedSection = document.getElementById('live-embed');
+    embedSection.style.display = 'block';
+    document.getElementById('liveEmbedTitle').textContent = '🔴 EN DIRECT — ' + (data.titre || 'Live en cours');
+    document.getElementById('liveEmbedZone').innerHTML = `
+      <iframe src="${data.embedURL}" style="width:100%;height:100%;border:none;" allowfullscreen loading="lazy"></iframe>
+    `;
+  } catch (err) {
+    console.error('Erreur live:', err);
+  }
+}
+
+// ============================================================
+// INITIALISATION
+// ============================================================
 document.addEventListener('DOMContentLoaded', () => {
 
-  // ---- LOADER ----
+  // LOADER
   setTimeout(() => document.getElementById('loader').classList.add('cache'), 600);
 
-  // ---- MENU MOBILE ----
+  // MENU MOBILE
   const burger = document.getElementById('nav-burger');
   const liens = document.getElementById('nav-liens');
   burger.addEventListener('click', () => {
@@ -540,18 +983,83 @@ document.addEventListener('DOMContentLoaded', () => {
     })
   );
 
-  // ---- REVEAL ----
-  const observateur = new IntersectionObserver((entrees) => {
+  // REVEAL
+  observateurReveal = new IntersectionObserver((entrees) => {
     entrees.forEach(entree => {
       if (entree.isIntersecting) {
         entree.target.classList.add('est-visible');
-        observateur.unobserve(entree.target);
+        observateurReveal.unobserve(entree.target);
       }
     });
   }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-  document.querySelectorAll('.reveal, .reveal-stagger').forEach(el => observateur.observe(el));
+  document.querySelectorAll('.reveal, .reveal-stagger').forEach(el => observateurReveal.observe(el));
 
+  // LIGHTBOX - événements
+  document.getElementById('lightboxClose').addEventListener('click', fermerLightbox);
+  document.getElementById('lightboxPrev').addEventListener('click', () => naviguerLightbox(-1));
+  document.getElementById('lightboxNext').addEventListener('click', () => naviguerLightbox(1));
+  document.getElementById('lightbox').addEventListener('click', (e) => {
+    if (e.target.id === 'lightbox') fermerLightbox();
+  });
+  document.addEventListener('keydown', (e) => {
+    const lb = document.getElementById('lightbox');
+    if (!lb.classList.contains('open')) return;
+    if (e.key === 'Escape') fermerLightbox();
+    if (e.key === 'ArrowLeft') naviguerLightbox(-1);
+    if (e.key === 'ArrowRight') naviguerLightbox(1);
+  });
+
+  // CHATBOT
+  const toggleBtn = document.getElementById('chatbotToggle');
+  const panel = document.getElementById('chatbotPanel');
+  const closeBtn = document.getElementById('chatbotClose');
+  const messagesContainer = document.getElementById('chatbotMessages');
+
+  toggleBtn.addEventListener('click', () => panel.classList.toggle('open'));
+  closeBtn.addEventListener('click', () => panel.classList.remove('open'));
+
+  function addMessage(text, sender) {
+    const msg = document.createElement('div');
+    msg.className = `chatbot-msg ${sender}`;
+    msg.textContent = text;
+    messagesContainer.appendChild(msg);
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+  }
+
+  const responses = {
+    'consultation': '🔸 Je vous propose une consultation du Fa. Nous avons deux formats : en présentiel à Abomey-Calavi (Bénin) ou à distance (WhatsApp / appel). Le Professeur Gbêmadoyômin vous accompagne avec écoute et tradition. Souhaitez-vous un RDV ?',
+    'rdv': '📅 Prendre rendez-vous est simple. Contactez-nous directement sur WhatsApp : +229 01 67 66 87 99. Nous vous répondrons dans les meilleurs délais pour fixer un créneau selon vos disponibilités.',
+    'livres': '📚 Découvrez les ouvrages du Professeur sur TODAAA SHOP : "Le Livre du Fa", "Le Code de Vie", "Vodoun Dan", "Le Livre d\'Astuces", et bien d\'autres. Chaque livre est une porte vers la connaissance traditionnelle.',
+    'vibration': '💜 Vibration Sacrée est une communauté de fraternité, de loyauté et de partage. Contactez-nous sur WhatsApp (+229 01 67 66 87 99) pour rejoindre cet espace de transmission et de solidarité.',
+    'don': '❤️ Merci pour votre générosité ! Vous pouvez faire un don directement via WhatsApp ou payer via MoMo Pay, Wave ou PayPal. Chaque contribution aide à soutenir les actions sociales du Groupe et à diffuser les traditions.',
+    'contact': '📞 Pour toute question, contactez-nous par WhatsApp : +229 01 67 66 87 99 ou par email : cabinetgbemadoyomin@gmail.com. Nous vous répondons dans les meilleurs délais.'
+  };
+
+  document.querySelectorAll('.chatbot-option').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const action = btn.dataset.action;
+      const label = btn.textContent.trim();
+      addMessage(label, 'user');
+      setTimeout(() => {
+        addMessage(responses[action] || 'Je peux vous aider avec autre chose.', 'bot');
+      }, 400);
+    });
+  });
+
+  // CHARGER LES DONNÉES
+  chargerPhotos();
+  chargerVideos();
+  chargerPresse();
+  chargerLive();
 });
+
+// ---- SERVICE WORKER ----
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('service-worker.js')
+    .then(() => console.log('✅ Service Worker enregistré'))
+    .catch(() => console.log('⚠️ Service Worker non enregistré'));
+}
 </script>
+
 </body>
 </html>
