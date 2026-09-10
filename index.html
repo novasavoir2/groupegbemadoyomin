@@ -859,6 +859,26 @@ section { padding-block: var(--espace-xl); }
   .footer-grille { grid-template-columns: 1fr; gap: 32px; }
   .footer-bas { flex-direction: column; align-items: flex-start; }
 }
+
+/* ===================================================================
+   LIVE BANNER (AJOUT)
+   =================================================================== */
+.live-banner {
+  background: linear-gradient(135deg, #7a1515, #4a0d0d);
+  border-bottom: 1px solid var(--or);
+  padding: 10px 0;
+  display: none;
+}
+.live-banner.actif { display: block; }
+.live-banner-inner { display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; text-align: center; }
+.live-dot { display: inline-block; width: 12px; height: 12px; border-radius: 50%; background: #ff2d2d; animation: clignote 1.2s ease-in-out infinite; flex-shrink: 0; }
+@keyframes clignote {
+  0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 8px #ff2d2d; }
+  50% { opacity: 0.3; transform: scale(0.8); box-shadow: 0 0 20px #ff2d2d; }
+}
+.live-banner strong { color: var(--blanc); font-family: var(--font-titres); letter-spacing: 0.05em; font-size: 0.9rem; }
+.live-banner a { color: var(--or-clair); font-size: 0.82rem; border-bottom: 1px solid var(--or-clair); transition: color 0.3s ease; }
+.live-banner a:hover { color: var(--blanc); }
 </style>
 </head>
 <body data-page="accueil">
@@ -943,6 +963,15 @@ section { padding-block: var(--espace-xl); }
   </div>
 </div>
 
+<!-- ===================== LIVE BANNER (AJOUT) ===================== -->
+<div class="live-banner" id="liveBanner">
+  <div class="conteneur live-banner-inner">
+    <span class="live-dot"></span>
+    <strong id="liveBannerText">🔴 EN DIRECT — Live en cours</strong>
+    <a href="#live-embed">Rejoindre le live →</a>
+  </div>
+</div>
+
 <!-- ===================== NAVIGATION ===================== -->
 <nav class="nav" aria-label="Navigation principale">
   <a href="index.html" class="nav-logo">
@@ -986,6 +1015,19 @@ section { padding-block: var(--espace-xl); }
     </div>
   </div>
 </header>
+
+<!-- ===================== LIVE EMBED (AJOUT) ===================== -->
+<section id="live-embed" style="display:none; padding-block: var(--espace-md);">
+  <div class="conteneur">
+    <div style="border: 1px solid var(--or); border-radius: 6px; overflow: hidden; background: var(--noir-2);">
+      <div style="padding: 12px 20px; background: linear-gradient(135deg, var(--rouge), var(--noir-2)); display: flex; align-items: center; gap: 12px; border-bottom: 1px solid var(--or);">
+        <span class="live-dot"></span>
+        <strong style="color: var(--blanc); font-family: var(--font-titres); font-size: 0.9rem;" id="liveEmbedTitle">🔴 EN DIRECT</strong>
+      </div>
+      <div style="aspect-ratio: 16/9; background: var(--noir-3);" id="liveEmbedZone"></div>
+    </div>
+  </div>
+</section>
 
 <!-- ===================== ARCHITECTURE DU GROUPE ===================== -->
 <section id="architecture">
@@ -1274,6 +1316,52 @@ section { padding-block: var(--espace-xl); }
   const db = getFirestore(app);
 
   console.log("✅ Firebase connecté avec succès !");
+</script>
+
+<!-- ===================== SCRIPT LIVE (AJOUT) ===================== -->
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+<script>
+  // Réutilise la config de l'app déjà initialisée si possible,
+  // sinon en initialise une nouvelle pour le mode compat.
+  (function () {
+    try {
+      var firebaseConfig = {
+        apiKey: "AIzaSyBkn-26DnNoQBBfiR4-rRrPfOszW24KRRc",
+        authDomain: "groupe-gbemadoyomin.firebaseapp.com",
+        projectId: "groupe-gbemadoyomin",
+        storageBucket: "groupe-gbemadoyomin.firebasestorage.app",
+        messagingSenderId: "113133757650",
+        appId: "1:113133757650:web:71a07f05cca0e78e28390b"
+      };
+      if (!firebase.apps.length) {
+        firebase.initializeApp(firebaseConfig);
+      }
+      var dbLive = firebase.firestore();
+
+      document.addEventListener('DOMContentLoaded', async function () {
+        try {
+          var snap = await dbLive.collection('live').get();
+          if (snap.empty) return;
+          var data = snap.docs[0].data();
+          if (!data.actif || !data.embedURL) return;
+
+          document.getElementById('liveBanner').classList.add('actif');
+          document.getElementById('liveBannerText').textContent = '🔴 EN DIRECT — ' + (data.titre || 'Live en cours');
+
+          var embedSection = document.getElementById('live-embed');
+          embedSection.style.display = 'block';
+          document.getElementById('liveEmbedTitle').textContent = '🔴 EN DIRECT — ' + (data.titre || 'Live en cours');
+          document.getElementById('liveEmbedZone').innerHTML =
+            '<iframe src="' + data.embedURL + '" style="width:100%;height:100%;border:none;" allowfullscreen loading="lazy"></iframe>';
+        } catch (err) {
+          console.error('Erreur live:', err);
+        }
+      });
+    } catch (e) {
+      console.error('Erreur init live:', e);
+    }
+  })();
 </script>
 
 <!-- ===================== SCRIPT PRINCIPAL ===================== -->
