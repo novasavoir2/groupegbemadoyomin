@@ -8,12 +8,12 @@
 <meta name="keywords" content="événements, séminaires, conférences, célébrations, Fa, Vodoun, traditions africaines, Groupe Gbêmadoyomin, GG, Cabinet Gbêmadoyomin">
 <meta name="author" content="Groupe Gbêmadoyomin">
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
-<link rel="canonical" href="https://www.groupegbemadoyomin.com/evenements.html">
+<link rel="canonical" href="https://groupegbemadoyomin.com/evenements.html">
 
 <meta property="og:type" content="website">
 <meta property="og:title" content="Événements — Séminaires, Conférences & Célébrations | Groupe Gbêmadoyomin">
 <meta property="og:description" content="Séminaires, conférences et célébrations organisés par le Cabinet Gbêmadoyomin autour du Fa, du Vodoun et des traditions africaines.">
-<meta property="og:url" content="https://www.groupegbemadoyomin.com/evenements.html">
+<meta property="og:url" content="https://groupegbemadoyomin.com/evenements.html">
 <meta property="og:locale" content="fr_FR">
 <meta property="og:image" content="logo-gg.jpeg">
 <meta property="og:image:width" content="1200">
@@ -26,30 +26,15 @@
 <meta name="twitter:image" content="logo-gg.jpeg">
 
 <meta name="theme-color" content="#0D0D0D">
+<link rel="manifest" href="manifest.json">
 
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Event",
-  "name": "Événements du Cabinet Gbêmadoyomin",
-  "description": "Rencontres, séminaires, conférences et célébrations autour du Fa, du Vodoun et des traditions africaines.",
-  "organizer": {
-    "@type": "Organization",
-    "name": "Cabinet Gbêmadoyomin",
-    "parentOrganization": {
-      "@type": "Organization",
-      "name": "Groupe Gbêmadoyomin"
-    }
-  },
-  "location": {
-    "@type": "Place",
-    "address": {
-      "@type": "PostalAddress",
-      "addressLocality": "Abomey-Calavi",
-      "addressCountry": "BJ"
-    }
-  }
-}
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XXXXXXXXXX');
 </script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -98,18 +83,48 @@ section { padding-block: var(--espace-xl); }
   background: linear-gradient(135deg, var(--or-clair), var(--or-fonce)); color: var(--noir);
   font-family: var(--font-titres); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em;
   padding: 14px 30px; border-radius: var(--rayon); box-shadow: var(--lueur-or);
-  transition: transform var(--vitesse), box-shadow var(--vitesse);
+  transition: transform var(--vitesse), box-shadow var(--vitesse); border: none;
 }
 .btn-or:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(184,146,46,.4); }
 .btn-contour {
   display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--border); color: var(--blanc-doux);
   font-family: var(--font-titres); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em;
   padding: 12px 26px; border-radius: var(--rayon); transition: border-color var(--vitesse), color var(--vitesse);
+  background: transparent;
 }
 .btn-contour:hover { border-color: var(--or); color: var(--or-clair); }
 
 /* ============================================================
-   LOADER PREMIUM AVEC LOGO
+   BANDEAU DÉFILANT
+   ============================================================ */
+.bandeau-defilant {
+  position: sticky; top: 0; z-index: 50;
+  background: linear-gradient(135deg, var(--rouge), var(--noir-2));
+  color: var(--blanc); padding: 8px 0; overflow: hidden;
+  border-bottom: 1px solid var(--or);
+  font-family: var(--font-titres);
+  font-size: clamp(0.7rem, 1.2vw, 0.95rem); letter-spacing: 0.05em;
+}
+.bandeau-defilant-inner {
+  display: inline-flex; align-items: center;
+  animation: defilement 30s linear infinite;
+  padding-left: 100%; white-space: nowrap;
+  transition: animation-play-state 0.3s ease;
+}
+.bandeau-defilant:hover .bandeau-defilant-inner { animation-play-state: paused; }
+.bandeau-defilant-inner span { display: inline-flex; align-items: center; gap: 8px; margin: 0 30px; }
+.bandeau-defilant-inner .highlight { color: var(--or-clair); font-weight: 700; }
+.bandeau-defilant-inner .bandeau-lien {
+  display: inline-flex; align-items: center; gap: 8px;
+  color: var(--blanc); text-decoration: none;
+  transition: color 0.3s ease; padding: 4px 8px; border-radius: 3px;
+}
+.bandeau-defilant-inner .bandeau-lien:hover { color: var(--or-clair); background: rgba(255,255,255,0.05); }
+.bandeau-defilant-inner .bandeau-lien img { width: 24px; height: 30px; object-fit: cover; border-radius: 2px; border: 1px solid rgba(255,255,255,0.2); }
+@keyframes defilement { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+
+/* ============================================================
+   LOADER
    ============================================================ */
 .loader {
   position: fixed; inset: 0; z-index: 999; background: var(--noir);
@@ -117,23 +132,10 @@ section { padding-block: var(--espace-xl); }
   transition: opacity 0.8s ease, visibility 0.8s ease;
 }
 .loader.cache { opacity: 0; visibility: hidden; pointer-events: none; }
-.loader-logo {
-  width: 90px; height: auto;
-  animation: pulse-logo 2s ease-in-out infinite;
-  filter: drop-shadow(0 0 30px rgba(184,146,46,0.3));
-}
-@keyframes pulse-logo {
-  0%, 100% { transform: scale(0.95) rotate(-2deg); opacity: 0.8; }
-  50% { transform: scale(1.08) rotate(2deg); opacity: 1; }
-}
-.loader-trait {
-  width: 60px; height: 2px; background: var(--or);
-  animation: etirer 1.7s ease-in-out infinite;
-}
-@keyframes etirer {
-  0%, 100% { width: 30px; opacity: 0.3; }
-  50% { width: 80px; opacity: 1; }
-}
+.loader-logo { width: 90px; height: auto; animation: pulse-logo 2s ease-in-out infinite; filter: drop-shadow(0 0 30px rgba(184,146,46,0.3)); }
+@keyframes pulse-logo { 0%, 100% { transform: scale(0.95) rotate(-2deg); opacity: 0.8; } 50% { transform: scale(1.08) rotate(2deg); opacity: 1; } }
+.loader-trait { width: 60px; height: 2px; background: var(--or); animation: etirer 1.7s ease-in-out infinite; }
+@keyframes etirer { 0%, 100% { width: 30px; opacity: 0.3; } 50% { width: 80px; opacity: 1; } }
 
 /* ============================================================
    NAVIGATION
@@ -170,6 +172,48 @@ section { padding-block: var(--espace-xl); }
 }
 
 /* ============================================================
+   CHATBOT
+   ============================================================ */
+.chatbot-container { position: fixed; bottom: 100px; left: 20px; z-index: 98; display: flex; flex-direction: column; align-items: flex-start; gap: 10px; }
+.chatbot-btn {
+  width: 54px; height: 54px; border-radius: 50%;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: white; display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
+  cursor: pointer; transition: transform 0.3s ease; border: none;
+}
+.chatbot-btn:hover { transform: scale(1.05); }
+.chatbot-btn svg { width: 28px; height: 28px; fill: none; stroke: white; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.chatbot-panel {
+  position: fixed; bottom: 160px; left: 20px; z-index: 97;
+  width: 340px; max-width: 90vw;
+  background: var(--noir-2); border: 1px solid var(--border); border-radius: 16px;
+  padding: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+  transform: translateY(20px) scale(0.95); opacity: 0; pointer-events: none;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+.chatbot-panel.open { transform: translateY(0) scale(1); opacity: 1; pointer-events: auto; }
+.chatbot-panel h3 { font-family: var(--font-titres); font-size: 0.9rem; color: var(--or); margin-bottom: 4px; }
+.chatbot-panel .chatbot-sub { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 14px; }
+.chatbot-messages { max-height: 200px; overflow-y: auto; margin-bottom: 12px; display: flex; flex-direction: column; gap: 6px; }
+.chatbot-msg { padding: 8px 12px; border-radius: 8px; font-size: 0.85rem; max-width: 85%; }
+.chatbot-msg.bot { background: var(--noir-3); color: var(--blanc-doux); align-self: flex-start; border-bottom-left-radius: 2px; }
+.chatbot-msg.user { background: linear-gradient(135deg, var(--or-clair), var(--or-fonce)); color: var(--noir); align-self: flex-end; border-bottom-right-radius: 2px; }
+.chatbot-options { display: flex; flex-wrap: wrap; gap: 6px; }
+.chatbot-option {
+  background: var(--noir-3); border: 1px solid var(--border-discret); border-radius: 6px;
+  padding: 8px 14px; font-size: 0.8rem; color: var(--blanc-doux);
+  transition: border-color var(--vitesse), background var(--vitesse); cursor: pointer; flex: 1 0 auto;
+}
+.chatbot-option:hover { border-color: var(--or); background: rgba(184,146,46,0.08); }
+.chatbot-close { position: absolute; top: 8px; right: 12px; font-size: 1.2rem; color: var(--text-discret); cursor: pointer; background: none; border: none; }
+@media (max-width: 640px) {
+  .chatbot-panel { width: 280px; bottom: 150px; left: 10px; }
+  .chatbot-btn { width: 48px; height: 48px; }
+  .chatbot-btn svg { width: 24px; height: 24px; }
+}
+
+/* ============================================================
    FLOTTANTS
    ============================================================ */
 .flottants { position: fixed; right: 20px; bottom: 20px; z-index: 90; display: flex; flex-direction: column; align-items: flex-end; gap: 12px; }
@@ -184,39 +228,73 @@ section { padding-block: var(--espace-xl); }
    ============================================================ */
 .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.8s ease, transform 0.8s ease; }
 .reveal.est-visible { opacity: 1; transform: translateY(0); }
-
 .reveal-stagger { opacity: 0; transform: translateY(28px); transition: opacity 0.8s ease, transform 0.8s ease; }
 .reveal-stagger.est-visible { opacity: 1; transform: translateY(0); }
 .reveal-stagger:nth-child(1) { transition-delay: 0.05s; }
 .reveal-stagger:nth-child(2) { transition-delay: 0.12s; }
 .reveal-stagger:nth-child(3) { transition-delay: 0.19s; }
 .reveal-stagger:nth-child(4) { transition-delay: 0.26s; }
-
 .pulse-doux { animation: pulse-doux 2.6s ease-in-out infinite; }
 @keyframes pulse-doux { 0%, 100% { box-shadow: 0 0 0 0 rgba(184,146,46,.35); } 50% { box-shadow: 0 0 0 10px rgba(184,146,46,0); } }
-
 .shine { position: relative; overflow: hidden; }
 .shine::before { content: ''; position: absolute; z-index: 5; inset: -30% -80%; background: linear-gradient(105deg, transparent 43%, rgba(255,255,255,0.12) 50%, transparent 57%); transform: translateX(-45%); transition: transform 1s ease; pointer-events: none; }
 .shine:hover::before { transform: translateX(45%); }
-
 @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } .reveal-stagger { opacity: 1; transform: none; transition: none; } .pulse-doux { animation: none; } }
 
 /* ============================================================
-   HERO ÉVÉNEMENTS
+   LIVE INDICATOR
+   ============================================================ */
+.live-banner {
+  background: linear-gradient(135deg, #7a1515, #4a0d0d);
+  border-bottom: 1px solid var(--or);
+  padding: 10px 0;
+  display: none;
+}
+.live-banner.actif { display: block; }
+.live-banner-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  text-align: center;
+}
+.live-dot {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #ff2d2d;
+  animation: clignote 1.2s ease-in-out infinite;
+  flex-shrink: 0;
+}
+@keyframes clignote {
+  0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 8px #ff2d2d; }
+  50% { opacity: 0.3; transform: scale(0.8); box-shadow: 0 0 20px #ff2d2d; }
+}
+.live-banner strong { color: var(--blanc); font-family: var(--font-titres); letter-spacing: 0.05em; font-size: 0.9rem; }
+.live-banner a {
+  color: var(--or-clair);
+  font-size: 0.82rem;
+  border-bottom: 1px solid var(--or-clair);
+  transition: color 0.3s ease;
+}
+.live-banner a:hover { color: var(--blanc); }
+
+/* ============================================================
+   HERO
    ============================================================ */
 .evt-hero {
   min-height: 42vh; display: flex; align-items: center;
   background: radial-gradient(circle at 78% 20%, rgba(184,146,46,.12), transparent 55%), linear-gradient(150deg, var(--bleu) 0%, var(--noir) 65%);
   padding-block: calc(var(--espace-xl) + 72px) var(--espace-md);
-  text-align: center;
-  position: relative;
-  overflow: hidden;
+  text-align: center; position: relative; overflow: hidden;
 }
 .evt-hero .conteneur { margin-inline: auto; position: relative; z-index: 1; }
 .evt-hero p { color: var(--blanc-doux); margin-inline: auto; }
 
 /* ============================================================
-   ÉVÉNEMENT À LA UNE
+   À LA UNE
    ============================================================ */
 .evt-une {
   background: var(--noir-2); border: 1px solid var(--border); border-radius: 6px; overflow: hidden;
@@ -268,13 +346,13 @@ section { padding-block: var(--espace-xl); }
 .agenda-titre { font-family: var(--font-titres); font-size: .88rem; color: var(--blanc); margin-bottom: 8px; }
 .agenda-meta { font-size: .78rem; color: var(--text-muted); display: flex; flex-direction: column; gap: 4px; margin-bottom: 14px; }
 .agenda-actions { display: flex; gap: 8px; }
-.agenda-actions a { flex: 1; text-align: center; font-size: .68rem; }
-.agenda-vide { color: var(--text-discret); font-size: .9rem; text-align: center; padding: var(--espace-md) 0; }
+.agenda-actions a { flex: 1; text-align: center; font-size: .68rem; padding: 8px 12px; }
+.agenda-vide { color: var(--text-discret); font-size: .9rem; text-align: center; padding: var(--espace-md) 0; grid-column: 1 / -1; }
 @media (max-width: 900px) { .agenda-grille { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 560px) { .agenda-grille { grid-template-columns: 1fr; } }
 
 /* ============================================================
-   ARCHIVES & BANDEAU
+   ARCHIVES
    ============================================================ */
 .archives-cta { text-align: center; border: 1px solid var(--border); border-radius: 6px; padding: var(--espace-lg) var(--espace-md); background: var(--noir-2); }
 
@@ -310,7 +388,10 @@ section { padding-block: var(--espace-xl); }
 .footer-bas { padding-top: 22px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
 .f-copy { font-size: 11px; color: var(--text-discret); opacity: 0.8; }
 .f-gg { font-family: var(--font-titres); font-size: 12px; color: var(--or); letter-spacing: 0.2em; opacity: 0.7; }
-
+.footer-dev { margin-top: 10px; padding-top: 14px; border-top: 1px solid var(--border-discret); display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; font-size: 11px; color: var(--text-discret); }
+.footer-dev .dev-link { display: inline-flex; align-items: center; gap: 6px; color: var(--or); font-weight: 600; transition: color 0.3s ease; }
+.footer-dev .dev-link:hover { color: var(--or-clair); }
+.footer-dev .dev-link svg { width: 14px; height: 14px; fill: currentColor; }
 @media (max-width: 900px) { .footer-grille { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 560px) { .footer-grille { grid-template-columns: 1fr; gap: 32px; } .footer-bas { flex-direction: column; align-items: flex-start; } }
 </style>
@@ -318,11 +399,42 @@ section { padding-block: var(--espace-xl); }
 <body data-page="evenements">
 
 <!-- ============================================================
-   LOADER PREMIUM
+   LOADER
    ============================================================ -->
 <div class="loader" id="loader" aria-hidden="true">
   <img src="logo-gg.jpeg" alt="Groupe Gbêmadoyomin" class="loader-logo" loading="eager">
   <span class="loader-trait"></span>
+</div>
+
+<!-- ============================================================
+   BANDEAU DÉFILANT
+   ============================================================ -->
+<div class="bandeau-defilant" aria-hidden="true">
+  <div class="bandeau-defilant-inner">
+    <span><a class="bandeau-lien" href="evenements.html">🔥 <span class="highlight">PROCHAINE ÉDITION 2027</span> — Restez connectés !</a></span>
+    <span><a class="bandeau-lien" href="boutique.html#livres"><img src="livre-du-fa.jpeg" alt="Le Livre du Fa" loading="lazy">Le Livre du Fa</a></span>
+    <span><a class="bandeau-lien" href="boutique.html#livres"><img src="code-de-vie.jpeg" alt="Le Code de Vie" loading="lazy">Le Code de Vie</a></span>
+    <span><a class="bandeau-lien" href="boutique.html#livres"><img src="vodoun-dan.jpeg" alt="Vodoun Dan" loading="lazy">Vodoun Dan</a></span>
+    <span><a class="bandeau-lien" href="boutique.html#livres"><img src="livre-astuces.jpeg" alt="Le Livre d'Astuces" loading="lazy">Le Livre d'Astuces</a></span>
+    <span><a class="bandeau-lien" href="boutique.html#mode">👕 Collection TODAAA 2026 — Édition actuelle</a></span>
+    <span><a class="bandeau-lien" href="evenements.html">🔥 <span class="highlight">PROCHAINE ÉDITION 2027</span> — Restez connectés !</a></span>
+    <span><a class="bandeau-lien" href="boutique.html#livres"><img src="livre-du-fa.jpeg" alt="Le Livre du Fa" loading="lazy">Le Livre du Fa</a></span>
+    <span><a class="bandeau-lien" href="boutique.html#livres"><img src="code-de-vie.jpeg" alt="Le Code de Vie" loading="lazy">Le Code de Vie</a></span>
+    <span><a class="bandeau-lien" href="boutique.html#livres"><img src="vodoun-dan.jpeg" alt="Vodoun Dan" loading="lazy">Vodoun Dan</a></span>
+    <span><a class="bandeau-lien" href="boutique.html#livres"><img src="livre-astuces.jpeg" alt="Le Livre d'Astuces" loading="lazy">Le Livre d'Astuces</a></span>
+    <span><a class="bandeau-lien" href="boutique.html#mode">👕 Collection TODAAA 2026 — Édition actuelle</a></span>
+  </div>
+</div>
+
+<!-- ============================================================
+   LIVE BANNER (clignotant si actif)
+   ============================================================ -->
+<div class="live-banner" id="liveBanner">
+  <div class="conteneur live-banner-inner">
+    <span class="live-dot"></span>
+    <strong id="liveBannerText">🔴 EN DIRECT — Live en cours</strong>
+    <a href="#live-embed" id="liveBannerLink">Rejoindre le live →</a>
+  </div>
 </div>
 
 <!-- ============================================================
@@ -341,10 +453,12 @@ section { padding-block: var(--espace-xl); }
     <a class="nav-lien" href="le-professeur.html">Le Professeur</a>
     <a class="nav-lien" href="consultations.html">Cabinet</a>
     <a class="nav-lien" href="ong.html">ONG</a>
+    <a class="nav-lien" href="decouvrir.html">Découvrir</a>
     <a class="nav-lien" href="boutique.html">TODAAA SHOP</a>
     <a class="nav-lien actif" href="evenements.html">Événements</a>
     <a class="nav-lien" href="vibration-sacree.html">Vibration Sacrée</a>
     <a class="nav-lien" href="medias.html">Médias</a>
+    <a class="nav-lien" href="contact.html">Contact</a>
     <a class="btn-or nav-rdv-mobile" href="https://wa.me/22967668799?text=Bonjour%2C%20je%20souhaite%20prendre%20rendez-vous." target="_blank" rel="noopener">Prendre RDV</a>
   </div>
   <a class="nav-rdv" href="https://wa.me/22967668799?text=Bonjour%2C%20je%20souhaite%20prendre%20rendez-vous." target="_blank" rel="noopener">Prendre RDV</a>
@@ -354,24 +468,41 @@ section { padding-block: var(--espace-xl); }
 </nav>
 
 <!-- ============================================================
-   HERO ÉVÉNEMENTS
+   HERO
    ============================================================ -->
 <header class="evt-hero">
   <div class="conteneur">
     <p class="eyebrow">Rencontres • Séminaires • Conférences • Célébrations</p>
-    <h1>Événements</h1>
+    <h1>Événements & Actualités</h1>
     <p>Des espaces privilégiés de transmission, d'apprentissage, d'échange et de partage d'expérience, consacrés au Fa, au Vodoun, aux traditions africaines et au développement de la personne.</p>
   </div>
 </header>
 
 <!-- ============================================================
-   PROCHAIN ÉVÉNEMENT (À LA UNE)
+   LIVE EMBED (si actif)
+   ============================================================ -->
+<section id="live-embed" style="display:none; padding-block: var(--espace-md);">
+  <div class="conteneur">
+    <div style="border: 1px solid var(--or); border-radius: 6px; overflow: hidden; background: var(--noir-2);">
+      <div style="padding: 12px 20px; background: linear-gradient(135deg, var(--rouge), var(--noir-2)); display: flex; align-items: center; gap: 12px; border-bottom: 1px solid var(--or);">
+        <span class="live-dot"></span>
+        <strong style="color: var(--blanc); font-family: var(--font-titres); font-size: 0.9rem;" id="liveEmbedTitle">🔴 EN DIRECT</strong>
+      </div>
+      <div style="aspect-ratio: 16/9; background: var(--noir-3);" id="liveEmbedZone"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+   À LA UNE
    ============================================================ -->
 <section>
   <div class="conteneur">
     <p class="eyebrow reveal">À la une</p>
     <h2 class="reveal" style="margin-bottom: var(--espace-md);">Prochain événement</h2>
-    <div id="evt-une-zone"><div class="agenda-vide">Chargement…</div></div>
+    <div id="evt-une-zone">
+      <div class="agenda-vide">Chargement…</div>
+    </div>
   </div>
 </section>
 
@@ -422,15 +553,14 @@ section { padding-block: var(--espace-xl); }
 </section>
 
 <!-- ============================================================
-   ARCHIVES
+   ARCHIVES (actualités / événements passés)
    ============================================================ -->
 <section>
   <div class="conteneur">
-    <div class="archives-cta reveal">
-      <p class="eyebrow">Événements passés</p>
-      <h2 style="margin-bottom: var(--espace-sm);">Nos archives</h2>
-      <p style="color: var(--blanc-doux); max-width: 520px; margin-inline: auto; margin-bottom: var(--espace-md);">Parce que chaque rencontre fait partie de notre histoire : photos, vidéos, affiches, thèmes, dates et pays.</p>
-      <a class="btn-contour" href="medias.html">Explorer nos archives</a>
+    <p class="eyebrow reveal">Actualités & retours</p>
+    <h2 class="reveal" style="margin-bottom: var(--espace-md);">Événements passés & actualités</h2>
+    <div class="agenda-grille" id="archives-grille">
+      <div class="agenda-vide">Chargement…</div>
     </div>
   </div>
 </section>
@@ -471,9 +601,9 @@ section { padding-block: var(--espace-xl); }
         <div class="f-sigle">GG — SARL multisectorielle</div>
         <p class="f-desc">Cabinet Gbêmadoyomin, ONG Gbêmadoyomin, TODAAA SHOP et Vibration Sacrée — quatre entités réunies autour d'une même vision : savoir, transmission, héritage et innovation.</p>
         <div class="f-socials">
-          <a class="f-social" href="#" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
-          <a class="f-social" href="#" aria-label="TikTok"><svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V9.97a8.16 8.16 0 004.77 1.52V8.05a4.85 4.85 0 01-1-.36z"/></svg></a>
-          <a class="f-social" href="#" aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 00-1.94-1.96C18.88 4 12 4 12 4s-6.88 0-8.6.46A2.78 2.78 0 001.46 6.42 29 29 0 001 12a29 29 0 00.46 5.58A2.78 2.78 0 003.4 19.54C5.12 20 12 20 12 20s6.88 0 8.6-.46a2.78 2.78 0 001.94-1.96A29 29 0 0023 12a29 29 0 00-.46-5.58zM9.75 15.02V8.98L15.5 12l-5.75 3.02z"/></svg></a>
+          <a class="f-social" href="https://www.facebook.com/share/1KLJbHgA74/?mibextid=wwXIfr" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
+          <a class="f-social" href="https://www.tiktok.com/@bokonon.gbemadoyomin" target="_blank" rel="noopener" aria-label="TikTok"><svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V9.97a8.16 8.16 0 004.77 1.52V8.05a4.85 4.85 0 01-1-.36z"/></svg></a>
+          <a class="f-social" href="#" target="_blank" rel="noopener" aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 00-1.94-1.96C18.88 4 12 4 12 4s-6.88 0-8.6.46A2.78 2.78 0 001.46 6.42 29 29 0 001 12a29 29 0 00.46 5.58A2.78 2.78 0 003.4 19.54C5.12 20 12 20 12 20s6.88 0 8.6-.46a2.78 2.78 0 001.94-1.96A29 29 0 0023 12a29 29 0 00-.46-5.58zM9.75 15.02V8.98L15.5 12l-5.75 3.02z"/></svg></a>
         </div>
       </div>
       <div>
@@ -499,7 +629,7 @@ section { padding-block: var(--espace-xl); }
       </div>
       <div>
         <div class="f-col-titre">Contact officiel</div>
-        <div class="f-contact-item"><span class="f-contact-icon">📱</span><div class="f-contact-texte"><strong>WhatsApp</strong><a href="https://wa.me/22967668799" target="_blank" rel="noopener">+229 67 66 87 99</a></div></div>
+        <div class="f-contact-item"><span class="f-contact-icon">📱</span><div class="f-contact-texte"><strong>WhatsApp</strong><a href="https://wa.me/22967668799" target="_blank" rel="noopener">+229 01 67 66 87 99</a></div></div>
         <div class="f-contact-item"><span class="f-contact-icon">✉️</span><div class="f-contact-texte"><strong>Email</strong><a href="mailto:cabinetgbemadoyomin@gmail.com">cabinetgbemadoyomin@gmail.com</a></div></div>
         <div class="f-contact-item"><span class="f-contact-icon">📍</span><div class="f-contact-texte"><strong>Localisation</strong>Abomey-Calavi, Bénin</div></div>
       </div>
@@ -508,11 +638,23 @@ section { padding-block: var(--espace-xl); }
       <span class="f-copy">© 2026 Groupe Gbêmadoyomin SARL. Tous droits réservés.</span>
       <span class="f-gg">GG</span>
     </div>
+    <div class="footer-dev">
+      <span>Développé par</span>
+      <a class="dev-link" href="https://wa.me/229015252106?text=Bonjour%20Novasavoir%2C%20je%20souhaite%20en%20savoir%20plus%20sur%20vos%20services." target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+        Novasavoir
+      </a>
+      <span>|</span>
+      <a class="dev-link" href="https://wa.me/229015252106?text=Bonjour%20Novasavoir%2C%20je%20souhaite%20en%20savoir%20plus%20sur%20vos%20services." target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+        +229 01 52 52 106
+      </a>
+    </div>
   </div>
 </footer>
 
 <!-- ============================================================
-   BOUTONS FLOTTANTS
+   FLOTTANTS
    ============================================================ -->
 <div class="flottants">
   <a class="flottant-wa pulse-doux" href="https://wa.me/22967668799?text=Bonjour%2C%20je%20souhaite%20prendre%20rendez-vous." target="_blank" rel="noopener" aria-label="Contacter sur WhatsApp">
@@ -522,90 +664,73 @@ section { padding-block: var(--espace-xl); }
 </div>
 
 <!-- ============================================================
-   JAVASCRIPT
+   CHATBOT
    ============================================================ -->
+<div class="chatbot-container">
+  <button class="chatbot-btn" id="chatbotToggle" aria-label="Ouvrir l'assistant">
+    <svg viewBox="0 0 24 24">
+      <path d="M12 2a10 10 0 0 0-10 10 10 10 0 0 0 10 10 10 10 0 0 0 10-10 10 10 0 0 0-10-10z"/>
+      <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+      <line x1="12" y1="17" x2="12.01" y2="17"/>
+    </svg>
+  </button>
+  <div class="chatbot-panel" id="chatbotPanel">
+    <button class="chatbot-close" id="chatbotClose" aria-label="Fermer l'assistant">✕</button>
+    <h3>🤖 Assistant Gbêmadoyomin</h3>
+    <p class="chatbot-sub">Poser une question</p>
+    <div class="chatbot-messages" id="chatbotMessages">
+      <div class="chatbot-msg bot">Bonjour ! Je suis l'assistant du Groupe Gbêmadoyomin. Que recherchez-vous ?</div>
+    </div>
+    <div class="chatbot-options" id="chatbotOptions">
+      <button class="chatbot-option" data-action="consultation">🔸 Consultation</button>
+      <button class="chatbot-option" data-action="rdv">📅 RDV</button>
+      <button class="chatbot-option" data-action="livres">📚 Livres</button>
+      <button class="chatbot-option" data-action="vibration">💜 Vibration Sacrée</button>
+      <button class="chatbot-option" data-action="don">❤️ Don</button>
+      <button class="chatbot-option" data-action="contact">📞 Contact</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+   FIREBASE CONFIG
+   ============================================================ -->
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+
 <script>
-// Données d'exemple — à remplacer par une source dynamique (Firestore) plus tard.
-const EVENEMENTS = [
-  // Exemple de données :
-  // {
-  //   titre: "Séminaire — Le Fa et la connaissance de soi",
-  //   date: "2026-11-15",
-  //   heure: "10h00",
-  //   lieu: "Abomey-Calavi, Bénin",
-  //   participation: "Sur inscription",
-  //   description: "Une présentation courte et forte du thème, de ce que les participants vont découvrir.",
-  //   affiche: "affiche-evenement.jpeg",
-  // },
-];
+// ============================================================
+// CONFIGURATION FIREBASE
+// ============================================================
+const firebaseConfig = {
+  apiKey: "AIzaSyBkn-26DnNoQBBfiR4-rRrPfOszW24KRRc",
+  authDomain: "groupe-gbemadoyomin.firebaseapp.com",
+  projectId: "groupe-gbemadoyomin",
+  storageBucket: "groupe-gbemadoyomin.storage.app",
+  messagingSenderId: "113133757650",
+  appId: "1:113133757650:web:71a07f05cca0e78e28390b"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
 
-function formaterDate(dateISO) {
-  const date = new Date(dateISO + 'T00:00:00');
-  return date.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+const cloudName = 'bvcdjwg7';
+
+// ============================================================
+// UTILITAIRES
+// ============================================================
+function cloudinaryUrl(url, width = 800) {
+  if (!url) return '';
+  return `https://res.cloudinary.com/${cloudName}/image/fetch/w_${width},f_auto/${encodeURIComponent(url)}`;
 }
 
-function evenementsAVenir() {
-  const aujourdhui = new Date().toISOString().slice(0, 10);
-  return EVENEMENTS.filter(e => e.date >= aujourdhui).sort((a, b) => a.date.localeCompare(b.date));
+function formaterDate(dateStr) {
+  if (!dateStr) return '';
+  const d = new Date(dateStr + 'T00:00:00');
+  return d.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
 }
 
-function afficherProchainEvenement() {
-  const zone = document.getElementById('evt-une-zone');
-  const [prochain] = evenementsAVenir();
-  if (!prochain) {
-    zone.innerHTML = `
-      <div class="evt-une reveal">
-        <div class="evt-une-affiche">Aucun événement en cours de programmation</div>
-        <div class="evt-une-details">
-          <h3>Le prochain rendez-vous sera bientôt annoncé</h3>
-          <p style="color: var(--text-muted); font-size: .92rem; margin-top: 10px;">Suivez le Groupe sur WhatsApp pour être informé dès qu'une date est fixée.</p>
-          <a class="btn-or" style="margin-top: var(--espace-sm);" href="https://wa.me/22967668799?text=Bonjour%2C%20je%20souhaite%20%C3%AAtre%20inform%C3%A9%20des%20prochains%20%C3%A9v%C3%A9nements" target="_blank" rel="noopener">Être informé sur WhatsApp</a>
-        </div>
-      </div>`;
-    reprendreReveal();
-    return;
-  }
-  zone.innerHTML = `
-    <div class="evt-une reveal">
-      <div class="evt-une-affiche shine" style="background-image:url('${prochain.affiche || 'affiche-evenement.jpeg'}');" role="img" aria-label="${prochain.titre}"></div>
-      <div class="evt-une-details">
-        <h3>${prochain.titre}</h3>
-        <div class="evt-une-meta">
-          <span>📅 ${formaterDate(prochain.date)} — ${prochain.heure}</span>
-          <span>📍 ${prochain.lieu}</span>
-          <span>🎟 ${prochain.participation}</span>
-        </div>
-        <p style="color: var(--text-muted); font-size: .92rem; margin-bottom: var(--espace-sm);">${prochain.description}</p>
-        <a class="btn-or" href="https://wa.me/22967668799?text=Bonjour%2C%20je%20souhaite%20m%27inscrire%20%C3%A0%20%3A%20${encodeURIComponent(prochain.titre)}" target="_blank" rel="noopener">Je m'inscris</a>
-      </div>
-    </div>`;
-  reprendreReveal();
-}
-
-function afficherAgenda() {
-  const grille = document.getElementById('agenda-grille');
-  const liste = evenementsAVenir();
-  if (!liste.length) {
-    grille.innerHTML = `<p class="agenda-vide">Aucun événement programmé pour le moment — revenez bientôt.</p>`;
-    return;
-  }
-  grille.innerHTML = liste.map((e, index) => `
-    <div class="agenda-carte reveal-stagger" data-delay="${index + 1}">
-      <div class="agenda-affiche shine" style="background-image:url('${e.affiche || 'event-' + (index + 1) + '.jpeg'}');" role="img" aria-label="${e.titre}"></div>
-      <div class="agenda-corps">
-        <div class="agenda-titre">${e.titre}</div>
-        <div class="agenda-meta">
-          <span>📅 ${formaterDate(e.date)}</span>
-          <span>📍 ${e.lieu}</span>
-          <span>🎟 ${e.participation}</span>
-        </div>
-        <div class="agenda-actions">
-          <a class="btn-contour" href="https://wa.me/22967668799?text=Bonjour%2C%20je%20souhaite%20en%20savoir%20plus%20sur%20%3A%20${encodeURIComponent(e.titre)}" target="_blank" rel="noopener">En savoir plus</a>
-          <a class="btn-or" href="https://wa.me/22967668799?text=Bonjour%2C%20je%20souhaite%20m%27inscrire%20%C3%A0%20%3A%20${encodeURIComponent(e.titre)}" target="_blank" rel="noopener">S'inscrire</a>
-        </div>
-      </div>
-    </div>`).join('');
-  reprendreReveal();
+function todayISO() {
+  return new Date().toISOString().slice(0, 10);
 }
 
 let observateurReveal;
@@ -616,12 +741,174 @@ function reprendreReveal() {
   });
 }
 
+// ============================================================
+// CHARGER LES ÉVÉNEMENTS
+// ============================================================
+let tousEvenements = [];
+
+async function chargerEvenements() {
+  try {
+    const snapshot = await db.collection('evenements').get();
+    tousEvenements = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+    // Séparer à venir / passés
+    const aujourdhui = todayISO();
+    const aVenir = tousEvenements
+      .filter(e => !e.archive && e.date >= aujourdhui)
+      .sort((a, b) => a.date.localeCompare(b.date));
+    const passes = tousEvenements
+      .filter(e => e.archive || e.date < aujourdhui)
+      .sort((a, b) => b.date.localeCompare(a.date));
+
+    afficherProchainEvenement(aVenir);
+    afficherAgenda(aVenir);
+    afficherArchives(passes);
+    reprendreReveal();
+  } catch (err) {
+    console.error('Erreur chargement événements:', err);
+    document.getElementById('evt-une-zone').innerHTML = `<div class="agenda-vide">Erreur de chargement.</div>`;
+    document.getElementById('agenda-grille').innerHTML = `<div class="agenda-vide">Erreur de chargement.</div>`;
+    document.getElementById('archives-grille').innerHTML = `<div class="agenda-vide">Erreur de chargement.</div>`;
+  }
+}
+
+// ============================================================
+// AFFICHER LE PROCHAIN ÉVÉNEMENT (À LA UNE)
+// ============================================================
+function afficherProchainEvenement(liste) {
+  const zone = document.getElementById('evt-une-zone');
+  const [prochain] = liste;
+
+  if (!prochain) {
+    zone.innerHTML = `
+      <div class="evt-une reveal">
+        <div class="evt-une-affiche">Aucun événement en cours de programmation</div>
+        <div class="evt-une-details">
+          <h3>Le prochain rendez-vous sera bientôt annoncé</h3>
+          <p style="color: var(--text-muted); font-size: .92rem; margin-top: 10px;">Suivez le Groupe sur WhatsApp pour être informé dès qu'une date est fixée.</p>
+          <a class="btn-or" style="margin-top: var(--espace-sm);" href="https://wa.me/22967668799?text=Bonjour%2C%20je%20souhaite%20%C3%AAtre%20inform%C3%A9%20des%20prochains%20%C3%A9v%C3%A9nements" target="_blank" rel="noopener">Être informé sur WhatsApp</a>
+        </div>
+      </div>`;
+    return;
+  }
+
+  const affiche = prochain.afficheURL
+    ? `background-image: url('${cloudinaryUrl(prochain.afficheURL, 800)}');`
+    : '';
+
+  zone.innerHTML = `
+    <div class="evt-une reveal">
+      <div class="evt-une-affiche shine" style="${affiche}" role="img" aria-label="${prochain.titre}"></div>
+      <div class="evt-une-details">
+        <p class="eyebrow">${prochain.categorie || 'Événement'}</p>
+        <h3>${prochain.titre}</h3>
+        <div class="evt-une-meta">
+          <span>📅 ${formaterDate(prochain.date)}${prochain.heure ? ' — ' + prochain.heure : ''}</span>
+          <span>📍 ${prochain.lieu || 'Lieu à confirmer'}</span>
+          <span>🎟 ${prochain.participation || 'Sur inscription'}</span>
+        </div>
+        <p style="color: var(--text-muted); font-size: .92rem; margin-bottom: var(--espace-sm);">${prochain.description || ''}</p>
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <a class="btn-or" href="article.html?slug=${encodeURIComponent(prochain.slug || prochain.id)}">Voir les détails</a>
+          <a class="btn-contour" href="https://wa.me/22967668799?text=Bonjour%2C%20je%20souhaite%20m%27inscrire%20%C3%A0%20%3A%20${encodeURIComponent(prochain.titre)}" target="_blank" rel="noopener">S'inscrire</a>
+        </div>
+      </div>
+    </div>`;
+}
+
+// ============================================================
+// AFFICHER L'AGENDA
+// ============================================================
+function afficherAgenda(liste) {
+  const grille = document.getElementById('agenda-grille');
+
+  if (!liste.length) {
+    grille.innerHTML = `<p class="agenda-vide">Aucun événement programmé pour le moment — revenez bientôt.</p>`;
+    return;
+  }
+
+  grille.innerHTML = liste.map((e, index) => `
+    <div class="agenda-carte reveal-stagger">
+      <div class="agenda-affiche shine" style="background-image:url('${e.afficheURL ? cloudinaryUrl(e.afficheURL, 600) : 'event-' + (index + 1) + '.jpeg'}');" role="img" aria-label="${e.titre}"></div>
+      <div class="agenda-corps">
+        <div class="agenda-titre">${e.titre}</div>
+        <div class="agenda-meta">
+          <span>📅 ${formaterDate(e.date)}${e.heure ? ' — ' + e.heure : ''}</span>
+          <span>📍 ${e.lieu || 'Lieu à confirmer'}</span>
+          <span>🎟 ${e.participation || 'Sur inscription'}</span>
+        </div>
+        <div class="agenda-actions">
+          <a class="btn-contour" href="article.html?slug=${encodeURIComponent(e.slug || e.id)}">Détails</a>
+          <a class="btn-or" href="https://wa.me/22967668799?text=Bonjour%2C%20je%20souhaite%20m%27inscrire%20%C3%A0%20%3A%20${encodeURIComponent(e.titre)}" target="_blank" rel="noopener">S'inscrire</a>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+// ============================================================
+// AFFICHER LES ARCHIVES / ACTUALITÉS
+// ============================================================
+function afficherArchives(liste) {
+  const grille = document.getElementById('archives-grille');
+
+  if (!liste.length) {
+    grille.innerHTML = `<p class="agenda-vide">Aucune archive pour le moment.</p>`;
+    return;
+  }
+
+  grille.innerHTML = liste.map((e) => `
+    <div class="agenda-carte reveal-stagger">
+      <div class="agenda-affiche shine" style="background-image:url('${e.afficheURL ? cloudinaryUrl(e.afficheURL, 600) : 'archive.jpeg'}');" role="img" aria-label="${e.titre}"></div>
+      <div class="agenda-corps">
+        <div class="agenda-titre">${e.titre}</div>
+        <div class="agenda-meta">
+          <span>📅 ${formaterDate(e.date)}</span>
+          <span>📍 ${e.lieu || ''}</span>
+          ${e.archive ? '<span>📁 Archivé</span>' : ''}
+        </div>
+        <div class="agenda-actions">
+          <a class="btn-contour" href="article.html?slug=${encodeURIComponent(e.slug || e.id)}">Lire l'article</a>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+// ============================================================
+// CHARGER LE LIVE
+// ============================================================
+async function chargerLive() {
+  try {
+    const snap = await db.collection('live').get();
+    if (snap.empty) return;
+    const data = snap.docs[0].data();
+    if (!data.actif || !data.embedURL) return;
+
+    // Afficher le bandeau
+    const banner = document.getElementById('liveBanner');
+    banner.classList.add('actif');
+    document.getElementById('liveBannerText').textContent = '🔴 EN DIRECT — ' + (data.titre || 'Live en cours');
+
+    // Afficher la section embed
+    const embedSection = document.getElementById('live-embed');
+    embedSection.style.display = 'block';
+    document.getElementById('liveEmbedTitle').textContent = '🔴 EN DIRECT — ' + (data.titre || 'Live en cours');
+    document.getElementById('liveEmbedZone').innerHTML = `
+      <iframe src="${data.embedURL}" style="width:100%;height:100%;border:none;" allowfullscreen loading="lazy"></iframe>
+    `;
+  } catch (err) {
+    console.error('Erreur live:', err);
+  }
+}
+
+// ============================================================
+// INITIALISATION
+// ============================================================
 document.addEventListener('DOMContentLoaded', () => {
 
-  // ---- LOADER ----
+  // LOADER
   setTimeout(() => document.getElementById('loader').classList.add('cache'), 600);
 
-  // ---- MENU MOBILE ----
+  // MENU MOBILE
   const burger = document.getElementById('nav-burger');
   const liens = document.getElementById('nav-liens');
   burger.addEventListener('click', () => {
@@ -637,7 +924,7 @@ document.addEventListener('DOMContentLoaded', () => {
     })
   );
 
-  // ---- REVEAL ----
+  // REVEAL
   observateurReveal = new IntersectionObserver((entrees) => {
     entrees.forEach(entree => {
       if (entree.isIntersecting) {
@@ -648,11 +935,55 @@ document.addEventListener('DOMContentLoaded', () => {
   }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
   document.querySelectorAll('.reveal, .reveal-stagger').forEach(el => observateurReveal.observe(el));
 
-  // ---- AFFICHAGE DES ÉVÉNEMENTS ----
-  afficherProchainEvenement();
-  afficherAgenda();
+  // CHATBOT
+  const toggleBtn = document.getElementById('chatbotToggle');
+  const panel = document.getElementById('chatbotPanel');
+  const closeBtn = document.getElementById('chatbotClose');
+  const messagesContainer = document.getElementById('chatbotMessages');
 
+  toggleBtn.addEventListener('click', () => panel.classList.toggle('open'));
+  closeBtn.addEventListener('click', () => panel.classList.remove('open'));
+
+  function addMessage(text, sender) {
+    const msg = document.createElement('div');
+    msg.className = `chatbot-msg ${sender}`;
+    msg.textContent = text;
+    messagesContainer.appendChild(msg);
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+  }
+
+  const responses = {
+    'consultation': '🔸 Je vous propose une consultation du Fa. Nous avons deux formats : en présentiel à Abomey-Calavi (Bénin) ou à distance (WhatsApp / appel). Le Professeur Gbêmadoyômin vous accompagne avec écoute et tradition. Souhaitez-vous un RDV ?',
+    'rdv': '📅 Prendre rendez-vous est simple. Contactez-nous directement sur WhatsApp : +229 01 67 66 87 99. Nous vous répondrons dans les meilleurs délais pour fixer un créneau selon vos disponibilités.',
+    'livres': '📚 Découvrez les ouvrages du Professeur sur TODAAA SHOP : "Le Livre du Fa", "Le Code de Vie", "Vodoun Dan", "Le Livre d\'Astuces", et bien d\'autres. Chaque livre est une porte vers la connaissance traditionnelle.',
+    'vibration': '💜 Vibration Sacrée est une communauté de fraternité, de loyauté et de partage. Contactez-nous sur WhatsApp (+229 01 67 66 87 99) pour rejoindre cet espace de transmission et de solidarité.',
+    'don': '❤️ Merci pour votre générosité ! Vous pouvez faire un don directement via WhatsApp ou payer via MoMo Pay, Wave ou PayPal. Chaque contribution aide à soutenir les actions sociales du Groupe et à diffuser les traditions.',
+    'contact': '📞 Pour toute question, contactez-nous par WhatsApp : +229 01 67 66 87 99 ou par email : cabinetgbemadoyomin@gmail.com. Nous vous répondons dans les meilleurs délais.'
+  };
+
+  document.querySelectorAll('.chatbot-option').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const action = btn.dataset.action;
+      const label = btn.textContent.trim();
+      addMessage(label, 'user');
+      setTimeout(() => {
+        addMessage(responses[action] || 'Je peux vous aider avec autre chose.', 'bot');
+      }, 400);
+    });
+  });
+
+  // CHARGER LES DONNÉES
+  chargerEvenements();
+  chargerLive();
 });
+
+// ---- SERVICE WORKER ----
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('service-worker.js')
+    .then(() => console.log('✅ Service Worker enregistré'))
+    .catch(() => console.log('⚠️ Service Worker non enregistré'));
+}
 </script>
+
 </body>
 </html>
