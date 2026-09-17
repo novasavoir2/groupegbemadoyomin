@@ -448,7 +448,7 @@ section { padding-block: var(--espace-xl); }
   background: var(--noir-2);
 }
 
-/* Bloc fallback */
+/* Bloc fallback (vidéo ET live) */
 .video-fallback {
   display: none;
   aspect-ratio: 16/9;
@@ -644,7 +644,7 @@ section { padding-block: var(--espace-xl); }
 </header>
 
 <!-- ============================================================
-   LIVE EMBED (si actif)
+   LIVE EMBED (si actif) — AVEC FALLBACK
    ============================================================ -->
 <section id="live-embed" style="display:none; padding-block: var(--espace-md);">
   <div class="conteneur">
@@ -653,7 +653,13 @@ section { padding-block: var(--espace-xl); }
         <span class="live-dot"></span>
         <strong style="color: var(--blanc); font-family: var(--font-titres); font-size: 0.9rem;" id="liveEmbedTitle">🔴 EN DIRECT</strong>
       </div>
-      <div style="aspect-ratio: 16/9; background: var(--noir-3);" id="liveEmbedZone"></div>
+      <div style="aspect-ratio: 16/9; background: var(--noir-3); position: relative;" id="liveEmbedZone"></div>
+      <div class="video-fallback" id="liveFallback">
+        <span class="video-fallback-icon">📡</span>
+        <div class="video-fallback-title">Lecture du live indisponible</div>
+        <div class="video-fallback-text" id="liveFallbackText">Le direct ne peut pas s'afficher dans la page. Rejoignez-le directement sur la plateforme :</div>
+        <div class="video-fallback-btns" id="liveFallbackBtns"></div>
+      </div>
     </div>
   </div>
 </section>
@@ -801,7 +807,7 @@ section { padding-block: var(--espace-xl); }
 </div>
 
 <!-- ============================================================
-   MODALE VIDÉO (AJOUT — MULTI-PLATEFORMES + FALLBACK)
+   MODALE VIDÉO (multi-plateformes + fallback)
    ============================================================ -->
 <div class="video-modal" id="videoModal">
   <div class="video-modal-content">
@@ -903,7 +909,7 @@ function extractYoutubeId(url) {
 }
 
 // ============================================================
-// DÉTECTION MULTI-PLATEFORMES (AJOUT)
+// DÉTECTION MULTI-PLATEFORMES
 // ============================================================
 function detecterPlateforme(url) {
   if (!url) return { nom: 'Inconnu', icone: '🔗', classe: 'btn-yt', lienDirect: url, embed: url };
@@ -923,7 +929,6 @@ function detecterPlateforme(url) {
 
   // Google Drive
   if (u.includes('drive.google.com')) {
-    // Extraire l'ID du fichier pour créer un lien d'aperçu propre
     const m = url.match(/\/d\/([^/]+)/);
     const id = m ? m[1] : '';
     return {
@@ -937,24 +942,12 @@ function detecterPlateforme(url) {
 
   // TikTok
   if (u.includes('tiktok.com')) {
-    return {
-      nom: 'TikTok',
-      icone: '🎵',
-      classe: 'btn-tk',
-      lienDirect: url,
-      embed: url
-    };
+    return { nom: 'TikTok', icone: '🎵', classe: 'btn-tk', lienDirect: url, embed: url };
   }
 
   // Facebook
   if (u.includes('facebook.com') || u.includes('fb.watch')) {
-    return {
-      nom: 'Facebook',
-      icone: '📘',
-      classe: 'btn-fb',
-      lienDirect: url,
-      embed: url
-    };
+    return { nom: 'Facebook', icone: '📘', classe: 'btn-fb', lienDirect: url, embed: url };
   }
 
   // Vimeo
@@ -972,23 +965,11 @@ function detecterPlateforme(url) {
 
   // Dailymotion
   if (u.includes('dailymotion.com')) {
-    return {
-      nom: 'Dailymotion',
-      icone: '🎥',
-      classe: 'btn-dailymotion',
-      lienDirect: url,
-      embed: url
-    };
+    return { nom: 'Dailymotion', icone: '🎥', classe: 'btn-dailymotion', lienDirect: url, embed: url };
   }
 
   // Par défaut
-  return {
-    nom: 'Vidéo',
-    icone: '🔗',
-    classe: 'btn-yt',
-    lienDirect: url,
-    embed: url
-  };
+  return { nom: 'Vidéo', icone: '🔗', classe: 'btn-yt', lienDirect: url, embed: url };
 }
 
 function formatDate(dateStr) {
@@ -1118,7 +1099,6 @@ async function chargerVideos() {
       `;
     }).join('');
 
-    // Événements : ouvrir la modale
     grille.querySelectorAll('.video-vignette, .lire-video').forEach(el => {
       el.addEventListener('click', (e) => {
         e.preventDefault();
@@ -1136,7 +1116,7 @@ async function chargerVideos() {
 }
 
 // ============================================================
-// MODALE VIDÉO (AJOUT) — avec détection de chargement
+// MODALE VIDÉO — avec détection de chargement
 // ============================================================
 let videoModalIframe = null;
 let videoModalTimeout = null;
@@ -1149,22 +1129,17 @@ function ouvrirVideoModal(url, titre) {
 
   document.getElementById('videoModalTitle').textContent = titre || 'Lecture vidéo';
 
-  // Nettoyer
   zone.innerHTML = '';
   fallback.classList.remove('visible');
   actions.innerHTML = '';
 
-  // Détecter la plateforme
   const plateforme = detecterPlateforme(url);
 
-  // Construire l'URL d'embed
   let embedURL = plateforme.embed;
-  // Ajouter les paramètres YouTube si nécessaire
   if (plateforme.nom === 'YouTube' && !embedURL.includes('?')) {
     embedURL += '?autoplay=1&rel=0';
   }
 
-  // Créer l'iframe
   const iframe = document.createElement('iframe');
   iframe.src = embedURL;
   iframe.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
@@ -1173,7 +1148,6 @@ function ouvrirVideoModal(url, titre) {
   zone.appendChild(iframe);
   videoModalIframe = iframe;
 
-  // Détection : si l'iframe ne charge pas dans 6 secondes → afficher fallback
   let loaded = false;
   iframe.onload = function () { loaded = true; };
   iframe.onerror = function () { afficherFallbackVideo(plateforme); };
@@ -1183,10 +1157,8 @@ function ouvrirVideoModal(url, titre) {
     if (!loaded) afficherFallbackVideo(plateforme);
   }, 6000);
 
-  // Construire les actions
   actions.innerHTML = '';
 
-  // Bouton "Ouvrir sur plateforme"
   const btnOuvrir = document.createElement('a');
   btnOuvrir.className = 'btn-contour btn-sm';
   btnOuvrir.href = plateforme.lienDirect;
@@ -1195,7 +1167,6 @@ function ouvrirVideoModal(url, titre) {
   btnOuvrir.textContent = plateforme.icone + ' Ouvrir sur ' + plateforme.nom;
   actions.appendChild(btnOuvrir);
 
-  // Bouton téléchargement YouTube
   if (plateforme.nom === 'YouTube') {
     const ytId = extractYoutubeId(url);
     if (ytId) {
@@ -1209,13 +1180,11 @@ function ouvrirVideoModal(url, titre) {
     }
   }
 
-  // Afficher la modale
   modal.classList.add('open');
   document.body.style.overflow = 'hidden';
 }
 
 function afficherFallbackVideo(plateforme) {
-  // Cacher l'iframe
   if (videoModalIframe) videoModalIframe.style.display = 'none';
   const fallback = document.getElementById('videoFallback');
   const btns = document.getElementById('videoFallbackBtns');
@@ -1224,7 +1193,6 @@ function afficherFallbackVideo(plateforme) {
   txt.textContent = `Cette vidéo ne peut pas s'afficher directement dans la page. Regardez-la sur ${plateforme.nom} :`;
   btns.innerHTML = '';
 
-  // Bouton principal : plateforme détectée
   const a1 = document.createElement('a');
   a1.className = plateforme.classe;
   a1.href = plateforme.lienDirect;
@@ -1233,26 +1201,7 @@ function afficherFallbackVideo(plateforme) {
   a1.textContent = plateforme.icone + ' ' + plateforme.nom;
   btns.appendChild(a1);
 
-  // Bouton secondaire : YouTube (au cas où)
-  if (plateforme.nom !== 'YouTube') {
-    const ytId = extractYouTubeIdFromUrl(plateforme.lienDirect);
-    if (ytId) {
-      const a2 = document.createElement('a');
-      a2.className = 'btn-yt';
-      a2.href = 'https://www.youtube.com/watch?v=' + ytId;
-      a2.target = '_blank';
-      a2.rel = 'noopener';
-      a2.textContent = '▶️ YouTube';
-      btns.appendChild(a2);
-    }
-  }
-
   fallback.classList.add('visible');
-}
-
-// Cas particulier : recherche YouTube dans une URL non-YouTube
-function extractYouTubeIdFromUrl(url) {
-  return null; // pas de fallback YouTube si l'URL de base n'est pas YouTube
 }
 
 function fermerVideoModal() {
@@ -1297,7 +1246,7 @@ async function chargerPresse() {
 }
 
 // ============================================================
-// CHARGER LE LIVE
+// CHARGER LE LIVE — AVEC FALLBACK MULTI-PLATEFORMES
 // ============================================================
 async function chargerLive() {
   try {
@@ -1306,19 +1255,106 @@ async function chargerLive() {
     const data = snap.docs[0].data();
     if (!data.actif || !data.embedURL) return;
 
+    // Bandeau
     const banner = document.getElementById('liveBanner');
     banner.classList.add('actif');
     document.getElementById('liveBannerText').textContent = '🔴 EN DIRECT — ' + (data.titre || 'Live en cours');
 
+    // Section
     const embedSection = document.getElementById('live-embed');
     embedSection.style.display = 'block';
     document.getElementById('liveEmbedTitle').textContent = '🔴 EN DIRECT — ' + (data.titre || 'Live en cours');
-    document.getElementById('liveEmbedZone').innerHTML = `
-      <iframe src="${data.embedURL}" style="width:100%;height:100%;border:none;" allowfullscreen loading="lazy"></iframe>
-    `;
+
+    // Zone d'embed + fallback
+    const zone = document.getElementById('liveEmbedZone');
+    const fallback = document.getElementById('liveFallback');
+    const fallbackBtns = document.getElementById('liveFallbackBtns');
+    const fallbackText = document.getElementById('liveFallbackText');
+
+    // Nettoyer
+    zone.innerHTML = '';
+    fallback.classList.remove('visible');
+
+    // Détecter la plateforme
+    const plateforme = detecterPlateforme(data.embedURL);
+
+    // Construire l'URL d'embed
+    let embedURL = data.embedURL;
+    if (plateforme.nom === 'YouTube' && !embedURL.includes('?')) {
+      embedURL += '?autoplay=0&rel=0';
+    }
+
+    // Créer l'iframe
+    const iframe = document.createElement('iframe');
+    iframe.src = embedURL;
+    iframe.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+    iframe.allowFullscreen = true;
+    iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+    iframe.style.cssText = 'width:100%;height:100%;border:none;position:absolute;inset:0;';
+    zone.appendChild(iframe);
+
+    // Détection du chargement (6 secondes)
+    let liveLoaded = false;
+    iframe.onload = function () { liveLoaded = true; };
+    iframe.onerror = function () {
+      afficherFallbackLive(plateforme, fallback, fallbackBtns, fallbackText);
+    };
+
+    setTimeout(function () {
+      if (!liveLoaded) {
+        afficherFallbackLive(plateforme, fallback, fallbackBtns, fallbackText);
+      }
+    }, 6000);
+
   } catch (err) {
     console.error('Erreur live:', err);
   }
+}
+
+// ------------------------------------------------------------
+// Afficher le fallback si le live ne charge pas
+// ------------------------------------------------------------
+function afficherFallbackLive(plateforme, fallback, btnsContainer, txtContainer) {
+  // Cacher l'iframe
+  const zone = document.getElementById('liveEmbedZone');
+  const iframe = zone.querySelector('iframe');
+  if (iframe) iframe.style.display = 'none';
+
+  // Texte adapté
+  txtContainer.textContent = 'Le direct ne peut pas s\'afficher dans la page. Rejoignez-le directement sur ' + plateforme.nom + ' :';
+
+  // Boutons
+  btnsContainer.innerHTML = '';
+
+  // Bouton principal : plateforme détectée
+  const btn1 = document.createElement('a');
+  btn1.className = plateforme.classe;
+  btn1.href = plateforme.lienDirect;
+  btn1.target = '_blank';
+  btn1.rel = 'noopener';
+  btn1.textContent = plateforme.icone + ' ' + plateforme.nom;
+  btnsContainer.appendChild(btn1);
+
+  // Boutons secondaires : autres réseaux du Groupe
+  const autresReseaux = [
+    { nom: 'Facebook', icone: '📘', classe: 'btn-fb', url: 'https://www.facebook.com/share/1KLJbHgA74/?mibextid=wwXIfr' },
+    { nom: 'TikTok', icone: '🎵', classe: 'btn-tk', url: 'https://www.tiktok.com/@bokonon.gbemadoyomin' }
+  ];
+
+  autresReseaux.forEach(function (reseau) {
+    if (reseau.nom.toLowerCase() !== plateforme.nom.toLowerCase()) {
+      const btn = document.createElement('a');
+      btn.className = reseau.classe;
+      btn.href = reseau.url;
+      btn.target = '_blank';
+      btn.rel = 'noopener';
+      btn.textContent = reseau.icone + ' ' + reseau.nom;
+      btnsContainer.appendChild(btn);
+    }
+  });
+
+  // Afficher le fallback
+  fallback.classList.add('visible');
 }
 
 // ============================================================
