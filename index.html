@@ -981,6 +981,37 @@ section { padding-block: var(--espace-xl); }
 .live-banner a:hover { color: var(--blanc); }
 
 /* ===================================================================
+   LIVE FALLBACK (AJOUT PHASE 4)
+   =================================================================== */
+.live-fallback {
+  display: none;
+  aspect-ratio: 16/9;
+  background: linear-gradient(135deg, var(--noir-2), var(--noir-3));
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 24px;
+  gap: 14px;
+}
+.live-fallback.visible { display: flex; }
+.live-fallback-icon { font-size: 2.4rem; }
+.live-fallback-title { font-family: var(--font-titres); color: var(--blanc); font-size: 1rem; }
+.live-fallback-text { color: var(--text-muted); font-size: 0.85rem; max-width: 460px; }
+.live-fallback-btns { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-top: 6px; }
+.live-fallback-btns a {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 10px 18px; border-radius: 4px;
+  font-family: var(--font-titres); font-size: 0.72rem; font-weight: 700;
+  letter-spacing: 0.05em; text-transform: uppercase;
+  transition: transform 0.3s ease;
+}
+.live-fallback-btns a:hover { transform: translateY(-2px); }
+.live-fallback-btns .btn-yt { background: #ff0000; color: white; }
+.live-fallback-btns .btn-fb { background: #1877f2; color: white; }
+.live-fallback-btns .btn-tk { background: #000000; color: white; border: 1px solid #fe2c55; }
+
+/* ===================================================================
    SECTION HEADER AVEC BOUTON VOIR PLUS (AJOUT)
    =================================================================== */
 .section-entete {
@@ -1157,7 +1188,13 @@ section { padding-block: var(--espace-xl); }
         <span class="live-dot"></span>
         <strong style="color: var(--blanc); font-family: var(--font-titres); font-size: 0.9rem;" id="liveEmbedTitle">🔴 EN DIRECT</strong>
       </div>
-      <div style="aspect-ratio: 16/9; background: var(--noir-3);" id="liveEmbedZone"></div>
+      <div style="aspect-ratio: 16/9; background: var(--noir-3); position: relative;" id="liveEmbedZone"></div>
+      <div class="live-fallback" id="liveFallback">
+        <span class="live-fallback-icon">📡</span>
+        <div class="live-fallback-title">Lecture intégrée indisponible</div>
+        <div class="live-fallback-text" id="liveFallbackText">La diffusion en direct ne peut pas s'afficher sur cette page. Rejoignez le live directement sur la plateforme :</div>
+        <div class="live-fallback-btns" id="liveFallbackBtns"></div>
+      </div>
     </div>
   </div>
 </section>
@@ -1469,6 +1506,37 @@ section { padding-block: var(--espace-xl); }
       var db = firebase.firestore();
       var cloudName = 'bvcdjwg7';
 
+      // ============================================================
+      // CONFIG GLOBALE (AJOUT PHASE 4 — chargée depuis config/site)
+      // ============================================================
+      var CONFIG = {
+        fallbackFacebook: 'https://www.facebook.com/share/1KLJbHgA74/?mibextid=wwXIfr',
+        fallbackTiktok: 'https://www.tiktok.com/@bokonon.gbemadoyomin',
+        fallbackYoutube: '',
+        whatsappAdmin: '22967668799',
+        whatsappDev: '229015252106',
+        emailContact: 'cabinetgbemadoyomin@gmail.com',
+        messageAccueil: ''
+      };
+
+      async function chargerConfig() {
+        try {
+          var doc = await db.collection('config').doc('site').get();
+          if (doc.exists) {
+            var d = doc.data();
+            if (d.fallbackFacebook) CONFIG.fallbackFacebook = d.fallbackFacebook;
+            if (d.fallbackTiktok) CONFIG.fallbackTiktok = d.fallbackTiktok;
+            if (d.fallbackYoutube) CONFIG.fallbackYoutube = d.fallbackYoutube;
+            if (d.whatsappAdmin) CONFIG.whatsappAdmin = d.whatsappAdmin;
+            if (d.whatsappDev) CONFIG.whatsappDev = d.whatsappDev;
+            if (d.emailContact) CONFIG.emailContact = d.emailContact;
+            if (d.messageAccueil) CONFIG.messageAccueil = d.messageAccueil;
+          }
+        } catch (err) {
+          console.warn('Config Firestore non chargée, valeurs par défaut utilisées.', err);
+        }
+      }
+
       function cloudinaryUrl(url, width) {
         if (!url) return '';
         width = width || 800;
@@ -1486,6 +1554,44 @@ section { padding-block: var(--espace-xl); }
       function escapeHtml(str) {
         if (!str) return '';
         return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
+      }
+
+      // ============================================================
+      // DÉTECTION PLATEFORME + VALIDATION (AJOUT PHASE 4)
+      // ============================================================
+      function detecterPlateforme(url) {
+        if (!url) return { nom: 'Vidéo', icone: '🔗', classe: 'btn-yt', lienDirect: '#', embed: '' };
+        var u = url.toLowerCase();
+        if (u.indexOf('youtube.com') !== -1 || u.indexOf('youtu.be') !== -1) {
+          var m = url.match(/(?:embed\/|watch\?v=|youtu\.be\/|shorts\/|live\/)([^?&/]+)/);
+          var id = m ? m[1] : '';
+          return { nom: 'YouTube', icone: '▶️', classe: 'btn-yt',
+            lienDirect: id ? 'https://www.youtube.com/watch?v=' + id : 'https://www.youtube.com/',
+            embed: id ? 'https://www.youtube.com/embed/' + id : '' };
+        }
+        if (u.indexOf('drive.google.com') !== -1) {
+          var md = url.match(/\/d\/([^/]+)/);
+          var idd = md ? md[1] : '';
+          return { nom: 'Google Drive', icone: '📁', classe: 'btn-yt',
+            lienDirect: url, embed: idd ? 'https://drive.google.com/file/d/' + idd + '/preview' : url };
+        }
+        if (u.indexOf('tiktok.com') !== -1) return { nom: 'TikTok', icone: '🎵', classe: 'btn-tk', lienDirect: url, embed: url };
+        if (u.indexOf('facebook.com') !== -1 || u.indexOf('fb.watch') !== -1) return { nom: 'Facebook', icone: '📘', classe: 'btn-fb', lienDirect: url, embed: url };
+        if (u.indexOf('vimeo.com') !== -1) {
+          var mv = url.match(/vimeo\.com\/(\d+)/);
+          var idv = mv ? mv[1] : '';
+          return { nom: 'Vimeo', icone: '🎬', classe: 'btn-yt', lienDirect: url, embed: idv ? 'https://player.vimeo.com/video/' + idv : url };
+        }
+        return { nom: 'Vidéo', icone: '🔗', classe: 'btn-yt', lienDirect: url, embed: url };
+      }
+
+      function validerEmbedURL(url, plateforme) {
+        if (!url) return { valide: false, raison: 'URL manquante' };
+        if (plateforme.nom === 'YouTube') {
+          var m = url.match(/embed\/([^?&/]+)/);
+          if (!m || !m[1] || m[1].length < 5) return { valide: false, raison: 'ID YouTube manquant' };
+        }
+        return { valide: true };
       }
 
       // ============================================================
@@ -1514,7 +1620,7 @@ section { padding-block: var(--espace-xl); }
                     '<span>📍 Lieu à confirmer</span>' +
                   '</div>' +
                   '<p style="color: var(--blanc-doux); font-size: 0.92rem; margin-bottom: var(--espace-sm);">Suivez le Groupe sur WhatsApp pour être informé dès qu\'une date est fixée.</p>' +
-                  '<a class="btn-or" href="https://wa.me/22967668799?text=Bonjour%2C%20je%20souhaite%20%C3%AAtre%20inform%C3%A9%20des%20prochains%20%C3%A9v%C3%A9nements" target="_blank" rel="noopener">Être informé</a>' +
+                  '<a class="btn-or" href="https://wa.me/' + CONFIG.whatsappAdmin + '?text=Bonjour%2C%20je%20souhaite%20%C3%AAtre%20inform%C3%A9%20des%20prochains%20%C3%A9v%C3%A9nements" target="_blank" rel="noopener">Être informé</a>' +
                 '</div>' +
               '</div>';
             return;
@@ -1613,7 +1719,7 @@ section { padding-block: var(--espace-xl); }
       }
 
       // ============================================================
-      // LIVE
+      // LIVE — AVEC FALLBACK (MODIFIÉ PHASE 4)
       // ============================================================
       async function chargerLive() {
         try {
@@ -1628,8 +1734,87 @@ section { padding-block: var(--espace-xl); }
           var embedSection = document.getElementById('live-embed');
           embedSection.style.display = 'block';
           document.getElementById('liveEmbedTitle').textContent = '🔴 EN DIRECT — ' + (data.titre || 'Live en cours');
-          document.getElementById('liveEmbedZone').innerHTML =
-            '<iframe src="' + data.embedURL + '" style="width:100%;height:100%;border:none;" allowfullscreen loading="lazy"></iframe>';
+
+          var zone = document.getElementById('liveEmbedZone');
+          var fallback = document.getElementById('liveFallback');
+          var fallbackBtns = document.getElementById('liveFallbackBtns');
+          var fallbackText = document.getElementById('liveFallbackText');
+
+          zone.innerHTML = '';
+          fallback.classList.remove('visible');
+
+          var plateforme = detecterPlateforme(data.embedURL);
+          var validation = validerEmbedURL(data.embedURL, plateforme);
+
+          // URLs de secours : priorité live > config > défaut
+          var fallbackCustom = {
+            youtube: data.fallbackYouTube || CONFIG.fallbackYoutube || '',
+            facebook: data.fallbackFacebook || CONFIG.fallbackFacebook || '',
+            tiktok: data.fallbackTikTok || CONFIG.fallbackTiktok || ''
+          };
+
+          function afficherFallback(raison) {
+            var iframe = zone.querySelector('iframe');
+            if (iframe) iframe.style.display = 'none';
+            var raisonTxt = raison ? ' (' + raison + ')' : '';
+            fallbackText.textContent = 'La diffusion en direct ne peut pas s\'afficher sur cette page' + raisonTxt + '. Rejoignez le live directement sur la plateforme :';
+            fallbackBtns.innerHTML = '';
+
+            // Bouton principal : plateforme détectée
+            if (plateforme.lienDirect && plateforme.lienDirect !== '#') {
+              var btn1 = document.createElement('a');
+              btn1.className = plateforme.classe;
+              btn1.href = plateforme.lienDirect;
+              btn1.target = '_blank';
+              btn1.rel = 'noopener';
+              btn1.textContent = plateforme.icone + ' ' + plateforme.nom;
+              fallbackBtns.appendChild(btn1);
+            }
+
+            // Boutons secondaires (URLs custom)
+            var autres = [
+              { nom: 'YouTube', icone: '▶️', classe: 'btn-yt', url: fallbackCustom.youtube },
+              { nom: 'Facebook', icone: '📘', classe: 'btn-fb', url: fallbackCustom.facebook },
+              { nom: 'TikTok', icone: '🎵', classe: 'btn-tk', url: fallbackCustom.tiktok }
+            ];
+            autres.forEach(function (r) {
+              if (!r.url) return;
+              if (r.nom.toLowerCase() === plateforme.nom.toLowerCase()) return;
+              var btn = document.createElement('a');
+              btn.className = r.classe;
+              btn.href = r.url;
+              btn.target = '_blank';
+              btn.rel = 'noopener';
+              btn.textContent = r.icone + ' ' + r.nom;
+              fallbackBtns.appendChild(btn);
+            });
+
+            fallback.classList.add('visible');
+          }
+
+          if (!validation.valide) {
+            afficherFallback(validation.raison);
+            return;
+          }
+
+          var embedURL = data.embedURL;
+          if (plateforme.nom === 'YouTube' && embedURL.indexOf('?') === -1) {
+            embedURL += '?autoplay=0&rel=0';
+          }
+
+          var iframe = document.createElement('iframe');
+          iframe.src = embedURL;
+          iframe.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+          iframe.allowFullscreen = true;
+          iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+          iframe.style.cssText = 'width:100%;height:100%;border:none;position:absolute;inset:0;';
+          zone.appendChild(iframe);
+
+          var liveLoaded = false;
+          iframe.onload = function () { liveLoaded = true; };
+          iframe.onerror = function () { afficherFallback(); };
+          setTimeout(function () { if (!liveLoaded) afficherFallback(); }, 6000);
+
         } catch (err) {
           console.error('Erreur live:', err);
         }
@@ -1638,7 +1823,8 @@ section { padding-block: var(--espace-xl); }
       // ============================================================
       // INIT
       // ============================================================
-      document.addEventListener('DOMContentLoaded', function () {
+      document.addEventListener('DOMContentLoaded', async function () {
+        await chargerConfig();
         chargerProchainEvenement();
         chargerDernieresActualites();
         chargerLive();
