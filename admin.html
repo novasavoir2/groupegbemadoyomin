@@ -258,6 +258,8 @@ h1, h2, h3 { font-family: var(--font-titres); font-weight: 700; color: var(--bla
 .badge-inactif { background: rgba(122,21,21,0.15); color: #ff8888; border: 1px solid rgba(122,21,21,0.4); }
 .badge-utilise { background: rgba(245,158,11,0.15); color: #fcd34d; border: 1px solid rgba(245,158,11,0.4); }
 .badge-expire { background: rgba(122,21,21,0.2); color: #ff8888; border: 1px solid rgba(122,21,21,0.5); }
+.badge-payant { background: rgba(184,146,46,0.15); color: var(--or-clair); border: 1px solid rgba(184,146,46,0.5); }
+.badge-gratuit { background: rgba(34,197,94,0.12); color: #4ade80; border: 1px solid rgba(34,197,94,0.4); }
 
 /* ============================================================
    TOAST (notifications)
@@ -364,6 +366,26 @@ h1, h2, h3 { font-family: var(--font-titres); font-weight: 700; color: var(--bla
   letter-spacing: 0.06em;
   text-transform: uppercase;
   margin-bottom: 6px;
+  display: flex; align-items: center; gap: 6px;
+}
+
+/* ============================================================
+   BLOC PAYANT (NOUVEAU)
+   ============================================================ */
+.payant-block {
+  border: 1px dashed rgba(184,146,46,0.5);
+  background: rgba(184,146,46,0.04);
+  border-radius: 6px;
+  padding: 16px;
+  margin-top: 16px;
+}
+.payant-block-title {
+  color: var(--or);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
   display: flex; align-items: center; gap: 6px;
 }
 </style>
@@ -739,7 +761,7 @@ h1, h2, h3 { font-family: var(--font-titres); font-weight: 700; color: var(--bla
   </div>
 
   <!-- ============================================================
-       TAB VIDÉOS
+       TAB VIDÉOS (avec bloc payant)
        ============================================================ -->
   <div class="tab-pane" id="pane-videos">
     <div class="alert alert-info">
@@ -792,11 +814,46 @@ h1, h2, h3 { font-family: var(--font-titres); font-weight: 700; color: var(--bla
           </div>
         </div>
 
-        <!-- ----- LIEN DE SECOURS (AJOUT PHASE 4) ----- -->
+        <!-- ----- LIEN DE SECOURS ----- -->
         <div class="form-group">
           <label>🔁 Lien de secours (optionnel)</label>
           <input type="url" id="viFallbackURL" placeholder="https://... (utilisé si l'iframe échoue)">
           <div class="hint">Facultatif — sinon, le lien direct de la plateforme est utilisé.</div>
+        </div>
+
+        <!-- ----- BLOC PAYANT (NOUVEAU) ----- -->
+        <div class="payant-block">
+          <div class="payant-block-title">💰 Cette vidéo est-elle payante ?</div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Vidéo payante ?</label>
+              <select id="viPayant">
+                <option value="false">Non — visible par tous</option>
+                <option value="true">Oui — accès par code</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Prix (FCFA)</label>
+              <input type="number" id="viPrix" min="0" step="500" placeholder="Ex: 5000">
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Slug (identifiant URL)</label>
+            <input type="text" id="viSlug" placeholder="Ex: formation-fa-2026">
+            <div class="hint">Utilisé pour l'URL : acces.html?type=video&amp;slug=…</div>
+          </div>
+          <div class="form-group">
+            <label>Description longue (fiche payante)</label>
+            <textarea id="viDescriptionPayante" rows="4" placeholder="Ce que le client voit avant d'acheter..."></textarea>
+          </div>
+          <div class="form-group">
+            <label>Affiche de présentation</label>
+            <div class="url-row">
+              <input type="url" id="viAffiche" placeholder="https://i.postimg.cc/... (image de présentation)">
+              <a class="btn-tool" href="https://postimages.org/fr/" target="_blank" rel="noopener">PostImage</a>
+            </div>
+            <div class="hint">Utilisée uniquement si la vidéo est payante.</div>
+          </div>
         </div>
 
         <div style="display:flex; gap:12px; margin-top:16px; flex-wrap:wrap;">
@@ -862,7 +919,7 @@ h1, h2, h3 { font-family: var(--font-titres); font-weight: 700; color: var(--bla
   </div>
 
   <!-- ============================================================
-       TAB LIVE
+       TAB LIVE (avec bloc payant)
        ============================================================ -->
   <div class="tab-pane" id="pane-live">
     <div class="alert alert-warn">
@@ -927,7 +984,41 @@ h1, h2, h3 { font-family: var(--font-titres); font-weight: 700; color: var(--bla
           </div>
         </div>
 
-        <!-- ----- LIENS DE SECOURS (AJOUT PHASE 4) ----- -->
+        <!-- ----- BLOC PAYANT (NOUVEAU) ----- -->
+        <div class="payant-block">
+          <div class="payant-block-title">💰 Ce live est-il payant ?</div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Live payant ?</label>
+              <select id="liPayant">
+                <option value="false">Non — visible par tous</option>
+                <option value="true">Oui — accès par code</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Prix (FCFA)</label>
+              <input type="number" id="liPrix" min="0" step="500" placeholder="Ex: 5000">
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Slug (identifiant URL)</label>
+            <input type="text" id="liSlug" placeholder="Ex: ceremonie-vodoun-2026">
+            <div class="hint">Utilisé pour l'URL : acces.html?type=live&amp;slug=…</div>
+          </div>
+          <div class="form-group">
+            <label>Description longue (fiche payante)</label>
+            <textarea id="liDescriptionPayante" rows="4" placeholder="Ce que le client voit avant d'acheter..."></textarea>
+          </div>
+          <div class="form-group">
+            <label>Affiche de présentation</label>
+            <div class="url-row">
+              <input type="url" id="liAffiche" placeholder="https://i.postimg.cc/... (image de présentation)">
+              <a class="btn-tool" href="https://postimages.org/fr/" target="_blank" rel="noopener">PostImage</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- ----- LIENS DE SECOURS ----- -->
         <div class="fallback-section">
           <div class="fallback-section-title">🔁 Liens de secours (si l'iframe refuse de se connecter)</div>
           <div class="hint" style="margin-bottom: 12px;">Laissez vide pour utiliser les liens par défaut du site (config/site).</div>
@@ -1958,7 +2049,7 @@ function resetPhotoForm() {
 }
 
 // ============================================================
-// VIDÉOS (médias)
+// VIDÉOS (médias) — avec bloc payant
 // ============================================================
 async function loadVideos() {
   const list = document.getElementById('viList');
@@ -1970,13 +2061,17 @@ async function loadVideos() {
     list.innerHTML = '';
     snap.forEach(doc => {
       const d = doc.data();
+      const payant = d.payant === true;
+      const badge = payant
+        ? `<span class="badge badge-payant">💰 ${d.prix || 0} FCFA</span>`
+        : `<span class="badge badge-gratuit">Gratuit</span>`;
       const row = document.createElement('div');
       row.className = 'item-row';
       row.innerHTML = `
-        <div class="item-thumb" style="background-image:url('${d.vignetteURL || ''}')"></div>
+        <div class="item-thumb" style="background-image:url('${d.vignetteURL || d.affiche || ''}')"></div>
         <div class="item-info">
-          <div class="item-title">${d.titre || 'Sans titre'}</div>
-          <div class="item-meta">${d.categorie || ''}</div>
+          <div class="item-title">${d.titre || 'Sans titre'} ${badge}</div>
+          <div class="item-meta">${d.categorie || ''}${payant && d.slug ? ' • /' + d.slug : ''}</div>
         </div>
         <div class="item-actions">
           <button class="btn btn-outline btn-sm" data-edit="${doc.id}">✏️</button>
@@ -2001,6 +2096,11 @@ async function editVideo(id) {
   viUrlInput.value = d.url || '';
   document.getElementById('viVignetteURL').value = d.vignetteURL || '';
   document.getElementById('viFallbackURL').value = d.fallbackURL || '';
+  document.getElementById('viPayant').value = d.payant === true ? 'true' : 'false';
+  document.getElementById('viPrix').value = d.prix || '';
+  document.getElementById('viSlug').value = d.slug || '';
+  document.getElementById('viDescriptionPayante').value = d.descriptionPayante || '';
+  document.getElementById('viAffiche').value = d.affiche || '';
   validerChampURL(viUrlInput, viUrlValidation);
   document.getElementById('btnCancelVi').style.display = 'inline-flex';
   document.getElementById('btnSaveVi').querySelector('.btn-text').textContent = '💾 Mettre à jour';
@@ -2019,6 +2119,7 @@ document.getElementById('formVideo').addEventListener('submit', async (e) => {
   const btn = document.getElementById('btnSaveVi');
   const id = document.getElementById('viId').value;
   const url = viUrlInput.value.trim();
+  const payant = document.getElementById('viPayant').value === 'true';
 
   if (url) {
     const plateforme = detecterPlateforme(url);
@@ -2029,12 +2130,23 @@ document.getElementById('formVideo').addEventListener('submit', async (e) => {
     }
   }
 
+  const slug = document.getElementById('viSlug').value.trim();
+  if (payant && !slug) {
+    toast('warning', 'Slug manquant', 'Une vidéo payante doit avoir un slug (identifiant URL).');
+    return;
+  }
+
   const data = {
     titre: document.getElementById('viTitre').value.trim(),
     categorie: document.getElementById('viCategorie').value,
     url: url,
     vignetteURL: document.getElementById('viVignetteURL').value.trim(),
     fallbackURL: document.getElementById('viFallbackURL').value.trim(),
+    payant: payant,
+    prix: parseInt(document.getElementById('viPrix').value, 10) || 0,
+    slug: slug,
+    descriptionPayante: document.getElementById('viDescriptionPayante').value.trim(),
+    affiche: document.getElementById('viAffiche').value.trim(),
     dateAjout: firebase.firestore.FieldValue.serverTimestamp()
   };
   if (!data.titre || !data.url) { toast('warning', 'Champs manquants', 'Titre et URL obligatoires.'); return; }
@@ -2142,7 +2254,7 @@ function resetPresseForm() {
 }
 
 // ============================================================
-// LIVE — AVEC VALIDATION + FALLBACK
+// LIVE — AVEC VALIDATION + FALLBACK + PAYANT
 // ============================================================
 async function loadLive() {
   try {
@@ -2162,6 +2274,11 @@ async function loadLive() {
       document.getElementById('liFallbackYouTube').value = '';
       document.getElementById('liFallbackFacebook').value = '';
       document.getElementById('liFallbackTikTok').value = '';
+      document.getElementById('liPayant').value = 'false';
+      document.getElementById('liPrix').value = '';
+      document.getElementById('liSlug').value = '';
+      document.getElementById('liDescriptionPayante').value = '';
+      document.getElementById('liAffiche').value = '';
       liValidationBox.className = 'url-validation';
       liValidationBox.innerHTML = '';
       dot.classList.remove('on');
@@ -2180,17 +2297,27 @@ async function loadLive() {
     document.getElementById('liFallbackYouTube').value = d.fallbackYouTube || '';
     document.getElementById('liFallbackFacebook').value = d.fallbackFacebook || '';
     document.getElementById('liFallbackTikTok').value = d.fallbackTikTok || '';
+    document.getElementById('liPayant').value = d.payant === true ? 'true' : 'false';
+    document.getElementById('liPrix').value = d.prix || '';
+    document.getElementById('liSlug').value = d.slug || '';
+    document.getElementById('liDescriptionPayante').value = d.descriptionPayante || '';
+    document.getElementById('liAffiche').value = d.affiche || '';
 
     validerChampURL(liEmbedInput, liValidationBox);
 
     const plateforme = detecterPlateforme(d.embedURL);
     const validation = validerEmbedURL(d.embedURL, plateforme);
 
-    if (d.actif && d.embedURL && validation.valide) {
+    if (d.actif && d.embedURL && validation.valide && d.payant !== true) {
       dot.classList.add('on');
       statusText.innerHTML = `🔴 <strong>EN DIRECT</strong> — ${d.titre || 'Live en cours'}`;
       preview.style.display = 'block';
       previewFrame.src = plateforme.embed || d.embedURL;
+    } else if (d.actif && d.payant === true) {
+      dot.classList.add('on');
+      statusText.innerHTML = `💰 <strong>LIVE PAYANT</strong> — ${d.titre || 'Live'} (${d.prix || 0} FCFA)`;
+      preview.style.display = 'none';
+      previewFrame.src = '';
     } else if (d.actif && !validation.valide) {
       dot.classList.add('on');
       statusText.innerHTML = `⚠️ <strong>Live activé mais URL invalide</strong>`;
@@ -2213,6 +2340,13 @@ document.getElementById('formLive').addEventListener('submit', async (e) => {
   const btn = document.getElementById('btnSaveLive');
   const id = document.getElementById('liId').value;
   const url = liEmbedInput.value.trim();
+  const payant = document.getElementById('liPayant').value === 'true';
+  const slug = document.getElementById('liSlug').value.trim();
+
+  if (payant && !slug) {
+    toast('warning', 'Slug manquant', 'Un live payant doit avoir un slug.');
+    return;
+  }
 
   const data = {
     actif: document.getElementById('liActif').value === 'true',
@@ -2221,12 +2355,17 @@ document.getElementById('formLive').addEventListener('submit', async (e) => {
     embedURL: url,
     fallbackYouTube: document.getElementById('liFallbackYouTube').value.trim(),
     fallbackFacebook: document.getElementById('liFallbackFacebook').value.trim(),
-    fallbackTikTok: document.getElementById('liFallbackTikTok').value.trim()
+    fallbackTikTok: document.getElementById('liFallbackTikTok').value.trim(),
+    payant: payant,
+    prix: parseInt(document.getElementById('liPrix').value, 10) || 0,
+    slug: slug,
+    descriptionPayante: document.getElementById('liDescriptionPayante').value.trim(),
+    affiche: document.getElementById('liAffiche').value.trim()
   };
 
-  if (data.actif) {
+  if (data.actif && !payant) {
     if (!url) {
-      toast('warning', 'URL manquante', 'Un live actif doit avoir une URL d\'intégration.');
+      toast('warning', 'URL manquante', 'Un live actif et gratuit doit avoir une URL d\'intégration.');
       return;
     }
     const plateforme = detecterPlateforme(url);
@@ -2281,7 +2420,6 @@ async function loadAcces() {
       return;
     }
 
-    // Trier par dateCreation desc
     const docs = snap.docs.slice().sort((a, b) => {
       const da = a.data().dateCreation;
       const db_ = b.data().dateCreation;
@@ -2384,12 +2522,10 @@ document.getElementById('formAcces').addEventListener('submit', async (e) => {
 
   let code = codeManuel || genererCode(type);
 
-  // Vérifier si le code existe déjà
   setLoading(btn, true, 'Génération…');
   try {
     const existing = await db.collection('acces').doc(code).get();
     if (existing.exists) {
-      // Régénérer si auto
       if (!codeManuel) {
         code = genererCode(type) + Math.floor(Math.random() * 100);
       } else {
@@ -2514,7 +2650,7 @@ document.getElementById('btnReloadConfig').addEventListener('click', async () =>
   toast('info', 'Configuration rechargée');
 });
 
-console.log('✅ Admin prête — version complète avec Accès payant + Configuration');
+console.log('✅ Admin prête — version complète avec Live/Vidéo payants + Accès payant + Configuration');
 </script>
 
 </body>
