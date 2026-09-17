@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Accès sécurisé — Groupe Gbêmadoyomin</title>
+<meta name="description" content="Entrez votre code d'accès pour rejoindre un live, un livre ou un contenu réservé du Groupe Gbêmadoyomin.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="canonical" href="https://groupegbemadoyomin.com/acces.html">
+<meta name="theme-color" content="#0D0D0D">
+<link rel="manifest" href="manifest.json">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,400;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --noir: #0d0d0d; --noir-2: #111111; --noir-3: #161616;
+  --or: #b8922e; --or-clair: #d4af5a; --or-fonce: #8a6a1f;
+  --rouge: #7a1515; --blanc: #f0ebe0; --blanc-doux: #c8c0b0; --bleu: #0d1f3c;
+  --text-principal: #f0ebe0; --text-muted: #9a9080; --text-discret: #7a7060;
+  --border: rgba(184, 146, 46, 0.2); --border-discret: rgba(184, 146, 46, 0.1);
+  --font-titres: 'Cinzel', serif; --font-accent: 'Cormorant Garamond', serif; --font-corps: 'Lato', sans-serif;
+  --espace-xs: 0.5rem; --espace-sm: 1rem; --espace-md: 2rem; --espace-lg: 4rem; --espace-xl: 7rem;
+  --largeur-max: 1180px; --largeur-texte: 68ch; --rayon: 3px;
+  --lueur-or: 0 4px 24px rgba(184, 146, 46, 0.25);
+  --vitesse: 0.35s cubic-bezier(.4,0,.2,1);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+body { background: var(--noir); color: var(--text-principal); font-family: var(--font-corps); font-weight: 300; line-height: 1.65; -webkit-font-smoothing: antialiased; overflow-x: hidden; min-height: 100vh; display: flex; flex-direction: column; }
+img { max-width: 100%; display: block; height: auto; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; background: none; border: none; cursor: pointer; }
+h1, h2, h3 { font-family: var(--font-titres); font-weight: 700; color: var(--blanc); line-height: 1.25; }
+h1 { font-size: clamp(2rem, 4.5vw, 3rem); letter-spacing: 0.02em; }
+h2 { font-size: clamp(1.5rem, 3vw, 2.2rem); }
+p { max-width: var(--largeur-texte); }
+:focus-visible { outline: 2px solid var(--or); outline-offset: 3px; }
+
+.conteneur { width: 100%; max-width: var(--largeur-max); margin-inline: auto; padding-inline: clamp(20px, 5vw, 48px); }
+
+.btn-or {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  background: linear-gradient(135deg, var(--or-clair), var(--or-fonce)); color: var(--noir);
+  font-family: var(--font-titres); font-size: 0.82rem; font-weight: 700; letter-spacing: 0.08em;
+  padding: 16px 32px; border-radius: var(--rayon); box-shadow: var(--lueur-or);
+  transition: transform var(--vitesse), box-shadow var(--vitesse); border: none;
+  cursor: pointer; text-transform: uppercase;
+}
+.btn-or:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(184,146,46,.4); }
+.btn-or:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+.btn-contour {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  border: 1px solid var(--border); color: var(--blanc-doux);
+  font-family: var(--font-titres); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em;
+  padding: 12px 24px; border-radius: var(--rayon);
+  transition: border-color var(--vitesse), color var(--vitesse); background: transparent;
+  text-transform: uppercase; cursor: pointer;
+}
+.btn-contour:hover { border-color: var(--or); color: var(--or-clair); }
+
+.eyebrow { font-family: var(--font-accent); font-style: italic; font-size: 0.95rem; color: var(--text-muted); margin-bottom: var(--espace-xs); }
+
+/* ============================================================
+   LOADER
+   ============================================================ */
+.loader {
+  position: fixed; inset: 0; z-index: 999; background: var(--noir);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px;
+  transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+.loader.cache { opacity: 0; visibility: hidden; pointer-events: none; }
+.loader-logo { width: 90px; height: auto; animation: pulse-logo 2s ease-in-out infinite; filter: drop-shadow(0 0 30px rgba(184,146,46,0.3)); }
+@keyframes pulse-logo { 0%, 100% { transform: scale(0.95) rotate(-2deg); opacity: 0.8; } 50% { transform: scale(1.08) rotate(2deg); opacity: 1; } }
+.loader-trait { width: 60px; height: 2px; background: var(--or); animation: etirer 1.7s ease-in-out infinite; }
+@keyframes etirer { 0%, 100% { width: 30px; opacity: 0.3; } 50% { width: 80px; opacity: 1; } }
+
+/* ============================================================
+   NAVIGATION
+   ============================================================ */
+.nav {
+  position: sticky; top: 0; z-index: 100; background: rgba(8, 8, 8, 0.92); backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border); padding-inline: clamp(20px, 4vw, 32px); height: 72px;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+}
+.nav-logo { display: flex; align-items: center; gap: 10px; }
+.nav-logo-img { height: 40px; width: auto; display: block; }
+.nav-logo-texte { display: flex; flex-direction: column; }
+.nav-logo-principal { font-family: var(--font-titres); font-size: 11px; font-weight: 700; color: var(--or); letter-spacing: 0.08em; line-height: 1.2; }
+.nav-logo-sous { font-family: var(--font-accent); font-style: italic; font-size: 10px; color: var(--text-muted); letter-spacing: 0.05em; }
+.nav-liens { display: flex; align-items: center; gap: 2px; }
+.nav-lien { font-size: 10px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: var(--text-muted); padding: 6px 10px; border-radius: 3px; white-space: nowrap; position: relative; transition: color var(--vitesse); }
+.nav-lien:hover, .nav-lien.actif { color: var(--or); }
+.nav-lien.actif::after { content: ''; position: absolute; bottom: 0; left: 10px; right: 10px; height: 1px; background: var(--or); }
+.nav-rdv { background: linear-gradient(135deg, var(--or-clair), var(--or-fonce)); color: var(--noir); font-family: var(--font-titres); font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 10px 18px; border-radius: 3px; white-space: nowrap; transition: transform var(--vitesse); }
+.nav-rdv:hover { transform: translateY(-1px); }
+.nav-burger { display: none; flex-direction: column; gap: 5px; width: 26px; }
+.nav-burger span { height: 2px; background: var(--or); border-radius: 1px; transition: transform var(--vitesse), opacity var(--vitesse); }
+.nav-burger.ouvert span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-burger.ouvert span:nth-child(2) { opacity: 0; }
+.nav-burger.ouvert span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+@media (max-width: 980px) {
+  .nav-liens { position: fixed; top: 72px; left: 0; right: 0; flex-direction: column; align-items: stretch; gap: 0; background: var(--noir-2); border-bottom: 1px solid var(--border); max-height: 0; overflow: hidden; transition: max-height var(--vitesse); }
+  .nav-liens.ouvert { max-height: 560px; }
+  .nav-lien { padding: 16px 24px; text-align: center; border-bottom: 1px solid var(--border-discret); }
+  .nav-lien.actif::after { display: none; }
+  .nav-rdv { display: none; }
+  .nav-liens .nav-rdv-mobile { display: inline-flex; justify-content: center; margin: 16px 24px; }
+  .nav-burger { display: flex; }
+}
+
+/* ============================================================
+   MAIN / CARTE D'ACCÈS
+   ============================================================ */
+.acces-main {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(40px, 8vh, 100px) 0;
+  background:
+    radial-gradient(ellipse at 20% 30%, rgba(184,146,46,0.10), transparent 55%),
+    radial-gradient(ellipse at 80% 70%, rgba(122,21,21,0.08), transparent 50%),
+    var(--noir);
+  position: relative;
+  overflow: hidden;
+}
+.acces-main::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(184,146,46,0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(184,146,46,0.02) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+}
+
+.acces-carte {
+  position: relative;
+  width: 100%;
+  max-width: 520px;
+  background: var(--noir-2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: clamp(28px, 5vw, 48px);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 0 60px rgba(184,146,46,0.05);
+  text-align: center;
+  z-index: 1;
+}
+.acces-carte::before {
+  content: '';
+  position: absolute;
+  top: -1px; left: 50%; transform: translateX(-50%);
+  width: 80px; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--or), transparent);
+}
+
+.acces-icone {
+  width: 72px; height: 72px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--or-clair), var(--or-fonce));
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 2rem; margin-bottom: var(--espace-sm);
+  box-shadow: 0 8px 24px rgba(184,146,46,0.3);
+  animation: pulse-acces 2.5s ease-in-out infinite;
+}
+@keyframes pulse-acces {
+  0%, 100% { box-shadow: 0 8px 24px rgba(184,146,46,0.3); }
+  50% { box-shadow: 0 8px 40px rgba(184,146,46,0.5); }
+}
+
+.acces-titre { font-size: clamp(1.4rem, 3vw, 1.9rem); margin-bottom: 8px; }
+.acces-sous-titre { color: var(--text-muted); font-size: 0.92rem; margin-bottom: var(--espace-md); margin-inline: auto; max-width: 380px; }
+
+.acces-form {
+  display: flex; flex-direction: column; gap: 16px;
+  margin-bottom: var(--espace-sm);
+}
+.acces-champ-wrap { position: relative; }
+.acces-champ {
+  width: 100%;
+  padding: 18px 20px;
+  background: var(--noir-3);
+  border: 2px solid var(--border-discret);
+  border-radius: 6px;
+  color: var(--blanc);
+  font-family: 'Courier New', monospace;
+  font-size: clamp(1rem, 2.5vw, 1.15rem);
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-align: center;
+  text-transform: uppercase;
+  transition: border-color var(--vitesse), background var(--vitesse);
+}
+.acces-champ:focus {
+  outline: none;
+  border-color: var(--or);
+  background: var(--noir-2);
+  box-shadow: 0 0 0 4px rgba(184,146,46,0.1);
+}
+.acces-champ::placeholder {
+  color: var(--text-discret);
+  letter-spacing: 0.08em;
+  font-weight: 400;
+  font-family: var(--font-corps);
+  text-transform: none;
+  font-size: 0.85rem;
+  letter-spacing: 0;
+}
+
+.acces-btn-verifier {
+  width: 100%;
+  padding: 16px;
+  font-size: 0.85rem;
+  letter-spacing: 0.12em;
+}
+
+.acces-message {
+  margin-top: var(--espace-sm);
+  padding: 14px 18px;
+  border-radius: 6px;
+  font-size: 0.88rem;
+  display: none;
+  text-align: left;
+  line-height: 1.5;
+  align-items: flex-start;
+  gap: 10px;
+}
+.acces-message.visible { display: flex; }
+.acces-message.erreur {
+  background: rgba(122,21,21,0.15);
+  border: 1px solid rgba(122,21,21,0.5);
+  color: #ff9e9e;
+}
+.acces-message.succes {
+  background: rgba(34,197,94,0.12);
+  border: 1px solid rgba(34,197,94,0.4);
+  color: #86efac;
+}
+.acces-message.info {
+  background: rgba(59,130,246,0.1);
+  border: 1px solid rgba(59,130,246,0.35);
+  color: #93c5fd;
+}
+.acces-message-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 1px; }
+.acces-message-contenu { flex: 1; }
+.acces-message-titre { font-weight: 700; margin-bottom: 3px; }
+.acces-message-detail { font-size: 0.82rem; opacity: 0.9; }
+
+.acces-separateur {
+  margin: var(--espace-md) 0;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  color: var(--text-discret);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.acces-separateur::before,
+.acces-separateur::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border-discret), transparent);
+}
+
+.acces-aide {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+.acces-aide strong { color: var(--blanc-doux); display: block; margin-bottom: 4px; font-weight: 700; }
+.acces-aide a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--or-clair);
+  margin-top: 10px;
+  padding: 10px 18px;
+  border: 1px solid var(--border);
+  border-radius: var(--rayon);
+  font-family: var(--font-titres);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: all var(--vitesse);
+}
+.acces-aide a:hover {
+  border-color: #25D366;
+  color: #25D366;
+  background: rgba(37,211,102,0.08);
+}
+
+.acces-loader-inline {
+  display: inline-block;
+  width: 18px; height: 18px;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin-inline 0.7s linear infinite;
+  vertical-align: middle;
+}
+@keyframes spin-inline { to { transform: rotate(360deg); } }
+
+.acces-info-bas {
+  margin-top: var(--espace-md);
+  padding-top: var(--espace-sm);
+  border-top: 1px dashed var(--border-discret);
+  font-size: 0.78rem;
+  color: var(--text-discret);
+  line-height: 1.6;
+}
+.acces-info-bas a { color: var(--or-clair); border-bottom: 1px solid rgba(184,146,46,0.3); }
+
+/* ============================================================
+   FOOTER (version allégée)
+   ============================================================ */
+.footer { background: var(--noir-2); border-top: 1px solid var(--border); padding: 40px 0 20px; }
+.footer-contenu { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.f-logo { font-family: var(--font-titres); font-size: 14px; color: var(--or); letter-spacing: 0.1em; display: flex; align-items: center; gap: 10px; }
+.f-logo img { height: 28px; width: auto; }
+.f-copy { font-size: 11px; color: var(--text-discret); }
+.f-liens { display: flex; gap: 20px; flex-wrap: wrap; font-size: 12px; }
+.f-liens a { color: var(--text-discret); transition: color var(--vitesse); }
+.f-liens a:hover { color: var(--or-clair); }
+@media (max-width: 640px) {
+  .footer-contenu { flex-direction: column; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- ===================== LOADER ===================== -->
+<div class="loader" id="loader" aria-hidden="true">
+  <img src="logo-gg.jpeg" alt="Groupe Gbêmadoyomin" class="loader-logo" loading="eager">
+  <span class="loader-trait"></span>
+</div>
+
+<!-- ===================== NAVIGATION ===================== -->
+<nav class="nav" aria-label="Navigation principale">
+  <a href="index.html" class="nav-logo">
+    <img src="logo-gg.jpeg" alt="Groupe Gbêmadoyomin" class="nav-logo-img" width="40" height="40">
+    <div class="nav-logo-texte">
+      <span class="nav-logo-principal">GROUPE GBÊMADOYOMIN</span>
+      <span class="nav-logo-sous">Cabinet • ONG • TODAAA SHOP • Vibration Sacrée</span>
+    </div>
+  </a>
+  <div class="nav-liens" id="nav-liens">
+    <a class="nav-lien" href="index.html">Accueil</a>
+    <a class="nav-lien" href="le-professeur.html">Le Professeur</a>
+    <a class="nav-lien" href="consultations.html">Cabinet</a>
+    <a class="nav-lien" href="boutique.html">TODAAA SHOP</a>
+    <a class="nav-lien" href="evenements.html">Événements</a>
+    <a class="nav-lien" href="medias.html">Médias</a>
+    <a class="nav-lien actif" href="acces.html">Accès</a>
+    <a class="nav-lien" href="contact.html">Contact</a>
+    <a class="btn-or nav-rdv-mobile" href="https://wa.me/22967668799" target="_blank" rel="noopener">Prendre RDV</a>
+  </div>
+  <a class="nav-rdv" href="https://wa.me/22967668799?text=Bonjour%2C%20je%20souhaite%20prendre%20rendez-vous." target="_blank" rel="noopener">Prendre RDV</a>
+  <button class="nav-burger" id="nav-burger" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="nav-liens">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ===================== MAIN ===================== -->
+<main class="acces-main">
+  <div class="conteneur" style="display:flex; justify-content:center;">
+
+    <div class="acces-carte">
+
+      <div class="acces-icone" aria-hidden="true">🔐</div>
+
+      <h1 class="acces-titre">Accéder à votre contenu</h1>
+      <p class="acces-sous-titre">Entrez le code unique que vous avez reçu pour rejoindre un live, consulter un livre, ou accéder à un contenu réservé.</p>
+
+      <form class="acces-form" id="formAcces" autocomplete="off">
+        <div class="acces-champ-wrap">
+          <input
+            type="text"
+            id="inputCode"
+            class="acces-champ"
+            placeholder="GG-XXXX-XXXXXX"
+            maxlength="32"
+            autocomplete="off"
+            autocapitalize="characters"
+            spellcheck="false"
+            aria-label="Code d'accès"
+            required
+          >
+        </div>
+
+        <button type="submit" class="btn-or acces-btn-verifier" id="btnVerifier">
+          <span class="btn-text">🔓 Vérifier le code</span>
+        </button>
+      </form>
+
+      <div class="acces-message" id="message" role="alert"></div>
+
+      <div class="acces-separateur">Pas de code ?</div>
+
+      <div class="acces-aide">
+        <strong>Besoin d'un code d'accès ?</strong>
+        Les codes sont fournis après paiement (MoMo, Wave ou virement). Contactez-nous pour obtenir le vôtre.
+        <br>
+        <a href="#" id="btnWhatsApp" target="_blank" rel="noopener">
+          📱 Demander un code sur WhatsApp
+        </a>
+      </div>
+
+      <div class="acces-info-bas">
+        Un problème ? Le code peut être <strong>expiré</strong>, <strong>désactivé</strong> ou <strong>déjà utilisé</strong>.
+        Contactez-nous à <a href="mailto:cabinetgbemadoyomin@gmail.com">cabinetgbemadoyomin@gmail.com</a>.
+      </div>
+
+    </div>
+
+  </div>
+</main>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="footer">
+  <div class="conteneur footer-contenu">
+    <div class="f-logo">
+      <img src="logo-gg.jpeg" alt="GG">
+      GROUPE GBÊMADOYOMIN
+    </div>
+    <div class="f-liens">
+      <a href="index.html">Accueil</a>
+      <a href="evenements.html">Événements</a>
+      <a href="medias.html">Médias</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <span class="f-copy">© 2026 Groupe Gbêmadoyomin SARL</span>
+  </div>
+</footer>
+
+<!-- ===================== FIREBASE ===================== -->
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+
+<script>
+// ============================================================
+// CONFIG FIREBASE
+// ============================================================
+const firebaseConfig = {
+  apiKey: "AIzaSyBkn-26DnNoQBBfiR4-rRrPfOszW24KRRc",
+  authDomain: "groupe-gbemadoyomin.firebaseapp.com",
+  projectId: "groupe-gbemadoyomin",
+  storageBucket: "groupe-gbemadoyomin.firebasestorage.app",
+  messagingSenderId: "113133757650",
+  appId: "1:113133757650:web:71a07f05cca0e78e28390b"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+// ============================================================
+// CONFIG LOCALE (récupérée depuis Firestore config/site)
+// ============================================================
+let CONFIG = {
+  whatsappAdmin: '22967668799',
+  emailContact: 'cabinetgbemadoyomin@gmail.com'
+};
+
+async function chargerConfig() {
+  try {
+    const doc = await db.collection('config').doc('site').get();
+    if (doc.exists) {
+      const d = doc.data();
+      if (d.whatsappAdmin) CONFIG.whatsappAdmin = d.whatsappAdmin;
+      if (d.emailContact) CONFIG.emailContact = d.emailContact;
+      mettreAJourWhatsApp();
+      mettreAJourEmail();
+    }
+  } catch (err) {
+    console.warn('Config non chargée, valeurs par défaut utilisées.', err);
+  }
+}
+
+function mettreAJourWhatsApp() {
+  const btnWA = document.getElementById('btnWhatsApp');
+  if (!btnWA) return;
+  const msg = 'Bonjour, je souhaite obtenir un code d\'accès pour accéder à un contenu du Groupe Gbêmadoyomin.';
+  btnWA.href = 'https://wa.me/' + CONFIG.whatsappAdmin + '?text=' + encodeURIComponent(msg);
+}
+
+function mettreAJourEmail() {
+  // Déjà en HTML par défaut, mais on peut le rendre dynamique si besoin
+  const lienMail = document.querySelector('.acces-info-bas a[href^="mailto:"]');
+  if (lienMail) {
+    lienMail.href = 'mailto:' + CONFIG.emailContact;
+    lienMail.textContent = CONFIG.emailContact;
+  }
+}
+
+// ============================================================
+// AFFICHER UN MESSAGE
+// ============================================================
+function afficherMessage(type, titre, detail) {
+  const box = document.getElementById('message');
+  const icones = { erreur: '❌', succes: '✅', info: 'ℹ️' };
+  box.className = 'acces-message visible ' + type;
+  box.innerHTML =
+    '<span class="acces-message-icon">' + (icones[type] || 'ℹ️') + '</span>' +
+    '<div class="acces-message-contenu">' +
+      '<div class="acces-message-titre">' + titre + '</div>' +
+      (detail ? '<div class="acces-message-detail">' + detail + '</div>' : '') +
+    '</div>';
+}
+
+function cacherMessage() {
+  const box = document.getElementById('message');
+  box.className = 'acces-message';
+  box.innerHTML = '';
+}
+
+// ============================================================
+// NETTOYER LE CODE SAISI
+// ============================================================
+function nettoyerCode(valeur) {
+  if (!valeur) return '';
+  // Uppercase, trim, retire espaces et caractères indésirables
+  return valeur.trim().toUpperCase().replace(/[^A-Z0-9-]/g, '');
+}
+
+// ============================================================
+// VÉRIFIER LE CODE
+// ============================================================
+async function verifierCode(code) {
+  const btn = document.getElementById('btnVerifier');
+  const spanText = btn.querySelector('.btn-text');
+
+  // État chargement
+  btn.disabled = true;
+  spanText.innerHTML = '<span class="acces-loader-inline"></span> Vérification…';
+  cacherMessage();
+
+  try {
+    const docRef = db.collection('acces').doc(code);
+    const doc = await docRef.get();
+
+    // 1. Code inexistant
+    if (!doc.exists) {
+      afficherMessage('erreur', 'Code inconnu',
+        'Ce code n\'existe pas ou a été supprimé. Vérifiez la saisie (majuscules, tirets). Si le problème persiste, contactez-nous.');
+      return;
+    }
+
+    const d = doc.data();
+
+    // 2. Code désactivé
+    if (!d.actif) {
+      afficherMessage('erreur', 'Code désactivé',
+        'Ce code a été désactivé par l\'administrateur. Contactez-nous pour en obtenir un nouveau.');
+      return;
+    }
+
+    // 3. Code expiré
+    if (d.dateExpiration && d.dateExpiration.toDate) {
+      const expDate = d.dateExpiration.toDate();
+      if (expDate.getTime() < Date.now()) {
+        afficherMessage('erreur', 'Code expiré',
+          'Ce code était valable jusqu\'au ' + expDate.toLocaleDateString('fr-FR', {
+            day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit'
+          }) + '. Contactez-nous pour le renouveler.');
+        return;
+      }
+    }
+
+    // 4. Usage unique et déjà utilisé
+    if (d.usageUnique && d.utilise) {
+      afficherMessage('erreur', 'Code déjà utilisé',
+        'Ce code a déjà été utilisé une fois (usage unique). Contactez-nous si vous pensez qu\'il s\'agit d\'une erreur.');
+      return;
+    }
+
+    // 5. Vérifier le lien de destination
+    if (!d.lien) {
+      afficherMessage('erreur', 'Lien manquant',
+        'Le code est valide mais aucun contenu n\'est associé. Contactez-nous.');
+      return;
+    }
+
+    // ✅ TOUT OK
+    afficherMessage('succes', 'Code valide ! Redirection en cours…',
+      'Accès autorisé à : ' + (d.titre || 'votre contenu') + '.');
+
+    // Marquer comme utilisé si usage unique
+    if (d.usageUnique) {
+      try {
+        await docRef.update({
+          utilise: true,
+          dateUtilisation: firebase.firestore.FieldValue.serverTimestamp()
+        });
+      } catch (err) {
+        console.warn('Impossible de marquer le code comme utilisé :', err);
+      }
+    }
+
+    // Rediriger après un court délai
+    setTimeout(function () {
+      window.location.href = d.lien;
+    }, 1200);
+
+  } catch (err) {
+    console.error('Erreur vérification code:', err);
+    afficherMessage('erreur', 'Erreur technique',
+      'Impossible de vérifier le code pour le moment. Réessayez dans un instant.');
+  } finally {
+    btn.disabled = false;
+    spanText.textContent = '🔓 Vérifier le code';
+  }
+}
+
+// ============================================================
+// INITIALISATION
+// ============================================================
+document.addEventListener('DOMContentLoaded', function () {
+
+  // Loader
+  setTimeout(function () {
+    document.getElementById('loader').classList.add('cache');
+  }, 600);
+
+  // Menu mobile
+  const burger = document.getElementById('nav-burger');
+  const liens = document.getElementById('nav-liens');
+  if (burger && liens) {
+    burger.addEventListener('click', function () {
+      const ouvert = liens.classList.toggle('ouvert');
+      burger.classList.toggle('ouvert', ouvert);
+      burger.setAttribute('aria-expanded', String(ouvert));
+    });
+    liens.querySelectorAll('.nav-lien, .nav-rdv-mobile').forEach(function (a) {
+      a.addEventListener('click', function () {
+        liens.classList.remove('ouvert');
+        burger.classList.remove('ouvert');
+        burger.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+
+  // Champ code — forcer majuscules en direct
+  const input = document.getElementById('inputCode');
+  input.addEventListener('input', function () {
+    const pos = input.selectionStart;
+    input.value = nettoyerCode(input.value);
+    // Repositionner le curseur
+    try { input.setSelectionRange(pos, pos); } catch (e) {}
+    cacherMessage();
+  });
+
+  // Soumission du formulaire
+  document.getElementById('formAcces').addEventListener('submit', function (e) {
+    e.preventDefault();
+    const code = nettoyerCode(input.value);
+
+    if (!code) {
+      afficherMessage('erreur', 'Code manquant', 'Veuillez saisir votre code d\'accès.');
+      input.focus();
+      return;
+    }
+
+    if (code.length < 6) {
+      afficherMessage('erreur', 'Code trop court', 'Un code d\'accès contient en général au moins 8 caractères (ex : GG-LIVE-ABCDEF).');
+      input.focus();
+      return;
+    }
+
+    verifierCode(code);
+  });
+
+  // Config WhatsApp
+  mettreAJourWhatsApp();
+  chargerConfig();
+});
+
+// ---- SERVICE WORKER (optionnel, silencieux si absent) ----
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('service-worker.js')
+    .then(function () { console.log('✅ Service Worker enregistré'); })
+    .catch(function () { console.log('⚠️ Service Worker non enregistré'); });
+}
+</script>
+
+</body>
+</html>
