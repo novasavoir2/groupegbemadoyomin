@@ -384,6 +384,103 @@ section { padding-block: var(--espace-xl); }
 @media (max-width: 860px) { .videos-grille { grid-template-columns: 1fr; } }
 
 /* ============================================================
+   MODALE VIDÉO (AJOUT — multi-plateformes + fallback)
+   ============================================================ */
+.video-modal {
+  position: fixed; inset: 0; z-index: 2100;
+  background: rgba(0, 0, 0, 0.94);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: fadeIn 0.3s ease;
+}
+.video-modal.open { display: flex; }
+.video-modal-content {
+  width: 100%;
+  max-width: 1000px;
+  background: var(--noir-2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+  position: relative;
+}
+.video-modal-header {
+  padding: 14px 20px;
+  background: linear-gradient(135deg, var(--rouge), var(--noir-2));
+  border-bottom: 1px solid var(--or);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.video-modal-title {
+  color: var(--blanc);
+  font-family: var(--font-titres);
+  font-size: 0.95rem;
+  flex: 1;
+}
+.video-modal-close {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: rgba(255,255,255,0.1); color: var(--blanc);
+  font-size: 1.3rem; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.3s ease;
+}
+.video-modal-close:hover { background: rgba(255,255,255,0.2); }
+.video-modal-zone {
+  aspect-ratio: 16/9;
+  background: var(--noir-3);
+  position: relative;
+}
+.video-modal-zone iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  position: absolute;
+  inset: 0;
+}
+.video-modal-actions {
+  padding: 14px 20px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  border-top: 1px solid var(--border-discret);
+  background: var(--noir-2);
+}
+
+/* Bloc fallback */
+.video-fallback {
+  display: none;
+  aspect-ratio: 16/9;
+  background: linear-gradient(135deg, var(--noir-2), var(--noir-3));
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 24px;
+  gap: 14px;
+}
+.video-fallback.visible { display: flex; }
+.video-fallback-icon { font-size: 2.4rem; }
+.video-fallback-title { font-family: var(--font-titres); color: var(--blanc); font-size: 1rem; }
+.video-fallback-text { color: var(--text-muted); font-size: 0.85rem; max-width: 460px; }
+.video-fallback-btns { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-top: 6px; }
+.video-fallback-btns a {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 10px 18px; border-radius: 4px;
+  font-family: var(--font-titres); font-size: 0.72rem; font-weight: 700;
+  letter-spacing: 0.05em; text-transform: uppercase;
+  transition: transform 0.3s ease;
+}
+.video-fallback-btns a:hover { transform: translateY(-2px); }
+.video-fallback-btns .btn-yt { background: #ff0000; color: white; }
+.video-fallback-btns .btn-drive { background: #1a73e8; color: white; }
+.video-fallback-btns .btn-tk { background: #000000; color: white; border: 1px solid #fe2c55; }
+.video-fallback-btns .btn-fb { background: #1877f2; color: white; }
+.video-fallback-btns .btn-vimeo { background: #1ab7ea; color: white; }
+.video-fallback-btns .btn-dailymotion { background: #0066dc; color: white; }
+
+/* ============================================================
    PRESSE
    ============================================================ */
 .presse-liste { display: flex; flex-direction: column; gap: 14px; max-width: var(--largeur-texte); margin-inline: auto; }
@@ -693,7 +790,7 @@ section { padding-block: var(--espace-xl); }
 </footer>
 
 <!-- ============================================================
-   LIGHTBOX
+   LIGHTBOX PHOTOS
    ============================================================ -->
 <div class="lightbox" id="lightbox">
   <button class="lightbox-close" id="lightboxClose" aria-label="Fermer">✕</button>
@@ -701,6 +798,32 @@ section { padding-block: var(--espace-xl); }
   <img class="lightbox-img" id="lightboxImg" src="" alt="">
   <button class="lightbox-nav lightbox-next" id="lightboxNext" aria-label="Suivant">›</button>
   <div class="lightbox-caption" id="lightboxCaption"></div>
+</div>
+
+<!-- ============================================================
+   MODALE VIDÉO (AJOUT — MULTI-PLATEFORMES + FALLBACK)
+   ============================================================ -->
+<div class="video-modal" id="videoModal">
+  <div class="video-modal-content">
+    <div class="video-modal-header">
+      <span class="video-modal-title" id="videoModalTitle">Lecture vidéo</span>
+      <button class="video-modal-close" id="videoModalClose" aria-label="Fermer">✕</button>
+    </div>
+    <div class="video-modal-zone" id="videoModalZone">
+      <!-- L'iframe sera injectée ici par JS -->
+    </div>
+    <div class="video-fallback" id="videoFallback">
+      <span class="video-fallback-icon">📡</span>
+      <div class="video-fallback-title">Lecture intégrée indisponible</div>
+      <div class="video-fallback-text" id="videoFallbackText">Cette vidéo ne peut pas s'afficher dans la page. Regardez-la directement sur la plateforme d'origine :</div>
+      <div class="video-fallback-btns" id="videoFallbackBtns">
+        <!-- Les boutons sont insérés dynamiquement -->
+      </div>
+    </div>
+    <div class="video-modal-actions" id="videoModalActions">
+      <!-- Actions dynamiques (télécharger, ouvrir, etc.) -->
+    </div>
+  </div>
 </div>
 
 <!-- ============================================================
@@ -775,8 +898,97 @@ function cloudinaryUrl(url, width = 600) {
 
 function extractYoutubeId(url) {
   if (!url) return null;
-  const m = url.match(/(?:embed\/|watch\?v=|youtu\.be\/)([^?&]+)/);
+  const m = url.match(/(?:embed\/|watch\?v=|youtu\.be\/|shorts\/)([^?&/]+)/);
   return m ? m[1] : null;
+}
+
+// ============================================================
+// DÉTECTION MULTI-PLATEFORMES (AJOUT)
+// ============================================================
+function detecterPlateforme(url) {
+  if (!url) return { nom: 'Inconnu', icone: '🔗', classe: 'btn-yt', lienDirect: url, embed: url };
+  const u = url.toLowerCase();
+
+  // YouTube
+  if (u.includes('youtube.com') || u.includes('youtu.be')) {
+    const id = extractYoutubeId(url);
+    return {
+      nom: 'YouTube',
+      icone: '▶️',
+      classe: 'btn-yt',
+      lienDirect: id ? 'https://www.youtube.com/watch?v=' + id : url,
+      embed: id ? 'https://www.youtube.com/embed/' + id : url
+    };
+  }
+
+  // Google Drive
+  if (u.includes('drive.google.com')) {
+    // Extraire l'ID du fichier pour créer un lien d'aperçu propre
+    const m = url.match(/\/d\/([^/]+)/);
+    const id = m ? m[1] : '';
+    return {
+      nom: 'Google Drive',
+      icone: '📁',
+      classe: 'btn-drive',
+      lienDirect: url,
+      embed: id ? 'https://drive.google.com/file/d/' + id + '/preview' : url
+    };
+  }
+
+  // TikTok
+  if (u.includes('tiktok.com')) {
+    return {
+      nom: 'TikTok',
+      icone: '🎵',
+      classe: 'btn-tk',
+      lienDirect: url,
+      embed: url
+    };
+  }
+
+  // Facebook
+  if (u.includes('facebook.com') || u.includes('fb.watch')) {
+    return {
+      nom: 'Facebook',
+      icone: '📘',
+      classe: 'btn-fb',
+      lienDirect: url,
+      embed: url
+    };
+  }
+
+  // Vimeo
+  if (u.includes('vimeo.com')) {
+    const m = url.match(/vimeo\.com\/(\d+)/);
+    const id = m ? m[1] : '';
+    return {
+      nom: 'Vimeo',
+      icone: '🎬',
+      classe: 'btn-vimeo',
+      lienDirect: url,
+      embed: id ? 'https://player.vimeo.com/video/' + id : url
+    };
+  }
+
+  // Dailymotion
+  if (u.includes('dailymotion.com')) {
+    return {
+      nom: 'Dailymotion',
+      icone: '🎥',
+      classe: 'btn-dailymotion',
+      lienDirect: url,
+      embed: url
+    };
+  }
+
+  // Par défaut
+  return {
+    nom: 'Vidéo',
+    icone: '🔗',
+    classe: 'btn-yt',
+    lienDirect: url,
+    embed: url
+  };
 }
 
 function formatDate(dateStr) {
@@ -817,7 +1029,6 @@ async function chargerPhotos() {
       </div>
     `).join('');
 
-    // Lightbox
     grille.querySelectorAll('.galerie-item').forEach(el => {
       el.addEventListener('click', () => {
         ouvrirLightbox(parseInt(el.dataset.index, 10));
@@ -880,28 +1091,179 @@ async function chargerVideos() {
       const vignette = v.vignetteURL
         ? cloudinaryUrl(v.vignetteURL, 600)
         : (ytId ? `https://img.youtube.com/vi/${ytId}/hqdefault.jpg` : 'video-1.jpeg');
+      const plateforme = detecterPlateforme(v.url);
 
       return `
         <div class="video-carte reveal-stagger">
-          <div class="video-vignette shine" style="background-image:url('${vignette}');" data-video-url="${v.url}">
+          <div class="video-vignette shine" style="background-image:url('${vignette}');"
+               data-video-url="${v.url}"
+               data-video-titre="${(v.titre || 'Vidéo').replace(/"/g, '&quot;')}">
             <span class="video-play">▶</span>
           </div>
           <div class="video-corps">
             <div class="video-titre">${v.titre || 'Vidéo'}</div>
-            <div class="video-categorie">${v.categorie || ''}</div>
+            <div class="video-categorie">${plateforme.icone} ${v.categorie || plateforme.nom}</div>
             <div class="video-actions">
-              <a class="btn-contour btn-sm" href="${v.url}" target="_blank" rel="noopener">▶ Regarder</a>
-              ${ytId ? `<a class="btn-or btn-sm" href="https://www.y2mate.com/youtube/${ytId}" target="_blank" rel="noopener">⬇ Télécharger</a>` : ''}
+              <button type="button" class="btn-or btn-sm lire-video"
+                      data-video-url="${v.url}"
+                      data-video-titre="${(v.titre || 'Vidéo').replace(/"/g, '&quot;')}">
+                ▶ Lire ici
+              </button>
+              <a class="btn-contour btn-sm" href="${plateforme.lienDirect}" target="_blank" rel="noopener">
+                ${plateforme.icone} Ouvrir
+              </a>
             </div>
           </div>
         </div>
       `;
     }).join('');
+
+    // Événements : ouvrir la modale
+    grille.querySelectorAll('.video-vignette, .lire-video').forEach(el => {
+      el.addEventListener('click', (e) => {
+        e.preventDefault();
+        const url = el.dataset.videoUrl;
+        const titre = el.dataset.videoTitre;
+        ouvrirVideoModal(url, titre);
+      });
+    });
+
     reprendreReveal();
   } catch (err) {
     console.error('Erreur vidéos:', err);
     grille.innerHTML = '<div class="etat-vide">Erreur de chargement des vidéos.</div>';
   }
+}
+
+// ============================================================
+// MODALE VIDÉO (AJOUT) — avec détection de chargement
+// ============================================================
+let videoModalIframe = null;
+let videoModalTimeout = null;
+
+function ouvrirVideoModal(url, titre) {
+  const modal = document.getElementById('videoModal');
+  const zone = document.getElementById('videoModalZone');
+  const fallback = document.getElementById('videoFallback');
+  const actions = document.getElementById('videoModalActions');
+
+  document.getElementById('videoModalTitle').textContent = titre || 'Lecture vidéo';
+
+  // Nettoyer
+  zone.innerHTML = '';
+  fallback.classList.remove('visible');
+  actions.innerHTML = '';
+
+  // Détecter la plateforme
+  const plateforme = detecterPlateforme(url);
+
+  // Construire l'URL d'embed
+  let embedURL = plateforme.embed;
+  // Ajouter les paramètres YouTube si nécessaire
+  if (plateforme.nom === 'YouTube' && !embedURL.includes('?')) {
+    embedURL += '?autoplay=1&rel=0';
+  }
+
+  // Créer l'iframe
+  const iframe = document.createElement('iframe');
+  iframe.src = embedURL;
+  iframe.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+  iframe.allowFullscreen = true;
+  iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+  zone.appendChild(iframe);
+  videoModalIframe = iframe;
+
+  // Détection : si l'iframe ne charge pas dans 6 secondes → afficher fallback
+  let loaded = false;
+  iframe.onload = function () { loaded = true; };
+  iframe.onerror = function () { afficherFallbackVideo(plateforme); };
+
+  if (videoModalTimeout) clearTimeout(videoModalTimeout);
+  videoModalTimeout = setTimeout(() => {
+    if (!loaded) afficherFallbackVideo(plateforme);
+  }, 6000);
+
+  // Construire les actions
+  actions.innerHTML = '';
+
+  // Bouton "Ouvrir sur plateforme"
+  const btnOuvrir = document.createElement('a');
+  btnOuvrir.className = 'btn-contour btn-sm';
+  btnOuvrir.href = plateforme.lienDirect;
+  btnOuvrir.target = '_blank';
+  btnOuvrir.rel = 'noopener';
+  btnOuvrir.textContent = plateforme.icone + ' Ouvrir sur ' + plateforme.nom;
+  actions.appendChild(btnOuvrir);
+
+  // Bouton téléchargement YouTube
+  if (plateforme.nom === 'YouTube') {
+    const ytId = extractYoutubeId(url);
+    if (ytId) {
+      const btnDl = document.createElement('a');
+      btnDl.className = 'btn-or btn-sm';
+      btnDl.href = 'https://www.y2mate.com/youtube/' + ytId;
+      btnDl.target = '_blank';
+      btnDl.rel = 'noopener';
+      btnDl.textContent = '⬇ Télécharger';
+      actions.appendChild(btnDl);
+    }
+  }
+
+  // Afficher la modale
+  modal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function afficherFallbackVideo(plateforme) {
+  // Cacher l'iframe
+  if (videoModalIframe) videoModalIframe.style.display = 'none';
+  const fallback = document.getElementById('videoFallback');
+  const btns = document.getElementById('videoFallbackBtns');
+  const txt = document.getElementById('videoFallbackText');
+
+  txt.textContent = `Cette vidéo ne peut pas s'afficher directement dans la page. Regardez-la sur ${plateforme.nom} :`;
+  btns.innerHTML = '';
+
+  // Bouton principal : plateforme détectée
+  const a1 = document.createElement('a');
+  a1.className = plateforme.classe;
+  a1.href = plateforme.lienDirect;
+  a1.target = '_blank';
+  a1.rel = 'noopener';
+  a1.textContent = plateforme.icone + ' ' + plateforme.nom;
+  btns.appendChild(a1);
+
+  // Bouton secondaire : YouTube (au cas où)
+  if (plateforme.nom !== 'YouTube') {
+    const ytId = extractYouTubeIdFromUrl(plateforme.lienDirect);
+    if (ytId) {
+      const a2 = document.createElement('a');
+      a2.className = 'btn-yt';
+      a2.href = 'https://www.youtube.com/watch?v=' + ytId;
+      a2.target = '_blank';
+      a2.rel = 'noopener';
+      a2.textContent = '▶️ YouTube';
+      btns.appendChild(a2);
+    }
+  }
+
+  fallback.classList.add('visible');
+}
+
+// Cas particulier : recherche YouTube dans une URL non-YouTube
+function extractYouTubeIdFromUrl(url) {
+  return null; // pas de fallback YouTube si l'URL de base n'est pas YouTube
+}
+
+function fermerVideoModal() {
+  const modal = document.getElementById('videoModal');
+  modal.classList.remove('open');
+  document.getElementById('videoModalZone').innerHTML = '';
+  document.getElementById('videoFallback').classList.remove('visible');
+  document.getElementById('videoModalActions').innerHTML = '';
+  if (videoModalTimeout) { clearTimeout(videoModalTimeout); videoModalTimeout = null; }
+  videoModalIframe = null;
+  document.body.style.overflow = '';
 }
 
 // ============================================================
@@ -994,19 +1356,35 @@ document.addEventListener('DOMContentLoaded', () => {
   }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
   document.querySelectorAll('.reveal, .reveal-stagger').forEach(el => observateurReveal.observe(el));
 
-  // LIGHTBOX - événements
+  // LIGHTBOX PHOTOS
   document.getElementById('lightboxClose').addEventListener('click', fermerLightbox);
   document.getElementById('lightboxPrev').addEventListener('click', () => naviguerLightbox(-1));
   document.getElementById('lightboxNext').addEventListener('click', () => naviguerLightbox(1));
   document.getElementById('lightbox').addEventListener('click', (e) => {
     if (e.target.id === 'lightbox') fermerLightbox();
   });
+
+  // MODALE VIDÉO
+  document.getElementById('videoModalClose').addEventListener('click', fermerVideoModal);
+  document.getElementById('videoModal').addEventListener('click', (e) => {
+    if (e.target.id === 'videoModal') fermerVideoModal();
+  });
+
+  // RACCOURCIS CLAVIER
   document.addEventListener('keydown', (e) => {
+    // Lightbox photos
     const lb = document.getElementById('lightbox');
-    if (!lb.classList.contains('open')) return;
-    if (e.key === 'Escape') fermerLightbox();
-    if (e.key === 'ArrowLeft') naviguerLightbox(-1);
-    if (e.key === 'ArrowRight') naviguerLightbox(1);
+    if (lb.classList.contains('open')) {
+      if (e.key === 'Escape') fermerLightbox();
+      if (e.key === 'ArrowLeft') naviguerLightbox(-1);
+      if (e.key === 'ArrowRight') naviguerLightbox(1);
+      return;
+    }
+    // Modale vidéo
+    const vm = document.getElementById('videoModal');
+    if (vm.classList.contains('open')) {
+      if (e.key === 'Escape') fermerVideoModal();
+    }
   });
 
   // CHATBOT
