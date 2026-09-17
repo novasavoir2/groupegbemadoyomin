@@ -922,7 +922,7 @@ function detecterPlateforme(url) {
       nom: 'YouTube',
       icone: '▶️',
       classe: 'btn-yt',
-      lienDirect: id ? 'https://www.youtube.com/watch?v=' + id : url,
+      lienDirect: id ? 'https://www.youtube.com/watch?v=' + id : 'https://www.youtube.com/',
       embed: id ? 'https://www.youtube.com/embed/' + id : url
     };
   }
@@ -970,6 +970,34 @@ function detecterPlateforme(url) {
 
   // Par défaut
   return { nom: 'Vidéo', icone: '🔗', classe: 'btn-yt', lienDirect: url, embed: url };
+}
+
+// ============================================================
+// VALIDER UNE URL D'EMBED (AJOUT)
+// ============================================================
+function validerEmbedURL(url, plateforme) {
+  if (!url || typeof url !== 'string') {
+    return { valide: false, raison: 'URL manquante' };
+  }
+
+  if (plateforme.nom === 'YouTube') {
+    const match = url.match(/embed\/([^?&/]+)/);
+    if (!match || !match[1] || match[1].length < 5) {
+      return { valide: false, raison: 'ID de vidéo YouTube manquant' };
+    }
+    return { valide: true };
+  }
+
+  if (plateforme.nom === 'Google Drive') {
+    const match = url.match(/\/d\/([^/]+)/);
+    if (!match || !match[1] || match[1].length < 10) {
+      return { valide: false, raison: 'ID de fichier Drive manquant' };
+    }
+    return { valide: true };
+  }
+
+  // Pour Facebook, TikTok, Vimeo, etc., on laisse passer
+  return { valide: true };
 }
 
 function formatDate(dateStr) {
@@ -1246,7 +1274,7 @@ async function chargerPresse() {
 }
 
 // ============================================================
-// CHARGER LE LIVE — AVEC FALLBACK MULTI-PLATEFORMES
+// CHARGER LE LIVE — AVEC VALIDATION + FALLBACK
 // ============================================================
 async function chargerLive() {
   try {
@@ -1277,6 +1305,16 @@ async function chargerLive() {
 
     // Détecter la plateforme
     const plateforme = detecterPlateforme(data.embedURL);
+
+    // 🔥 VALIDATION : l'URL contient-elle un ID valide ?
+    const validation = validerEmbedURL(data.embedURL, plateforme);
+
+    if (!validation.valide) {
+      // URL invalide → fallback IMMÉDIAT (pas de tentative d'iframe)
+      console.warn('[Live] URL invalide :', validation.raison);
+      afficherFallbackLive(plateforme, fallback, fallbackBtns, fallbackText, validation.raison);
+      return;
+    }
 
     // Construire l'URL d'embed
     let embedURL = data.embedURL;
@@ -1314,14 +1352,15 @@ async function chargerLive() {
 // ------------------------------------------------------------
 // Afficher le fallback si le live ne charge pas
 // ------------------------------------------------------------
-function afficherFallbackLive(plateforme, fallback, btnsContainer, txtContainer) {
+function afficherFallbackLive(plateforme, fallback, btnsContainer, txtContainer, raison) {
   // Cacher l'iframe
   const zone = document.getElementById('liveEmbedZone');
   const iframe = zone.querySelector('iframe');
   if (iframe) iframe.style.display = 'none';
 
   // Texte adapté
-  txtContainer.textContent = 'Le direct ne peut pas s\'afficher dans la page. Rejoignez-le directement sur ' + plateforme.nom + ' :';
+  const raisonTxt = raison ? ' (' + raison + ')' : '';
+  txtContainer.textContent = 'Le direct ne peut pas s\'afficher dans la page' + raisonTxt + '. Rejoignez-le directement sur ' + plateforme.nom + ' :';
 
   // Boutons
   btnsContainer.innerHTML = '';
@@ -1329,7 +1368,7 @@ function afficherFallbackLive(plateforme, fallback, btnsContainer, txtContainer)
   // Bouton principal : plateforme détectée
   const btn1 = document.createElement('a');
   btn1.className = plateforme.classe;
-  btn1.href = plateforme.lienDirect;
+  btn1.href = plateforme.lienDirect || '#';
   btn1.target = '_blank';
   btn1.rel = 'noopener';
   btn1.textContent = plateforme.icone + ' ' + plateforme.nom;
