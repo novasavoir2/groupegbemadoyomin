@@ -738,6 +738,106 @@ section { padding-block: var(--espace-xl); }
 @media (max-width: 780px) { .evenement-bloc { grid-template-columns: 1fr; } }
 
 /* ===================================================================
+   DERNIÈRES ACTUALITÉS (AJOUT)
+   =================================================================== */
+.actus-home-grille {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--espace-md);
+  margin-bottom: var(--espace-md);
+}
+.actu-home-carte {
+  background: var(--noir-2);
+  border: 1px solid var(--border-discret);
+  border-radius: 6px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform var(--vitesse), border-color var(--vitesse), box-shadow var(--vitesse);
+}
+.actu-home-carte:hover {
+  transform: translateY(-4px);
+  border-color: var(--or);
+  box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+}
+.actu-home-image {
+  aspect-ratio: 16/10;
+  background: var(--noir-3);
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+.actu-home-badge {
+  position: absolute;
+  top: 12px; left: 12px;
+  background: linear-gradient(135deg, var(--or-clair), var(--or-fonce));
+  color: var(--noir);
+  padding: 5px 10px;
+  border-radius: 3px;
+  font-family: var(--font-titres);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.actu-home-badge.epingle {
+  background: linear-gradient(135deg, #ff4757, #c0392b);
+  color: white;
+}
+.actu-home-corps {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+.actu-home-categorie {
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-size: 0.78rem;
+  color: var(--or-clair);
+}
+.actu-home-titre {
+  font-family: var(--font-titres);
+  font-size: 0.95rem;
+  color: var(--blanc);
+  line-height: 1.35;
+}
+.actu-home-resume {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  flex: 1;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+.actu-home-meta {
+  font-size: 0.72rem;
+  color: var(--text-discret);
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.actu-home-lire {
+  color: var(--or);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+.actu-home-carte:hover .actu-home-lire { color: var(--or-clair); }
+
+.actus-home-vide {
+  grid-column: 1 / -1;
+  text-align: center;
+  color: var(--text-discret);
+  font-size: 0.9rem;
+  padding: var(--espace-md) 0;
+}
+@media (max-width: 900px) { .actus-home-grille { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .actus-home-grille { grid-template-columns: 1fr; } }
+
+/* ===================================================================
    CONSULTATIONS
    =================================================================== */
 .cartes-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--espace-md); }
@@ -879,6 +979,39 @@ section { padding-block: var(--espace-xl); }
 .live-banner strong { color: var(--blanc); font-family: var(--font-titres); letter-spacing: 0.05em; font-size: 0.9rem; }
 .live-banner a { color: var(--or-clair); font-size: 0.82rem; border-bottom: 1px solid var(--or-clair); transition: color 0.3s ease; }
 .live-banner a:hover { color: var(--blanc); }
+
+/* ===================================================================
+   SECTION HEADER AVEC BOUTON VOIR PLUS (AJOUT)
+   =================================================================== */
+.section-entete {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: var(--espace-md);
+}
+.section-entete h2 { margin: 0; }
+.section-entete .btn-voir-plus {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--rayon);
+  color: var(--or-clair);
+  font-family: var(--font-titres);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: all var(--vitesse);
+}
+.section-entete .btn-voir-plus:hover {
+  border-color: var(--or);
+  background: rgba(184,146,46,0.08);
+  transform: translateY(-2px);
+}
 </style>
 </head>
 <body data-page="accueil">
@@ -963,7 +1096,7 @@ section { padding-block: var(--espace-xl); }
   </div>
 </div>
 
-<!-- ===================== LIVE BANNER (AJOUT) ===================== -->
+<!-- ===================== LIVE BANNER ===================== -->
 <div class="live-banner" id="liveBanner">
   <div class="conteneur live-banner-inner">
     <span class="live-dot"></span>
@@ -1016,7 +1149,7 @@ section { padding-block: var(--espace-xl); }
   </div>
 </header>
 
-<!-- ===================== LIVE EMBED (AJOUT) ===================== -->
+<!-- ===================== LIVE EMBED ===================== -->
 <section id="live-embed" style="display:none; padding-block: var(--espace-md);">
   <div class="conteneur">
     <div style="border: 1px solid var(--or); border-radius: 6px; overflow: hidden; background: var(--noir-2);">
@@ -1094,23 +1227,39 @@ section { padding-block: var(--espace-xl); }
   </div>
 </section>
 
-<!-- ===================== PROCHAIN ÉVÉNEMENT ===================== -->
+<!-- ===================== PROCHAIN ÉVÉNEMENT (DYNAMIQUE) ===================== -->
 <section>
   <div class="conteneur">
-    <p class="eyebrow reveal">À la une</p>
-    <h2 class="reveal" style="margin-bottom: var(--espace-md);">Prochain événement</h2>
-    <div class="evenement-bloc reveal">
-      <div class="evenement-affiche shine" style="background-image: url('affiche-evenement.jpeg');" role="img" aria-label="Affiche du prochain événement"></div>
-      <div class="evenement-details">
-        <h3>Titre de l'événement</h3>
-        <div class="evenement-meta">
-          <span>📅 Date à confirmer</span>
-          <span>📍 Lieu à confirmer</span>
-          <span>🎟 Participation sur inscription</span>
-        </div>
-        <p style="color: var(--blanc-doux); font-size: 0.92rem; margin-bottom: var(--espace-sm);">Une présentation courte et forte du thème, de ce que les participants vont découvrir et de l'intérêt de l'événement.</p>
-        <a class="btn-or" href="evenements.html">Découvrir & s'inscrire</a>
+    <div class="section-entete reveal">
+      <div>
+        <p class="eyebrow">À la une</p>
+        <h2>Prochain événement</h2>
       </div>
+      <a class="btn-voir-plus" href="evenements.html#evenements">Voir plus →</a>
+    </div>
+    <div id="prochain-evenement-zone">
+      <div class="evenement-bloc reveal">
+        <div class="evenement-affiche">Chargement…</div>
+        <div class="evenement-details">
+          <h3>Chargement…</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== DERNIÈRES ACTUALITÉS (AJOUT) ===================== -->
+<section>
+  <div class="conteneur">
+    <div class="section-entete reveal">
+      <div>
+        <p class="eyebrow">Le Groupe en mouvement</p>
+        <h2>Dernières actualités</h2>
+      </div>
+      <a class="btn-voir-plus" href="evenements.html#actualites">Voir plus →</a>
+    </div>
+    <div class="actus-home-grille" id="actus-home-zone">
+      <div class="actus-home-vide">Chargement des actualités…</div>
     </div>
   </div>
 </section>
@@ -1222,7 +1371,7 @@ section { padding-block: var(--espace-xl); }
           <a class="f-lien" href="le-professeur.html">Le Professeur</a>
           <a class="f-lien" href="consultations.html">Cabinet Gbêmadoyomin</a>
           <a class="f-lien" href="ong.html">ONG Gbêmadoyomin</a>
-          <a class="f-lien" href="evenements.html">Événements</a>
+          <a class="f-lien" href="evenements.html">Événements & Actualités</a>
           <a class="f-lien" href="medias.html">Médias</a>
         </div>
       </div>
@@ -1299,26 +1448,6 @@ section { padding-block: var(--espace-xl); }
 </div>
 
 <!-- ===================== FIREBASE CONFIG ===================== -->
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js";
-  import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js";
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyBkn-26DnNoQBBfiR4-rRrPfOszW24KRRc",
-    authDomain: "groupe-gbemadoyomin.firebaseapp.com",
-    projectId: "groupe-gbemadoyomin",
-    storageBucket: "groupe-gbemadoyomin.firebasestorage.app",
-    messagingSenderId: "113133757650",
-    appId: "1:113133757650:web:71a07f05cca0e78e28390b"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
-
-  console.log("✅ Firebase connecté avec succès !");
-</script>
-
-<!-- ===================== SCRIPT LIVE (AJOUT) ===================== -->
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 <script>
@@ -1337,11 +1466,158 @@ section { padding-block: var(--espace-xl); }
       if (!firebase.apps.length) {
         firebase.initializeApp(firebaseConfig);
       }
-      var dbLive = firebase.firestore();
+      var db = firebase.firestore();
+      var cloudName = 'bvcdjwg7';
 
-      document.addEventListener('DOMContentLoaded', async function () {
+      function cloudinaryUrl(url, width) {
+        if (!url) return '';
+        width = width || 800;
+        return 'https://res.cloudinary.com/' + cloudName + '/image/fetch/w_' + width + ',f_auto/' + encodeURIComponent(url);
+      }
+      function formaterDate(dateStr) {
+        if (!dateStr) return '';
+        var d = new Date(dateStr + 'T00:00:00');
+        if (isNaN(d.getTime())) return dateStr;
+        return d.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+      }
+      function todayISO() {
+        return new Date().toISOString().slice(0, 10);
+      }
+      function escapeHtml(str) {
+        if (!str) return '';
+        return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
+      }
+
+      // ============================================================
+      // PROCHAIN ÉVÉNEMENT DYNAMIQUE
+      // ============================================================
+      async function chargerProchainEvenement() {
+        var zone = document.getElementById('prochain-evenement-zone');
+        if (!zone) return;
         try {
-          var snap = await dbLive.collection('live').get();
+          var snapshot = await db.collection('evenements').get();
+          var aujourdhui = todayISO();
+          var liste = snapshot.docs
+            .map(function (doc) { return Object.assign({ id: doc.id }, doc.data()); })
+            .filter(function (e) { return !e.archive && e.date >= aujourdhui; })
+            .sort(function (a, b) { return a.date.localeCompare(b.date); });
+          var prochain = liste[0];
+
+          if (!prochain) {
+            zone.innerHTML =
+              '<div class="evenement-bloc reveal est-visible">' +
+                '<div class="evenement-affiche">Aucun événement en cours</div>' +
+                '<div class="evenement-details">' +
+                  '<h3>Le prochain rendez-vous sera bientôt annoncé</h3>' +
+                  '<div class="evenement-meta">' +
+                    '<span>📅 Date à confirmer</span>' +
+                    '<span>📍 Lieu à confirmer</span>' +
+                  '</div>' +
+                  '<p style="color: var(--blanc-doux); font-size: 0.92rem; margin-bottom: var(--espace-sm);">Suivez le Groupe sur WhatsApp pour être informé dès qu\'une date est fixée.</p>' +
+                  '<a class="btn-or" href="https://wa.me/22967668799?text=Bonjour%2C%20je%20souhaite%20%C3%AAtre%20inform%C3%A9%20des%20prochains%20%C3%A9v%C3%A9nements" target="_blank" rel="noopener">Être informé</a>' +
+                '</div>' +
+              '</div>';
+            return;
+          }
+
+          var affiche = (prochain.images && prochain.images[0]) || prochain.afficheURL || '';
+          var styleAffiche = affiche ? 'background-image: url(\'' + cloudinaryUrl(affiche, 800) + '\');' : '';
+
+          zone.innerHTML =
+            '<div class="evenement-bloc reveal est-visible">' +
+              '<div class="evenement-affiche shine" style="' + styleAffiche + '" role="img" aria-label="' + escapeHtml(prochain.titre) + '"></div>' +
+              '<div class="evenement-details">' +
+                '<p class="eyebrow">' + escapeHtml(prochain.categorie || 'Événement') + '</p>' +
+                '<h3>' + escapeHtml(prochain.titre) + '</h3>' +
+                '<div class="evenement-meta">' +
+                  '<span>📅 ' + formaterDate(prochain.date) + (prochain.heure ? ' — ' + escapeHtml(prochain.heure) : '') + '</span>' +
+                  '<span>📍 ' + escapeHtml(prochain.lieu || 'Lieu à confirmer') + '</span>' +
+                  '<span>🎟 ' + escapeHtml(prochain.participation || 'Sur inscription') + '</span>' +
+                '</div>' +
+                '<p style="color: var(--blanc-doux); font-size: 0.92rem; margin-bottom: var(--espace-sm);">' + escapeHtml(prochain.description || '') + '</p>' +
+                '<div style="display:flex; gap:10px; flex-wrap:wrap;">' +
+                  '<a class="btn-or" href="article.html?type=evenement&slug=' + encodeURIComponent(prochain.slug || prochain.id) + '">Voir les détails</a>' +
+                '</div>' +
+              '</div>' +
+            '</div>';
+        } catch (err) {
+          console.error('Erreur prochain événement:', err);
+        }
+      }
+
+      // ============================================================
+      // DERNIÈRES ACTUALITÉS (3)
+      // ============================================================
+      async function chargerDernieresActualites() {
+        var zone = document.getElementById('actus-home-zone');
+        if (!zone) return;
+        try {
+          var snapshot = await db.collection('actualites').get();
+          var toutes = snapshot.docs.map(function (doc) { return Object.assign({ id: doc.id }, doc.data()); });
+
+          // Trier : épinglées d'abord, puis par datePublication desc
+          toutes.sort(function (a, b) {
+            var aEpingle = (a.epingle === true || a.epingle === 'true') ? 1 : 0;
+            var bEpingle = (b.epingle === true || b.epingle === 'true') ? 1 : 0;
+            if (aEpingle !== bEpingle) return bEpingle - aEpingle;
+            var da = a.datePublication || '';
+            var db_ = b.datePublication || '';
+            return db_.localeCompare(da);
+          });
+
+          var liste = toutes.slice(0, 3);
+
+          if (!liste.length) {
+            zone.innerHTML = '<div class="actus-home-vide">Aucune actualité pour le moment.</div>';
+            return;
+          }
+
+          zone.innerHTML = liste.map(function (actu) {
+            var img = (actu.images && actu.images[0]) || actu.imageURL || '';
+            var bg = img ? cloudinaryUrl(img, 700) : '';
+            var styleBg = bg ? 'background-image:url(\'' + bg + '\');' : '';
+            var estEpingle = (actu.epingle === true || actu.epingle === 'true');
+            var badge = estEpingle
+              ? '<span class="actu-home-badge epingle">📌 À la une</span>'
+              : (actu.categorie ? '<span class="actu-home-badge">' + escapeHtml(actu.categorie) + '</span>' : '');
+            var resume = actu.resume || (actu.contenu ? actu.contenu.slice(0, 140) + '…' : '');
+            var slugURL = 'article.html?type=actualite&slug=' + encodeURIComponent(actu.slug || actu.id);
+
+            return '<article class="actu-home-carte reveal-stagger">' +
+              '<a href="' + slugURL + '" style="display:block;">' +
+                '<div class="actu-home-image shine" style="' + styleBg + '" role="img" aria-label="' + escapeHtml(actu.titre) + '">' +
+                  badge +
+                '</div>' +
+              '</a>' +
+              '<div class="actu-home-corps">' +
+                (actu.categorie ? '<span class="actu-home-categorie">' + escapeHtml(actu.categorie) + '</span>' : '') +
+                '<a href="' + slugURL + '"><h3 class="actu-home-titre">' + escapeHtml(actu.titre || 'Sans titre') + '</h3></a>' +
+                '<p class="actu-home-resume">' + escapeHtml(resume) + '</p>' +
+                '<div class="actu-home-meta">' +
+                  '<span>📅 ' + formaterDate(actu.datePublication) + '</span>' +
+                  (actu.auteur ? '<span>✍️ ' + escapeHtml(actu.auteur) + '</span>' : '') +
+                '</div>' +
+                '<a class="actu-home-lire" href="' + slugURL + '">Lire l\'article →</a>' +
+              '</div>' +
+            '</article>';
+          }).join('');
+
+          // Ré-animer les reveals
+          if (typeof window.__ggReprendreReveal === 'function') {
+            window.__ggReprendreReveal();
+          }
+        } catch (err) {
+          console.error('Erreur dernières actualités:', err);
+          zone.innerHTML = '<div class="actus-home-vide">Erreur de chargement.</div>';
+        }
+      }
+
+      // ============================================================
+      // LIVE
+      // ============================================================
+      async function chargerLive() {
+        try {
+          var snap = await db.collection('live').get();
           if (snap.empty) return;
           var data = snap.docs[0].data();
           if (!data.actif || !data.embedURL) return;
@@ -1357,9 +1633,18 @@ section { padding-block: var(--espace-xl); }
         } catch (err) {
           console.error('Erreur live:', err);
         }
+      }
+
+      // ============================================================
+      // INIT
+      // ============================================================
+      document.addEventListener('DOMContentLoaded', function () {
+        chargerProchainEvenement();
+        chargerDernieresActualites();
+        chargerLive();
       });
     } catch (e) {
-      console.error('Erreur init live:', e);
+      console.error('Erreur init Firebase:', e);
     }
   })();
 </script>
@@ -1397,6 +1682,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
   document.querySelectorAll('.reveal, .reveal-stagger').forEach(el => observateur.observe(el));
+
+  // Fonction exposée pour ré-animer les nouveaux éléments insérés
+  window.__ggReprendreReveal = function () {
+    document.querySelectorAll('.reveal:not(.est-visible), .reveal-stagger:not(.est-visible)').forEach(el => {
+      observateur.observe(el);
+    });
+  };
 
   // ---- TYPEWRITER ----
   document.querySelectorAll('[data-typewriter]').forEach(el => {
@@ -1457,7 +1749,6 @@ document.addEventListener('DOMContentLoaded', () => {
   toggleBtn.addEventListener('click', () => panel.classList.toggle('open'));
   closeBtn.addEventListener('click', () => panel.classList.remove('open'));
 
-  // Ajouter un message dans le chat
   function addMessage(text, sender) {
     const msg = document.createElement('div');
     msg.className = `chatbot-msg ${sender}`;
@@ -1466,7 +1757,6 @@ document.addEventListener('DOMContentLoaded', () => {
     messagesContainer.scrollTop = messagesContainer.scrollHeight;
   }
 
-  // Réponses personnalisées enrichies
   const responses = {
     'consultation': '🔸 Je vous propose une consultation du Fa. Nous avons deux formats : en présentiel à Abomey-Calavi (Bénin) ou à distance (WhatsApp / appel). Le Professeur Gbêmadoyômin vous accompagne avec écoute et tradition. Souhaitez-vous un RDV ?',
     'rdv': '📅 Prendre rendez-vous est simple. Contactez-nous directement sur WhatsApp : +229 01 67 66 87 99. Nous vous répondrons dans les meilleurs délais pour fixer un créneau selon vos disponibilités.',
@@ -1476,7 +1766,6 @@ document.addEventListener('DOMContentLoaded', () => {
     'contact': '📞 Pour toute question, contactez-nous par WhatsApp : +229 01 67 66 87 99 ou par email : cabinetgbemadoyomin@gmail.com. Nous vous répondons dans les meilleurs délais.'
   };
 
-  // Gestion des clics sur les options (le panneau reste ouvert après chaque clic)
   document.querySelectorAll('.chatbot-option').forEach(btn => {
     btn.addEventListener('click', () => {
       const action = btn.dataset.action;
@@ -1486,8 +1775,6 @@ document.addEventListener('DOMContentLoaded', () => {
       setTimeout(() => {
         addMessage(responses[action] || 'Je peux vous aider avec autre chose.', 'bot');
       }, 400);
-
-      // ✅ Le panneau RESTE OUVERT — on ne fait plus panel.classList.remove('open')
     });
   });
 
