@@ -10,7 +10,6 @@
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
 <link rel="canonical" href="https://groupegbemadoyomin.com/consultations.html">
 
-<!-- Open Graph -->
 <meta property="og:type" content="website">
 <meta property="og:title" content="Consultations du Fa — Cabinet Gbêmadoyomin | Groupe Gbêmadoyomin">
 <meta property="og:description" content="Consultations du Fa en présentiel à Abomey-Calavi ou à distance, partout dans le monde.">
@@ -21,7 +20,6 @@
 <meta property="og:image:height" content="630">
 <meta property="og:site_name" content="Groupe Gbêmadoyomin">
 
-<!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Consultations du Fa — Cabinet Gbêmadoyomin">
 <meta name="twitter:description" content="Consultations du Fa en présentiel à Abomey-Calavi ou à distance, partout dans le monde.">
@@ -29,10 +27,8 @@
 
 <meta name="theme-color" content="#0D0D0D">
 
-<!-- PWA Manifest -->
 <link rel="manifest" href="manifest.json">
 
-<!-- Google Analytics GA4 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -41,7 +37,6 @@
   gtag('config', 'G-XXXXXXXXXX');
 </script>
 
-<!-- Données structurées Schema.org -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -52,10 +47,7 @@
   "provider": {
     "@type": "Organization",
     "name": "Cabinet Gbêmadoyomin",
-    "parentOrganization": {
-      "@type": "Organization",
-      "name": "Groupe Gbêmadoyomin"
-    }
+    "parentOrganization": { "@type": "Organization", "name": "Groupe Gbêmadoyomin" }
   },
   "areaServed": "Worldwide",
   "availableChannel": {
@@ -63,11 +55,7 @@
     "servicePhone": "+22967668799",
     "serviceUrl": "https://wa.me/22967668799"
   },
-  "address": {
-    "@type": "PostalAddress",
-    "addressLocality": "Abomey-Calavi",
-    "addressCountry": "BJ"
-  }
+  "address": { "@type": "PostalAddress", "addressLocality": "Abomey-Calavi", "addressCountry": "BJ" }
 }
 </script>
 
@@ -127,99 +115,93 @@ section { padding-block: var(--espace-xl); }
 }
 .btn-contour:hover { border-color: var(--or); color: var(--or-clair); }
 
-/* ============================================================
-   BANDEAU DÉFILANT INTERACTIF
-   ============================================================ */
 .bandeau-defilant {
-  position: sticky;
-  top: 0;
-  z-index: 50;
+  position: sticky; top: 0; z-index: 50;
   background: linear-gradient(135deg, var(--rouge), var(--noir-2));
-  color: var(--blanc);
-  padding: 8px 0;
-  overflow: hidden;
+  color: var(--blanc); padding: 8px 0; overflow: hidden;
   border-bottom: 1px solid var(--or);
   font-family: var(--font-titres);
-  font-size: clamp(0.7rem, 1.2vw, 0.95rem);
-  letter-spacing: 0.05em;
+  font-size: clamp(0.7rem, 1.2vw, 0.95rem); letter-spacing: 0.05em;
 }
 .bandeau-defilant-inner {
-  display: inline-flex;
-  align-items: center;
+  display: inline-flex; align-items: center;
   animation: defilement 30s linear infinite;
-  padding-left: 100%;
-  white-space: nowrap;
+  padding-left: 100%; white-space: nowrap;
   transition: animation-play-state 0.3s ease;
 }
-.bandeau-defilant:hover .bandeau-defilant-inner {
-  animation-play-state: paused;
-}
-.bandeau-defilant-inner span {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  margin: 0 30px;
-}
-.bandeau-defilant-inner .highlight {
-  color: var(--or-clair);
-  font-weight: 700;
-}
+.bandeau-defilant:hover .bandeau-defilant-inner { animation-play-state: paused; }
+.bandeau-defilant-inner span { display: inline-flex; align-items: center; gap: 8px; margin: 0 30px; }
+.bandeau-defilant-inner .highlight { color: var(--or-clair); font-weight: 700; }
 .bandeau-defilant-inner .bandeau-lien {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  color: var(--blanc);
-  text-decoration: none;
-  transition: color 0.3s ease;
-  padding: 4px 8px;
-  border-radius: 3px;
+  display: inline-flex; align-items: center; gap: 8px;
+  color: var(--blanc); text-decoration: none;
+  transition: color 0.3s ease; padding: 4px 8px; border-radius: 3px;
 }
-.bandeau-defilant-inner .bandeau-lien:hover {
-  color: var(--or-clair);
-  background: rgba(255,255,255,0.05);
-}
-.bandeau-defilant-inner .bandeau-lien img {
-  width: 24px;
-  height: 30px;
-  object-fit: cover;
-  border-radius: 2px;
-  border: 1px solid rgba(255,255,255,0.2);
-}
-@keyframes defilement {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-100%); }
-}
+.bandeau-defilant-inner .bandeau-lien:hover { color: var(--or-clair); background: rgba(255,255,255,0.05); }
+.bandeau-defilant-inner .bandeau-lien img { width: 24px; height: 30px; object-fit: cover; border-radius: 2px; border: 1px solid rgba(255,255,255,0.2); }
+@keyframes defilement { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
 
 /* ============================================================
-   LOADER PREMIUM
+   LIVE BANNER + FALLBACK
    ============================================================ */
+.live-banner {
+  background: linear-gradient(135deg, #7a1515, #4a0d0d);
+  border-bottom: 1px solid var(--or);
+  padding: 10px 0;
+  display: none;
+}
+.live-banner.actif { display: block; }
+.live-banner-inner { display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; text-align: center; }
+.live-dot { display: inline-block; width: 12px; height: 12px; border-radius: 50%; background: #ff2d2d; animation: clignote 1.2s ease-in-out infinite; flex-shrink: 0; }
+@keyframes clignote {
+  0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 8px #ff2d2d; }
+  50% { opacity: 0.3; transform: scale(0.8); box-shadow: 0 0 20px #ff2d2d; }
+}
+.live-banner strong { color: var(--blanc); font-family: var(--font-titres); letter-spacing: 0.05em; font-size: 0.9rem; }
+.live-banner a { color: var(--or-clair); font-size: 0.82rem; border-bottom: 1px solid var(--or-clair); transition: color 0.3s ease; }
+.live-banner a:hover { color: var(--blanc); }
+
+.live-fallback {
+  display: none;
+  aspect-ratio: 16/9;
+  background: linear-gradient(135deg, var(--noir-2), var(--noir-3));
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 20px;
+  gap: 14px;
+}
+.live-fallback.visible { display: flex; }
+.live-fallback-icon { font-size: 2.4rem; }
+.live-fallback-title { font-family: var(--font-titres); color: var(--blanc); font-size: 1rem; }
+.live-fallback-text { color: var(--text-muted); font-size: 0.85rem; max-width: 420px; }
+.live-fallback-btns { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-top: 6px; }
+.live-fallback-btns a {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 10px 18px; border-radius: 4px;
+  font-family: var(--font-titres); font-size: 0.72rem; font-weight: 700;
+  letter-spacing: 0.05em; text-transform: uppercase;
+  transition: transform 0.3s ease;
+}
+.live-fallback-btns a:hover { transform: translateY(-2px); }
+.live-fallback-btns .btn-yt { background: #ff0000; color: white; }
+.live-fallback-btns .btn-fb { background: #1877f2; color: white; }
+.live-fallback-btns .btn-tk { background: #000000; color: white; border: 1px solid #fe2c55; }
+
 .loader {
   position: fixed; inset: 0; z-index: 999; background: var(--noir);
   display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px;
   transition: opacity 0.8s ease, visibility 0.8s ease;
 }
 .loader.cache { opacity: 0; visibility: hidden; pointer-events: none; }
-.loader-logo {
-  width: 90px; height: auto;
-  animation: pulse-logo 2s ease-in-out infinite;
-  filter: drop-shadow(0 0 30px rgba(184,146,46,0.3));
-}
-@keyframes pulse-logo {
-  0%, 100% { transform: scale(0.95) rotate(-2deg); opacity: 0.8; }
-  50% { transform: scale(1.08) rotate(2deg); opacity: 1; }
-}
-.loader-trait {
-  width: 60px; height: 2px; background: var(--or);
-  animation: etirer 1.7s ease-in-out infinite;
-}
-@keyframes etirer {
-  0%, 100% { width: 30px; opacity: 0.3; }
-  50% { width: 80px; opacity: 1; }
-}
+.loader-logo { width: 90px; height: auto; animation: pulse-logo 2s ease-in-out infinite; filter: drop-shadow(0 0 30px rgba(184,146,46,0.3)); }
+@keyframes pulse-logo { 0%, 100% { transform: scale(0.95) rotate(-2deg); opacity: 0.8; } 50% { transform: scale(1.08) rotate(2deg); opacity: 1; } }
+.loader-trait { width: 60px; height: 2px; background: var(--or); animation: etirer 1.7s ease-in-out infinite; }
+@keyframes etirer { 0%, 100% { width: 30px; opacity: 0.3; } 50% { width: 80px; opacity: 1; } }
 
-/* ============================================================
-   NAVIGATION
-   ============================================================ */
 .nav {
   position: sticky; top: 0; z-index: 100; background: rgba(8, 8, 8, 0.92); backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border); padding-inline: clamp(20px, 4vw, 32px); height: 72px;
@@ -251,142 +233,48 @@ section { padding-block: var(--espace-xl); }
   .nav-burger { display: flex; }
 }
 
-/* ============================================================
-   CHATBOT PERSONNALISÉ (style Gemini/ChatGPT)
-   ============================================================ */
 .chatbot-container {
-  position: fixed;
-  bottom: 100px;
-  left: 20px;
-  z-index: 98;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 10px;
+  position: fixed; bottom: 100px; left: 20px; z-index: 98;
+  display: flex; flex-direction: column; align-items: flex-start; gap: 10px;
 }
 .chatbot-btn {
-  width: 54px;
-  height: 54px;
-  border-radius: 50%;
+  width: 54px; height: 54px; border-radius: 50%;
   background: linear-gradient(135deg, #6366f1, #8b5cf6);
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  color: white; display: flex; align-items: center; justify-content: center;
   box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
-  cursor: pointer;
-  transition: transform 0.3s ease;
-  border: none;
+  cursor: pointer; transition: transform 0.3s ease; border: none;
 }
 .chatbot-btn:hover { transform: scale(1.05); }
-.chatbot-btn svg {
-  width: 28px;
-  height: 28px;
-  fill: none;
-  stroke: white;
-  stroke-width: 2;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
+.chatbot-btn svg { width: 28px; height: 28px; fill: none; stroke: white; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 .chatbot-panel {
-  position: fixed;
-  bottom: 160px;
-  left: 20px;
-  z-index: 97;
-  width: 340px;
-  max-width: 90vw;
-  background: var(--noir-2);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 20px;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.6);
-  transform: translateY(20px) scale(0.95);
-  opacity: 0;
-  pointer-events: none;
+  position: fixed; bottom: 160px; left: 20px; z-index: 97;
+  width: 340px; max-width: 90vw;
+  background: var(--noir-2); border: 1px solid var(--border); border-radius: 16px;
+  padding: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+  transform: translateY(20px) scale(0.95); opacity: 0; pointer-events: none;
   transition: transform 0.3s ease, opacity 0.3s ease;
 }
-.chatbot-panel.open {
-  transform: translateY(0) scale(1);
-  opacity: 1;
-  pointer-events: auto;
-}
-.chatbot-panel h3 {
-  font-family: var(--font-titres);
-  font-size: 0.9rem;
-  color: var(--or);
-  margin-bottom: 4px;
-}
-.chatbot-panel .chatbot-sub {
-  font-size: 0.75rem;
-  color: var(--text-muted);
-  margin-bottom: 14px;
-}
-.chatbot-messages {
-  max-height: 200px;
-  overflow-y: auto;
-  margin-bottom: 12px;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-.chatbot-msg {
-  padding: 8px 12px;
-  border-radius: 8px;
-  font-size: 0.85rem;
-  max-width: 85%;
-}
-.chatbot-msg.bot {
-  background: var(--noir-3);
-  color: var(--blanc-doux);
-  align-self: flex-start;
-  border-bottom-left-radius: 2px;
-}
-.chatbot-msg.user {
-  background: linear-gradient(135deg, var(--or-clair), var(--or-fonce));
-  color: var(--noir);
-  align-self: flex-end;
-  border-bottom-right-radius: 2px;
-}
-.chatbot-options {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-}
+.chatbot-panel.open { transform: translateY(0) scale(1); opacity: 1; pointer-events: auto; }
+.chatbot-panel h3 { font-family: var(--font-titres); font-size: 0.9rem; color: var(--or); margin-bottom: 4px; }
+.chatbot-panel .chatbot-sub { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 14px; }
+.chatbot-messages { max-height: 200px; overflow-y: auto; margin-bottom: 12px; display: flex; flex-direction: column; gap: 6px; }
+.chatbot-msg { padding: 8px 12px; border-radius: 8px; font-size: 0.85rem; max-width: 85%; }
+.chatbot-msg.bot { background: var(--noir-3); color: var(--blanc-doux); align-self: flex-start; border-bottom-left-radius: 2px; }
+.chatbot-msg.user { background: linear-gradient(135deg, var(--or-clair), var(--or-fonce)); color: var(--noir); align-self: flex-end; border-bottom-right-radius: 2px; }
+.chatbot-options { display: flex; flex-wrap: wrap; gap: 6px; }
 .chatbot-option {
-  background: var(--noir-3);
-  border: 1px solid var(--border-discret);
-  border-radius: 6px;
-  padding: 8px 14px;
-  font-size: 0.8rem;
-  color: var(--blanc-doux);
-  transition: border-color var(--vitesse), background var(--vitesse);
-  cursor: pointer;
-  flex: 1 0 auto;
+  background: var(--noir-3); border: 1px solid var(--border-discret); border-radius: 6px;
+  padding: 8px 14px; font-size: 0.8rem; color: var(--blanc-doux);
+  transition: border-color var(--vitesse), background var(--vitesse); cursor: pointer; flex: 1 0 auto;
 }
-.chatbot-option:hover {
-  border-color: var(--or);
-  background: rgba(184,146,46,0.08);
-}
-.chatbot-close {
-  position: absolute;
-  top: 8px;
-  right: 12px;
-  font-size: 1.2rem;
-  color: var(--text-discret);
-  cursor: pointer;
-  background: none;
-  border: none;
-}
+.chatbot-option:hover { border-color: var(--or); background: rgba(184,146,46,0.08); }
+.chatbot-close { position: absolute; top: 8px; right: 12px; font-size: 1.2rem; color: var(--text-discret); cursor: pointer; background: none; border: none; }
 @media (max-width: 640px) {
   .chatbot-panel { width: 280px; bottom: 150px; left: 10px; }
   .chatbot-btn { width: 48px; height: 48px; }
   .chatbot-btn svg { width: 24px; height: 24px; }
 }
 
-/* ============================================================
-   FLOTTANTS
-   ============================================================ */
 .flottants { position: fixed; right: 20px; bottom: 20px; z-index: 90; display: flex; flex-direction: column; align-items: flex-end; gap: 12px; }
 .flottant-wa { width: 52px; height: 52px; background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(37, 211, 102, .35); transition: transform 0.3s ease; }
 .flottant-wa:hover { transform: scale(1.08); }
@@ -394,12 +282,8 @@ section { padding-block: var(--espace-xl); }
 .flottant-rdv { background: linear-gradient(135deg, var(--or-clair), var(--or-fonce)); color: var(--noir); font-family: var(--font-titres); font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 12px 20px; border-radius: 3px; box-shadow: var(--lueur-or); transition: transform 0.3s ease; }
 .flottant-rdv:hover { transform: translateY(-2px); }
 
-/* ============================================================
-   ANIMATIONS
-   ============================================================ */
 .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.8s ease, transform 0.8s ease; }
 .reveal.est-visible { opacity: 1; transform: translateY(0); }
-
 .reveal-stagger { opacity: 0; transform: translateY(28px); transition: opacity 0.8s ease, transform 0.8s ease; }
 .reveal-stagger.est-visible { opacity: 1; transform: translateY(0); }
 .reveal-stagger:nth-child(1) { transition-delay: 0.05s; }
@@ -408,34 +292,20 @@ section { padding-block: var(--espace-xl); }
 
 .pulse-doux { animation: pulse-doux 2.6s ease-in-out infinite; }
 @keyframes pulse-doux { 0%, 100% { box-shadow: 0 0 0 0 rgba(184,146,46,.35); } 50% { box-shadow: 0 0 0 10px rgba(184,146,46,0); } }
-
 .shine { position: relative; overflow: hidden; }
 .shine::before { content: ''; position: absolute; z-index: 5; inset: -30% -80%; background: linear-gradient(105deg, transparent 43%, rgba(255,255,255,0.12) 50%, transparent 57%); transform: translateX(-45%); transition: transform 1s ease; pointer-events: none; }
 .shine:hover::before { transform: translateX(45%); }
-
 @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } .reveal-stagger { opacity: 1; transform: none; transition: none; } .pulse-doux { animation: none; } }
 
-/* ============================================================
-   HERO CONSULTATIONS
-   ============================================================ */
 .cons-hero {
   min-height: 46vh; display: flex; align-items: center;
   background: radial-gradient(circle at 78% 20%, rgba(184,146,46,.12), transparent 55%), linear-gradient(160deg, var(--noir-2), var(--noir));
   padding-block: calc(var(--espace-xl) + 72px) var(--espace-md);
-  position: relative;
-  overflow: hidden;
+  position: relative; overflow: hidden;
 }
-.cons-hero-image {
-  position: absolute; inset: 0; z-index: 0;
-  background: url('cabinet-ambiance.jpeg') center/cover no-repeat;
-  opacity: 0.15;
-  filter: blur(2px);
-}
+.cons-hero-image { position: absolute; inset: 0; z-index: 0; background: url('cabinet-ambiance.jpeg') center/cover no-repeat; opacity: 0.15; filter: blur(2px); }
 .cons-hero-contenu { position: relative; max-width: 620px; z-index: 1; }
 
-/* ============================================================
-   CONTENU
-   ============================================================ */
 .cons-intro { max-width: var(--largeur-texte); margin-inline: auto; text-align: center; }
 .cons-intro p { color: var(--blanc-doux); margin-inline: auto; }
 
@@ -462,9 +332,6 @@ section { padding-block: var(--espace-xl); }
 }
 .groupe-bandeau p { color: var(--text-muted); font-size: .92rem; margin: 0; }
 
-/* ============================================================
-   FOOTER
-   ============================================================ */
 .footer { background: var(--noir-2); border-top: 1px solid var(--border); padding: 56px 0 24px; }
 .footer-grille { display: grid; grid-template-columns: 1.8fr 1fr 1fr 1.4fr; gap: 40px; padding-bottom: 32px; border-bottom: 1px solid var(--border-discret); }
 .f-logo { font-family: var(--font-titres); font-size: 19px; color: var(--or); letter-spacing: 0.1em; margin-bottom: 4px; display: flex; align-items: center; gap: 10px; }
@@ -487,133 +354,56 @@ section { padding-block: var(--espace-xl); }
 .footer-bas { padding-top: 22px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
 .f-copy { font-size: 11px; color: var(--text-discret); opacity: 0.8; }
 .f-gg { font-family: var(--font-titres); font-size: 12px; color: var(--or); letter-spacing: 0.2em; opacity: 0.7; }
-
-/* ---- NOVASAVOIR (développeur) ---- */
 .footer-dev {
-  margin-top: 10px;
-  padding-top: 14px;
+  margin-top: 10px; padding-top: 14px;
   border-top: 1px solid var(--border-discret);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  flex-wrap: wrap;
-  font-size: 11px;
-  color: var(--text-discret);
+  display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap;
+  font-size: 11px; color: var(--text-discret);
 }
-.footer-dev .dev-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  color: var(--or);
-  font-weight: 600;
-  transition: color 0.3s ease;
-}
+.footer-dev .dev-link { display: inline-flex; align-items: center; gap: 6px; color: var(--or); font-weight: 600; transition: color 0.3s ease; }
 .footer-dev .dev-link:hover { color: var(--or-clair); }
-.footer-dev .dev-link svg {
-  width: 14px;
-  height: 14px;
-  fill: currentColor;
-}
+.footer-dev .dev-link svg { width: 14px; height: 14px; fill: currentColor; }
 
 @media (max-width: 900px) { .footer-grille { grid-template-columns: 1fr 1fr; } }
-@media (max-width: 560px) {
-  .footer-grille { grid-template-columns: 1fr; gap: 32px; }
-  .footer-bas { flex-direction: column; align-items: flex-start; }
-}
+@media (max-width: 560px) { .footer-grille { grid-template-columns: 1fr; gap: 32px; } .footer-bas { flex-direction: column; align-items: flex-start; } }
 @media (max-width: 780px) { .cons-etapes { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body data-page="consultations">
 
-<!-- ============================================================
-   LOADER PREMIUM
-   ============================================================ -->
 <div class="loader" id="loader" aria-hidden="true">
   <img src="logo-gg.jpeg" alt="Groupe Gbêmadoyomin" class="loader-logo" loading="eager">
   <span class="loader-trait"></span>
 </div>
 
-<!-- ============================================================
-   BANDEAU DÉFILANT INTERACTIF
-   ============================================================ -->
 <div class="bandeau-defilant" aria-hidden="true">
   <div class="bandeau-defilant-inner">
-    <span>
-      <a class="bandeau-lien" href="evenements.html">
-        🔥 <span class="highlight">PROCHAINE ÉDITION 2027</span> — Restez connectés !
-      </a>
-    </span>
-    <span>
-      <a class="bandeau-lien" href="boutique.html#livres">
-        <img src="livre-du-fa.jpeg" alt="Le Livre du Fa" loading="lazy">
-        Le Livre du Fa
-      </a>
-    </span>
-    <span>
-      <a class="bandeau-lien" href="boutique.html#livres">
-        <img src="code-de-vie.jpeg" alt="Le Code de Vie" loading="lazy">
-        Le Code de Vie
-      </a>
-    </span>
-    <span>
-      <a class="bandeau-lien" href="boutique.html#livres">
-        <img src="vodoun-dan.jpeg" alt="Vodoun Dan" loading="lazy">
-        Vodoun Dan
-      </a>
-    </span>
-    <span>
-      <a class="bandeau-lien" href="boutique.html#livres">
-        <img src="livre-astuces.jpeg" alt="Le Livre d'Astuces" loading="lazy">
-        Le Livre d'Astuces
-      </a>
-    </span>
-    <span>
-      <a class="bandeau-lien" href="boutique.html#mode">
-        👕 Collection TODAAA 2026 — Édition actuelle
-      </a>
-    </span>
-    <!-- Répétition pour le défilement continu -->
-    <span>
-      <a class="bandeau-lien" href="evenements.html">
-        🔥 <span class="highlight">PROCHAINE ÉDITION 2027</span> — Restez connectés !
-      </a>
-    </span>
-    <span>
-      <a class="bandeau-lien" href="boutique.html#livres">
-        <img src="livre-du-fa.jpeg" alt="Le Livre du Fa" loading="lazy">
-        Le Livre du Fa
-      </a>
-    </span>
-    <span>
-      <a class="bandeau-lien" href="boutique.html#livres">
-        <img src="code-de-vie.jpeg" alt="Le Code de Vie" loading="lazy">
-        Le Code de Vie
-      </a>
-    </span>
-    <span>
-      <a class="bandeau-lien" href="boutique.html#livres">
-        <img src="vodoun-dan.jpeg" alt="Vodoun Dan" loading="lazy">
-        Vodoun Dan
-      </a>
-    </span>
-    <span>
-      <a class="bandeau-lien" href="boutique.html#livres">
-        <img src="livre-astuces.jpeg" alt="Le Livre d'Astuces" loading="lazy">
-        Le Livre d'Astuces
-      </a>
-    </span>
-    <span>
-      <a class="bandeau-lien" href="boutique.html#mode">
-        👕 Collection TODAAA 2026 — Édition actuelle
-      </a>
-    </span>
+    <span><a class="bandeau-lien" href="evenements.html">🔥 <span class="highlight">PROCHAINE ÉDITION 2027</span> — Restez connectés !</a></span>
+    <span><a class="bandeau-lien" href="boutique.html#livres"><img src="livre-du-fa.jpeg" alt="Le Livre du Fa" loading="lazy">Le Livre du Fa</a></span>
+    <span><a class="bandeau-lien" href="boutique.html#livres"><img src="code-de-vie.jpeg" alt="Le Code de Vie" loading="lazy">Le Code de Vie</a></span>
+    <span><a class="bandeau-lien" href="boutique.html#livres"><img src="vodoun-dan.jpeg" alt="Vodoun Dan" loading="lazy">Vodoun Dan</a></span>
+    <span><a class="bandeau-lien" href="boutique.html#livres"><img src="livre-astuces.jpeg" alt="Le Livre d'Astuces" loading="lazy">Le Livre d'Astuces</a></span>
+    <span><a class="bandeau-lien" href="boutique.html#mode">👕 Collection TODAAA 2026 — Édition actuelle</a></span>
+    <span><a class="bandeau-lien" href="evenements.html">🔥 <span class="highlight">PROCHAINE ÉDITION 2027</span> — Restez connectés !</a></span>
+    <span><a class="bandeau-lien" href="boutique.html#livres"><img src="livre-du-fa.jpeg" alt="Le Livre du Fa" loading="lazy">Le Livre du Fa</a></span>
+    <span><a class="bandeau-lien" href="boutique.html#livres"><img src="code-de-vie.jpeg" alt="Le Code de Vie" loading="lazy">Le Code de Vie</a></span>
+    <span><a class="bandeau-lien" href="boutique.html#livres"><img src="vodoun-dan.jpeg" alt="Vodoun Dan" loading="lazy">Vodoun Dan</a></span>
+    <span><a class="bandeau-lien" href="boutique.html#livres"><img src="livre-astuces.jpeg" alt="Le Livre d'Astuces" loading="lazy">Le Livre d'Astuces</a></span>
+    <span><a class="bandeau-lien" href="boutique.html#mode">👕 Collection TODAAA 2026 — Édition actuelle</a></span>
   </div>
 </div>
 
 <!-- ============================================================
-   NAVIGATION
+   LIVE BANNER
    ============================================================ -->
+<div class="live-banner" id="liveBanner">
+  <div class="conteneur live-banner-inner">
+    <span class="live-dot"></span>
+    <strong id="liveBannerText">🔴 EN DIRECT — Live en cours</strong>
+    <a href="#live-embed">Rejoindre le live →</a>
+  </div>
+</div>
+
 <nav class="nav" aria-label="Navigation principale">
   <a href="index.html" class="nav-logo">
     <img src="logo-gg.jpeg" alt="Groupe Gbêmadoyomin" class="nav-logo-img" width="40" height="40">
@@ -641,9 +431,6 @@ section { padding-block: var(--espace-xl); }
   </button>
 </nav>
 
-<!-- ============================================================
-   HERO CONSULTATIONS
-   ============================================================ -->
 <header class="cons-hero">
   <div class="cons-hero-image" aria-hidden="true"></div>
   <div class="conteneur cons-hero-contenu">
@@ -653,8 +440,26 @@ section { padding-block: var(--espace-xl); }
 </header>
 
 <!-- ============================================================
-   PRÉSENTATION & TYPES DE CONSULTATION
+   LIVE EMBED
    ============================================================ -->
+<section id="live-embed" style="display:none; padding-block: var(--espace-md);">
+  <div class="conteneur">
+    <div style="border: 1px solid var(--or); border-radius: 6px; overflow: hidden; background: var(--noir-2);">
+      <div style="padding: 12px 20px; background: linear-gradient(135deg, var(--rouge), var(--noir-2)); display: flex; align-items: center; gap: 12px; border-bottom: 1px solid var(--or);">
+        <span class="live-dot"></span>
+        <strong style="color: var(--blanc); font-family: var(--font-titres); font-size: 0.9rem;" id="liveEmbedTitle">🔴 EN DIRECT</strong>
+      </div>
+      <div style="aspect-ratio: 16/9; background: var(--noir-3); position: relative;" id="liveEmbedZone"></div>
+      <div class="live-fallback" id="liveFallback">
+        <span class="live-fallback-icon">📡</span>
+        <div class="live-fallback-title">Lecture intégrée indisponible</div>
+        <div class="live-fallback-text" id="liveFallbackText">La diffusion en direct ne peut pas s'afficher sur cette page. Rejoignez le live directement sur la plateforme :</div>
+        <div class="live-fallback-btns" id="liveFallbackBtns"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section>
   <div class="conteneur">
     <div class="cons-intro reveal">
@@ -681,9 +486,6 @@ section { padding-block: var(--espace-xl); }
   </div>
 </section>
 
-<!-- ============================================================
-   PRENDRE RENDEZ-VOUS
-   ============================================================ -->
 <section>
   <div class="conteneur">
     <div class="rdv-bloc reveal">
@@ -699,9 +501,6 @@ section { padding-block: var(--espace-xl); }
   </div>
 </section>
 
-<!-- ============================================================
-   GROUPE BANDEAU
-   ============================================================ -->
 <section>
   <div class="conteneur">
     <div class="groupe-bandeau reveal">
@@ -711,9 +510,6 @@ section { padding-block: var(--espace-xl); }
   </div>
 </section>
 
-<!-- ============================================================
-   CITATION FINALE
-   ============================================================ -->
 <section>
   <div class="conteneur" style="text-align:center;">
     <p class="eyebrow reveal" style="font-size:1.15rem; font-style:italic; color:var(--or-clair); margin-bottom: 8px;">Consultation • Orientation • Transmission</p>
@@ -721,9 +517,6 @@ section { padding-block: var(--espace-xl); }
   </div>
 </section>
 
-<!-- ============================================================
-   FOOTER
-   ============================================================ -->
 <footer class="footer">
   <div class="conteneur">
     <div class="footer-grille">
@@ -772,7 +565,6 @@ section { padding-block: var(--espace-xl); }
       <span class="f-copy">© 2026 Groupe Gbêmadoyomin SARL. Tous droits réservés.</span>
       <span class="f-gg">GG</span>
     </div>
-    <!-- NOVASAVOIR — développeur -->
     <div class="footer-dev">
       <span>Développé par</span>
       <a class="dev-link" href="https://wa.me/229015252106?text=Bonjour%20Novasavoir%2C%20je%20souhaite%20en%20savoir%20plus%20sur%20vos%20services." target="_blank" rel="noopener">
@@ -788,9 +580,6 @@ section { padding-block: var(--espace-xl); }
   </div>
 </footer>
 
-<!-- ============================================================
-   BOUTONS FLOTTANTS
-   ============================================================ -->
 <div class="flottants">
   <a class="flottant-wa pulse-doux" href="https://wa.me/22967668799?text=Bonjour%2C%20je%20souhaite%20prendre%20rendez-vous." target="_blank" rel="noopener" aria-label="Contacter sur WhatsApp">
     <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
@@ -798,9 +587,6 @@ section { padding-block: var(--espace-xl); }
   <a class="flottant-rdv" href="https://wa.me/22967668799?text=Bonjour%2C%20je%20souhaite%20prendre%20rendez-vous." target="_blank" rel="noopener">Prendre RDV</a>
 </div>
 
-<!-- ============================================================
-   CHATBOT PERSONNALISÉ
-   ============================================================ -->
 <div class="chatbot-container">
   <button class="chatbot-btn" id="chatbotToggle" aria-label="Ouvrir l'assistant">
     <svg viewBox="0 0 24 24">
@@ -828,36 +614,237 @@ section { padding-block: var(--espace-xl); }
 </div>
 
 <!-- ============================================================
-   FIREBASE CONFIG
+   FIREBASE CONFIG (compat — corrigé)
    ============================================================ -->
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js";
-  import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js";
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+<script>
+(function () {
+  try {
+    var firebaseConfig = {
+      apiKey: "AIzaSyBkn-26DnNoQBBfiR4-rRrPfOszW24KRRc",
+      authDomain: "groupe-gbemadoyomin.firebaseapp.com",
+      projectId: "groupe-gbemadoyomin",
+      storageBucket: "groupe-gbemadoyomin.firebasestorage.app",
+      messagingSenderId: "113133757650",
+      appId: "1:113133757650:web:71a07f05cca0e78e28390b"
+    };
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
+    var db = firebase.firestore();
+    var cloudName = 'bvcdjwg7';
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyBkn-26DnNoQBBfiR4-rRrPfOszW24KRRc",
-    authDomain: "groupe-gbemadoyomin.firebaseapp.com",
-    projectId: "groupe-gbemadoyomin",
-    storageBucket: "groupe-gbemadoyomin.firebasestorage.app",
-    messagingSenderId: "113133757650",
-    appId: "1:113133757650:web:71a07f05cca0e78e28390b"
-  };
+    // CONFIG GLOBALE
+    var CONFIG = {
+      fallbackFacebook: 'https://www.facebook.com/share/1KLJbHgA74/?mibextid=wwXIfr',
+      fallbackTiktok: 'https://www.tiktok.com/@bokonon.gbemadoyomin',
+      fallbackYoutube: '',
+      whatsappAdmin: '22967668799',
+      whatsappDev: '229015252106',
+      emailContact: 'cabinetgbemadoyomin@gmail.com',
+      messageAccueil: ''
+    };
 
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
-  console.log("✅ Firebase connecté avec succès !");
+    async function chargerConfig() {
+      try {
+        var doc = await db.collection('config').doc('site').get();
+        if (doc.exists) {
+          var d = doc.data();
+          if (d.fallbackFacebook) CONFIG.fallbackFacebook = d.fallbackFacebook;
+          if (d.fallbackTiktok) CONFIG.fallbackTiktok = d.fallbackTiktok;
+          if (d.fallbackYoutube) CONFIG.fallbackYoutube = d.fallbackYoutube;
+          if (d.whatsappAdmin) CONFIG.whatsappAdmin = d.whatsappAdmin;
+          if (d.whatsappDev) CONFIG.whatsappDev = d.whatsappDev;
+          if (d.emailContact) CONFIG.emailContact = d.emailContact;
+        }
+      } catch (err) {
+        console.warn('Config Firestore non chargée.', err);
+      }
+    }
+
+    // UTILITAIRES
+    function cloudinaryUrl(url, width) {
+      if (!url) return '';
+      width = width || 800;
+      return 'https://res.cloudinary.com/' + cloudName + '/image/fetch/w_' + width + ',f_auto/' + encodeURIComponent(url);
+    }
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
+    }
+    function detecterPlateforme(url) {
+      if (!url) return { nom: 'Vidéo', icone: '🔗', classe: 'btn-yt', lienDirect: '#', embed: '' };
+      var u = url.toLowerCase();
+      if (u.indexOf('youtube.com') !== -1 || u.indexOf('youtu.be') !== -1) {
+        var m = url.match(/(?:embed\/|watch\?v=|youtu\.be\/|shorts\/|live\/)([^?&/]+)/);
+        var id = m ? m[1] : '';
+        return { nom: 'YouTube', icone: '▶️', classe: 'btn-yt',
+          lienDirect: id ? 'https://www.youtube.com/watch?v=' + id : 'https://www.youtube.com/',
+          embed: id ? 'https://www.youtube.com/embed/' + id : '' };
+      }
+      if (u.indexOf('drive.google.com') !== -1) {
+        var md = url.match(/\/d\/([^/]+)/);
+        var idd = md ? md[1] : '';
+        return { nom: 'Google Drive', icone: '📁', classe: 'btn-yt',
+          lienDirect: url, embed: idd ? 'https://drive.google.com/file/d/' + idd + '/preview' : url };
+      }
+      if (u.indexOf('tiktok.com') !== -1) return { nom: 'TikTok', icone: '🎵', classe: 'btn-tk', lienDirect: url, embed: url };
+      if (u.indexOf('facebook.com') !== -1 || u.indexOf('fb.watch') !== -1) return { nom: 'Facebook', icone: '📘', classe: 'btn-fb', lienDirect: url, embed: url };
+      if (u.indexOf('vimeo.com') !== -1) {
+        var mv = url.match(/vimeo\.com\/(\d+)/);
+        var idv = mv ? mv[1] : '';
+        return { nom: 'Vimeo', icone: '🎬', classe: 'btn-yt', lienDirect: url, embed: idv ? 'https://player.vimeo.com/video/' + idv : url };
+      }
+      return { nom: 'Vidéo', icone: '🔗', classe: 'btn-yt', lienDirect: url, embed: url };
+    }
+    function validerEmbedURL(url, plateforme) {
+      if (!url) return { valide: false, raison: 'URL manquante' };
+      if (plateforme.nom === 'YouTube') {
+        var m = url.match(/embed\/([^?&/]+)/);
+        if (!m || !m[1] || m[1].length < 5) return { valide: false, raison: 'ID YouTube manquant' };
+      }
+      return { valide: true };
+    }
+
+    // LIVE
+    async function chargerLive() {
+      try {
+        var snap = await db.collection('live').get();
+        if (snap.empty) return;
+        var data = snap.docs[0].data();
+        if (!data.actif) return;
+
+        document.getElementById('liveBanner').classList.add('actif');
+        document.getElementById('liveBannerText').textContent = '🔴 EN DIRECT — ' + (data.titre || 'Live en cours');
+
+        var embedSection = document.getElementById('live-embed');
+        embedSection.style.display = 'block';
+        document.getElementById('liveEmbedTitle').textContent = '🔴 EN DIRECT — ' + (data.titre || 'Live en cours');
+
+        var zone = document.getElementById('liveEmbedZone');
+        var fallback = document.getElementById('liveFallback');
+        var fallbackBtnsContainer = document.getElementById('liveFallbackBtns');
+        var fallbackText = document.getElementById('liveFallbackText');
+
+        zone.innerHTML = '';
+        fallback.classList.remove('visible');
+
+        // CAS PAYANT
+        if (data.payant === true && data.slug) {
+          var urlAcces = 'acces.html?type=live&slug=' + encodeURIComponent(data.slug);
+          var prix = parseInt(data.prix, 10) || 0;
+          var affiche = data.affiche || '';
+          var fondStyle = affiche
+            ? "background-image:url('" + cloudinaryUrl(affiche, 900) + "'); background-size:cover; background-position:center; background-color:var(--noir-3);"
+            : 'background-color: var(--noir-2);';
+
+          zone.innerHTML =
+            '<a href="' + urlAcces + '" style="display:block; width:100%; height:100%; text-decoration:none; position:absolute; inset:0;">' +
+              '<div style="position:absolute; inset:0; ' + fondStyle + '">' +
+                '<div style="position:absolute; inset:0; background:linear-gradient(180deg, rgba(0,0,0,0.3), rgba(0,0,0,0.85)); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px; padding:24px; text-align:center;">' +
+                  '<span style="background:linear-gradient(135deg, var(--or-clair), var(--or-fonce)); color:var(--noir); padding:6px 14px; border-radius:20px; font-family:var(--font-titres); font-size:0.7rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase;">💰 Live payant</span>' +
+                  '<div style="font-family:var(--font-titres); color:var(--blanc); font-size:clamp(1.1rem, 2.5vw, 1.5rem); line-height:1.3;">' + escapeHtml(data.titre || 'Live en cours') + '</div>' +
+                  (prix > 0 ? '<div style="font-family:var(--font-titres); color:var(--or-clair); font-size:1.3rem; font-weight:700;">' + prix.toLocaleString('fr-FR') + ' FCFA</div>' : '') +
+                  '<div style="background:linear-gradient(135deg, var(--or-clair), var(--or-fonce)); color:var(--noir); padding:12px 28px; border-radius:4px; font-family:var(--font-titres); font-size:0.82rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; margin-top:8px;">🎟 Accéder au live</div>' +
+                '</div>' +
+              '</div>' +
+            '</a>';
+          return;
+        }
+
+        // CAS GRATUIT
+        if (!data.embedURL) return;
+
+        var plateforme = detecterPlateforme(data.embedURL);
+        var validation = validerEmbedURL(data.embedURL, plateforme);
+
+        var fallbackCustom = {
+          youtube: data.fallbackYouTube || CONFIG.fallbackYoutube || '',
+          facebook: data.fallbackFacebook || CONFIG.fallbackFacebook || '',
+          tiktok: data.fallbackTikTok || CONFIG.fallbackTiktok || ''
+        };
+
+        function afficherFallback(raison) {
+          var iframe = zone.querySelector('iframe');
+          if (iframe) iframe.style.display = 'none';
+          var raisonTxt = raison ? ' (' + raison + ')' : '';
+          fallbackText.textContent = 'La diffusion en direct ne peut pas s\'afficher sur cette page' + raisonTxt + '. Rejoignez le live directement :';
+          fallbackBtnsContainer.innerHTML = '';
+
+          if (plateforme.lienDirect && plateforme.lienDirect !== '#') {
+            var btn1 = document.createElement('a');
+            btn1.className = plateforme.classe;
+            btn1.href = plateforme.lienDirect;
+            btn1.target = '_blank';
+            btn1.rel = 'noopener';
+            btn1.textContent = plateforme.icone + ' ' + plateforme.nom;
+            fallbackBtnsContainer.appendChild(btn1);
+          }
+
+          var autres = [
+            { nom: 'YouTube', icone: '▶️', classe: 'btn-yt', url: fallbackCustom.youtube },
+            { nom: 'Facebook', icone: '📘', classe: 'btn-fb', url: fallbackCustom.facebook },
+            { nom: 'TikTok', icone: '🎵', classe: 'btn-tk', url: fallbackCustom.tiktok }
+          ];
+          autres.forEach(function (r) {
+            if (!r.url) return;
+            if (r.nom.toLowerCase() === plateforme.nom.toLowerCase()) return;
+            var btn = document.createElement('a');
+            btn.className = r.classe;
+            btn.href = r.url;
+            btn.target = '_blank';
+            btn.rel = 'noopener';
+            btn.textContent = r.icone + ' ' + r.nom;
+            fallbackBtnsContainer.appendChild(btn);
+          });
+
+          fallback.classList.add('visible');
+        }
+
+        if (!validation.valide) {
+          afficherFallback(validation.raison);
+          return;
+        }
+
+        var embedURL = data.embedURL;
+        if (plateforme.nom === 'YouTube' && embedURL.indexOf('?') === -1) {
+          embedURL += '?autoplay=0&rel=0';
+        }
+
+        var iframe = document.createElement('iframe');
+        iframe.src = embedURL;
+        iframe.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+        iframe.allowFullscreen = true;
+        iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+        iframe.style.cssText = 'width:100%;height:100%;border:none;position:absolute;inset:0;';
+        zone.appendChild(iframe);
+
+        var liveLoaded = false;
+        iframe.onload = function () { liveLoaded = true; };
+        iframe.onerror = function () { afficherFallback(); };
+        setTimeout(function () { if (!liveLoaded) afficherFallback(); }, 6000);
+
+      } catch (err) {
+        console.error('Erreur live:', err);
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', async function () {
+      await chargerConfig();
+      chargerLive();
+    });
+  } catch (e) {
+    console.error('Erreur init Firebase:', e);
+  }
+})();
 </script>
 
-<!-- ============================================================
-   JAVASCRIPT PRINCIPAL
-   ============================================================ -->
 <script>
 document.addEventListener('DOMContentLoaded', () => {
 
-  // ---- LOADER ----
   setTimeout(() => document.getElementById('loader').classList.add('cache'), 600);
 
-  // ---- MENU MOBILE ----
   const burger = document.getElementById('nav-burger');
   const liens = document.getElementById('nav-liens');
   burger.addEventListener('click', () => {
@@ -873,7 +860,6 @@ document.addEventListener('DOMContentLoaded', () => {
     })
   );
 
-  // ---- REVEAL ----
   const observateur = new IntersectionObserver((entrees) => {
     entrees.forEach(entree => {
       if (entree.isIntersecting) {
@@ -884,7 +870,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
   document.querySelectorAll('.reveal, .reveal-stagger').forEach(el => observateur.observe(el));
 
-  // ---- CHATBOT (reste ouvert après chaque clic) ----
   const toggleBtn = document.getElementById('chatbotToggle');
   const panel = document.getElementById('chatbotPanel');
   const closeBtn = document.getElementById('chatbotClose');
@@ -915,21 +900,18 @@ document.addEventListener('DOMContentLoaded', () => {
       const action = btn.dataset.action;
       const label = btn.textContent.trim();
       addMessage(label, 'user');
-
       setTimeout(() => {
         addMessage(responses[action] || 'Je peux vous aider avec autre chose.', 'bot');
       }, 400);
-      // ✅ Le panneau reste ouvert
     });
   });
 
 });
 
-// ---- SERVICE WORKER (PWA) ----
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('service-worker.js')
     .then(() => console.log('✅ Service Worker enregistré'))
-    .catch(() => console.log('⚠️ Service Worker non enregistré'));
+    .catch(() => console.warn('⚠️ Service Worker non enregistré'));
 }
 </script>
 
