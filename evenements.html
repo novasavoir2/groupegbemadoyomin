@@ -28,7 +28,6 @@
 <meta name="theme-color" content="#0D0D0D">
 <link rel="manifest" href="manifest.json">
 
-<!-- Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -910,6 +909,16 @@ function todayISO() {
   return new Date().toISOString().slice(0, 10);
 }
 
+function escapeHtml(str) {
+  if (!str) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
 let observateurReveal;
 
 function reprendreReveal() {
@@ -1173,7 +1182,7 @@ function afficherActualitesListe(liste) {
 }
 
 // ============================================================
-// LIVE — AVEC VALIDATION + FALLBACK COMPLET + URLs CUSTOM
+// LIVE — AVEC VALIDATION + FALLBACK COMPLET + URLs CUSTOM + PAYANT
 // ============================================================
 function detecterPlateforme(url) {
   if (!url) return { nom: 'Vidéo', icone: '🔗', classe: 'btn-yt', lienDirect: '#', embed: '' };
@@ -1215,7 +1224,7 @@ async function chargerLive() {
     const snap = await db.collection('live').get();
     if (snap.empty) return;
     const data = snap.docs[0].data();
-    if (!data.actif || !data.embedURL) return;
+    if (!data.actif) return;
 
     document.getElementById('liveBanner').classList.add('actif');
     document.getElementById('liveBannerText').textContent = '🔴 EN DIRECT — ' + (data.titre || 'Live en cours');
@@ -1232,10 +1241,40 @@ async function chargerLive() {
     zone.innerHTML = '';
     fallback.classList.remove('visible');
 
+    // ============================================================
+    // CAS PAYANT : fiche cliquable (au lieu de la vidéo)
+    // ============================================================
+    if (data.payant === true && data.slug) {
+      const urlAcces = 'acces.html?type=live&slug=' + encodeURIComponent(data.slug);
+      const prix = parseInt(data.prix, 10) || 0;
+      const affiche = data.affiche || '';
+
+      const fondStyle = affiche
+        ? "background-image:url('" + cloudinaryUrl(affiche, 900) + "'); background-size:cover; background-position:center; background-color:var(--noir-3);"
+        : 'background-color: var(--noir-2);';
+
+      zone.innerHTML =
+        '<a href="' + urlAcces + '" style="display:block; width:100%; height:100%; text-decoration:none; position:absolute; inset:0;">' +
+          '<div style="position:absolute; inset:0; ' + fondStyle + '">' +
+            '<div style="position:absolute; inset:0; background:linear-gradient(180deg, rgba(0,0,0,0.3), rgba(0,0,0,0.85)); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px; padding:24px; text-align:center;">' +
+              '<span style="background:linear-gradient(135deg, var(--or-clair), var(--or-fonce)); color:var(--noir); padding:6px 14px; border-radius:20px; font-family:var(--font-titres); font-size:0.7rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase;">💰 Live payant</span>' +
+              '<div style="font-family:var(--font-titres); color:var(--blanc); font-size:clamp(1.1rem, 2.5vw, 1.5rem); line-height:1.3;">' + escapeHtml(data.titre || 'Live en cours') + '</div>' +
+              (prix > 0 ? '<div style="font-family:var(--font-titres); color:var(--or-clair); font-size:1.3rem; font-weight:700;">' + prix.toLocaleString('fr-FR') + ' FCFA</div>' : '') +
+              '<div style="background:linear-gradient(135deg, var(--or-clair), var(--or-fonce)); color:var(--noir); padding:12px 28px; border-radius:4px; font-family:var(--font-titres); font-size:0.82rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; margin-top:8px;">🎟 Accéder au live</div>' +
+            '</div>' +
+          '</div>' +
+        '</a>';
+      return;
+    }
+
+    // ============================================================
+    // CAS GRATUIT : vidéo intégrée + fallback
+    // ============================================================
+    if (!data.embedURL) return;
+
     const plateforme = detecterPlateforme(data.embedURL);
     const validation = validerEmbedURL(data.embedURL, plateforme);
 
-    // URLs de secours : priorité live > config > défaut
     const fallbackCustom = {
       youtube: data.fallbackYouTube || CONFIG.fallbackYoutube || '',
       facebook: data.fallbackFacebook || CONFIG.fallbackFacebook || '',
@@ -1249,7 +1288,6 @@ async function chargerLive() {
       fallbackText.textContent = 'Le direct ne peut pas s\'afficher dans la page' + raisonTxt + '. Rejoignez-le directement :';
       fallbackBtnsContainer.innerHTML = '';
 
-      // Priorité : bouton de la plateforme détectée
       if (plateforme.lienDirect && plateforme.lienDirect !== '#') {
         const btn1 = document.createElement('a');
         btn1.className = plateforme.classe;
@@ -1260,7 +1298,6 @@ async function chargerLive() {
         fallbackBtnsContainer.appendChild(btn1);
       }
 
-      // Boutons secondaires : URLs custom
       const autres = [
         { nom: 'YouTube', icone: '▶️', classe: 'btn-yt', url: fallbackCustom.youtube },
         { nom: 'Facebook', icone: '📘', classe: 'btn-fb', url: fallbackCustom.facebook },
