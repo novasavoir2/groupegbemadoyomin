@@ -179,6 +179,59 @@ section { padding-block: var(--espace-xl); }
 }
 
 /* ============================================================
+   LIVE BANNER (AJOUT)
+   ============================================================ */
+.live-banner {
+  background: linear-gradient(135deg, #7a1515, #4a0d0d);
+  border-bottom: 1px solid var(--or);
+  padding: 10px 0;
+  display: none;
+}
+.live-banner.actif { display: block; }
+.live-banner-inner { display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; text-align: center; }
+.live-dot { display: inline-block; width: 12px; height: 12px; border-radius: 50%; background: #ff2d2d; animation: clignote 1.2s ease-in-out infinite; flex-shrink: 0; }
+@keyframes clignote {
+  0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 8px #ff2d2d; }
+  50% { opacity: 0.3; transform: scale(0.8); box-shadow: 0 0 20px #ff2d2d; }
+}
+.live-banner strong { color: var(--blanc); font-family: var(--font-titres); letter-spacing: 0.05em; font-size: 0.9rem; }
+.live-banner a { color: var(--or-clair); font-size: 0.82rem; border-bottom: 1px solid var(--or-clair); transition: color 0.3s ease; }
+.live-banner a:hover { color: var(--blanc); }
+
+/* ============================================================
+   LIVE FALLBACK (si YouTube refuse la connexion)
+   ============================================================ */
+.live-fallback {
+  display: none;
+  aspect-ratio: 16/9;
+  background: linear-gradient(135deg, var(--noir-2), var(--noir-3));
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 20px;
+  gap: 14px;
+}
+.live-fallback.visible { display: flex; }
+.live-fallback-icon { font-size: 2.4rem; }
+.live-fallback-title { font-family: var(--font-titres); color: var(--blanc); font-size: 1rem; }
+.live-fallback-text { color: var(--text-muted); font-size: 0.85rem; max-width: 420px; }
+.live-fallback-btns { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-top: 6px; }
+.live-fallback-btns a {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 10px 18px; border-radius: 4px;
+  font-family: var(--font-titres); font-size: 0.72rem; font-weight: 700;
+  letter-spacing: 0.05em; text-transform: uppercase;
+  transition: transform 0.3s ease;
+}
+.live-fallback-btns a:hover { transform: translateY(-2px); }
+.live-fallback-btns .btn-yt { background: #ff0000; color: white; }
+.live-fallback-btns .btn-fb { background: #1877f2; color: white; }
+.live-fallback-btns .btn-tk { background: #000000; color: white; border: 1px solid #fe2c55; }
+
+/* ============================================================
    LOADER
    ============================================================ */
 .loader {
@@ -458,15 +511,90 @@ section { padding-block: var(--espace-xl); }
 .ouvrage-titre { font-family: var(--font-titres); font-size: .8rem; color: var(--blanc); }
 
 /* ============================================================
-   GALERIE
+   GALERIE (AJOUT : plus grande + cliquable)
    ============================================================ */
-.galerie-grille { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.galerie-grille { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
 .galerie-item {
-  aspect-ratio: 1; background: var(--noir-2); border: 1px solid var(--border-discret); border-radius: 3px;
+  aspect-ratio: 1; background: var(--noir-2); border: 1px solid var(--border-discret); border-radius: 4px;
   background-size: cover; background-position: center;
-  transition: transform var(--vitesse), border-color var(--vitesse);
+  cursor: pointer; position: relative;
+  transition: transform var(--vitesse), border-color var(--vitesse), box-shadow var(--vitesse);
 }
-.galerie-item:hover { transform: scale(1.02); border-color: var(--or); }
+.galerie-item:hover { transform: translateY(-4px); border-color: var(--or); box-shadow: 0 15px 35px rgba(0,0,0,0.4); }
+.galerie-item::after {
+  content: '🔍';
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(0,0,0,0.55);
+  font-size: 2rem; opacity: 0;
+  transition: opacity 0.3s ease;
+  border-radius: 4px;
+}
+.galerie-item:hover::after { opacity: 1; }
+
+@media (max-width: 900px) { .galerie-grille { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .galerie-grille { grid-template-columns: 1fr; } }
+
+/* ============================================================
+   LIGHTBOX (AJOUT)
+   ============================================================ */
+.lightbox {
+  position: fixed; inset: 0; z-index: 2000;
+  background: rgba(0, 0, 0, 0.96);
+  display: none; align-items: center; justify-content: center;
+  padding: 20px;
+  animation: fadeInLB 0.3s ease;
+}
+.lightbox.open { display: flex; }
+@keyframes fadeInLB { from { opacity: 0; } to { opacity: 1; } }
+.lightbox-img {
+  max-width: 92vw; max-height: 88vh; object-fit: contain;
+  border-radius: 4px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.85);
+  animation: zoomLB 0.3s ease;
+}
+@keyframes zoomLB { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+.lightbox-close {
+  position: absolute; top: 20px; right: 24px;
+  font-size: 2rem; color: var(--blanc); cursor: pointer;
+  width: 48px; height: 48px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(255,255,255,0.08);
+  transition: background 0.3s ease, transform 0.3s ease;
+  border: none;
+}
+.lightbox-close:hover { background: rgba(255,255,255,0.2); transform: rotate(90deg); }
+.lightbox-nav {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  width: 56px; height: 56px; border-radius: 50%;
+  background: rgba(184,146,46,0.85); color: var(--noir);
+  font-size: 1.6rem; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; border: none;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+.lightbox-nav:hover { background: var(--or); transform: translateY(-50%) scale(1.1); }
+.lightbox-prev { left: 20px; }
+.lightbox-next { right: 20px; }
+.lightbox-caption {
+  position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%);
+  color: var(--blanc-doux); font-size: 0.88rem; font-style: italic;
+  background: rgba(0,0,0,0.7); padding: 10px 20px; border-radius: 4px;
+  max-width: 80vw; text-align: center;
+}
+.lightbox-counter {
+  position: absolute; top: 24px; left: 24px;
+  color: var(--or-clair); font-family: var(--font-titres); font-size: 0.82rem;
+  background: rgba(0,0,0,0.7); padding: 8px 14px; border-radius: 4px;
+  letter-spacing: 0.05em;
+}
+@media (max-width: 640px) {
+  .lightbox-nav { width: 42px; height: 42px; font-size: 1.2rem; }
+  .lightbox-prev { left: 8px; }
+  .lightbox-next { right: 8px; }
+  .lightbox-close { top: 12px; right: 12px; }
+  .lightbox-counter { top: 12px; left: 12px; }
+}
 
 /* ============================================================
    GROUPE BANDEAU
@@ -544,7 +672,7 @@ section { padding-block: var(--espace-xl); }
   .footer-grille { grid-template-columns: 1fr; gap: 32px; }
   .footer-bas { flex-direction: column; align-items: flex-start; }
 }
-@media (max-width: 860px) { .ouvrages-grille { grid-template-columns: repeat(2, 1fr); } .galerie-grille { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 860px) { .ouvrages-grille { grid-template-columns: repeat(2, 1fr); } }
 </style>
 </head>
 <body data-page="professeur">
@@ -596,7 +724,6 @@ section { padding-block: var(--espace-xl); }
         👕 Collection TODAAA 2026 — Édition actuelle
       </a>
     </span>
-    <!-- Répétition pour le défilement continu -->
     <span>
       <a class="bandeau-lien" href="evenements.html">
         🔥 <span class="highlight">PROCHAINE ÉDITION 2027</span> — Restez connectés !
@@ -631,6 +758,17 @@ section { padding-block: var(--espace-xl); }
         👕 Collection TODAAA 2026 — Édition actuelle
       </a>
     </span>
+  </div>
+</div>
+
+<!-- ============================================================
+   LIVE BANNER (AJOUT)
+   ============================================================ -->
+<div class="live-banner" id="liveBanner">
+  <div class="conteneur live-banner-inner">
+    <span class="live-dot"></span>
+    <strong id="liveBannerText">🔴 EN DIRECT — Live en cours</strong>
+    <a href="#live-embed">Rejoindre le live →</a>
   </div>
 </div>
 
@@ -676,6 +814,33 @@ section { padding-block: var(--espace-xl); }
     <h1>Bokônon Gbêmadoyômin</h1>
   </div>
 </header>
+
+<!-- ============================================================
+   LIVE EMBED (AJOUT)
+   ============================================================ -->
+<section id="live-embed" style="display:none; padding-block: var(--espace-md);">
+  <div class="conteneur">
+    <div style="border: 1px solid var(--or); border-radius: 6px; overflow: hidden; background: var(--noir-2);">
+      <div style="padding: 12px 20px; background: linear-gradient(135deg, var(--rouge), var(--noir-2)); display: flex; align-items: center; gap: 12px; border-bottom: 1px solid var(--or);">
+        <span class="live-dot"></span>
+        <strong style="color: var(--blanc); font-family: var(--font-titres); font-size: 0.9rem;" id="liveEmbedTitle">🔴 EN DIRECT</strong>
+      </div>
+      <div style="aspect-ratio: 16/9; background: var(--noir-3); position: relative;" id="liveEmbedZone">
+        <!-- L'iframe est insérée ici par JS. En cas d'échec, on affiche le fallback -->
+      </div>
+      <div class="live-fallback" id="liveFallback">
+        <span class="live-fallback-icon">📡</span>
+        <div class="live-fallback-title">Lecture intégrée indisponible</div>
+        <div class="live-fallback-text">La diffusion en direct ne peut pas s'afficher sur cette page. Rejoignez le live directement sur la plateforme :</div>
+        <div class="live-fallback-btns">
+          <a class="btn-yt" id="fallbackYT" href="#" target="_blank" rel="noopener">▶️ YouTube</a>
+          <a class="btn-fb" id="fallbackFB" href="https://www.facebook.com/share/1KLJbHgA74/?mibextid=wwXIfr" target="_blank" rel="noopener">📘 Facebook</a>
+          <a class="btn-tk" id="fallbackTK" href="https://www.tiktok.com/@bokonon.gbemadoyomin" target="_blank" rel="noopener">🎵 TikTok</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- ============================================================
    CONTENU
@@ -771,13 +936,17 @@ section { padding-block: var(--espace-xl); }
       <p>Il encourage chacun à rechercher un équilibre entre héritage et innovation, spiritualité et responsabilité, connaissance et action, identité et ouverture sur le monde.</p>
     </div>
 
+    <!-- ============================================================
+         GALERIE (MODIFIÉE : plus grande + cliquable)
+         ============================================================ -->
     <div class="prof-bloc reveal">
       <h2>Galerie</h2>
-      <div class="galerie-grille">
-        <div class="galerie-item shine" style="background-image:url('professeur-galerie-1.jpeg');" role="img" aria-label="Photo du Professeur 1"></div>
-        <div class="galerie-item shine" style="background-image:url('professeur-hero.jpeg');" role="img" aria-label="Photo du Professeur 2"></div>
-        <div class="galerie-item shine" style="background-image:url('professeur-galerie-3.jpeg');" role="img" aria-label="Photo du Professeur 3"></div>
-        <div class="galerie-item shine" style="background-image:url('professeur-galerie-4.jpeg');" role="img" aria-label="Photo du Professeur 4"></div>
+      <p style="color: var(--text-muted); font-size: .88rem; margin-bottom: var(--espace-sm);">Cliquez sur une photo pour l'agrandir — utilisez les flèches ← → pour naviguer, Échap pour fermer.</p>
+      <div class="galerie-grille" id="galerieProfesseur">
+        <div class="galerie-item shine" style="background-image:url('professeur-galerie-1.jpeg');" data-src="professeur-galerie-1.jpeg" data-caption="Le Professeur Gbêmadoyômin — portrait 1" role="img" aria-label="Photo du Professeur 1"></div>
+        <div class="galerie-item shine" style="background-image:url('professeur-hero.jpeg');" data-src="professeur-hero.jpeg" data-caption="Le Professeur Gbêmadoyômin — portrait 2" role="img" aria-label="Photo du Professeur 2"></div>
+        <div class="galerie-item shine" style="background-image:url('professeur-galerie-3.jpeg');" data-src="professeur-galerie-3.jpeg" data-caption="Le Professeur Gbêmadoyômin — portrait 3" role="img" aria-label="Photo du Professeur 3"></div>
+        <div class="galerie-item shine" style="background-image:url('professeur-galerie-4.jpeg');" data-src="professeur-galerie-4.jpeg" data-caption="Le Professeur Gbêmadoyômin — portrait 4" role="img" aria-label="Photo du Professeur 4"></div>
       </div>
     </div>
 
@@ -895,24 +1064,101 @@ section { padding-block: var(--espace-xl); }
 </div>
 
 <!-- ============================================================
-   FIREBASE
+   LIGHTBOX (AJOUT)
    ============================================================ -->
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js";
-  import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js";
+<div class="lightbox" id="lightbox" role="dialog" aria-label="Photo agrandie">
+  <button class="lightbox-close" id="lightboxClose" aria-label="Fermer">✕</button>
+  <span class="lightbox-counter" id="lightboxCounter">1 / 4</span>
+  <button class="lightbox-nav lightbox-prev" id="lightboxPrev" aria-label="Photo précédente">‹</button>
+  <img class="lightbox-img" id="lightboxImg" src="" alt="">
+  <button class="lightbox-nav lightbox-next" id="lightboxNext" aria-label="Photo suivante">›</button>
+  <div class="lightbox-caption" id="lightboxCaption"></div>
+</div>
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyBkn-26DnNoQBBfiR4-rRrPfOszW24KRRc",
-    authDomain: "groupe-gbemadoyomin.firebaseapp.com",
-    projectId: "groupe-gbemadoyomin",
-    storageBucket: "groupe-gbemadoyomin.firebasestorage.app",
-    messagingSenderId: "113133757650",
-    appId: "1:113133757650:web:71a07f05cca0e78e28390b"
-  };
+<!-- ============================================================
+   FIREBASE + LIVE (AJOUT)
+   ============================================================ -->
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+<script>
+(function () {
+  try {
+    var firebaseConfig = {
+      apiKey: "AIzaSyBkn-26DnNoQBBfiR4-rRrPfOszW24KRRc",
+      authDomain: "groupe-gbemadoyomin.firebaseapp.com",
+      projectId: "groupe-gbemadoyomin",
+      storageBucket: "groupe-gbemadoyomin.firebasestorage.app",
+      messagingSenderId: "113133757650",
+      appId: "1:113133757650:web:71a07f05cca0e78e28390b"
+    };
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
+    var dbLive = firebase.firestore();
 
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
-  console.log("✅ Firebase connecté avec succès !");
+    document.addEventListener('DOMContentLoaded', async function () {
+      try {
+        var snap = await dbLive.collection('live').get();
+        if (snap.empty) return;
+        var data = snap.docs[0].data();
+        if (!data.actif || !data.embedURL) return;
+
+        // Bandeau
+        document.getElementById('liveBanner').classList.add('actif');
+        document.getElementById('liveBannerText').textContent = '🔴 EN DIRECT — ' + (data.titre || 'Live en cours');
+
+        // Section embed
+        var embedSection = document.getElementById('live-embed');
+        embedSection.style.display = 'block';
+        document.getElementById('liveEmbedTitle').textContent = '🔴 EN DIRECT — ' + (data.titre || 'Live en cours');
+
+        // Injection de l'iframe avec détection de chargement
+        var zone = document.getElementById('liveEmbedZone');
+        var fallback = document.getElementById('liveFallback');
+        var iframe = document.createElement('iframe');
+        iframe.src = data.embedURL;
+        iframe.style.cssText = 'width:100%;height:100%;border:none;position:absolute;inset:0;';
+        iframe.allow = 'autoplay; encrypted-media; picture-in-picture';
+        iframe.allowFullscreen = true;
+
+        // Si l'iframe ne déclenche pas onload dans 6 secondes → on affiche le fallback
+        var iframeLoaded = false;
+        iframe.onload = function () { iframeLoaded = true; };
+        iframe.onerror = function () { afficherFallback(); };
+
+        function afficherFallback() {
+          iframe.style.display = 'none';
+          fallback.classList.add('visible');
+        }
+
+        zone.appendChild(iframe);
+
+        setTimeout(function () {
+          if (!iframeLoaded) afficherFallback();
+        }, 6000);
+
+        // Configurer les liens fallback
+        var fallbackYT = document.getElementById('fallbackYT');
+        var fallbackFB = document.getElementById('fallbackFB');
+        var fallbackTK = document.getElementById('fallbackTK');
+
+        // Extraire l'ID YouTube si présent
+        var matchYT = data.embedURL.match(/embed\/([^?]+)/);
+        if (matchYT) {
+          fallbackYT.href = 'https://www.youtube.com/watch?v=' + matchYT[1];
+        } else {
+          fallbackYT.href = 'https://www.youtube.com/';
+        }
+        // Facebook et TikTok pointent déjà vers les liens officiels
+
+      } catch (err) {
+        console.error('Erreur live:', err);
+      }
+    });
+  } catch (e) {
+    console.error('Erreur init Firebase live:', e);
+  }
+})();
 </script>
 
 <!-- ============================================================
@@ -951,7 +1197,61 @@ document.addEventListener('DOMContentLoaded', () => {
   }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
   document.querySelectorAll('.reveal, .reveal-stagger').forEach(el => observateur.observe(el));
 
-  // ---- CHATBOT (corrigé : reste ouvert après chaque clic) ----
+  // ---- LIGHTBOX GALERIE (AJOUT) ----
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightboxImg');
+  const lightboxCaption = document.getElementById('lightboxCaption');
+  const lightboxCounter = document.getElementById('lightboxCounter');
+  const lightboxClose = document.getElementById('lightboxClose');
+  const lightboxPrev = document.getElementById('lightboxPrev');
+  const lightboxNext = document.getElementById('lightboxNext');
+
+  const galerieItems = Array.from(document.querySelectorAll('#galerieProfesseur .galerie-item'));
+  let lightboxIndex = 0;
+
+  function ouvrirLightbox(index) {
+    if (!galerieItems.length) return;
+    lightboxIndex = (index + galerieItems.length) % galerieItems.length;
+    const item = galerieItems[lightboxIndex];
+    const src = item.dataset.src || '';
+    const caption = item.dataset.caption || '';
+    if (!src) return;
+    lightboxImg.src = src;
+    lightboxImg.alt = caption;
+    lightboxCaption.textContent = caption;
+    lightboxCounter.textContent = (lightboxIndex + 1) + ' / ' + galerieItems.length;
+    lightbox.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function fermerLightbox() {
+    lightbox.classList.remove('open');
+    document.body.style.overflow = '';
+    lightboxImg.src = '';
+  }
+
+  function naviguer(direction) {
+    ouvrirLightbox(lightboxIndex + direction);
+  }
+
+  galerieItems.forEach((item, i) => {
+    item.addEventListener('click', () => ouvrirLightbox(i));
+  });
+
+  lightboxClose.addEventListener('click', fermerLightbox);
+  lightboxPrev.addEventListener('click', () => naviguer(-1));
+  lightboxNext.addEventListener('click', () => naviguer(1));
+  lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox) fermerLightbox();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (!lightbox.classList.contains('open')) return;
+    if (e.key === 'Escape') fermerLightbox();
+    if (e.key === 'ArrowLeft') naviguer(-1);
+    if (e.key === 'ArrowRight') naviguer(1);
+  });
+
+  // ---- CHATBOT (reste ouvert après chaque clic) ----
   const toggleBtn = document.getElementById('chatbotToggle');
   const panel = document.getElementById('chatbotPanel');
   const closeBtn = document.getElementById('chatbotClose');
@@ -977,18 +1277,14 @@ document.addEventListener('DOMContentLoaded', () => {
     'contact': '📞 Pour toute question, contactez-nous par WhatsApp : +229 01 67 66 87 99 ou par email : cabinetgbemadoyomin@gmail.com. Nous vous répondons dans les meilleurs délais.'
   };
 
-  // Gestion des clics sur les options (le panneau reste ouvert après chaque clic)
   document.querySelectorAll('.chatbot-option').forEach(btn => {
     btn.addEventListener('click', () => {
       const action = btn.dataset.action;
       const label = btn.textContent.trim();
       addMessage(label, 'user');
-
       setTimeout(() => {
         addMessage(responses[action] || 'Je peux vous aider avec autre chose.', 'bot');
       }, 400);
-
-      // ✅ Le panneau RESTE OUVERT — on ne fait plus panel.classList.remove('open')
     });
   });
 
