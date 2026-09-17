@@ -303,6 +303,30 @@ h1, h2, h3 { font-family: var(--font-titres); font-weight: 700; color: var(--bla
 .alert-info { background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.3); color: #93c5fd; }
 .alert-warn { background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.3); color: #fcd34d; }
 .alert-tip { background: rgba(34,197,94,0.08); border: 1px solid rgba(34,197,94,0.3); color: #86efac; }
+
+/* ============================================================
+   VALIDATION URL (AJOUT)
+   ============================================================ */
+.url-validation {
+  font-size: 0.78rem;
+  margin-top: 6px;
+  padding: 8px 12px;
+  border-radius: 4px;
+  display: none;
+  line-height: 1.4;
+}
+.url-validation.visible { display: block; }
+.url-validation.valide {
+  background: rgba(34,197,94,0.15);
+  color: #4ade80;
+  border: 1px solid rgba(34,197,94,0.4);
+}
+.url-validation.invalide {
+  background: rgba(122,21,21,0.2);
+  color: #ff8888;
+  border: 1px solid rgba(122,21,21,0.5);
+}
+.url-validation small { opacity: 0.85; }
 </style>
 </head>
 <body>
@@ -480,7 +504,7 @@ h1, h2, h3 { font-family: var(--font-titres); font-weight: 700; color: var(--bla
             <a class="btn-tool" href="https://www.youtube.com/" target="_blank" rel="noopener">▶️ Ouvrir YouTube</a>
             <a class="btn-tool" href="https://drive.google.com/" target="_blank" rel="noopener">📁 Ouvrir Google Drive</a>
           </div>
-          <div class="hint">Format attendu : https://www.youtube.com/embed/ID_VIDEO</div>
+          <div class="hint">Formats acceptés : YouTube (embed/), Google Drive, TikTok, Facebook, Vimeo, Dailymotion…</div>
         </div>
 
         <div style="display:flex; gap:12px; margin-top:20px; flex-wrap:wrap;">
@@ -504,7 +528,7 @@ h1, h2, h3 { font-family: var(--font-titres); font-weight: 700; color: var(--bla
   </div>
 
   <!-- ============================================================
-       TAB ACTUALITÉS (AJOUT)
+       TAB ACTUALITÉS
        ============================================================ -->
   <div class="tab-pane" id="pane-actualites">
 
@@ -589,7 +613,8 @@ h1, h2, h3 { font-family: var(--font-titres); font-weight: 700; color: var(--bla
               <a class="btn-tool" href="https://drive.google.com/" target="_blank" rel="noopener">Drive</a>
             </div>
           </div>
-          <div class="hint">Format attendu : https://www.youtube.com/embed/ID_VIDEO</div>
+          <div class="url-validation" id="acVideoValidation"></div>
+          <div class="hint">Formats acceptés : YouTube (embed/), Google Drive, TikTok, Facebook, Vimeo, Dailymotion…</div>
         </div>
 
         <div style="display:flex; gap:12px; margin-top:20px; flex-wrap:wrap;">
@@ -678,7 +703,7 @@ h1, h2, h3 { font-family: var(--font-titres); font-weight: 700; color: var(--bla
   <div class="tab-pane" id="pane-videos">
     <div class="alert alert-info">
       <span>💡</span>
-      <span><strong>Format :</strong> collez le lien d'intégration YouTube (<code>https://www.youtube.com/embed/ID</code>) ou Google Drive.</span>
+      <span><strong>Formats acceptés :</strong> YouTube (<code>https://www.youtube.com/embed/ID</code>), Google Drive, TikTok, Facebook, Vimeo, Dailymotion, Twitch…</span>
     </div>
 
     <div class="card">
@@ -711,7 +736,8 @@ h1, h2, h3 { font-family: var(--font-titres); font-weight: 700; color: var(--bla
               <a class="btn-tool" href="https://drive.google.com/" target="_blank" rel="noopener">Drive</a>
             </div>
           </div>
-          <div class="hint">Pour YouTube, remplacez "watch?v=" par "embed/".</div>
+          <div class="url-validation" id="viUrlValidation"></div>
+          <div class="hint">Collez le lien d'intégration (embed) ou un lien direct YouTube / Drive / TikTok / Facebook / Vimeo.</div>
         </div>
 
         <div class="form-group">
@@ -822,6 +848,9 @@ h1, h2, h3 { font-family: var(--font-titres); font-weight: 700; color: var(--bla
               <option value="youtube">YouTube</option>
               <option value="facebook">Facebook</option>
               <option value="tiktok">TikTok</option>
+              <option value="drive">Google Drive</option>
+              <option value="vimeo">Vimeo</option>
+              <option value="autre">Autre</option>
             </select>
           </div>
         </div>
@@ -838,11 +867,15 @@ h1, h2, h3 { font-family: var(--font-titres); font-weight: 700; color: var(--bla
             <div class="url-tools">
               <a class="btn-tool" href="https://www.youtube.com/" target="_blank" rel="noopener">YouTube</a>
               <a class="btn-tool" href="https://www.facebook.com/" target="_blank" rel="noopener">Facebook</a>
+              <a class="btn-tool" href="https://www.tiktok.com/" target="_blank" rel="noopener">TikTok</a>
             </div>
           </div>
+          <div class="url-validation" id="liEmbedValidation"></div>
           <div class="hint">
             YouTube : <code>https://www.youtube.com/embed/ID</code><br>
-            Facebook : <code>https://www.facebook.com/plugins/video.php?href=URL_VIDEO</code>
+            Facebook : <code>https://www.facebook.com/plugins/video.php?href=URL</code><br>
+            TikTok : <code>https://www.tiktok.com/@user/video/ID</code><br>
+            Drive : <code>https://drive.google.com/file/d/ID/preview</code>
           </div>
         </div>
 
@@ -894,6 +927,166 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
+
+// ============================================================
+// 🎬 VALIDATION VIDÉO — TOUTES PLATEFORMES (AJOUT)
+// ============================================================
+function detecterPlateforme(url) {
+  if (!url || typeof url !== 'string') {
+    return { nom: 'Inconnu', icone: '🔗', lienDirect: '#', embed: '' };
+  }
+  const u = url.toLowerCase().trim();
+
+  // YouTube
+  if (u.includes('youtube.com') || u.includes('youtu.be')) {
+    const m = url.match(/(?:embed\/|watch\?v=|youtu\.be\/|shorts\/|live\/)([^?&/]+)/);
+    const id = m ? m[1] : '';
+    return {
+      nom: 'YouTube',
+      icone: '▶️',
+      lienDirect: id ? 'https://www.youtube.com/watch?v=' + id : 'https://www.youtube.com/',
+      embed: id ? 'https://www.youtube.com/embed/' + id : ''
+    };
+  }
+
+  // Google Drive
+  if (u.includes('drive.google.com')) {
+    const m = url.match(/\/d\/([^/]+)/);
+    const id = m ? m[1] : '';
+    return {
+      nom: 'Google Drive',
+      icone: '📁',
+      lienDirect: url,
+      embed: id ? 'https://drive.google.com/file/d/' + id + '/preview' : ''
+    };
+  }
+
+  // TikTok
+  if (u.includes('tiktok.com')) {
+    return { nom: 'TikTok', icone: '🎵', lienDirect: url, embed: url };
+  }
+
+  // Facebook
+  if (u.includes('facebook.com') || u.includes('fb.watch')) {
+    let embed = url;
+    if (u.includes('facebook.com') && !u.includes('plugins/video')) {
+      embed = 'https://www.facebook.com/plugins/video.php?href=' + encodeURIComponent(url);
+    }
+    return { nom: 'Facebook', icone: '📘', lienDirect: url, embed: embed };
+  }
+
+  // Vimeo
+  if (u.includes('vimeo.com')) {
+    const m = url.match(/vimeo\.com\/(\d+)/);
+    const id = m ? m[1] : '';
+    return {
+      nom: 'Vimeo',
+      icone: '🎬',
+      lienDirect: url,
+      embed: id ? 'https://player.vimeo.com/video/' + id : ''
+    };
+  }
+
+  // Dailymotion
+  if (u.includes('dailymotion.com') || u.includes('dai.ly')) {
+    return { nom: 'Dailymotion', icone: '🎥', lienDirect: url, embed: url };
+  }
+
+  // Twitch
+  if (u.includes('twitch.tv')) {
+    const m = url.match(/twitch\.tv\/([^?&/]+)/);
+    const chaine = m ? m[1] : '';
+    return {
+      nom: 'Twitch',
+      icone: '🎮',
+      lienDirect: url,
+      embed: chaine ? 'https://player.twitch.tv/?channel=' + chaine + '&parent=groupegbemadoyomin.com' : ''
+    };
+  }
+
+  // Instagram
+  if (u.includes('instagram.com')) {
+    return { nom: 'Instagram', icone: '📸', lienDirect: url, embed: url };
+  }
+
+  // Twitter / X
+  if (u.includes('twitter.com') || u.includes('x.com')) {
+    return { nom: 'Twitter/X', icone: '🐦', lienDirect: url, embed: url };
+  }
+
+  return { nom: 'Vidéo', icone: '🔗', lienDirect: url, embed: url };
+}
+
+function validerEmbedURL(url, plateforme) {
+  if (!url || typeof url !== 'string' || url.trim() === '') {
+    return { valide: false, raison: 'URL manquante ou vide' };
+  }
+
+  const u = url.toLowerCase().trim();
+
+  if (plateforme.nom === 'YouTube') {
+    const m = url.match(/embed\/([^?&/]+)/);
+    if (!m || !m[1] || m[1].length < 5) {
+      return { valide: false, raison: 'ID de vidéo YouTube manquant (ex: .../embed/dQw4w9WgXcQ)' };
+    }
+    return { valide: true };
+  }
+
+  if (plateforme.nom === 'Google Drive') {
+    const m = url.match(/\/d\/([^/]+)/);
+    if (!m || !m[1] || m[1].length < 10) {
+      return { valide: false, raison: 'ID de fichier Drive manquant' };
+    }
+    return { valide: true };
+  }
+
+  if (plateforme.nom === 'Vimeo') {
+    const m = url.match(/vimeo\.com\/(\d+)/);
+    if (!m || !m[1]) {
+      return { valide: false, raison: 'ID de vidéo Vimeo manquant' };
+    }
+    return { valide: true };
+  }
+
+  if (plateforme.nom === 'TikTok') {
+    if (!u.includes('/video/') && !u.includes('/live/')) {
+      return { valide: false, raison: 'Lien TikTok invalide (doit contenir /video/ ou /live/)' };
+    }
+    return { valide: true };
+  }
+
+  if (plateforme.nom === 'Facebook') {
+    if (!u.includes('facebook.com') && !u.includes('fb.watch')) {
+      return { valide: false, raison: 'Lien Facebook invalide' };
+    }
+    return { valide: true };
+  }
+
+  return { valide: true };
+}
+
+// Validation visuelle d'un champ URL
+function validerChampURL(inputEl, validationEl) {
+  if (!inputEl || !validationEl) return;
+  const url = inputEl.value.trim();
+  if (!url) {
+    validationEl.className = 'url-validation';
+    validationEl.innerHTML = '';
+    return;
+  }
+
+  const plateforme = detecterPlateforme(url);
+  const validation = validerEmbedURL(url, plateforme);
+
+  validationEl.className = 'url-validation visible ' + (validation.valide ? 'valide' : 'invalide');
+
+  if (validation.valide) {
+    validationEl.innerHTML = '✅ URL valide — Plateforme détectée : <strong>' + plateforme.nom + '</strong>';
+  } else {
+    validationEl.innerHTML = '❌ URL invalide : ' + validation.reason +
+      '<br><small>Formats acceptés : YouTube (embed/), Google Drive, TikTok, Facebook, Vimeo, Dailymotion</small>';
+  }
+}
 
 // ============================================================
 // HELPERS — TOASTS
@@ -1008,7 +1201,7 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
 });
 
 // ============================================================
-// DYNAMIC LISTS (images/videos)
+// DYNAMIC LISTS (images/videos) — AVEC VALIDATION
 // ============================================================
 function addImageRow(container, value = '') {
   const row = document.createElement('div');
@@ -1021,19 +1214,30 @@ function addImageRow(container, value = '') {
 }
 
 function addVideoRow(container, value = '') {
-  const row = document.createElement('div');
-  row.className = 'url-row';
-  row.innerHTML = `
-    <input type="url" class="vid-input" placeholder="https://www.youtube.com/embed/..." value="${value}">
-    <button type="button" class="btn-remove" title="Supprimer">✕</button>`;
-  row.querySelector('.btn-remove').addEventListener('click', () => row.remove());
-  container.appendChild(row);
+  const wrapper = document.createElement('div');
+  wrapper.style.marginBottom = '8px';
+  wrapper.innerHTML = `
+    <div class="url-row" style="margin-bottom:0;">
+      <input type="url" class="vid-input" placeholder="https://www.youtube.com/embed/... ou TikTok, Facebook, Vimeo, Drive" value="${value}">
+      <button type="button" class="btn-remove" title="Supprimer">✕</button>
+    </div>
+    <div class="url-validation vid-validation"></div>`;
+
+  const input = wrapper.querySelector('.vid-input');
+  const validation = wrapper.querySelector('.vid-validation');
+
+  const valider = () => validerChampURL(input, validation);
+  input.addEventListener('input', valider);
+  input.addEventListener('blur', valider);
+
+  wrapper.querySelector('.btn-remove').addEventListener('click', () => wrapper.remove());
+  container.appendChild(wrapper);
+
+  if (value) valider();
 }
 
 document.getElementById('evAddImage').addEventListener('click', () => addImageRow(document.getElementById('evImagesList')));
 document.getElementById('evAddVideo').addEventListener('click', () => addVideoRow(document.getElementById('evVideosList')));
-
-// Actualités — ajout image
 document.getElementById('acAddImage').addEventListener('click', () => addImageRow(document.getElementById('acImagesList')));
 
 function getImages(containerId) {
@@ -1046,6 +1250,42 @@ function getVideos(containerId) {
 }
 function clearImages(containerId) { document.getElementById(containerId).innerHTML = ''; }
 function clearVideos(containerId) { document.getElementById(containerId).innerHTML = ''; }
+
+// Vérifie toutes les URLs vidéo d'un conteneur
+function verifierVideos(containerId) {
+  const inputs = document.querySelectorAll(`#${containerId} .vid-input`);
+  for (const input of inputs) {
+    const url = input.value.trim();
+    if (!url) continue;
+    const plateforme = detecterPlateforme(url);
+    const validation = validerEmbedURL(url, plateforme);
+    if (!validation.valide) {
+      return { valide: false, raison: validation.raison, url: url };
+    }
+  }
+  return { valide: true };
+}
+
+// ============================================================
+// VALIDATION LIVE EN TEMPS RÉEL
+// ============================================================
+const liEmbedInput = document.getElementById('liEmbedURL');
+const liValidationBox = document.getElementById('liEmbedValidation');
+
+liEmbedInput.addEventListener('input', () => validerChampURL(liEmbedInput, liValidationBox));
+liEmbedInput.addEventListener('blur', () => validerChampURL(liEmbedInput, liValidationBox));
+
+// Validation vidéo (médias)
+const viUrlInput = document.getElementById('viUrl');
+const viUrlValidation = document.getElementById('viUrlValidation');
+viUrlInput.addEventListener('input', () => validerChampURL(viUrlInput, viUrlValidation));
+viUrlInput.addEventListener('blur', () => validerChampURL(viUrlInput, viUrlValidation));
+
+// Validation vidéo (actualité)
+const acVideoInput = document.getElementById('acVideoURL');
+const acVideoValidation = document.getElementById('acVideoValidation');
+acVideoInput.addEventListener('input', () => validerChampURL(acVideoInput, acVideoValidation));
+acVideoInput.addEventListener('blur', () => validerChampURL(acVideoInput, acVideoValidation));
 
 // ============================================================
 // LOAD ALL
@@ -1158,6 +1398,14 @@ document.getElementById('formEvenement').addEventListener('submit', async (e) =>
   const id = document.getElementById('evId').value;
   const images = getImages('evImagesList');
   const videos = getVideos('evVideosList');
+
+  // 🔥 VALIDATION DES VIDÉOS
+  const validationVideos = verifierVideos('evVideosList');
+  if (!validationVideos.valide) {
+    toast('error', 'Vidéo invalide', validationVideos.raison + ' — ' + validationVideos.url);
+    return;
+  }
+
   const data = {
     titre: document.getElementById('evTitre').value.trim(),
     slug: document.getElementById('evSlug').value.trim(),
@@ -1218,7 +1466,7 @@ addImageRow(document.getElementById('evImagesList'));
 addVideoRow(document.getElementById('evVideosList'));
 
 // ============================================================
-// ACTUALITÉS (AJOUT)
+// ACTUALITÉS
 // ============================================================
 async function loadActualites() {
   const list = document.getElementById('acList');
@@ -1277,7 +1525,7 @@ async function editActualite(id) {
     document.getElementById('acEpingle').value = (d.epingle === true || d.epingle === 'true') ? 'true' : 'false';
     document.getElementById('acResume').value = d.resume || '';
     document.getElementById('acContenu').value = d.contenu || '';
-    document.getElementById('acVideoURL').value = d.videoURL || '';
+    acVideoInput.value = d.videoURL || '';
 
     clearImages('acImagesList');
     const imgs = d.images && d.images.length ? d.images : (d.imageURL ? [d.imageURL] : []);
@@ -1309,6 +1557,18 @@ document.getElementById('formActualite').addEventListener('submit', async (e) =>
   const btn = document.getElementById('btnSaveAc');
   const id = document.getElementById('acId').value;
   const images = getImages('acImagesList');
+  const videoURL = acVideoInput.value.trim();
+
+  // 🔥 VALIDATION DE LA VIDÉO (si présente)
+  if (videoURL) {
+    const plateforme = detecterPlateforme(videoURL);
+    const validation = validerEmbedURL(videoURL, plateforme);
+    if (!validation.valide) {
+      toast('error', 'Vidéo invalide', validation.raison);
+      return;
+    }
+  }
+
   const data = {
     titre: document.getElementById('acTitre').value.trim(),
     slug: document.getElementById('acSlug').value.trim(),
@@ -1320,7 +1580,7 @@ document.getElementById('formActualite').addEventListener('submit', async (e) =>
     contenu: document.getElementById('acContenu').value.trim(),
     images: images,
     imageURL: images[0] || '',
-    videoURL: document.getElementById('acVideoURL').value.trim(),
+    videoURL: videoURL,
     dateAjout: firebase.firestore.FieldValue.serverTimestamp()
   };
   if (!data.titre || !data.slug || !data.contenu) {
@@ -1355,11 +1615,12 @@ function resetActualiteForm() {
   document.getElementById('formActualite').reset();
   document.getElementById('acId').value = '';
   clearImages('acImagesList'); addImageRow(document.getElementById('acImagesList'));
+  acVideoValidation.className = 'url-validation';
+  acVideoValidation.innerHTML = '';
   document.getElementById('btnCancelAc').style.display = 'none';
   document.getElementById('btnSaveAc').querySelector('.btn-text').textContent = '💾 Enregistrer l\'actualité';
 }
 
-// Initialiser avec une ligne vide
 addImageRow(document.getElementById('acImagesList'));
 
 // ============================================================
@@ -1445,7 +1706,7 @@ function resetPhotoForm() {
 }
 
 // ============================================================
-// VIDÉOS
+// VIDÉOS (médias)
 // ============================================================
 async function loadVideos() {
   const list = document.getElementById('viList');
@@ -1485,8 +1746,9 @@ async function editVideo(id) {
   document.getElementById('viId').value = id;
   document.getElementById('viTitre').value = d.titre || '';
   document.getElementById('viCategorie').value = d.categorie || 'intervention';
-  document.getElementById('viUrl').value = d.url || '';
+  viUrlInput.value = d.url || '';
   document.getElementById('viVignetteURL').value = d.vignetteURL || '';
+  validerChampURL(viUrlInput, viUrlValidation);
   document.getElementById('btnCancelVi').style.display = 'inline-flex';
   document.getElementById('btnSaveVi').querySelector('.btn-text').textContent = '💾 Mettre à jour';
   document.getElementById('formVideo').scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -1503,10 +1765,22 @@ document.getElementById('formVideo').addEventListener('submit', async (e) => {
   e.preventDefault();
   const btn = document.getElementById('btnSaveVi');
   const id = document.getElementById('viId').value;
+  const url = viUrlInput.value.trim();
+
+  // 🔥 VALIDATION
+  if (url) {
+    const plateforme = detecterPlateforme(url);
+    const validation = validerEmbedURL(url, plateforme);
+    if (!validation.valide) {
+      toast('error', 'Vidéo invalide', validation.raison);
+      return;
+    }
+  }
+
   const data = {
     titre: document.getElementById('viTitre').value.trim(),
     categorie: document.getElementById('viCategorie').value,
-    url: document.getElementById('viUrl').value.trim(),
+    url: url,
     vignetteURL: document.getElementById('viVignetteURL').value.trim(),
     dateAjout: firebase.firestore.FieldValue.serverTimestamp()
   };
@@ -1524,6 +1798,8 @@ document.getElementById('btnCancelVi').addEventListener('click', () => { resetVi
 function resetVideoForm() {
   document.getElementById('formVideo').reset();
   document.getElementById('viId').value = '';
+  viUrlValidation.className = 'url-validation';
+  viUrlValidation.innerHTML = '';
   document.getElementById('btnCancelVi').style.display = 'none';
   document.getElementById('btnSaveVi').querySelector('.btn-text').textContent = '💾 Enregistrer la vidéo';
 }
@@ -1613,7 +1889,7 @@ function resetPresseForm() {
 }
 
 // ============================================================
-// LIVE
+// LIVE — AVEC VALIDATION
 // ============================================================
 async function loadLive() {
   try {
@@ -1629,7 +1905,9 @@ async function loadLive() {
       document.getElementById('liActif').value = 'false';
       document.getElementById('liPlateforme').value = 'youtube';
       document.getElementById('liTitre').value = '';
-      document.getElementById('liEmbedURL').value = '';
+      liEmbedInput.value = '';
+      liValidationBox.className = 'url-validation';
+      liValidationBox.innerHTML = '';
       dot.classList.remove('on');
       statusText.textContent = 'Aucun live configuré';
       preview.style.display = 'none';
@@ -1642,13 +1920,25 @@ async function loadLive() {
     document.getElementById('liActif').value = d.actif ? 'true' : 'false';
     document.getElementById('liPlateforme').value = d.plateforme || 'youtube';
     document.getElementById('liTitre').value = d.titre || '';
-    document.getElementById('liEmbedURL').value = d.embedURL || '';
+    liEmbedInput.value = d.embedURL || '';
 
-    if (d.actif && d.embedURL) {
+    // Validation visuelle
+    validerChampURL(liEmbedInput, liValidationBox);
+
+    // Prévisualisation
+    const plateforme = detecterPlateforme(d.embedURL);
+    const validation = validerEmbedURL(d.embedURL, plateforme);
+
+    if (d.actif && d.embedURL && validation.valide) {
       dot.classList.add('on');
       statusText.innerHTML = `🔴 <strong>EN DIRECT</strong> — ${d.titre || 'Live en cours'}`;
       preview.style.display = 'block';
-      previewFrame.src = d.embedURL;
+      previewFrame.src = plateforme.embed || d.embedURL;
+    } else if (d.actif && !validation.valide) {
+      dot.classList.add('on');
+      statusText.innerHTML = `⚠️ <strong>Live activé mais URL invalide</strong>`;
+      preview.style.display = 'none';
+      previewFrame.src = '';
     } else {
       dot.classList.remove('on');
       statusText.textContent = 'Live désactivé';
@@ -1665,16 +1955,29 @@ document.getElementById('formLive').addEventListener('submit', async (e) => {
   e.preventDefault();
   const btn = document.getElementById('btnSaveLive');
   const id = document.getElementById('liId').value;
+  const url = liEmbedInput.value.trim();
+
   const data = {
     actif: document.getElementById('liActif').value === 'true',
     plateforme: document.getElementById('liPlateforme').value,
     titre: document.getElementById('liTitre').value.trim(),
-    embedURL: document.getElementById('liEmbedURL').value.trim()
+    embedURL: url
   };
-  if (data.actif && !data.embedURL) {
-    toast('warning', 'URL manquante', 'Un live actif doit avoir une URL d\'intégration.');
-    return;
+
+  // 🔥 VALIDATION SI LIVE ACTIF
+  if (data.actif) {
+    if (!url) {
+      toast('warning', 'URL manquante', 'Un live actif doit avoir une URL d\'intégration.');
+      return;
+    }
+    const plateforme = detecterPlateforme(url);
+    const validation = validerEmbedURL(url, plateforme);
+    if (!validation.valide) {
+      toast('error', 'URL invalide', validation.raison);
+      return;
+    }
   }
+
   setLoading(btn, true);
   try {
     if (id) {
