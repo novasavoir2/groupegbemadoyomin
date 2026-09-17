@@ -230,13 +230,34 @@ h1, h2, h3 { font-family: var(--font-titres); font-weight: 700; color: var(--bla
 .item-info { flex: 1; min-width: 0; }
 .item-title { font-size: 0.88rem; color: var(--blanc); font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .item-meta { font-size: 0.72rem; color: var(--text-discret); margin-top: 2px; }
-.item-actions { display: flex; gap: 6px; flex-shrink: 0; }
+.item-actions { display: flex; gap: 6px; flex-shrink: 0; flex-wrap: wrap; }
 
 .empty-state {
   text-align: center; padding: 40px 20px; color: var(--text-discret);
   border: 1px dashed var(--border-discret); border-radius: 4px;
   font-size: 0.85rem;
 }
+
+/* ============================================================
+   ACCÈS — CODE MONO
+   ============================================================ */
+.code-mono {
+  font-family: 'Courier New', monospace;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--or-clair);
+  letter-spacing: 0.05em;
+}
+.badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 2px 8px; border-radius: 10px;
+  font-size: 0.68rem; font-weight: 700;
+  letter-spacing: 0.03em;
+}
+.badge-actif { background: rgba(34,197,94,0.15); color: #4ade80; border: 1px solid rgba(34,197,94,0.4); }
+.badge-inactif { background: rgba(122,21,21,0.15); color: #ff8888; border: 1px solid rgba(122,21,21,0.4); }
+.badge-utilise { background: rgba(245,158,11,0.15); color: #fcd34d; border: 1px solid rgba(245,158,11,0.4); }
+.badge-expire { background: rgba(122,21,21,0.2); color: #ff8888; border: 1px solid rgba(122,21,21,0.5); }
 
 /* ============================================================
    TOAST (notifications)
@@ -305,7 +326,7 @@ h1, h2, h3 { font-family: var(--font-titres); font-weight: 700; color: var(--bla
 .alert-tip { background: rgba(34,197,94,0.08); border: 1px solid rgba(34,197,94,0.3); color: #86efac; }
 
 /* ============================================================
-   VALIDATION URL (AJOUT)
+   VALIDATION URL
    ============================================================ */
 .url-validation {
   font-size: 0.78rem;
@@ -327,6 +348,24 @@ h1, h2, h3 { font-family: var(--font-titres); font-weight: 700; color: var(--bla
   border: 1px solid rgba(122,21,21,0.5);
 }
 .url-validation small { opacity: 0.85; }
+
+/* ============================================================
+   SECTION SECOURS (fallback)
+   ============================================================ */
+.fallback-section {
+  border-top: 1px dashed var(--border-discret);
+  padding-top: 16px;
+  margin-top: 20px;
+}
+.fallback-section-title {
+  color: var(--or);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  display: flex; align-items: center; gap: 6px;
+}
 </style>
 </head>
 <body>
@@ -391,6 +430,8 @@ h1, h2, h3 { font-family: var(--font-titres); font-weight: 700; color: var(--bla
     <button class="tab-btn" data-tab="videos">🎬 Vidéos</button>
     <button class="tab-btn" data-tab="presse">📰 Presse</button>
     <button class="tab-btn" data-tab="live">🔴 Live</button>
+    <button class="tab-btn" data-tab="acces">🔐 Accès payant</button>
+    <button class="tab-btn" data-tab="config">⚙️ Configuration</button>
   </div>
 
   <!-- ============================================================
@@ -751,6 +792,13 @@ h1, h2, h3 { font-family: var(--font-titres); font-weight: 700; color: var(--bla
           </div>
         </div>
 
+        <!-- ----- LIEN DE SECOURS (AJOUT PHASE 4) ----- -->
+        <div class="form-group">
+          <label>🔁 Lien de secours (optionnel)</label>
+          <input type="url" id="viFallbackURL" placeholder="https://... (utilisé si l'iframe échoue)">
+          <div class="hint">Facultatif — sinon, le lien direct de la plateforme est utilisé.</div>
+        </div>
+
         <div style="display:flex; gap:12px; margin-top:16px; flex-wrap:wrap;">
           <button type="submit" class="btn btn-or" id="btnSaveVi">
             <span class="btn-text">💾 Enregistrer la vidéo</span>
@@ -879,6 +927,25 @@ h1, h2, h3 { font-family: var(--font-titres); font-weight: 700; color: var(--bla
           </div>
         </div>
 
+        <!-- ----- LIENS DE SECOURS (AJOUT PHASE 4) ----- -->
+        <div class="fallback-section">
+          <div class="fallback-section-title">🔁 Liens de secours (si l'iframe refuse de se connecter)</div>
+          <div class="hint" style="margin-bottom: 12px;">Laissez vide pour utiliser les liens par défaut du site (config/site).</div>
+
+          <div class="form-group">
+            <label style="font-size: 0.7rem;">Lien direct YouTube</label>
+            <input type="url" id="liFallbackYouTube" placeholder="https://www.youtube.com/watch?v=...">
+          </div>
+          <div class="form-group">
+            <label style="font-size: 0.7rem;">Page Facebook</label>
+            <input type="url" id="liFallbackFacebook" placeholder="https://www.facebook.com/...">
+          </div>
+          <div class="form-group">
+            <label style="font-size: 0.7rem;">Compte TikTok</label>
+            <input type="url" id="liFallbackTikTok" placeholder="https://www.tiktok.com/@...">
+          </div>
+        </div>
+
         <div style="display:flex; gap:12px; margin-top:20px; flex-wrap:wrap;">
           <button type="submit" class="btn btn-or" id="btnSaveLive">
             <span class="btn-text">💾 Enregistrer le live</span>
@@ -895,6 +962,169 @@ h1, h2, h3 { font-family: var(--font-titres); font-weight: 700; color: var(--bla
           <iframe id="liveFrame" style="width:100%; height:100%; border:none;" allowfullscreen></iframe>
         </div>
       </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       TAB ACCÈS PAYANT
+       ============================================================ -->
+  <div class="tab-pane" id="pane-acces">
+
+    <div class="alert alert-tip">
+      <span>🔐</span>
+      <span><strong>Fonctionnement :</strong> L'acheteur vous paie (MoMo/Wave/virement), vous lui envoyez un <strong>code unique</strong> par WhatsApp, il le saisit sur <code>acces.html</code> et accède au contenu.</span>
+    </div>
+
+    <div class="card">
+      <div class="card-title">➕ Générer un nouveau code d'accès</div>
+      <div class="card-sub">Le code sert d'identifiant unique. Il sera <strong>impossible à deviner</strong>.</div>
+
+      <form id="formAcces" autocomplete="off">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Titre du contenu <span class="req">*</span></label>
+            <input type="text" id="accTitre" required placeholder="Ex: Live Cérémonie 2026">
+          </div>
+          <div class="form-group">
+            <label>Type <span class="req">*</span></label>
+            <select id="accType" required>
+              <option value="live">🔴 Live</option>
+              <option value="livre">📚 Livre</option>
+              <option value="video">🎬 Vidéo</option>
+              <option value="produit">🛍️ Produit</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Lien vers le contenu <span class="req">*</span></label>
+          <input type="url" id="accLien" required placeholder="https://... (URL du live, du livre, etc.)">
+        </div>
+
+        <div class="form-row-3">
+          <div class="form-group">
+            <label>Durée de validité (jours)</label>
+            <input type="number" id="accDuree" value="0" min="0" placeholder="0 = illimité">
+            <div class="hint">0 = pas d'expiration</div>
+          </div>
+          <div class="form-group">
+            <label>Usage unique ?</label>
+            <select id="accUsageUnique">
+              <option value="true">Oui (1 seule utilisation)</option>
+              <option value="false">Non (utilisable plusieurs fois)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Code personnalisé</label>
+            <input type="text" id="accCodeManuel" placeholder="Laisser vide = auto">
+            <div class="hint">Format conseillé : GG-XXX-XXXX</div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Email de l'acheteur (optionnel)</label>
+            <input type="email" id="accEmail" placeholder="client@example.com">
+          </div>
+          <div class="form-group">
+            <label>Note interne (optionnel)</label>
+            <input type="text" id="accNote" placeholder="Ex: payé par Wave le 15/03">
+          </div>
+        </div>
+
+        <div style="display:flex; gap:12px; margin-top:20px; flex-wrap:wrap;">
+          <button type="submit" class="btn btn-or" id="btnSaveAcc">
+            <span class="btn-text">🔐 Générer le code</span>
+          </button>
+          <button type="button" class="btn btn-outline" id="btnResetAcc">
+            🔄 Réinitialiser
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📋 Codes générés</div>
+      <div class="card-sub">Total : <span id="accCount">0</span></div>
+      <div class="items-list" id="accList">
+        <div class="empty-state">Chargement…</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       TAB CONFIGURATION
+       ============================================================ -->
+  <div class="tab-pane" id="pane-config">
+
+    <div class="alert alert-info">
+      <span>⚙️</span>
+      <span>Ces réglages sont utilisés partout sur le site : boutons de secours, WhatsApp, réseaux sociaux, chatbot.</span>
+    </div>
+
+    <div class="card">
+      <div class="card-title">⚙️ Configuration du site</div>
+      <div class="card-sub">Modifiez les valeurs puis cliquez sur « Enregistrer ». <span id="configLastUpdate" style="color:var(--or-clair);"></span></div>
+
+      <form id="formConfig" autocomplete="off">
+
+        <h3 style="color:var(--or); font-size:0.9rem; margin-bottom:14px; margin-top:8px;">🔁 Liens de secours (fallback)</h3>
+        <div class="form-group">
+          <label>URL Facebook</label>
+          <input type="url" id="cfgFallbackFacebook" placeholder="https://www.facebook.com/...">
+        </div>
+        <div class="form-group">
+          <label>URL TikTok</label>
+          <input type="url" id="cfgFallbackTiktok" placeholder="https://www.tiktok.com/@...">
+        </div>
+        <div class="form-group">
+          <label>URL YouTube</label>
+          <input type="url" id="cfgFallbackYoutube" placeholder="https://www.youtube.com/...">
+        </div>
+
+        <h3 style="color:var(--or); font-size:0.9rem; margin-bottom:14px; margin-top:20px;">📞 Contact</h3>
+        <div class="form-row">
+          <div class="form-group">
+            <label>WhatsApp admin</label>
+            <input type="text" id="cfgWhatsappAdmin" placeholder="22967668799">
+          </div>
+          <div class="form-group">
+            <label>WhatsApp développeur</label>
+            <input type="text" id="cfgWhatsappDev" placeholder="229015252106">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Email de contact</label>
+          <input type="email" id="cfgEmailContact" placeholder="cabinetgbemadoyomin@gmail.com">
+        </div>
+
+        <h3 style="color:var(--or); font-size:0.9rem; margin-bottom:14px; margin-top:20px;">💳 Paiement</h3>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Numéro MoMo</label>
+            <input type="text" id="cfgPaiementMoMo" placeholder="+229 ...">
+          </div>
+          <div class="form-group">
+            <label>Numéro Wave</label>
+            <input type="text" id="cfgPaiementWave" placeholder="+229 ...">
+          </div>
+        </div>
+
+        <h3 style="color:var(--or); font-size:0.9rem; margin-bottom:14px; margin-top:20px;">💬 Chatbot</h3>
+        <div class="form-group">
+          <label>Message d'accueil du chatbot</label>
+          <textarea id="cfgMessageAccueil" rows="2" placeholder="Bonjour ! Je suis l'assistant du Groupe Gbêmadoyomin. Que recherchez-vous ?"></textarea>
+        </div>
+
+        <div style="display:flex; gap:12px; margin-top:24px; flex-wrap:wrap;">
+          <button type="submit" class="btn btn-or" id="btnSaveConfig">
+            <span class="btn-text">💾 Enregistrer la configuration</span>
+          </button>
+          <button type="button" class="btn btn-outline" id="btnReloadConfig">
+            🔄 Recharger
+          </button>
+        </div>
+      </form>
     </div>
   </div>
 
@@ -928,8 +1158,21 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
 
+// Cache local de la config (utilisé pour les liens par défaut)
+let CONFIG = {
+  fallbackFacebook: '',
+  fallbackTiktok: '',
+  fallbackYoutube: '',
+  whatsappAdmin: '22967668799',
+  whatsappDev: '229015252106',
+  emailContact: 'cabinetgbemadoyomin@gmail.com',
+  paiementMoMo: '',
+  paiementWave: '',
+  messageAccueil: ''
+};
+
 // ============================================================
-// 🎬 VALIDATION VIDÉO — TOUTES PLATEFORMES (AJOUT)
+// 🎬 VALIDATION VIDÉO — TOUTES PLATEFORMES
 // ============================================================
 function detecterPlateforme(url) {
   if (!url || typeof url !== 'string') {
@@ -937,7 +1180,6 @@ function detecterPlateforme(url) {
   }
   const u = url.toLowerCase().trim();
 
-  // YouTube
   if (u.includes('youtube.com') || u.includes('youtu.be')) {
     const m = url.match(/(?:embed\/|watch\?v=|youtu\.be\/|shorts\/|live\/)([^?&/]+)/);
     const id = m ? m[1] : '';
@@ -949,7 +1191,6 @@ function detecterPlateforme(url) {
     };
   }
 
-  // Google Drive
   if (u.includes('drive.google.com')) {
     const m = url.match(/\/d\/([^/]+)/);
     const id = m ? m[1] : '';
@@ -961,12 +1202,10 @@ function detecterPlateforme(url) {
     };
   }
 
-  // TikTok
   if (u.includes('tiktok.com')) {
     return { nom: 'TikTok', icone: '🎵', lienDirect: url, embed: url };
   }
 
-  // Facebook
   if (u.includes('facebook.com') || u.includes('fb.watch')) {
     let embed = url;
     if (u.includes('facebook.com') && !u.includes('plugins/video')) {
@@ -975,7 +1214,6 @@ function detecterPlateforme(url) {
     return { nom: 'Facebook', icone: '📘', lienDirect: url, embed: embed };
   }
 
-  // Vimeo
   if (u.includes('vimeo.com')) {
     const m = url.match(/vimeo\.com\/(\d+)/);
     const id = m ? m[1] : '';
@@ -987,12 +1225,10 @@ function detecterPlateforme(url) {
     };
   }
 
-  // Dailymotion
   if (u.includes('dailymotion.com') || u.includes('dai.ly')) {
     return { nom: 'Dailymotion', icone: '🎥', lienDirect: url, embed: url };
   }
 
-  // Twitch
   if (u.includes('twitch.tv')) {
     const m = url.match(/twitch\.tv\/([^?&/]+)/);
     const chaine = m ? m[1] : '';
@@ -1004,12 +1240,10 @@ function detecterPlateforme(url) {
     };
   }
 
-  // Instagram
   if (u.includes('instagram.com')) {
     return { nom: 'Instagram', icone: '📸', lienDirect: url, embed: url };
   }
 
-  // Twitter / X
   if (u.includes('twitter.com') || u.includes('x.com')) {
     return { nom: 'Twitter/X', icone: '🐦', lienDirect: url, embed: url };
   }
@@ -1065,7 +1299,7 @@ function validerEmbedURL(url, plateforme) {
   return { valide: true };
 }
 
-// Validation visuelle d'un champ URL
+// Validation visuelle d'un champ URL — BUG CORRIGÉ
 function validerChampURL(inputEl, validationEl) {
   if (!inputEl || !validationEl) return;
   const url = inputEl.value.trim();
@@ -1083,7 +1317,7 @@ function validerChampURL(inputEl, validationEl) {
   if (validation.valide) {
     validationEl.innerHTML = '✅ URL valide — Plateforme détectée : <strong>' + plateforme.nom + '</strong>';
   } else {
-    validationEl.innerHTML = '❌ URL invalide : ' + validation.reason +
+    validationEl.innerHTML = '❌ URL invalide : ' + validation.raison +
       '<br><small>Formats acceptés : YouTube (embed/), Google Drive, TikTok, Facebook, Vimeo, Dailymotion</small>';
   }
 }
@@ -1143,6 +1377,27 @@ function formatDateReadable(d) {
   if (isNaN(dt.getTime())) return d;
   return dt.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short', year: 'numeric' });
 }
+function formatTimestamp(ts) {
+  if (!ts) return '';
+  try {
+    const date = ts.toDate ? ts.toDate() : new Date(ts);
+    return date.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+  } catch (e) { return ''; }
+}
+
+// ============================================================
+// HELPERS — GÉNÉRATION DE CODE UNIQUE
+// ============================================================
+function genererCode(type) {
+  const prefixes = { live: 'LIVE', livre: 'LIVRE', video: 'VIDEO', produit: 'PROD' };
+  const prefix = prefixes[type] || 'ACC';
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  let random = '';
+  for (let i = 0; i < 6; i++) {
+    random += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return 'GG-' + prefix + '-' + random;
+}
 
 // ============================================================
 // AUTH
@@ -1174,12 +1429,13 @@ document.getElementById('btnLogout').addEventListener('click', async () => {
   toast('info', 'Déconnecté', 'À bientôt !');
 });
 
-auth.onAuthStateChanged((user) => {
+auth.onAuthStateChanged(async (user) => {
   if (user) {
     loginWrap.style.display = 'none';
     dashboard.style.display = 'block';
     adminUser.style.display = 'flex';
     userEmailDisplay.textContent = user.email;
+    await chargerConfig();
     loadAll();
   } else {
     loginWrap.style.display = 'flex';
@@ -1196,7 +1452,8 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
     document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
     btn.classList.add('active');
-    document.getElementById('pane-' + btn.dataset.tab).classList.add('active');
+    const pane = document.getElementById('pane-' + btn.dataset.tab);
+    if (pane) pane.classList.add('active');
   });
 });
 
@@ -1251,7 +1508,6 @@ function getVideos(containerId) {
 function clearImages(containerId) { document.getElementById(containerId).innerHTML = ''; }
 function clearVideos(containerId) { document.getElementById(containerId).innerHTML = ''; }
 
-// Vérifie toutes les URLs vidéo d'un conteneur
 function verifierVideos(containerId) {
   const inputs = document.querySelectorAll(`#${containerId} .vid-input`);
   for (const input of inputs) {
@@ -1267,21 +1523,18 @@ function verifierVideos(containerId) {
 }
 
 // ============================================================
-// VALIDATION LIVE EN TEMPS RÉEL
+// VALIDATION LIVE / VIDÉO / ACTUALITÉ EN TEMPS RÉEL
 // ============================================================
 const liEmbedInput = document.getElementById('liEmbedURL');
 const liValidationBox = document.getElementById('liEmbedValidation');
-
 liEmbedInput.addEventListener('input', () => validerChampURL(liEmbedInput, liValidationBox));
 liEmbedInput.addEventListener('blur', () => validerChampURL(liEmbedInput, liValidationBox));
 
-// Validation vidéo (médias)
 const viUrlInput = document.getElementById('viUrl');
 const viUrlValidation = document.getElementById('viUrlValidation');
 viUrlInput.addEventListener('input', () => validerChampURL(viUrlInput, viUrlValidation));
 viUrlInput.addEventListener('blur', () => validerChampURL(viUrlInput, viUrlValidation));
 
-// Validation vidéo (actualité)
 const acVideoInput = document.getElementById('acVideoURL');
 const acVideoValidation = document.getElementById('acVideoValidation');
 acVideoInput.addEventListener('input', () => validerChampURL(acVideoInput, acVideoValidation));
@@ -1297,6 +1550,8 @@ function loadAll() {
   loadVideos();
   loadPresse();
   loadLive();
+  loadAcces();
+  loadConfigForm();
 }
 
 // ============================================================
@@ -1399,7 +1654,6 @@ document.getElementById('formEvenement').addEventListener('submit', async (e) =>
   const images = getImages('evImagesList');
   const videos = getVideos('evVideosList');
 
-  // 🔥 VALIDATION DES VIDÉOS
   const validationVideos = verifierVideos('evVideosList');
   if (!validationVideos.valide) {
     toast('error', 'Vidéo invalide', validationVideos.raison + ' — ' + validationVideos.url);
@@ -1461,7 +1715,6 @@ function resetEvenementForm() {
   document.getElementById('btnSaveEv').querySelector('.btn-text').textContent = '💾 Enregistrer l\'événement';
 }
 
-// Initialiser avec une ligne vide
 addImageRow(document.getElementById('evImagesList'));
 addVideoRow(document.getElementById('evVideosList'));
 
@@ -1559,7 +1812,6 @@ document.getElementById('formActualite').addEventListener('submit', async (e) =>
   const images = getImages('acImagesList');
   const videoURL = acVideoInput.value.trim();
 
-  // 🔥 VALIDATION DE LA VIDÉO (si présente)
   if (videoURL) {
     const plateforme = detecterPlateforme(videoURL);
     const validation = validerEmbedURL(videoURL, plateforme);
@@ -1748,6 +2000,7 @@ async function editVideo(id) {
   document.getElementById('viCategorie').value = d.categorie || 'intervention';
   viUrlInput.value = d.url || '';
   document.getElementById('viVignetteURL').value = d.vignetteURL || '';
+  document.getElementById('viFallbackURL').value = d.fallbackURL || '';
   validerChampURL(viUrlInput, viUrlValidation);
   document.getElementById('btnCancelVi').style.display = 'inline-flex';
   document.getElementById('btnSaveVi').querySelector('.btn-text').textContent = '💾 Mettre à jour';
@@ -1767,7 +2020,6 @@ document.getElementById('formVideo').addEventListener('submit', async (e) => {
   const id = document.getElementById('viId').value;
   const url = viUrlInput.value.trim();
 
-  // 🔥 VALIDATION
   if (url) {
     const plateforme = detecterPlateforme(url);
     const validation = validerEmbedURL(url, plateforme);
@@ -1782,6 +2034,7 @@ document.getElementById('formVideo').addEventListener('submit', async (e) => {
     categorie: document.getElementById('viCategorie').value,
     url: url,
     vignetteURL: document.getElementById('viVignetteURL').value.trim(),
+    fallbackURL: document.getElementById('viFallbackURL').value.trim(),
     dateAjout: firebase.firestore.FieldValue.serverTimestamp()
   };
   if (!data.titre || !data.url) { toast('warning', 'Champs manquants', 'Titre et URL obligatoires.'); return; }
@@ -1889,7 +2142,7 @@ function resetPresseForm() {
 }
 
 // ============================================================
-// LIVE — AVEC VALIDATION
+// LIVE — AVEC VALIDATION + FALLBACK
 // ============================================================
 async function loadLive() {
   try {
@@ -1906,6 +2159,9 @@ async function loadLive() {
       document.getElementById('liPlateforme').value = 'youtube';
       document.getElementById('liTitre').value = '';
       liEmbedInput.value = '';
+      document.getElementById('liFallbackYouTube').value = '';
+      document.getElementById('liFallbackFacebook').value = '';
+      document.getElementById('liFallbackTikTok').value = '';
       liValidationBox.className = 'url-validation';
       liValidationBox.innerHTML = '';
       dot.classList.remove('on');
@@ -1921,11 +2177,12 @@ async function loadLive() {
     document.getElementById('liPlateforme').value = d.plateforme || 'youtube';
     document.getElementById('liTitre').value = d.titre || '';
     liEmbedInput.value = d.embedURL || '';
+    document.getElementById('liFallbackYouTube').value = d.fallbackYouTube || '';
+    document.getElementById('liFallbackFacebook').value = d.fallbackFacebook || '';
+    document.getElementById('liFallbackTikTok').value = d.fallbackTikTok || '';
 
-    // Validation visuelle
     validerChampURL(liEmbedInput, liValidationBox);
 
-    // Prévisualisation
     const plateforme = detecterPlateforme(d.embedURL);
     const validation = validerEmbedURL(d.embedURL, plateforme);
 
@@ -1961,10 +2218,12 @@ document.getElementById('formLive').addEventListener('submit', async (e) => {
     actif: document.getElementById('liActif').value === 'true',
     plateforme: document.getElementById('liPlateforme').value,
     titre: document.getElementById('liTitre').value.trim(),
-    embedURL: url
+    embedURL: url,
+    fallbackYouTube: document.getElementById('liFallbackYouTube').value.trim(),
+    fallbackFacebook: document.getElementById('liFallbackFacebook').value.trim(),
+    fallbackTikTok: document.getElementById('liFallbackTikTok').value.trim()
   };
 
-  // 🔥 VALIDATION SI LIVE ACTIF
   if (data.actif) {
     if (!url) {
       toast('warning', 'URL manquante', 'Un live actif doit avoir une URL d\'intégration.');
@@ -2008,7 +2267,254 @@ document.getElementById('btnDeleteLive').addEventListener('click', async () => {
   }
 });
 
-console.log('✅ Admin prête');
+// ============================================================
+// ACCÈS PAYANT
+// ============================================================
+async function loadAcces() {
+  const list = document.getElementById('accList');
+  list.innerHTML = '<div class="empty-state">Chargement…</div>';
+  try {
+    const snap = await db.collection('acces').get();
+    document.getElementById('accCount').textContent = snap.size;
+    if (snap.empty) {
+      list.innerHTML = '<div class="empty-state">Aucun code généré pour le moment.</div>';
+      return;
+    }
+
+    // Trier par dateCreation desc
+    const docs = snap.docs.slice().sort((a, b) => {
+      const da = a.data().dateCreation;
+      const db_ = b.data().dateCreation;
+      const ta = da && da.toDate ? da.toDate().getTime() : 0;
+      const tb = db_ && db_.toDate ? db_.toDate().getTime() : 0;
+      return tb - ta;
+    });
+
+    list.innerHTML = '';
+    docs.forEach(doc => {
+      const code = doc.id;
+      const d = doc.data();
+      const now = Date.now();
+      const expire = d.dateExpiration && d.dateExpiration.toDate ? d.dateExpiration.toDate().getTime() : null;
+      const estExpire = expire && expire < now && d.dureeValidite > 0;
+
+      let badge = '';
+      if (!d.actif) badge = '<span class="badge badge-inactif">🚫 Désactivé</span>';
+      else if (estExpire) badge = '<span class="badge badge-expire">⏰ Expiré</span>';
+      else if (d.usageUnique && d.utilise) badge = '<span class="badge badge-utilise">✔️ Utilisé</span>';
+      else badge = '<span class="badge badge-actif">✅ Actif</span>';
+
+      const row = document.createElement('div');
+      row.className = 'item-row';
+      row.innerHTML = `
+        <div class="item-info" style="flex:1; min-width:0;">
+          <div class="item-title">
+            <span class="code-mono">${code}</span>
+            ${badge}
+          </div>
+          <div class="item-meta">
+            ${d.titre || 'Sans titre'}
+            ${d.type ? ' • ' + d.type : ''}
+            ${d.dureeValidite > 0 ? ' • expire dans ' + d.dureeValidite + 'j' : ' • illimité'}
+            ${d.dateCreation ? ' • créé le ' + formatTimestamp(d.dateCreation) : ''}
+          </div>
+          ${d.lien ? `<div class="item-meta" style="word-break:break-all; margin-top:4px; color:var(--text-muted);">🔗 ${d.lien}</div>` : ''}
+          ${d.note ? `<div class="item-meta" style="margin-top:4px; font-style:italic;">📝 ${d.note}</div>` : ''}
+        </div>
+        <div class="item-actions">
+          <button class="btn btn-outline btn-sm" data-copy="${code}">📋 Copier</button>
+          <button class="btn btn-outline btn-sm" data-wa="${code}">📱 WhatsApp</button>
+          <button class="btn btn-outline btn-sm" data-toggle="${code}" data-actif="${d.actif ? 'true' : 'false'}">${d.actif ? '🚫' : '✅'}</button>
+          <button class="btn btn-outline btn-danger btn-sm" data-del="${code}">🗑️</button>
+        </div>`;
+
+      row.querySelector('[data-copy]').addEventListener('click', () => {
+        navigator.clipboard.writeText(code);
+        toast('success', 'Code copié', code);
+      });
+
+      row.querySelector('[data-wa]').addEventListener('click', () => {
+        const msg = 'Bonjour ! Voici votre code d\'accès pour « ' + (d.titre || 'contenu') + ' » : ' + code + '\n\nRendez-vous sur acces.html pour l\'utiliser.';
+        const num = CONFIG.whatsappAdmin || '22967668799';
+        window.open('https://wa.me/' + num + '?text=' + encodeURIComponent(msg), '_blank');
+      });
+
+      row.querySelector('[data-toggle]').addEventListener('click', async (ev) => {
+        const actif = ev.currentTarget.dataset.actif === 'true';
+        try {
+          await db.collection('acces').doc(code).update({ actif: !actif });
+          toast('success', 'Statut modifié', !actif ? 'Code activé' : 'Code désactivé');
+          loadAcces();
+        } catch (err) { toast('error', 'Erreur', err.message); }
+      });
+
+      row.querySelector('[data-del]').addEventListener('click', async () => {
+        if (!confirm('Supprimer définitivement le code ' + code + ' ?')) return;
+        try {
+          await db.collection('acces').doc(code).delete();
+          toast('success', 'Code supprimé');
+          loadAcces();
+        } catch (err) { toast('error', 'Erreur', err.message); }
+      });
+
+      list.appendChild(row);
+    });
+  } catch (err) {
+    list.innerHTML = `<div class="empty-state">Erreur : ${err.message}</div>`;
+  }
+}
+
+document.getElementById('formAcces').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = document.getElementById('btnSaveAcc');
+
+  const titre = document.getElementById('accTitre').value.trim();
+  const type = document.getElementById('accType').value;
+  const lien = document.getElementById('accLien').value.trim();
+  const duree = parseInt(document.getElementById('accDuree').value, 10) || 0;
+  const usageUnique = document.getElementById('accUsageUnique').value === 'true';
+  const codeManuel = document.getElementById('accCodeManuel').value.trim();
+  const email = document.getElementById('accEmail').value.trim();
+  const note = document.getElementById('accNote').value.trim();
+
+  if (!titre || !lien) {
+    toast('warning', 'Champs manquants', 'Titre et lien obligatoires.');
+    return;
+  }
+
+  let code = codeManuel || genererCode(type);
+
+  // Vérifier si le code existe déjà
+  setLoading(btn, true, 'Génération…');
+  try {
+    const existing = await db.collection('acces').doc(code).get();
+    if (existing.exists) {
+      // Régénérer si auto
+      if (!codeManuel) {
+        code = genererCode(type) + Math.floor(Math.random() * 100);
+      } else {
+        toast('error', 'Code déjà utilisé', 'Choisissez un autre code.');
+        setLoading(btn, false);
+        return;
+      }
+    }
+
+    const data = {
+      titre: titre,
+      type: type,
+      lien: lien,
+      actif: true,
+      utilise: false,
+      usageUnique: usageUnique,
+      dureeValidite: duree,
+      email: email,
+      note: note,
+      dateCreation: firebase.firestore.FieldValue.serverTimestamp(),
+      dateUtilisation: null
+    };
+
+    if (duree > 0) {
+      const exp = new Date();
+      exp.setDate(exp.getDate() + duree);
+      data.dateExpiration = firebase.firestore.Timestamp.fromDate(exp);
+    } else {
+      data.dateExpiration = null;
+    }
+
+    await db.collection('acces').doc(code).set(data);
+    toast('success', 'Code créé : ' + code, 'Copiez-le et envoyez-le au client.');
+    document.getElementById('formAcces').reset();
+    document.getElementById('accDuree').value = '0';
+    document.getElementById('accUsageUnique').value = 'true';
+    loadAcces();
+  } catch (err) {
+    toast('error', 'Erreur', err.message);
+  } finally {
+    setLoading(btn, false);
+  }
+});
+
+document.getElementById('btnResetAcc').addEventListener('click', () => {
+  document.getElementById('formAcces').reset();
+  document.getElementById('accDuree').value = '0';
+  document.getElementById('accUsageUnique').value = 'true';
+  toast('info', 'Formulaire réinitialisé');
+});
+
+// ============================================================
+// CONFIGURATION
+// ============================================================
+async function chargerConfig() {
+  try {
+    const doc = await db.collection('config').doc('site').get();
+    if (doc.exists) {
+      const d = doc.data();
+      CONFIG = {
+        fallbackFacebook: d.fallbackFacebook || '',
+        fallbackTiktok: d.fallbackTiktok || '',
+        fallbackYoutube: d.fallbackYoutube || '',
+        whatsappAdmin: d.whatsappAdmin || '22967668799',
+        whatsappDev: d.whatsappDev || '229015252106',
+        emailContact: d.emailContact || 'cabinetgbemadoyomin@gmail.com',
+        paiementMoMo: d.paiementMoMo || '',
+        paiementWave: d.paiementWave || '',
+        messageAccueil: d.messageAccueil || ''
+      };
+    }
+  } catch (err) {
+    console.error('Erreur chargement config:', err);
+  }
+}
+
+function loadConfigForm() {
+  document.getElementById('cfgFallbackFacebook').value = CONFIG.fallbackFacebook;
+  document.getElementById('cfgFallbackTiktok').value = CONFIG.fallbackTiktok;
+  document.getElementById('cfgFallbackYoutube').value = CONFIG.fallbackYoutube;
+  document.getElementById('cfgWhatsappAdmin').value = CONFIG.whatsappAdmin;
+  document.getElementById('cfgWhatsappDev').value = CONFIG.whatsappDev;
+  document.getElementById('cfgEmailContact').value = CONFIG.emailContact;
+  document.getElementById('cfgPaiementMoMo').value = CONFIG.paiementMoMo;
+  document.getElementById('cfgPaiementWave').value = CONFIG.paiementWave;
+  document.getElementById('cfgMessageAccueil').value = CONFIG.messageAccueil;
+}
+
+document.getElementById('formConfig').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = document.getElementById('btnSaveConfig');
+
+  const data = {
+    fallbackFacebook: document.getElementById('cfgFallbackFacebook').value.trim(),
+    fallbackTiktok: document.getElementById('cfgFallbackTiktok').value.trim(),
+    fallbackYoutube: document.getElementById('cfgFallbackYoutube').value.trim(),
+    whatsappAdmin: document.getElementById('cfgWhatsappAdmin').value.trim(),
+    whatsappDev: document.getElementById('cfgWhatsappDev').value.trim(),
+    emailContact: document.getElementById('cfgEmailContact').value.trim(),
+    paiementMoMo: document.getElementById('cfgPaiementMoMo').value.trim(),
+    paiementWave: document.getElementById('cfgPaiementWave').value.trim(),
+    messageAccueil: document.getElementById('cfgMessageAccueil').value.trim(),
+    dateMaj: firebase.firestore.FieldValue.serverTimestamp()
+  };
+
+  setLoading(btn, true);
+  try {
+    await db.collection('config').doc('site').set(data, { merge: true });
+    CONFIG = { ...CONFIG, ...data };
+    toast('success', 'Configuration enregistrée ✅');
+    document.getElementById('configLastUpdate').textContent = 'Dernière mise à jour : à l\'instant';
+  } catch (err) {
+    toast('error', 'Erreur', err.message);
+  } finally {
+    setLoading(btn, false);
+  }
+});
+
+document.getElementById('btnReloadConfig').addEventListener('click', async () => {
+  await chargerConfig();
+  loadConfigForm();
+  toast('info', 'Configuration rechargée');
+});
+
+console.log('✅ Admin prête — version complète avec Accès payant + Configuration');
 </script>
 
 </body>
