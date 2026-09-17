@@ -362,6 +362,7 @@ h1, h2, h3 { font-family: var(--font-titres); font-weight: 700; color: var(--bla
   <!-- TABS -->
   <div class="tabs">
     <button class="tab-btn active" data-tab="evenements">📅 Événements</button>
+    <button class="tab-btn" data-tab="actualites">📰 Actualités</button>
     <button class="tab-btn" data-tab="photos">🖼️ Photos</button>
     <button class="tab-btn" data-tab="videos">🎬 Vidéos</button>
     <button class="tab-btn" data-tab="presse">📰 Presse</button>
@@ -393,7 +394,7 @@ h1, h2, h3 { font-family: var(--font-titres); font-weight: 700; color: var(--bla
           <div class="form-group">
             <label>Slug (identifiant URL) <span class="req">*</span></label>
             <input type="text" id="evSlug" required placeholder="Ex: seminaire-fa-2026">
-            <div class="hint">Utilisé pour l'URL : article.html?slug=…</div>
+            <div class="hint">Utilisé pour l'URL : article.html?type=evenement&amp;slug=…</div>
           </div>
         </div>
 
@@ -497,6 +498,115 @@ h1, h2, h3 { font-family: var(--font-titres); font-weight: 700; color: var(--bla
       <div class="card-title">📋 Événements enregistrés</div>
       <div class="card-sub">Total : <span id="evCount">0</span></div>
       <div class="items-list" id="evList">
+        <div class="empty-state">Chargement…</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       TAB ACTUALITÉS (AJOUT)
+       ============================================================ -->
+  <div class="tab-pane" id="pane-actualites">
+
+    <div class="alert alert-tip">
+      <span>📰</span>
+      <span><strong>Actualités :</strong> Elles apparaissent sur la page Événements (onglet Actualités) et peuvent être épinglées « À la une ».</span>
+    </div>
+
+    <div class="card">
+      <div class="card-title">➕ Ajouter / modifier une actualité</div>
+      <div class="card-sub">Tous les champs marqués d'un <span style="color: var(--or);">*</span> sont obligatoires.</div>
+
+      <form id="formActualite" autocomplete="off">
+        <input type="hidden" id="acId" value="">
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Titre <span class="req">*</span></label>
+            <input type="text" id="acTitre" required placeholder="Ex: Nouvelle parution du Livre du Fa">
+          </div>
+          <div class="form-group">
+            <label>Slug (identifiant URL) <span class="req">*</span></label>
+            <input type="text" id="acSlug" required placeholder="Ex: nouvelle-parution-livre-fa">
+            <div class="hint">Utilisé pour l'URL : article.html?type=actualite&amp;slug=…</div>
+          </div>
+        </div>
+
+        <div class="form-row-3">
+          <div class="form-group">
+            <label>Date de publication</label>
+            <input type="date" id="acDatePublication">
+          </div>
+          <div class="form-group">
+            <label>Catégorie</label>
+            <input type="text" id="acCategorie" placeholder="Ex: Parution, Annonce, Communiqué…">
+          </div>
+          <div class="form-group">
+            <label>Auteur</label>
+            <input type="text" id="acAuteur" placeholder="Ex: Cabinet Gbêmadoyomin">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Épingler à la une ?</label>
+            <select id="acEpingle">
+              <option value="false">Non</option>
+              <option value="true">Oui</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Résumé court</label>
+            <input type="text" id="acResume" placeholder="Résumé affiché dans les listes">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Contenu complet <span class="req">*</span></label>
+          <textarea id="acContenu" rows="6" required placeholder="Texte complet de l'actualité"></textarea>
+        </div>
+
+        <!-- ----- IMAGES (plusieurs) ----- -->
+        <div class="form-group">
+          <label>🖼️ Images (plusieurs possibles)</label>
+          <div class="dyn-list" id="acImagesList"></div>
+          <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
+            <button type="button" class="btn-add" id="acAddImage">➕ Ajouter une image</button>
+            <a class="btn-tool" href="https://postimages.org/fr/" target="_blank" rel="noopener">📤 Ouvrir PostImage</a>
+            <a class="btn-tool" href="https://console.cloudinary.com/" target="_blank" rel="noopener">☁️ Ouvrir Cloudinary</a>
+            <a class="btn-tool" href="https://imgbb.com/" target="_blank" rel="noopener">🖼️ Ouvrir ImgBB</a>
+          </div>
+          <div class="hint">La première image servira d'image principale.</div>
+        </div>
+
+        <!-- ----- VIDÉO ----- -->
+        <div class="form-group">
+          <label>🎬 Vidéo (optionnelle)</label>
+          <div class="url-row">
+            <input type="url" id="acVideoURL" placeholder="https://www.youtube.com/embed/ID">
+            <div class="url-tools">
+              <a class="btn-tool" href="https://www.youtube.com/" target="_blank" rel="noopener">YouTube</a>
+              <a class="btn-tool" href="https://drive.google.com/" target="_blank" rel="noopener">Drive</a>
+            </div>
+          </div>
+          <div class="hint">Format attendu : https://www.youtube.com/embed/ID_VIDEO</div>
+        </div>
+
+        <div style="display:flex; gap:12px; margin-top:20px; flex-wrap:wrap;">
+          <button type="submit" class="btn btn-or" id="btnSaveAc">
+            <span class="btn-text">💾 Enregistrer l'actualité</span>
+          </button>
+          <button type="button" class="btn btn-outline" id="btnCancelAc" style="display:none;">
+            ❌ Annuler la modification
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📋 Actualités enregistrées</div>
+      <div class="card-sub">Total : <span id="acCount">0</span></div>
+      <div class="items-list" id="acList">
         <div class="empty-state">Chargement…</div>
       </div>
     </div>
@@ -837,6 +947,7 @@ function formatDateInput(d) {
 function formatDateReadable(d) {
   if (!d) return '';
   const dt = new Date(d + 'T00:00:00');
+  if (isNaN(dt.getTime())) return d;
   return dt.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short', year: 'numeric' });
 }
 
@@ -922,6 +1033,9 @@ function addVideoRow(container, value = '') {
 document.getElementById('evAddImage').addEventListener('click', () => addImageRow(document.getElementById('evImagesList')));
 document.getElementById('evAddVideo').addEventListener('click', () => addVideoRow(document.getElementById('evVideosList')));
 
+// Actualités — ajout image
+document.getElementById('acAddImage').addEventListener('click', () => addImageRow(document.getElementById('acImagesList')));
+
 function getImages(containerId) {
   return Array.from(document.querySelectorAll(`#${containerId} .img-input`))
     .map(i => i.value.trim()).filter(Boolean);
@@ -938,6 +1052,7 @@ function clearVideos(containerId) { document.getElementById(containerId).innerHT
 // ============================================================
 function loadAll() {
   loadEvenements();
+  loadActualites();
   loadPhotos();
   loadVideos();
   loadPresse();
@@ -976,7 +1091,7 @@ async function loadEvenements() {
           </div>
         </div>
         <div class="item-actions">
-          <a class="btn btn-outline btn-sm" href="article.html?slug=${encodeURIComponent(d.slug || doc.id)}" target="_blank">👁 Voir</a>
+          <a class="btn btn-outline btn-sm" href="article.html?type=evenement&slug=${encodeURIComponent(d.slug || doc.id)}" target="_blank">👁 Voir</a>
           <button class="btn btn-outline btn-sm" data-edit="${doc.id}">✏️ Modifier</button>
           <button class="btn btn-outline btn-danger btn-sm" data-del="${doc.id}">🗑️</button>
         </div>`;
@@ -1101,6 +1216,151 @@ function resetEvenementForm() {
 // Initialiser avec une ligne vide
 addImageRow(document.getElementById('evImagesList'));
 addVideoRow(document.getElementById('evVideosList'));
+
+// ============================================================
+// ACTUALITÉS (AJOUT)
+// ============================================================
+async function loadActualites() {
+  const list = document.getElementById('acList');
+  list.innerHTML = '<div class="empty-state">Chargement…</div>';
+  try {
+    const snap = await db.collection('actualites').orderBy('datePublication', 'desc').get();
+    document.getElementById('acCount').textContent = snap.size;
+    if (snap.empty) {
+      list.innerHTML = '<div class="empty-state">Aucune actualité pour le moment.</div>';
+      return;
+    }
+    list.innerHTML = '';
+    snap.forEach(doc => {
+      const d = doc.data();
+      const img = (d.images && d.images[0]) || d.imageURL || '';
+      const thumb = img ? `style="background-image:url('${img}')"` : '';
+      const epingle = (d.epingle === true || d.epingle === 'true');
+      const row = document.createElement('div');
+      row.className = 'item-row';
+      row.innerHTML = `
+        <div class="item-thumb" ${thumb}></div>
+        <div class="item-info">
+          <div class="item-title">${epingle ? '📌 ' : ''}${d.titre || 'Sans titre'}</div>
+          <div class="item-meta">
+            ${d.datePublication ? formatDateReadable(d.datePublication) : ''}
+            ${d.categorie ? ' • ' + d.categorie : ''}
+            ${d.auteur ? ' • ' + d.auteur : ''}
+            ${epingle ? ' • <span style="color:#f59e0b;">Épinglée</span>' : ''}
+          </div>
+        </div>
+        <div class="item-actions">
+          <a class="btn btn-outline btn-sm" href="article.html?type=actualite&slug=${encodeURIComponent(d.slug || doc.id)}" target="_blank">👁 Voir</a>
+          <button class="btn btn-outline btn-sm" data-edit="${doc.id}">✏️ Modifier</button>
+          <button class="btn btn-outline btn-danger btn-sm" data-del="${doc.id}">🗑️</button>
+        </div>`;
+      row.querySelector('[data-edit]').addEventListener('click', () => editActualite(doc.id));
+      row.querySelector('[data-del]').addEventListener('click', () => deleteActualite(doc.id));
+      list.appendChild(row);
+    });
+  } catch (err) {
+    list.innerHTML = `<div class="empty-state">Erreur : ${err.message}</div>`;
+  }
+}
+
+async function editActualite(id) {
+  try {
+    const doc = await db.collection('actualites').doc(id).get();
+    if (!doc.exists) { toast('error', 'Introuvable'); return; }
+    const d = doc.data();
+    document.getElementById('acId').value = id;
+    document.getElementById('acTitre').value = d.titre || '';
+    document.getElementById('acSlug').value = d.slug || '';
+    document.getElementById('acDatePublication').value = formatDateInput(d.datePublication);
+    document.getElementById('acCategorie').value = d.categorie || '';
+    document.getElementById('acAuteur').value = d.auteur || '';
+    document.getElementById('acEpingle').value = (d.epingle === true || d.epingle === 'true') ? 'true' : 'false';
+    document.getElementById('acResume').value = d.resume || '';
+    document.getElementById('acContenu').value = d.contenu || '';
+    document.getElementById('acVideoURL').value = d.videoURL || '';
+
+    clearImages('acImagesList');
+    const imgs = d.images && d.images.length ? d.images : (d.imageURL ? [d.imageURL] : []);
+    if (imgs.length === 0) addImageRow(document.getElementById('acImagesList'));
+    else imgs.forEach(u => addImageRow(document.getElementById('acImagesList'), u));
+
+    document.getElementById('btnCancelAc').style.display = 'inline-flex';
+    document.getElementById('btnSaveAc').querySelector('.btn-text').textContent = '💾 Mettre à jour';
+    document.getElementById('formActualite').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    toast('info', 'Mode modification', 'Modifiez puis enregistrez.');
+  } catch (err) {
+    toast('error', 'Erreur', err.message);
+  }
+}
+
+async function deleteActualite(id) {
+  if (!confirm('Confirmer la suppression de cette actualité ?')) return;
+  try {
+    await db.collection('actualites').doc(id).delete();
+    toast('success', 'Actualité supprimée');
+    loadActualites();
+  } catch (err) {
+    toast('error', 'Erreur', err.message);
+  }
+}
+
+document.getElementById('formActualite').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = document.getElementById('btnSaveAc');
+  const id = document.getElementById('acId').value;
+  const images = getImages('acImagesList');
+  const data = {
+    titre: document.getElementById('acTitre').value.trim(),
+    slug: document.getElementById('acSlug').value.trim(),
+    datePublication: document.getElementById('acDatePublication').value,
+    categorie: document.getElementById('acCategorie').value.trim(),
+    auteur: document.getElementById('acAuteur').value.trim(),
+    epingle: document.getElementById('acEpingle').value === 'true',
+    resume: document.getElementById('acResume').value.trim(),
+    contenu: document.getElementById('acContenu').value.trim(),
+    images: images,
+    imageURL: images[0] || '',
+    videoURL: document.getElementById('acVideoURL').value.trim(),
+    dateAjout: firebase.firestore.FieldValue.serverTimestamp()
+  };
+  if (!data.titre || !data.slug || !data.contenu) {
+    toast('warning', 'Champs manquants', 'Titre, slug et contenu sont obligatoires.');
+    return;
+  }
+  setLoading(btn, true);
+  try {
+    if (id) {
+      delete data.dateAjout;
+      await db.collection('actualites').doc(id).update(data);
+      toast('success', 'Actualité mise à jour ✅');
+    } else {
+      await db.collection('actualites').add(data);
+      toast('success', 'Actualité ajoutée ✅');
+    }
+    resetActualiteForm();
+    loadActualites();
+  } catch (err) {
+    toast('error', 'Erreur d\'enregistrement', err.message);
+  } finally {
+    setLoading(btn, false);
+  }
+});
+
+document.getElementById('btnCancelAc').addEventListener('click', () => {
+  resetActualiteForm();
+  toast('info', 'Modification annulée');
+});
+
+function resetActualiteForm() {
+  document.getElementById('formActualite').reset();
+  document.getElementById('acId').value = '';
+  clearImages('acImagesList'); addImageRow(document.getElementById('acImagesList'));
+  document.getElementById('btnCancelAc').style.display = 'none';
+  document.getElementById('btnSaveAc').querySelector('.btn-text').textContent = '💾 Enregistrer l\'actualité';
+}
+
+// Initialiser avec une ligne vide
+addImageRow(document.getElementById('acImagesList'));
 
 // ============================================================
 // PHOTOS
