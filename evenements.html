@@ -306,7 +306,7 @@ section { padding-block: var(--espace-xl); }
 .evt-hero p { color: var(--blanc-doux); margin-inline: auto; }
 
 /* ============================================================
-   ONGLETS ÉVÉNEMENTS / ACTUALITÉS (AJOUT)
+   ONGLETS ÉVÉNEMENTS / ACTUALITÉS
    ============================================================ */
 .evt-tabs-wrap {
   position: sticky; top: 72px; z-index: 40;
@@ -345,7 +345,6 @@ section { padding-block: var(--espace-xl); }
 .evt-tab.actif .evt-tab-count { background: rgba(0,0,0,0.25); }
 .evt-tab:not(.actif) .evt-tab-count { background: rgba(184,146,46,0.15); color: var(--or-clair); }
 
-/* Panneaux */
 .evt-panel { display: none; }
 .evt-panel.actif { display: block; animation: fadeInPane 0.4s ease; }
 @keyframes fadeInPane { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
@@ -409,7 +408,7 @@ section { padding-block: var(--espace-xl); }
 @media (max-width: 560px) { .agenda-grille { grid-template-columns: 1fr; } }
 
 /* ============================================================
-   ACTUALITÉS (AJOUT)
+   ACTUALITÉS
    ============================================================ */
 .actus-grille { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--espace-md); }
 .actu-carte {
@@ -525,7 +524,7 @@ section { padding-block: var(--espace-xl); }
 </div>
 
 <!-- ============================================================
-   LIVE BANNER (clignotant si actif)
+   LIVE BANNER
    ============================================================ -->
 <div class="live-banner" id="liveBanner">
   <div class="conteneur live-banner-inner">
@@ -592,19 +591,15 @@ section { padding-block: var(--espace-xl); }
       <div class="live-fallback" id="liveFallback">
         <span class="live-fallback-icon">📡</span>
         <div class="live-fallback-title">Lecture intégrée indisponible</div>
-        <div class="live-fallback-text">La diffusion en direct ne peut pas s'afficher sur cette page. Rejoignez le live directement sur la plateforme :</div>
-        <div class="live-fallback-btns">
-          <a class="btn-yt" id="fallbackYT" href="#" target="_blank" rel="noopener">▶️ YouTube</a>
-          <a class="btn-fb" id="fallbackFB" href="https://www.facebook.com/share/1KLJbHgA74/?mibextid=wwXIfr" target="_blank" rel="noopener">📘 Facebook</a>
-          <a class="btn-tk" id="fallbackTK" href="https://www.tiktok.com/@bokonon.gbemadoyomin" target="_blank" rel="noopener">🎵 TikTok</a>
-        </div>
+        <div class="live-fallback-text" id="liveFallbackText">La diffusion en direct ne peut pas s'afficher sur cette page. Rejoignez le live directement sur la plateforme :</div>
+        <div class="live-fallback-btns" id="liveFallbackBtns"></div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- ============================================================
-   ONGLETS ÉVÉNEMENTS / ACTUALITÉS (AJOUT)
+   ONGLETS ÉVÉNEMENTS / ACTUALITÉS
    ============================================================ -->
 <div class="evt-tabs-wrap">
   <div class="conteneur">
@@ -626,7 +621,6 @@ section { padding-block: var(--espace-xl); }
    ============================================================ -->
 <div class="evt-panel actif" id="panel-evenements">
 
-  <!-- À la une -->
   <section>
     <div class="conteneur">
       <p class="eyebrow reveal">À la une</p>
@@ -637,7 +631,6 @@ section { padding-block: var(--espace-xl); }
     </div>
   </section>
 
-  <!-- Catégories -->
   <section>
     <div class="conteneur">
       <p class="eyebrow reveal">Nos grands rendez-vous</p>
@@ -667,7 +660,6 @@ section { padding-block: var(--espace-xl); }
     </div>
   </section>
 
-  <!-- Agenda -->
   <section>
     <div class="conteneur">
       <p class="eyebrow reveal">Prochainement</p>
@@ -679,7 +671,6 @@ section { padding-block: var(--espace-xl); }
     </div>
   </section>
 
-  <!-- Archives événements -->
   <section>
     <div class="conteneur">
       <p class="eyebrow reveal">Événements passés</p>
@@ -693,11 +684,10 @@ section { padding-block: var(--espace-xl); }
 </div>
 
 <!-- ============================================================
-   PANNEAU : ACTUALITÉS (AJOUT)
+   PANNEAU : ACTUALITÉS
    ============================================================ -->
 <div class="evt-panel" id="panel-actualites">
 
-  <!-- Actualités épinglées -->
   <section class="actus-epingles-section">
     <div class="conteneur">
       <p class="eyebrow reveal">À ne pas manquer</p>
@@ -708,7 +698,6 @@ section { padding-block: var(--espace-xl); }
     </div>
   </section>
 
-  <!-- Toutes les actualités -->
   <section>
     <div class="conteneur">
       <p class="eyebrow reveal">Toute l'actualité du Groupe</p>
@@ -872,6 +861,37 @@ const db = firebase.firestore();
 const cloudName = 'bvcdjwg7';
 
 // ============================================================
+// CONFIG GLOBALE (chargée depuis Firestore config/site)
+// ============================================================
+let CONFIG = {
+  fallbackFacebook: 'https://www.facebook.com/share/1KLJbHgA74/?mibextid=wwXIfr',
+  fallbackTiktok: 'https://www.tiktok.com/@bokonon.gbemadoyomin',
+  fallbackYoutube: '',
+  whatsappAdmin: '22967668799',
+  whatsappDev: '229015252106',
+  emailContact: 'cabinetgbemadoyomin@gmail.com',
+  messageAccueil: ''
+};
+
+async function chargerConfig() {
+  try {
+    const doc = await db.collection('config').doc('site').get();
+    if (doc.exists) {
+      const d = doc.data();
+      if (d.fallbackFacebook) CONFIG.fallbackFacebook = d.fallbackFacebook;
+      if (d.fallbackTiktok) CONFIG.fallbackTiktok = d.fallbackTiktok;
+      if (d.fallbackYoutube) CONFIG.fallbackYoutube = d.fallbackYoutube;
+      if (d.whatsappAdmin) CONFIG.whatsappAdmin = d.whatsappAdmin;
+      if (d.whatsappDev) CONFIG.whatsappDev = d.whatsappDev;
+      if (d.emailContact) CONFIG.emailContact = d.emailContact;
+      if (d.messageAccueil) CONFIG.messageAccueil = d.messageAccueil;
+    }
+  } catch (err) {
+    console.warn('Config Firestore non chargée, valeurs par défaut utilisées.', err);
+  }
+}
+
+// ============================================================
 // UTILITAIRES
 // ============================================================
 function cloudinaryUrl(url, width = 800) {
@@ -902,17 +922,14 @@ function reprendreReveal() {
 // ONGLETS
 // ============================================================
 function activerOnglet(nom) {
-  // Boutons
   document.querySelectorAll('.evt-tab').forEach(btn => {
     const estActif = btn.dataset.tab === nom;
     btn.classList.toggle('actif', estActif);
     btn.setAttribute('aria-selected', String(estActif));
   });
-  // Panneaux
   document.querySelectorAll('.evt-panel').forEach(p => p.classList.remove('actif'));
   const panel = document.getElementById('panel-' + nom);
   if (panel) panel.classList.add('actif');
-  // Hash URL
   if (history.replaceState) {
     history.replaceState(null, '', '#' + nom);
   } else {
@@ -925,7 +942,6 @@ function initOnglets() {
     btn.addEventListener('click', () => {
       const nom = btn.dataset.tab;
       activerOnglet(nom);
-      // Remonter jusqu'aux onglets
       const wrap = document.querySelector('.evt-tabs-wrap');
       if (wrap) {
         window.scrollTo({ top: wrap.offsetTop - 70, behavior: 'smooth' });
@@ -933,7 +949,6 @@ function initOnglets() {
     });
   });
 
-  // Activer l'onglet selon le hash
   const hash = (location.hash || '').replace('#', '');
   if (hash === 'actualites') {
     activerOnglet('actualites');
@@ -960,7 +975,6 @@ async function chargerEvenements() {
       .filter(e => e.archive || e.date < aujourdhui)
       .sort((a, b) => b.date.localeCompare(a.date));
 
-    // Compteur onglet
     document.getElementById('countEvenements').textContent = tousEvenements.length;
 
     afficherProchainEvenement(aVenir);
@@ -986,13 +1000,12 @@ function afficherProchainEvenement(liste) {
         <div class="evt-une-details">
           <h3>Le prochain rendez-vous sera bientôt annoncé</h3>
           <p style="color: var(--text-muted); font-size: .92rem; margin-top: 10px;">Suivez le Groupe sur WhatsApp pour être informé dès qu'une date est fixée.</p>
-          <a class="btn-or" style="margin-top: var(--espace-sm);" href="https://wa.me/22967668799?text=Bonjour%2C%20je%20souhaite%20%C3%AAtre%20inform%C3%A9%20des%20prochains%20%C3%A9v%C3%A9nements" target="_blank" rel="noopener">Être informé sur WhatsApp</a>
+          <a class="btn-or" style="margin-top: var(--espace-sm);" href="https://wa.me/${CONFIG.whatsappAdmin}?text=Bonjour%2C%20je%20souhaite%20%C3%AAtre%20inform%C3%A9%20des%20prochains%20%C3%A9v%C3%A9nements" target="_blank" rel="noopener">Être informé sur WhatsApp</a>
         </div>
       </div>`;
     return;
   }
 
-  // Gérer images multiple ou afficheURL
   const affiche = (prochain.images && prochain.images[0]) || prochain.afficheURL || '';
   const styleAffiche = affiche
     ? `background-image: url('${cloudinaryUrl(affiche, 800)}');`
@@ -1012,7 +1025,7 @@ function afficherProchainEvenement(liste) {
         <p style="color: var(--text-muted); font-size: .92rem; margin-bottom: var(--espace-sm);">${prochain.description || ''}</p>
         <div style="display:flex; gap:10px; flex-wrap:wrap;">
           <a class="btn-or" href="article.html?type=evenement&slug=${encodeURIComponent(prochain.slug || prochain.id)}">Voir les détails</a>
-          <a class="btn-contour" href="https://wa.me/22967668799?text=Bonjour%2C%20je%20souhaite%20m%27inscrire%20%C3%A0%20%3A%20${encodeURIComponent(prochain.titre)}" target="_blank" rel="noopener">S'inscrire</a>
+          <a class="btn-contour" href="https://wa.me/${CONFIG.whatsappAdmin}?text=Bonjour%2C%20je%20souhaite%20m%27inscrire%20%C3%A0%20%3A%20${encodeURIComponent(prochain.titre)}" target="_blank" rel="noopener">S'inscrire</a>
         </div>
       </div>
     </div>`;
@@ -1041,7 +1054,7 @@ function afficherAgenda(liste) {
         </div>
         <div class="agenda-actions">
           <a class="btn-contour" href="article.html?type=evenement&slug=${encodeURIComponent(e.slug || e.id)}">Détails</a>
-          <a class="btn-or" href="https://wa.me/22967668799?text=Bonjour%2C%20je%20souhaite%20m%27inscrire%20%C3%A0%20%3A%20${encodeURIComponent(e.titre)}" target="_blank" rel="noopener">S'inscrire</a>
+          <a class="btn-or" href="https://wa.me/${CONFIG.whatsappAdmin}?text=Bonjour%2C%20je%20souhaite%20m%27inscrire%20%C3%A0%20%3A%20${encodeURIComponent(e.titre)}" target="_blank" rel="noopener">S'inscrire</a>
         </div>
       </div>
     </div>`;
@@ -1078,7 +1091,7 @@ function afficherArchives(liste) {
 }
 
 // ============================================================
-// ACTUALITÉS (AJOUT)
+// ACTUALITÉS
 // ============================================================
 let toutesActualites = [];
 
@@ -1087,17 +1100,14 @@ async function chargerActualites() {
     const snapshot = await db.collection('actualites').get();
     toutesActualites = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 
-    // Compteur onglet
     document.getElementById('countActualites').textContent = toutesActualites.length;
 
-    // Trier par datePublication desc
     toutesActualites.sort((a, b) => {
       const da = a.datePublication || '';
       const db_ = b.datePublication || '';
       return db_.localeCompare(da);
     });
 
-    // Séparer épinglées et normales
     const epinglees = toutesActualites.filter(a => a.epingle === true || a.epingle === 'true');
     const normales = toutesActualites.filter(a => !(a.epingle === true || a.epingle === 'true'));
 
@@ -1163,8 +1173,43 @@ function afficherActualitesListe(liste) {
 }
 
 // ============================================================
-// LIVE (avec fallback)
+// LIVE — AVEC VALIDATION + FALLBACK COMPLET + URLs CUSTOM
 // ============================================================
+function detecterPlateforme(url) {
+  if (!url) return { nom: 'Vidéo', icone: '🔗', classe: 'btn-yt', lienDirect: '#', embed: '' };
+  const u = url.toLowerCase();
+  if (u.includes('youtube.com') || u.includes('youtu.be')) {
+    const m = url.match(/(?:embed\/|watch\?v=|youtu\.be\/|shorts\/|live\/)([^?&/]+)/);
+    const id = m ? m[1] : '';
+    return { nom: 'YouTube', icone: '▶️', classe: 'btn-yt',
+      lienDirect: id ? 'https://www.youtube.com/watch?v=' + id : 'https://www.youtube.com/',
+      embed: id ? 'https://www.youtube.com/embed/' + id : '' };
+  }
+  if (u.includes('drive.google.com')) {
+    const m = url.match(/\/d\/([^/]+)/);
+    const id = m ? m[1] : '';
+    return { nom: 'Google Drive', icone: '📁', classe: 'btn-yt',
+      lienDirect: url, embed: id ? 'https://drive.google.com/file/d/' + id + '/preview' : url };
+  }
+  if (u.includes('tiktok.com')) return { nom: 'TikTok', icone: '🎵', classe: 'btn-tk', lienDirect: url, embed: url };
+  if (u.includes('facebook.com') || u.includes('fb.watch')) return { nom: 'Facebook', icone: '📘', classe: 'btn-fb', lienDirect: url, embed: url };
+  if (u.includes('vimeo.com')) {
+    const m = url.match(/vimeo\.com\/(\d+)/);
+    const id = m ? m[1] : '';
+    return { nom: 'Vimeo', icone: '🎬', classe: 'btn-yt', lienDirect: url, embed: id ? 'https://player.vimeo.com/video/' + id : url };
+  }
+  return { nom: 'Vidéo', icone: '🔗', classe: 'btn-yt', lienDirect: url, embed: url };
+}
+
+function validerEmbedURL(url, plateforme) {
+  if (!url) return { valide: false, raison: 'URL manquante' };
+  if (plateforme.nom === 'YouTube') {
+    const m = url.match(/embed\/([^?&/]+)/);
+    if (!m || !m[1] || m[1].length < 5) return { valide: false, raison: 'ID YouTube manquant' };
+  }
+  return { valide: true };
+}
+
 async function chargerLive() {
   try {
     const snap = await db.collection('live').get();
@@ -1172,48 +1217,96 @@ async function chargerLive() {
     const data = snap.docs[0].data();
     if (!data.actif || !data.embedURL) return;
 
-    // Bandeau
-    const banner = document.getElementById('liveBanner');
-    banner.classList.add('actif');
+    document.getElementById('liveBanner').classList.add('actif');
     document.getElementById('liveBannerText').textContent = '🔴 EN DIRECT — ' + (data.titre || 'Live en cours');
 
-    // Section
     const embedSection = document.getElementById('live-embed');
     embedSection.style.display = 'block';
     document.getElementById('liveEmbedTitle').textContent = '🔴 EN DIRECT — ' + (data.titre || 'Live en cours');
 
-    // Injection iframe + fallback
     const zone = document.getElementById('liveEmbedZone');
     const fallback = document.getElementById('liveFallback');
-    const iframe = document.createElement('iframe');
-    iframe.src = data.embedURL;
-    iframe.style.cssText = 'width:100%;height:100%;border:none;position:absolute;inset:0;';
-    iframe.allow = 'autoplay; encrypted-media; picture-in-picture';
-    iframe.allowFullscreen = true;
+    const fallbackBtnsContainer = document.getElementById('liveFallbackBtns');
+    const fallbackText = document.getElementById('liveFallbackText');
 
-    var iframeLoaded = false;
-    iframe.onload = function () { iframeLoaded = true; };
-    iframe.onerror = function () { afficherFallback(); };
+    zone.innerHTML = '';
+    fallback.classList.remove('visible');
 
-    function afficherFallback() {
-      iframe.style.display = 'none';
+    const plateforme = detecterPlateforme(data.embedURL);
+    const validation = validerEmbedURL(data.embedURL, plateforme);
+
+    // URLs de secours : priorité live > config > défaut
+    const fallbackCustom = {
+      youtube: data.fallbackYouTube || CONFIG.fallbackYoutube || '',
+      facebook: data.fallbackFacebook || CONFIG.fallbackFacebook || '',
+      tiktok: data.fallbackTikTok || CONFIG.fallbackTiktok || ''
+    };
+
+    function afficherFallback(raison) {
+      const iframe = zone.querySelector('iframe');
+      if (iframe) iframe.style.display = 'none';
+      const raisonTxt = raison ? ' (' + raison + ')' : '';
+      fallbackText.textContent = 'Le direct ne peut pas s\'afficher dans la page' + raisonTxt + '. Rejoignez-le directement :';
+      fallbackBtnsContainer.innerHTML = '';
+
+      // Priorité : bouton de la plateforme détectée
+      if (plateforme.lienDirect && plateforme.lienDirect !== '#') {
+        const btn1 = document.createElement('a');
+        btn1.className = plateforme.classe;
+        btn1.href = plateforme.lienDirect;
+        btn1.target = '_blank';
+        btn1.rel = 'noopener';
+        btn1.textContent = plateforme.icone + ' ' + plateforme.nom;
+        fallbackBtnsContainer.appendChild(btn1);
+      }
+
+      // Boutons secondaires : URLs custom
+      const autres = [
+        { nom: 'YouTube', icone: '▶️', classe: 'btn-yt', url: fallbackCustom.youtube },
+        { nom: 'Facebook', icone: '📘', classe: 'btn-fb', url: fallbackCustom.facebook },
+        { nom: 'TikTok', icone: '🎵', classe: 'btn-tk', url: fallbackCustom.tiktok }
+      ];
+      autres.forEach(function (r) {
+        if (!r.url) return;
+        if (r.nom.toLowerCase() === plateforme.nom.toLowerCase()) return;
+        const btn = document.createElement('a');
+        btn.className = r.classe;
+        btn.href = r.url;
+        btn.target = '_blank';
+        btn.rel = 'noopener';
+        btn.textContent = r.icone + ' ' + r.nom;
+        fallbackBtnsContainer.appendChild(btn);
+      });
+
       fallback.classList.add('visible');
     }
 
+    if (!validation.valide) {
+      afficherFallback(validation.raison);
+      return;
+    }
+
+    let embedURL = data.embedURL;
+    if (plateforme.nom === 'YouTube' && !embedURL.includes('?')) {
+      embedURL += '?autoplay=0&rel=0';
+    }
+
+    const iframe = document.createElement('iframe');
+    iframe.src = embedURL;
+    iframe.style.cssText = 'width:100%;height:100%;border:none;position:absolute;inset:0;';
+    iframe.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+    iframe.allowFullscreen = true;
+    iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+
+    let iframeLoaded = false;
+    iframe.onload = function () { iframeLoaded = true; };
+    iframe.onerror = function () { afficherFallback(); };
     zone.appendChild(iframe);
 
     setTimeout(function () {
       if (!iframeLoaded) afficherFallback();
     }, 6000);
 
-    // Configurer le fallback YouTube
-    var fallbackYT = document.getElementById('fallbackYT');
-    var matchYT = data.embedURL.match(/embed\/([^?]+)/);
-    if (matchYT) {
-      fallbackYT.href = 'https://www.youtube.com/watch?v=' + matchYT[1];
-    } else {
-      fallbackYT.href = 'https://www.youtube.com/';
-    }
   } catch (err) {
     console.error('Erreur live:', err);
   }
@@ -1222,7 +1315,7 @@ async function chargerLive() {
 // ============================================================
 // INITIALISATION
 // ============================================================
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
 
   // LOADER
   setTimeout(() => document.getElementById('loader').classList.add('cache'), 600);
@@ -1290,6 +1383,9 @@ document.addEventListener('DOMContentLoaded', () => {
       }, 400);
     });
   });
+
+  // CHARGER LA CONFIG D'ABORD
+  await chargerConfig();
 
   // INITIALISER LES ONGLETS
   initOnglets();
