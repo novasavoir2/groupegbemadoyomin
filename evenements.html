@@ -3,16 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Événements — Séminaires, Conférences & Célébrations | Groupe Gbêmadoyomin</title>
-<meta name="description" content="Rencontres, séminaires, conférences et célébrations organisés par le Cabinet Gbêmadoyomin autour du Fa, du Vodoun et des traditions africaines.">
-<meta name="keywords" content="événements, séminaires, conférences, célébrations, Fa, Vodoun, traditions africaines, Groupe Gbêmadoyomin, GG, Cabinet Gbêmadoyomin">
+<title>Événements & Actualités — Groupe Gbêmadoyomin</title>
+<meta name="description" content="Rencontres, séminaires, conférences, célébrations et actualités du Cabinet Gbêmadoyomin autour du Fa, du Vodoun et des traditions africaines.">
+<meta name="keywords" content="événements, actualités, séminaires, conférences, célébrations, Fa, Vodoun, traditions africaines, Groupe Gbêmadoyomin, GG, Cabinet Gbêmadoyomin">
 <meta name="author" content="Groupe Gbêmadoyomin">
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
 <link rel="canonical" href="https://groupegbemadoyomin.com/evenements.html">
 
 <meta property="og:type" content="website">
-<meta property="og:title" content="Événements — Séminaires, Conférences & Célébrations | Groupe Gbêmadoyomin">
-<meta property="og:description" content="Séminaires, conférences et célébrations organisés par le Cabinet Gbêmadoyomin autour du Fa, du Vodoun et des traditions africaines.">
+<meta property="og:title" content="Événements & Actualités — Groupe Gbêmadoyomin">
+<meta property="og:description" content="Séminaires, conférences, célébrations et actualités du Cabinet Gbêmadoyomin.">
 <meta property="og:url" content="https://groupegbemadoyomin.com/evenements.html">
 <meta property="og:locale" content="fr_FR">
 <meta property="og:image" content="logo-gg.jpeg">
@@ -21,8 +21,8 @@
 <meta property="og:site_name" content="Groupe Gbêmadoyomin">
 
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Événements — Groupe Gbêmadoyomin">
-<meta name="twitter:description" content="Séminaires, conférences et célébrations organisés par le Cabinet Gbêmadoyomin.">
+<meta name="twitter:title" content="Événements & Actualités — Groupe Gbêmadoyomin">
+<meta name="twitter:description" content="Séminaires, conférences, célébrations et actualités du Cabinet Gbêmadoyomin.">
 <meta name="twitter:image" content="logo-gg.jpeg">
 
 <meta name="theme-color" content="#0D0D0D">
@@ -122,6 +122,58 @@ section { padding-block: var(--espace-xl); }
 .bandeau-defilant-inner .bandeau-lien:hover { color: var(--or-clair); background: rgba(255,255,255,0.05); }
 .bandeau-defilant-inner .bandeau-lien img { width: 24px; height: 30px; object-fit: cover; border-radius: 2px; border: 1px solid rgba(255,255,255,0.2); }
 @keyframes defilement { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+
+/* ============================================================
+   LIVE BANNER (clignotant)
+   ============================================================ */
+.live-banner {
+  background: linear-gradient(135deg, #7a1515, #4a0d0d);
+  border-bottom: 1px solid var(--or);
+  padding: 10px 0;
+  display: none;
+}
+.live-banner.actif { display: block; }
+.live-banner-inner { display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; text-align: center; }
+.live-dot { display: inline-block; width: 12px; height: 12px; border-radius: 50%; background: #ff2d2d; animation: clignote 1.2s ease-in-out infinite; flex-shrink: 0; }
+@keyframes clignote {
+  0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 8px #ff2d2d; }
+  50% { opacity: 0.3; transform: scale(0.8); box-shadow: 0 0 20px #ff2d2d; }
+}
+.live-banner strong { color: var(--blanc); font-family: var(--font-titres); letter-spacing: 0.05em; font-size: 0.9rem; }
+.live-banner a { color: var(--or-clair); font-size: 0.82rem; border-bottom: 1px solid var(--or-clair); transition: color 0.3s ease; }
+.live-banner a:hover { color: var(--blanc); }
+
+/* ============================================================
+   LIVE FALLBACK (si YouTube refuse la connexion)
+   ============================================================ */
+.live-fallback {
+  display: none;
+  aspect-ratio: 16/9;
+  background: linear-gradient(135deg, var(--noir-2), var(--noir-3));
+  border-radius: 4px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 24px;
+  gap: 14px;
+}
+.live-fallback.visible { display: flex; }
+.live-fallback-icon { font-size: 2.4rem; }
+.live-fallback-title { font-family: var(--font-titres); color: var(--blanc); font-size: 1rem; }
+.live-fallback-text { color: var(--text-muted); font-size: 0.85rem; max-width: 460px; }
+.live-fallback-btns { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-top: 6px; }
+.live-fallback-btns a {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 10px 18px; border-radius: 4px;
+  font-family: var(--font-titres); font-size: 0.72rem; font-weight: 700;
+  letter-spacing: 0.05em; text-transform: uppercase;
+  transition: transform 0.3s ease;
+}
+.live-fallback-btns a:hover { transform: translateY(-2px); }
+.live-fallback-btns .btn-yt { background: #ff0000; color: white; }
+.live-fallback-btns .btn-fb { background: #1877f2; color: white; }
+.live-fallback-btns .btn-tk { background: #000000; color: white; border: 1px solid #fe2c55; }
 
 /* ============================================================
    LOADER
@@ -242,46 +294,6 @@ section { padding-block: var(--espace-xl); }
 @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } .reveal-stagger { opacity: 1; transform: none; transition: none; } .pulse-doux { animation: none; } }
 
 /* ============================================================
-   LIVE INDICATOR
-   ============================================================ */
-.live-banner {
-  background: linear-gradient(135deg, #7a1515, #4a0d0d);
-  border-bottom: 1px solid var(--or);
-  padding: 10px 0;
-  display: none;
-}
-.live-banner.actif { display: block; }
-.live-banner-inner {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  flex-wrap: wrap;
-  text-align: center;
-}
-.live-dot {
-  display: inline-block;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: #ff2d2d;
-  animation: clignote 1.2s ease-in-out infinite;
-  flex-shrink: 0;
-}
-@keyframes clignote {
-  0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 8px #ff2d2d; }
-  50% { opacity: 0.3; transform: scale(0.8); box-shadow: 0 0 20px #ff2d2d; }
-}
-.live-banner strong { color: var(--blanc); font-family: var(--font-titres); letter-spacing: 0.05em; font-size: 0.9rem; }
-.live-banner a {
-  color: var(--or-clair);
-  font-size: 0.82rem;
-  border-bottom: 1px solid var(--or-clair);
-  transition: color 0.3s ease;
-}
-.live-banner a:hover { color: var(--blanc); }
-
-/* ============================================================
    HERO
    ============================================================ */
 .evt-hero {
@@ -292,6 +304,51 @@ section { padding-block: var(--espace-xl); }
 }
 .evt-hero .conteneur { margin-inline: auto; position: relative; z-index: 1; }
 .evt-hero p { color: var(--blanc-doux); margin-inline: auto; }
+
+/* ============================================================
+   ONGLETS ÉVÉNEMENTS / ACTUALITÉS (AJOUT)
+   ============================================================ */
+.evt-tabs-wrap {
+  position: sticky; top: 72px; z-index: 40;
+  background: rgba(13,13,13,0.95); backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-discret);
+  padding: 14px 0;
+}
+.evt-tabs {
+  display: flex; gap: 8px; flex-wrap: wrap;
+  justify-content: center;
+}
+.evt-tab {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 12px 26px; border-radius: 4px;
+  font-family: var(--font-titres); font-size: 0.78rem; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--text-muted);
+  border: 1px solid var(--border-discret);
+  background: transparent;
+  transition: all var(--vitesse);
+  cursor: pointer;
+}
+.evt-tab:hover { color: var(--blanc-doux); border-color: var(--border); }
+.evt-tab.actif {
+  color: var(--noir);
+  background: linear-gradient(135deg, var(--or-clair), var(--or-fonce));
+  border-color: var(--or);
+  box-shadow: 0 6px 20px rgba(184,146,46,0.25);
+}
+.evt-tab-count {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 22px; height: 20px; padding: 0 6px;
+  border-radius: 10px; font-size: 0.68rem; font-weight: 700;
+  background: rgba(0,0,0,0.2);
+}
+.evt-tab.actif .evt-tab-count { background: rgba(0,0,0,0.25); }
+.evt-tab:not(.actif) .evt-tab-count { background: rgba(184,146,46,0.15); color: var(--or-clair); }
+
+/* Panneaux */
+.evt-panel { display: none; }
+.evt-panel.actif { display: block; animation: fadeInPane 0.4s ease; }
+@keyframes fadeInPane { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
 
 /* ============================================================
    À LA UNE
@@ -352,10 +409,51 @@ section { padding-block: var(--espace-xl); }
 @media (max-width: 560px) { .agenda-grille { grid-template-columns: 1fr; } }
 
 /* ============================================================
-   ARCHIVES
+   ACTUALITÉS (AJOUT)
    ============================================================ */
-.archives-cta { text-align: center; border: 1px solid var(--border); border-radius: 6px; padding: var(--espace-lg) var(--espace-md); background: var(--noir-2); }
+.actus-grille { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--espace-md); }
+.actu-carte {
+  border: 1px solid var(--border-discret); border-radius: 6px; overflow: hidden;
+  background: var(--noir-2);
+  transition: border-color var(--vitesse), transform var(--vitesse), box-shadow var(--vitesse);
+  display: flex; flex-direction: column;
+}
+.actu-carte:hover { border-color: var(--or); transform: translateY(-4px); box-shadow: 0 15px 40px rgba(0,0,0,0.4); }
+.actu-image {
+  aspect-ratio: 16/10; background: var(--noir-3);
+  background-size: cover; background-position: center;
+  position: relative;
+}
+.actu-badge {
+  position: absolute; top: 12px; left: 12px;
+  background: linear-gradient(135deg, var(--or-clair), var(--or-fonce));
+  color: var(--noir); padding: 5px 10px; border-radius: 3px;
+  font-family: var(--font-titres); font-size: 0.62rem; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase;
+}
+.actu-badge.epingle { background: linear-gradient(135deg, #ff4757, #c0392b); color: white; }
+.actu-corps { padding: 18px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+.actu-categorie { font-family: var(--font-accent); font-style: italic; font-size: 0.78rem; color: var(--or-clair); }
+.actu-titre { font-family: var(--font-titres); font-size: 1rem; color: var(--blanc); line-height: 1.35; }
+.actu-resume { font-size: 0.85rem; color: var(--text-muted); flex: 1; }
+.actu-meta { display: flex; gap: 12px; font-size: 0.72rem; color: var(--text-discret); flex-wrap: wrap; }
+.actu-lire { color: var(--or); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.05em; display: inline-flex; align-items: center; gap: 6px; }
+.actu-carte:hover .actu-lire { color: var(--or-clair); }
 
+.actus-epingles-section { margin-bottom: var(--espace-lg); }
+.actus-section-titre {
+  font-family: var(--font-titres); font-size: 1.1rem; color: var(--or);
+  letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: var(--espace-md);
+  display: flex; align-items: center; gap: 10px;
+}
+.actus-section-titre::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, var(--border), transparent); }
+
+@media (max-width: 900px) { .actus-grille { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .actus-grille { grid-template-columns: 1fr; } }
+
+/* ============================================================
+   GROUPE BANDEAU
+   ============================================================ */
 .groupe-bandeau {
   border: 1px solid var(--border); border-radius: 6px; padding: var(--espace-md);
   display: flex; align-items: center; justify-content: space-between; gap: var(--espace-md); flex-wrap: wrap;
@@ -411,13 +509,13 @@ section { padding-block: var(--espace-xl); }
    ============================================================ -->
 <div class="bandeau-defilant" aria-hidden="true">
   <div class="bandeau-defilant-inner">
-    <span><a class="bandeau-lien" href="evenements.html">🔥 <span class="highlight">PROCHAINE ÉDITION 2027</span> — Restez connectés !</a></span>
+    <span><a class="bandeau-lien" href="evenements.html#evenements">🔥 <span class="highlight">PROCHAINE ÉDITION 2027</span> — Restez connectés !</a></span>
     <span><a class="bandeau-lien" href="boutique.html#livres"><img src="livre-du-fa.jpeg" alt="Le Livre du Fa" loading="lazy">Le Livre du Fa</a></span>
     <span><a class="bandeau-lien" href="boutique.html#livres"><img src="code-de-vie.jpeg" alt="Le Code de Vie" loading="lazy">Le Code de Vie</a></span>
     <span><a class="bandeau-lien" href="boutique.html#livres"><img src="vodoun-dan.jpeg" alt="Vodoun Dan" loading="lazy">Vodoun Dan</a></span>
     <span><a class="bandeau-lien" href="boutique.html#livres"><img src="livre-astuces.jpeg" alt="Le Livre d'Astuces" loading="lazy">Le Livre d'Astuces</a></span>
     <span><a class="bandeau-lien" href="boutique.html#mode">👕 Collection TODAAA 2026 — Édition actuelle</a></span>
-    <span><a class="bandeau-lien" href="evenements.html">🔥 <span class="highlight">PROCHAINE ÉDITION 2027</span> — Restez connectés !</a></span>
+    <span><a class="bandeau-lien" href="evenements.html#evenements">🔥 <span class="highlight">PROCHAINE ÉDITION 2027</span> — Restez connectés !</a></span>
     <span><a class="bandeau-lien" href="boutique.html#livres"><img src="livre-du-fa.jpeg" alt="Le Livre du Fa" loading="lazy">Le Livre du Fa</a></span>
     <span><a class="bandeau-lien" href="boutique.html#livres"><img src="code-de-vie.jpeg" alt="Le Code de Vie" loading="lazy">Le Code de Vie</a></span>
     <span><a class="bandeau-lien" href="boutique.html#livres"><img src="vodoun-dan.jpeg" alt="Vodoun Dan" loading="lazy">Vodoun Dan</a></span>
@@ -472,14 +570,14 @@ section { padding-block: var(--espace-xl); }
    ============================================================ -->
 <header class="evt-hero">
   <div class="conteneur">
-    <p class="eyebrow">Rencontres • Séminaires • Conférences • Célébrations</p>
+    <p class="eyebrow">Rencontres • Séminaires • Conférences • Célébrations • Actualités</p>
     <h1>Événements & Actualités</h1>
     <p>Des espaces privilégiés de transmission, d'apprentissage, d'échange et de partage d'expérience, consacrés au Fa, au Vodoun, aux traditions africaines et au développement de la personne.</p>
   </div>
 </header>
 
 <!-- ============================================================
-   LIVE EMBED (si actif)
+   LIVE EMBED (avec fallback)
    ============================================================ -->
 <section id="live-embed" style="display:none; padding-block: var(--espace-md);">
   <div class="conteneur">
@@ -488,82 +586,140 @@ section { padding-block: var(--espace-xl); }
         <span class="live-dot"></span>
         <strong style="color: var(--blanc); font-family: var(--font-titres); font-size: 0.9rem;" id="liveEmbedTitle">🔴 EN DIRECT</strong>
       </div>
-      <div style="aspect-ratio: 16/9; background: var(--noir-3);" id="liveEmbedZone"></div>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================================
-   À LA UNE
-   ============================================================ -->
-<section>
-  <div class="conteneur">
-    <p class="eyebrow reveal">À la une</p>
-    <h2 class="reveal" style="margin-bottom: var(--espace-md);">Prochain événement</h2>
-    <div id="evt-une-zone">
-      <div class="agenda-vide">Chargement…</div>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================================
-   CATÉGORIES
-   ============================================================ -->
-<section>
-  <div class="conteneur">
-    <p class="eyebrow reveal">Nos grands rendez-vous</p>
-    <h2 class="reveal" style="margin-bottom: var(--espace-md);">Formats d'événements</h2>
-    <div class="categories-grille">
-      <div class="categorie-carte reveal-stagger">
-        <span class="glyphe">🎓</span>
-        <h3>Séminaires & Masterclass</h3>
-        <p>Approfondissement de thèmes spécifiques autour du Fa, du Vodoun, de la spiritualité, des traditions et de la connaissance de soi.</p>
+      <div style="aspect-ratio: 16/9; background: var(--noir-3); position: relative;" id="liveEmbedZone">
+        <!-- L'iframe sera injectée ici par JS. En cas d'échec, le fallback s'affiche. -->
       </div>
-      <div class="categorie-carte reveal-stagger">
-        <span class="glyphe">🎤</span>
-        <h3>Conférences & Rencontres</h3>
-        <p>Espaces de réflexion et de dialogue autour des traditions africaines, de la société, de la philosophie et des grandes questions contemporaines.</p>
-      </div>
-      <div class="categorie-carte reveal-stagger">
-        <span class="glyphe">🌍</span>
-        <h3>Événements internationaux</h3>
-        <p>Conférences, séminaires et rencontres du Professeur organisés au Bénin et à l'international.</p>
-      </div>
-      <div class="categorie-carte reveal-stagger">
-        <span class="glyphe">✨</span>
-        <h3>Célébrations traditionnelles</h3>
-        <p>Grands rendez-vous, rencontres communautaires et événements traditionnels organisés ou accompagnés par le Cabinet.</p>
+      <div class="live-fallback" id="liveFallback">
+        <span class="live-fallback-icon">📡</span>
+        <div class="live-fallback-title">Lecture intégrée indisponible</div>
+        <div class="live-fallback-text">La diffusion en direct ne peut pas s'afficher sur cette page. Rejoignez le live directement sur la plateforme :</div>
+        <div class="live-fallback-btns">
+          <a class="btn-yt" id="fallbackYT" href="#" target="_blank" rel="noopener">▶️ YouTube</a>
+          <a class="btn-fb" id="fallbackFB" href="https://www.facebook.com/share/1KLJbHgA74/?mibextid=wwXIfr" target="_blank" rel="noopener">📘 Facebook</a>
+          <a class="btn-tk" id="fallbackTK" href="https://www.tiktok.com/@bokonon.gbemadoyomin" target="_blank" rel="noopener">🎵 TikTok</a>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- ============================================================
-   AGENDA
+   ONGLETS ÉVÉNEMENTS / ACTUALITÉS (AJOUT)
    ============================================================ -->
-<section>
+<div class="evt-tabs-wrap">
   <div class="conteneur">
-    <p class="eyebrow reveal">Prochainement</p>
-    <h2 class="reveal" style="margin-bottom: var(--espace-md);">Agenda</h2>
-    <p class="reveal" style="color: var(--text-muted); font-size: .88rem; margin-bottom: var(--espace-md);">Les prochains rendez-vous s'affichent automatiquement par ordre chronologique.</p>
-    <div class="agenda-grille" id="agenda-grille">
-      <div class="agenda-vide">Chargement…</div>
+    <div class="evt-tabs" role="tablist">
+      <button class="evt-tab actif" data-tab="evenements" role="tab" aria-selected="true">
+        📅 Événements
+        <span class="evt-tab-count" id="countEvenements">—</span>
+      </button>
+      <button class="evt-tab" data-tab="actualites" role="tab" aria-selected="false">
+        📰 Actualités
+        <span class="evt-tab-count" id="countActualites">—</span>
+      </button>
     </div>
   </div>
-</section>
+</div>
 
 <!-- ============================================================
-   ARCHIVES (actualités / événements passés)
+   PANNEAU : ÉVÉNEMENTS
    ============================================================ -->
-<section>
-  <div class="conteneur">
-    <p class="eyebrow reveal">Actualités & retours</p>
-    <h2 class="reveal" style="margin-bottom: var(--espace-md);">Événements passés & actualités</h2>
-    <div class="agenda-grille" id="archives-grille">
-      <div class="agenda-vide">Chargement…</div>
+<div class="evt-panel actif" id="panel-evenements">
+
+  <!-- À la une -->
+  <section>
+    <div class="conteneur">
+      <p class="eyebrow reveal">À la une</p>
+      <h2 class="reveal" style="margin-bottom: var(--espace-md);">Prochain événement</h2>
+      <div id="evt-une-zone">
+        <div class="agenda-vide">Chargement…</div>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
+
+  <!-- Catégories -->
+  <section>
+    <div class="conteneur">
+      <p class="eyebrow reveal">Nos grands rendez-vous</p>
+      <h2 class="reveal" style="margin-bottom: var(--espace-md);">Formats d'événements</h2>
+      <div class="categories-grille">
+        <div class="categorie-carte reveal-stagger">
+          <span class="glyphe">🎓</span>
+          <h3>Séminaires & Masterclass</h3>
+          <p>Approfondissement de thèmes spécifiques autour du Fa, du Vodoun, de la spiritualité, des traditions et de la connaissance de soi.</p>
+        </div>
+        <div class="categorie-carte reveal-stagger">
+          <span class="glyphe">🎤</span>
+          <h3>Conférences & Rencontres</h3>
+          <p>Espaces de réflexion et de dialogue autour des traditions africaines, de la société, de la philosophie et des grandes questions contemporaines.</p>
+        </div>
+        <div class="categorie-carte reveal-stagger">
+          <span class="glyphe">🌍</span>
+          <h3>Événements internationaux</h3>
+          <p>Conférences, séminaires et rencontres du Professeur organisés au Bénin et à l'international.</p>
+        </div>
+        <div class="categorie-carte reveal-stagger">
+          <span class="glyphe">✨</span>
+          <h3>Célébrations traditionnelles</h3>
+          <p>Grands rendez-vous, rencontres communautaires et événements traditionnels organisés ou accompagnés par le Cabinet.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Agenda -->
+  <section>
+    <div class="conteneur">
+      <p class="eyebrow reveal">Prochainement</p>
+      <h2 class="reveal" style="margin-bottom: var(--espace-md);">Agenda</h2>
+      <p class="reveal" style="color: var(--text-muted); font-size: .88rem; margin-bottom: var(--espace-md);">Les prochains rendez-vous s'affichent automatiquement par ordre chronologique.</p>
+      <div class="agenda-grille" id="agenda-grille">
+        <div class="agenda-vide">Chargement…</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Archives événements -->
+  <section>
+    <div class="conteneur">
+      <p class="eyebrow reveal">Événements passés</p>
+      <h2 class="reveal" style="margin-bottom: var(--espace-md);">Nos archives</h2>
+      <div class="agenda-grille" id="archives-grille">
+        <div class="agenda-vide">Chargement…</div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- ============================================================
+   PANNEAU : ACTUALITÉS (AJOUT)
+   ============================================================ -->
+<div class="evt-panel" id="panel-actualites">
+
+  <!-- Actualités épinglées -->
+  <section class="actus-epingles-section">
+    <div class="conteneur">
+      <p class="eyebrow reveal">À ne pas manquer</p>
+      <h2 class="reveal" style="margin-bottom: var(--espace-md);">Actualités à la une</h2>
+      <div class="actus-grille" id="actus-epinglees">
+        <div class="agenda-vide">Chargement…</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Toutes les actualités -->
+  <section>
+    <div class="conteneur">
+      <p class="eyebrow reveal">Toute l'actualité du Groupe</p>
+      <h2 class="reveal" style="margin-bottom: var(--espace-md);">Dernières actualités</h2>
+      <div class="actus-grille" id="actus-liste">
+        <div class="agenda-vide">Chargement…</div>
+      </div>
+    </div>
+  </section>
+
+</div>
 
 <!-- ============================================================
    GROUPE BANDEAU
@@ -571,7 +727,7 @@ section { padding-block: var(--espace-xl); }
 <section>
   <div class="conteneur">
     <div class="groupe-bandeau reveal">
-      <p>Les événements sont organisés par le Cabinet Gbêmadoyomin, entité du Groupe Gbêmadoyomin.</p>
+      <p>Les événements et actualités sont publiés par le Cabinet Gbêmadoyomin, entité du Groupe Gbêmadoyomin.</p>
       <a class="btn-contour" href="index.html#architecture">Voir l'architecture du Groupe</a>
     </div>
   </div>
@@ -726,6 +882,7 @@ function cloudinaryUrl(url, width = 800) {
 function formaterDate(dateStr) {
   if (!dateStr) return '';
   const d = new Date(dateStr + 'T00:00:00');
+  if (isNaN(d.getTime())) return dateStr;
   return d.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
 }
 
@@ -742,7 +899,51 @@ function reprendreReveal() {
 }
 
 // ============================================================
-// CHARGER LES ÉVÉNEMENTS
+// ONGLETS
+// ============================================================
+function activerOnglet(nom) {
+  // Boutons
+  document.querySelectorAll('.evt-tab').forEach(btn => {
+    const estActif = btn.dataset.tab === nom;
+    btn.classList.toggle('actif', estActif);
+    btn.setAttribute('aria-selected', String(estActif));
+  });
+  // Panneaux
+  document.querySelectorAll('.evt-panel').forEach(p => p.classList.remove('actif'));
+  const panel = document.getElementById('panel-' + nom);
+  if (panel) panel.classList.add('actif');
+  // Hash URL
+  if (history.replaceState) {
+    history.replaceState(null, '', '#' + nom);
+  } else {
+    location.hash = '#' + nom;
+  }
+}
+
+function initOnglets() {
+  document.querySelectorAll('.evt-tab').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const nom = btn.dataset.tab;
+      activerOnglet(nom);
+      // Remonter jusqu'aux onglets
+      const wrap = document.querySelector('.evt-tabs-wrap');
+      if (wrap) {
+        window.scrollTo({ top: wrap.offsetTop - 70, behavior: 'smooth' });
+      }
+    });
+  });
+
+  // Activer l'onglet selon le hash
+  const hash = (location.hash || '').replace('#', '');
+  if (hash === 'actualites') {
+    activerOnglet('actualites');
+  } else {
+    activerOnglet('evenements');
+  }
+}
+
+// ============================================================
+// ÉVÉNEMENTS
 // ============================================================
 let tousEvenements = [];
 
@@ -751,7 +952,6 @@ async function chargerEvenements() {
     const snapshot = await db.collection('evenements').get();
     tousEvenements = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 
-    // Séparer à venir / passés
     const aujourdhui = todayISO();
     const aVenir = tousEvenements
       .filter(e => !e.archive && e.date >= aujourdhui)
@@ -759,6 +959,9 @@ async function chargerEvenements() {
     const passes = tousEvenements
       .filter(e => e.archive || e.date < aujourdhui)
       .sort((a, b) => b.date.localeCompare(a.date));
+
+    // Compteur onglet
+    document.getElementById('countEvenements').textContent = tousEvenements.length;
 
     afficherProchainEvenement(aVenir);
     afficherAgenda(aVenir);
@@ -772,9 +975,6 @@ async function chargerEvenements() {
   }
 }
 
-// ============================================================
-// AFFICHER LE PROCHAIN ÉVÉNEMENT (À LA UNE)
-// ============================================================
 function afficherProchainEvenement(liste) {
   const zone = document.getElementById('evt-une-zone');
   const [prochain] = liste;
@@ -792,13 +992,15 @@ function afficherProchainEvenement(liste) {
     return;
   }
 
-  const affiche = prochain.afficheURL
-    ? `background-image: url('${cloudinaryUrl(prochain.afficheURL, 800)}');`
+  // Gérer images multiple ou afficheURL
+  const affiche = (prochain.images && prochain.images[0]) || prochain.afficheURL || '';
+  const styleAffiche = affiche
+    ? `background-image: url('${cloudinaryUrl(affiche, 800)}');`
     : '';
 
   zone.innerHTML = `
     <div class="evt-une reveal">
-      <div class="evt-une-affiche shine" style="${affiche}" role="img" aria-label="${prochain.titre}"></div>
+      <div class="evt-une-affiche shine" style="${styleAffiche}" role="img" aria-label="${prochain.titre}"></div>
       <div class="evt-une-details">
         <p class="eyebrow">${prochain.categorie || 'Événement'}</p>
         <h3>${prochain.titre}</h3>
@@ -809,16 +1011,13 @@ function afficherProchainEvenement(liste) {
         </div>
         <p style="color: var(--text-muted); font-size: .92rem; margin-bottom: var(--espace-sm);">${prochain.description || ''}</p>
         <div style="display:flex; gap:10px; flex-wrap:wrap;">
-          <a class="btn-or" href="article.html?slug=${encodeURIComponent(prochain.slug || prochain.id)}">Voir les détails</a>
+          <a class="btn-or" href="article.html?type=evenement&slug=${encodeURIComponent(prochain.slug || prochain.id)}">Voir les détails</a>
           <a class="btn-contour" href="https://wa.me/22967668799?text=Bonjour%2C%20je%20souhaite%20m%27inscrire%20%C3%A0%20%3A%20${encodeURIComponent(prochain.titre)}" target="_blank" rel="noopener">S'inscrire</a>
         </div>
       </div>
     </div>`;
 }
 
-// ============================================================
-// AFFICHER L'AGENDA
-// ============================================================
 function afficherAgenda(liste) {
   const grille = document.getElementById('agenda-grille');
 
@@ -827,9 +1026,12 @@ function afficherAgenda(liste) {
     return;
   }
 
-  grille.innerHTML = liste.map((e, index) => `
+  grille.innerHTML = liste.map((e, index) => {
+    const affiche = (e.images && e.images[0]) || e.afficheURL || '';
+    const bg = affiche ? cloudinaryUrl(affiche, 600) : ('event-' + (index + 1) + '.jpeg');
+    return `
     <div class="agenda-carte reveal-stagger">
-      <div class="agenda-affiche shine" style="background-image:url('${e.afficheURL ? cloudinaryUrl(e.afficheURL, 600) : 'event-' + (index + 1) + '.jpeg'}');" role="img" aria-label="${e.titre}"></div>
+      <div class="agenda-affiche shine" style="background-image:url('${bg}');" role="img" aria-label="${e.titre}"></div>
       <div class="agenda-corps">
         <div class="agenda-titre">${e.titre}</div>
         <div class="agenda-meta">
@@ -838,16 +1040,14 @@ function afficherAgenda(liste) {
           <span>🎟 ${e.participation || 'Sur inscription'}</span>
         </div>
         <div class="agenda-actions">
-          <a class="btn-contour" href="article.html?slug=${encodeURIComponent(e.slug || e.id)}">Détails</a>
+          <a class="btn-contour" href="article.html?type=evenement&slug=${encodeURIComponent(e.slug || e.id)}">Détails</a>
           <a class="btn-or" href="https://wa.me/22967668799?text=Bonjour%2C%20je%20souhaite%20m%27inscrire%20%C3%A0%20%3A%20${encodeURIComponent(e.titre)}" target="_blank" rel="noopener">S'inscrire</a>
         </div>
       </div>
-    </div>`).join('');
+    </div>`;
+  }).join('');
 }
 
-// ============================================================
-// AFFICHER LES ARCHIVES / ACTUALITÉS
-// ============================================================
 function afficherArchives(liste) {
   const grille = document.getElementById('archives-grille');
 
@@ -856,9 +1056,12 @@ function afficherArchives(liste) {
     return;
   }
 
-  grille.innerHTML = liste.map((e) => `
+  grille.innerHTML = liste.map((e) => {
+    const affiche = (e.images && e.images[0]) || e.afficheURL || '';
+    const bg = affiche ? cloudinaryUrl(affiche, 600) : 'archive.jpeg';
+    return `
     <div class="agenda-carte reveal-stagger">
-      <div class="agenda-affiche shine" style="background-image:url('${e.afficheURL ? cloudinaryUrl(e.afficheURL, 600) : 'archive.jpeg'}');" role="img" aria-label="${e.titre}"></div>
+      <div class="agenda-affiche shine" style="background-image:url('${bg}');" role="img" aria-label="${e.titre}"></div>
       <div class="agenda-corps">
         <div class="agenda-titre">${e.titre}</div>
         <div class="agenda-meta">
@@ -867,14 +1070,100 @@ function afficherArchives(liste) {
           ${e.archive ? '<span>📁 Archivé</span>' : ''}
         </div>
         <div class="agenda-actions">
-          <a class="btn-contour" href="article.html?slug=${encodeURIComponent(e.slug || e.id)}">Lire l'article</a>
+          <a class="btn-contour" href="article.html?type=evenement&slug=${encodeURIComponent(e.slug || e.id)}">Lire l'article</a>
         </div>
       </div>
-    </div>`).join('');
+    </div>`;
+  }).join('');
 }
 
 // ============================================================
-// CHARGER LE LIVE
+// ACTUALITÉS (AJOUT)
+// ============================================================
+let toutesActualites = [];
+
+async function chargerActualites() {
+  try {
+    const snapshot = await db.collection('actualites').get();
+    toutesActualites = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+    // Compteur onglet
+    document.getElementById('countActualites').textContent = toutesActualites.length;
+
+    // Trier par datePublication desc
+    toutesActualites.sort((a, b) => {
+      const da = a.datePublication || '';
+      const db_ = b.datePublication || '';
+      return db_.localeCompare(da);
+    });
+
+    // Séparer épinglées et normales
+    const epinglees = toutesActualites.filter(a => a.epingle === true || a.epingle === 'true');
+    const normales = toutesActualites.filter(a => !(a.epingle === true || a.epingle === 'true'));
+
+    afficherActualitesEpinglees(epinglees);
+    afficherActualitesListe(normales.length ? normales : toutesActualites);
+    reprendreReveal();
+  } catch (err) {
+    console.error('Erreur chargement actualités:', err);
+    document.getElementById('actus-epinglees').innerHTML = `<div class="agenda-vide">Erreur de chargement.</div>`;
+    document.getElementById('actus-liste').innerHTML = `<div class="agenda-vide">Erreur de chargement.</div>`;
+  }
+}
+
+function carteActualite(actu) {
+  const img = (actu.images && actu.images[0]) || actu.imageURL || '';
+  const bg = img ? cloudinaryUrl(img, 800) : '';
+  const styleBg = bg ? `background-image:url('${bg}');` : '';
+  const estEpingle = actu.epingle === true || actu.epingle === 'true';
+  const badge = estEpingle
+    ? '<span class="actu-badge epingle">📌 À la une</span>'
+    : (actu.categorie ? `<span class="actu-badge">${actu.categorie}</span>` : '');
+
+  return `
+    <article class="actu-carte reveal-stagger">
+      <a href="article.html?type=actualite&slug=${encodeURIComponent(actu.slug || actu.id)}" style="display:block;">
+        <div class="actu-image shine" style="${styleBg}" role="img" aria-label="${actu.titre || 'Actualité'}">
+          ${badge}
+        </div>
+      </a>
+      <div class="actu-corps">
+        ${actu.categorie ? `<span class="actu-categorie">${actu.categorie}</span>` : ''}
+        <a href="article.html?type=actualite&slug=${encodeURIComponent(actu.slug || actu.id)}">
+          <h3 class="actu-titre">${actu.titre || 'Sans titre'}</h3>
+        </a>
+        <p class="actu-resume">${actu.resume || (actu.contenu ? actu.contenu.slice(0, 150) + '…' : '')}</p>
+        <div class="actu-meta">
+          <span>📅 ${formaterDate(actu.datePublication)}</span>
+          ${actu.auteur ? `<span>✍️ ${actu.auteur}</span>` : ''}
+        </div>
+        <a class="actu-lire" href="article.html?type=actualite&slug=${encodeURIComponent(actu.slug || actu.id)}">
+          Lire l'article →
+        </a>
+      </div>
+    </article>`;
+}
+
+function afficherActualitesEpinglees(liste) {
+  const zone = document.getElementById('actus-epinglees');
+  if (!liste.length) {
+    zone.innerHTML = `<div class="agenda-vide" style="grid-column:1/-1;">Aucune actualité épinglée pour le moment.</div>`;
+    return;
+  }
+  zone.innerHTML = liste.slice(0, 3).map(carteActualite).join('');
+}
+
+function afficherActualitesListe(liste) {
+  const zone = document.getElementById('actus-liste');
+  if (!liste.length) {
+    zone.innerHTML = `<div class="agenda-vide" style="grid-column:1/-1;">Aucune actualité pour le moment.</div>`;
+    return;
+  }
+  zone.innerHTML = liste.map(carteActualite).join('');
+}
+
+// ============================================================
+// LIVE (avec fallback)
 // ============================================================
 async function chargerLive() {
   try {
@@ -883,18 +1172,48 @@ async function chargerLive() {
     const data = snap.docs[0].data();
     if (!data.actif || !data.embedURL) return;
 
-    // Afficher le bandeau
+    // Bandeau
     const banner = document.getElementById('liveBanner');
     banner.classList.add('actif');
     document.getElementById('liveBannerText').textContent = '🔴 EN DIRECT — ' + (data.titre || 'Live en cours');
 
-    // Afficher la section embed
+    // Section
     const embedSection = document.getElementById('live-embed');
     embedSection.style.display = 'block';
     document.getElementById('liveEmbedTitle').textContent = '🔴 EN DIRECT — ' + (data.titre || 'Live en cours');
-    document.getElementById('liveEmbedZone').innerHTML = `
-      <iframe src="${data.embedURL}" style="width:100%;height:100%;border:none;" allowfullscreen loading="lazy"></iframe>
-    `;
+
+    // Injection iframe + fallback
+    const zone = document.getElementById('liveEmbedZone');
+    const fallback = document.getElementById('liveFallback');
+    const iframe = document.createElement('iframe');
+    iframe.src = data.embedURL;
+    iframe.style.cssText = 'width:100%;height:100%;border:none;position:absolute;inset:0;';
+    iframe.allow = 'autoplay; encrypted-media; picture-in-picture';
+    iframe.allowFullscreen = true;
+
+    var iframeLoaded = false;
+    iframe.onload = function () { iframeLoaded = true; };
+    iframe.onerror = function () { afficherFallback(); };
+
+    function afficherFallback() {
+      iframe.style.display = 'none';
+      fallback.classList.add('visible');
+    }
+
+    zone.appendChild(iframe);
+
+    setTimeout(function () {
+      if (!iframeLoaded) afficherFallback();
+    }, 6000);
+
+    // Configurer le fallback YouTube
+    var fallbackYT = document.getElementById('fallbackYT');
+    var matchYT = data.embedURL.match(/embed\/([^?]+)/);
+    if (matchYT) {
+      fallbackYT.href = 'https://www.youtube.com/watch?v=' + matchYT[1];
+    } else {
+      fallbackYT.href = 'https://www.youtube.com/';
+    }
   } catch (err) {
     console.error('Erreur live:', err);
   }
@@ -972,9 +1291,21 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  // INITIALISER LES ONGLETS
+  initOnglets();
+
   // CHARGER LES DONNÉES
   chargerEvenements();
+  chargerActualites();
   chargerLive();
+
+  // Écouter le hash pour changer d'onglet
+  window.addEventListener('hashchange', () => {
+    const hash = (location.hash || '').replace('#', '');
+    if (hash === 'actualites' || hash === 'evenements') {
+      activerOnglet(hash);
+    }
+  });
 });
 
 // ---- SERVICE WORKER ----
