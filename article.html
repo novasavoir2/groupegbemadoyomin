@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Événement — Groupe Gbêmadoyomin</title>
+    <title>Article — Groupe Gbêmadoyomin</title>
     <meta name="description" content="Découvrez en détail l'événement ou l'actualité du Groupe Gbêmadoyomin.">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://groupegbemadoyomin.com/article.html">
 
     <!-- Open Graph -->
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Événement — Groupe Gbêmadoyomin">
+    <meta property="og:title" content="Article — Groupe Gbêmadoyomin">
     <meta property="og:description" content="Découvrez en détail l'événement ou l'actualité du Groupe Gbêmadoyomin.">
     <meta property="og:url" content="https://groupegbemadoyomin.com/article.html">
     <meta property="og:locale" content="fr_FR">
@@ -18,7 +18,7 @@
     <meta property="og:site_name" content="Groupe Gbêmadoyomin">
 
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Événement — Groupe Gbêmadoyomin">
+    <meta name="twitter:title" content="Article — Groupe Gbêmadoyomin">
     <meta name="twitter:image" content="logo-gg.jpeg">
 
     <meta name="theme-color" content="#0D0D0D">
@@ -802,6 +802,12 @@
         .article-body ol li {
             margin-bottom: 6px;
         }
+        .article-body ul {
+            list-style: disc;
+        }
+        .article-body ol {
+            list-style: decimal;
+        }
 
         .article-image {
             border-radius: var(--rayon);
@@ -822,6 +828,7 @@
             margin: var(--espace-lg) 0;
             border: 1px solid var(--border);
             background: var(--noir-3);
+            position: relative;
         }
         .article-video iframe {
             width: 100%;
@@ -849,6 +856,36 @@
             color: var(--text-muted);
             margin-inline: auto;
         }
+
+        /* ============================================================
+           FALLBACK VIDÉO (AJOUT)
+           ============================================================ */
+        .video-fallback {
+            display: none;
+            aspect-ratio: 16/9;
+            background: linear-gradient(135deg, var(--noir-2), var(--noir-3));
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 24px;
+            gap: 14px;
+        }
+        .video-fallback.visible { display: flex; }
+        .video-fallback-icon { font-size: 2.4rem; }
+        .video-fallback-title { font-family: var(--font-titres); color: var(--blanc); font-size: 1rem; }
+        .video-fallback-text { color: var(--text-muted); font-size: 0.85rem; max-width: 420px; }
+        .video-fallback-btns { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-top: 6px; }
+        .video-fallback-btns a {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 10px 18px; border-radius: 4px;
+            font-family: var(--font-titres); font-size: 0.72rem; font-weight: 700;
+            letter-spacing: 0.05em; text-transform: uppercase;
+            transition: transform 0.3s ease;
+        }
+        .video-fallback-btns a:hover { transform: translateY(-2px); }
+        .video-fallback-btns .btn-yt { background: #ff0000; color: white; }
+        .video-fallback-btns .btn-drive { background: #1a73e8; color: white; }
 
         /* ============================================================
            GROUPE BANDEAU
@@ -1194,12 +1231,29 @@
                     <img id="articleImage" src="" alt="" loading="lazy">
                 </div>
 
+                <!-- Conteneur vidéo avec fallback -->
                 <div id="articleVideoContainer" style="display:none;" class="article-video">
                     <iframe id="articleVideo" src="" allowfullscreen loading="lazy"></iframe>
+                    <div class="video-fallback" id="videoFallback">
+                        <span class="video-fallback-icon">📡</span>
+                        <div class="video-fallback-title">Lecture intégrée indisponible</div>
+                        <div class="video-fallback-text">La vidéo ne peut pas s'afficher sur cette page. Regardez-la directement sur la plateforme :</div>
+                        <div class="video-fallback-btns">
+                            <a class="btn-yt" id="fallbackVideoYT" href="#" target="_blank" rel="noopener">▶️ YouTube</a>
+                            <a class="btn-drive" id="fallbackVideoDrive" href="#" target="_blank" rel="noopener">📁 Google Drive</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Galerie d'images supplémentaires -->
+                <div id="articleGallery" style="display:none; margin-top: var(--espace-lg);">
+                    <p class="eyebrow">Galerie</p>
+                    <h3 style="margin-bottom: var(--espace-sm);">Photos supplémentaires</h3>
+                    <div id="articleGalleryGrid" style="display:grid; grid-template-columns: repeat(2, 1fr); gap: 12px;"></div>
                 </div>
 
                 <div class="article-actions" id="articleActions">
-                    <a class="btn-contour" href="evenements.html">← Retour aux événements</a>
+                    <a class="btn-contour" id="articleRetourBtn" href="evenements.html">← Retour aux événements</a>
                     <a class="btn-or" id="articleInscriptionBtn" href="https://wa.me/22967668799?text=Bonjour%2C%20je%20souhaite%20m%27inscrire" target="_blank" rel="noopener">📝 S'inscrire</a>
                     <a class="btn-contour" id="articleDownloadBtn" href="#" target="_blank" rel="noopener" style="display:none;">⬇️ Télécharger la vidéo</a>
                 </div>
@@ -1212,8 +1266,8 @@
         <section>
             <div class="conteneur">
                 <div class="groupe-bandeau reveal">
-                    <p>Retrouvez tous les événements du Groupe Gbêmadoyomin.</p>
-                    <a class="btn-contour" href="evenements.html">Voir tous les événements</a>
+                    <p id="groupeBandeauTexte">Retrouvez tous les événements du Groupe Gbêmadoyomin.</p>
+                    <a class="btn-contour" id="groupeBandeauLien" href="evenements.html">Voir tous les événements</a>
                 </div>
             </div>
         </section>
@@ -1361,119 +1415,236 @@
         function formatDate(dateStr) {
             if (!dateStr) return '';
             const d = new Date(dateStr + 'T00:00:00');
+            if (isNaN(d.getTime())) return dateStr;
             return d.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
         }
 
-        // Extraire l'ID d'une vidéo YouTube depuis une URL d'intégration
         function extractYoutubeId(url) {
             if (!url) return null;
-            const match = url.match(/embed\/([^?]+)/);
+            const match = url.match(/(?:embed\/|watch\?v=|youtu\.be\/)([^?&]+)/);
             return match ? match[1] : null;
         }
 
+        function escapeHtml(str) {
+            if (!str) return '';
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+
         // ============================================================
-        // CHARGER L'ARTICLE
+        // CHARGER L'ARTICLE (ÉVÉNEMENT OU ACTUALITÉ)
         // ============================================================
         async function chargerArticle() {
             const params = new URLSearchParams(window.location.search);
             const slug = params.get('slug');
+            const type = (params.get('type') || 'evenement').toLowerCase();
 
             if (!slug) {
-                afficherErreur('Aucun événement spécifié. Veuillez utiliser ?slug=mon-evenement.');
+                afficherErreur('Aucun article spécifié. Veuillez utiliser ?type=evenement&slug=... ou ?type=actualite&slug=...');
                 return;
             }
 
+            // Choisir la collection
+            const collectionName = (type === 'actualite') ? 'actualites' : 'evenements';
+
             try {
-                const snap = await db.collection('evenements')
+                const snap = await db.collection(collectionName)
                     .where('slug', '==', slug)
                     .limit(1)
                     .get();
 
                 if (snap.empty) {
-                    afficherErreur('Événement introuvable. Vérifiez le slug ou revenez à la liste.');
+                    afficherErreur('Article introuvable. Vérifiez le slug ou revenez à la liste.');
                     return;
                 }
 
                 const doc = snap.docs[0];
                 const data = doc.data();
 
-                // Mettre à jour le titre de la page
-                document.title = data.titre + ' — Groupe Gbêmadoyomin';
+                // Titre de la page
+                document.title = (data.titre || 'Article') + ' — Groupe Gbêmadoyomin';
 
-                // Mettre à jour les balises OG
-                document.querySelector('meta[property="og:title"]').content = data.titre;
-                document.querySelector('meta[property="og:description"]').content = data.description || 'Découvrez cet événement du Groupe Gbêmadoyomin.';
-                if (data.afficheURL) {
-                    document.querySelector('meta[property="og:image"]').content = data.afficheURL;
-                    document.querySelector('meta[name="twitter:image"]').content = data.afficheURL;
+                // Meta OG
+                document.querySelector('meta[property="og:title"]').content = data.titre || 'Article';
+                document.querySelector('meta[property="og:description"]').content = data.description || data.resume || 'Découvrez cet article du Groupe Gbêmadoyomin.';
+                const ogImage = (data.images && data.images[0]) || data.imageURL || data.afficheURL || '';
+                if (ogImage) {
+                    document.querySelector('meta[property="og:image"]').content = ogImage;
+                    document.querySelector('meta[name="twitter:image"]').content = ogImage;
                 }
 
-                // Hero
-                document.getElementById('articleCategorie').textContent = data.categorie || 'Événement';
-                document.getElementById('articleTitre').textContent = data.titre;
+                // Image principale : supporter plusieurs champs
+                const imagePrincipale = (data.images && data.images[0]) || data.imageURL || data.afficheURL || '';
 
-                // Meta
-                document.getElementById('articleDate').textContent = '📅 ' + formatDate(data.date) + (data.heure ? ' — ' + data.heure : '');
-                document.getElementById('articleLieu').textContent = '📍 ' + (data.lieu || 'Lieu à confirmer');
-                document.getElementById('articleParticipation').textContent = '🎟 ' + (data.participation || 'Sur inscription');
+                // Hero
+                document.getElementById('articleCategorie').textContent = data.categorie || (type === 'actualite' ? 'Actualité' : 'Événement');
+                document.getElementById('articleTitre').textContent = data.titre || 'Sans titre';
+
+                // Meta : adapter selon le type
+                const metaEl = document.getElementById('articleMeta');
+                if (type === 'actualite') {
+                    metaEl.innerHTML = '';
+                    if (data.datePublication) {
+                        const s = document.createElement('span');
+                        s.textContent = '📅 ' + formatDate(data.datePublication);
+                        metaEl.appendChild(s);
+                    }
+                    if (data.auteur) {
+                        const s = document.createElement('span');
+                        s.textContent = '✍️ ' + data.auteur;
+                        metaEl.appendChild(s);
+                    }
+                    if (data.categorie) {
+                        const s = document.createElement('span');
+                        s.textContent = '🏷️ ' + data.categorie;
+                        metaEl.appendChild(s);
+                    }
+                } else {
+                    // Événement
+                    metaEl.innerHTML = '';
+                    const d = document.createElement('span');
+                    d.textContent = '📅 ' + (formatDate(data.date) + (data.heure ? ' — ' + data.heure : '') || 'Date à confirmer');
+                    metaEl.appendChild(d);
+                    const l = document.createElement('span');
+                    l.textContent = '📍 ' + (data.lieu || 'Lieu à confirmer');
+                    metaEl.appendChild(l);
+                    const p = document.createElement('span');
+                    p.textContent = '🎟 ' + (data.participation || 'Sur inscription');
+                    metaEl.appendChild(p);
+                }
 
                 // Image de fond du hero
-                if (data.afficheURL) {
-                    document.getElementById('articleHeroBg').style.backgroundImage = 'url(' + cloudinaryUrl(data.afficheURL, 1200) + ')';
+                if (imagePrincipale) {
+                    document.getElementById('articleHeroBg').style.backgroundImage = 'url(' + cloudinaryUrl(imagePrincipale, 1200) + ')';
                 }
 
                 // Contenu complet
                 const bodyEl = document.getElementById('articleBody');
-                if (data.contenu) {
-                    // Convertir les retours à la ligne en paragraphes
-                    const paragraphs = data.contenu.split('\n\n').filter(p => p.trim());
-                    bodyEl.innerHTML = paragraphs.map(p => `<p>${p}</p>`).join('');
+                const contenuSource = data.contenu || data.description || data.resume || '';
+
+                if (contenuSource) {
+                    // Si le contenu contient déjà des balises HTML (h2, p, ul…), on l'injecte tel quel.
+                    // Sinon on convertit les doubles sauts de ligne en paragraphes.
+                    const contientHtml = /<\/?(p|h2|h3|ul|ol|li|strong|em|br)\b/i.test(contenuSource);
+                    if (contientHtml) {
+                        bodyEl.innerHTML = contenuSource;
+                    } else {
+                        const paragraphs = contenuSource.split('\n\n').filter(p => p.trim());
+                        bodyEl.innerHTML = paragraphs.map(p => `<p>${escapeHtml(p)}</p>`).join('');
+                    }
                 } else {
-                    bodyEl.innerHTML = '<p>' + (data.description || 'Aucune description détaillée pour le moment.') + '</p>';
+                    bodyEl.innerHTML = '<p>Aucun contenu détaillé pour le moment.</p>';
                 }
 
-                // Image principale
+                // Image principale (affichée après le contenu)
                 const imgContainer = document.getElementById('articleImageContainer');
                 const imgEl = document.getElementById('articleImage');
-                if (data.afficheURL) {
+                if (imagePrincipale) {
                     imgContainer.style.display = 'block';
-                    imgEl.src = cloudinaryUrl(data.afficheURL, 800);
-                    imgEl.alt = data.titre;
+                    imgEl.src = cloudinaryUrl(imagePrincipale, 1200);
+                    imgEl.alt = data.titre || '';
                 } else {
                     imgContainer.style.display = 'none';
                 }
 
-                // Vidéo
+                // Galerie d'images supplémentaires
+                const galleryContainer = document.getElementById('articleGallery');
+                const galleryGrid = document.getElementById('articleGalleryGrid');
+                const imagesSup = (data.images || []).slice(1);
+                if (imagesSup.length > 0) {
+                    galleryContainer.style.display = 'block';
+                    galleryGrid.innerHTML = imagesSup.map(url => `
+                        <div style="aspect-ratio:1; border:1px solid var(--border-discret); border-radius:4px; background-image:url('${cloudinaryUrl(url, 700)}'); background-size:cover; background-position:center;" role="img" aria-label="Photo"></div>
+                    `).join('');
+                } else {
+                    galleryContainer.style.display = 'none';
+                }
+
+                // Vidéo(s)
                 const videoContainer = document.getElementById('articleVideoContainer');
                 const videoEl = document.getElementById('articleVideo');
                 const downloadBtn = document.getElementById('articleDownloadBtn');
+                const videoFallback = document.getElementById('videoFallback');
+                const fallbackVideoYT = document.getElementById('fallbackVideoYT');
+                const fallbackVideoDrive = document.getElementById('fallbackVideoDrive');
 
-                if (data.videoURL) {
+                // Récupérer la première vidéo : soit videos[] soit videoURL
+                const videoURL = (data.videos && data.videos[0]) || data.videoURL || '';
+
+                if (videoURL) {
                     videoContainer.style.display = 'block';
-                    videoEl.src = data.videoURL;
+                    videoEl.src = videoURL;
+                    videoEl.style.display = '';
+                    videoFallback.classList.remove('visible');
 
-                    // Bouton de téléchargement pour YouTube
-                    const youtubeId = extractYoutubeId(data.videoURL);
+                    // Détection de chargement iframe
+                    let iframeLoaded = false;
+                    videoEl.onload = function () { iframeLoaded = true; };
+                    videoEl.onerror = function () {
+                        videoEl.style.display = 'none';
+                        videoFallback.classList.add('visible');
+                    };
+                    setTimeout(() => {
+                        if (!iframeLoaded) {
+                            videoEl.style.display = 'none';
+                            videoFallback.classList.add('visible');
+                        }
+                    }, 6000);
+
+                    // Bouton téléchargement YouTube
+                    const youtubeId = extractYoutubeId(videoURL);
                     if (youtubeId) {
                         downloadBtn.style.display = 'inline-flex';
                         downloadBtn.href = 'https://www.y2mate.com/youtube/' + youtubeId;
                         downloadBtn.textContent = '⬇️ Télécharger la vidéo (YouTube)';
+                        fallbackVideoYT.href = 'https://www.youtube.com/watch?v=' + youtubeId;
                     } else {
                         downloadBtn.style.display = 'none';
+                        fallbackVideoYT.href = '#';
+                    }
+
+                    // Détecter Google Drive
+                    if (videoURL.includes('drive.google.com')) {
+                        fallbackVideoDrive.href = videoURL;
+                        fallbackVideoDrive.style.display = 'inline-flex';
+                    } else {
+                        fallbackVideoDrive.style.display = 'none';
                     }
                 } else {
                     videoContainer.style.display = 'none';
                     downloadBtn.style.display = 'none';
                 }
 
-                // Bouton d'inscription
+                // Actions : adapter selon le type
+                const retourBtn = document.getElementById('articleRetourBtn');
                 const inscriptionBtn = document.getElementById('articleInscriptionBtn');
-                if (data.participation && data.participation.toLowerCase().includes('inscription')) {
-                    inscriptionBtn.href = 'https://wa.me/22967668799?text=Bonjour%2C%20je%20souhaite%20m%27inscrire%20%C3%A0%20%3A%20' +
-                        encodeURIComponent(data.titre);
-                    inscriptionBtn.style.display = 'inline-flex';
-                } else {
+                const groupeBandeauTexte = document.getElementById('groupeBandeauTexte');
+                const groupeBandeauLien = document.getElementById('groupeBandeauLien');
+
+                if (type === 'actualite') {
+                    retourBtn.textContent = '← Retour aux actualités';
+                    retourBtn.href = 'evenements.html#actualites';
+                    groupeBandeauTexte.textContent = 'Retrouvez toutes les actualités du Groupe Gbêmadoyomin.';
+                    groupeBandeauLien.textContent = 'Voir toutes les actualités';
+                    groupeBandeauLien.href = 'evenements.html#actualites';
                     inscriptionBtn.style.display = 'none';
+                } else {
+                    retourBtn.textContent = '← Retour aux événements';
+                    retourBtn.href = 'evenements.html#evenements';
+                    groupeBandeauTexte.textContent = 'Retrouvez tous les événements du Groupe Gbêmadoyomin.';
+                    groupeBandeauLien.textContent = 'Voir tous les événements';
+                    groupeBandeauLien.href = 'evenements.html#evenements';
+                    if (data.participation && data.participation.toLowerCase().includes('inscription')) {
+                        inscriptionBtn.href = 'https://wa.me/22967668799?text=Bonjour%2C%20je%20souhaite%20m%27inscrire%20%C3%A0%20%3A%20' +
+                            encodeURIComponent(data.titre || '');
+                        inscriptionBtn.style.display = 'inline-flex';
+                    } else {
+                        inscriptionBtn.style.display = 'none';
+                    }
                 }
 
             } catch (err) {
@@ -1486,23 +1657,24 @@
         // ============================================================
         function afficherErreur(message) {
             document.getElementById('articleCategorie').textContent = '⚠️';
-            document.getElementById('articleTitre').textContent = 'Événement non trouvé';
+            document.getElementById('articleTitre').textContent = 'Article non trouvé';
             document.getElementById('articleMeta').innerHTML = '';
             document.getElementById('articleBody').innerHTML = `
                     <div class="article-not-found">
                         <h2>😕 Oups !</h2>
-                        <p>${message}</p>
+                        <p>${escapeHtml(message)}</p>
                         <br>
-                        <a class="btn-or" href="evenements.html">← Retour aux événements</a>
+                        <a class="btn-or" href="evenements.html">← Retour aux événements et actualités</a>
                     </div>
                 `;
             document.getElementById('articleImageContainer').style.display = 'none';
             document.getElementById('articleVideoContainer').style.display = 'none';
+            document.getElementById('articleGallery').style.display = 'none';
             document.getElementById('articleActions').style.display = 'none';
         }
 
         // ============================================================
-        // MENU MOBILE
+        // MENU MOBILE + CHATBOT
         // ============================================================
         document.addEventListener('DOMContentLoaded', () => {
 
