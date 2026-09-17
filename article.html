@@ -1407,6 +1407,37 @@
         // ============================================================
         const cloudName = 'bvcdjwg7';
 
+        // ============================================================
+        // CONFIG GLOBALE (AJOUT PHASE 4 — chargée depuis config/site)
+        // ============================================================
+        let CONFIG = {
+            fallbackFacebook: 'https://www.facebook.com/share/1KLJbHgA74/?mibextid=wwXIfr',
+            fallbackTiktok: 'https://www.tiktok.com/@bokonon.gbemadoyomin',
+            fallbackYoutube: '',
+            whatsappAdmin: '22967668799',
+            whatsappDev: '229015252106',
+            emailContact: 'cabinetgbemadoyomin@gmail.com',
+            messageAccueil: ''
+        };
+
+        async function chargerConfig() {
+            try {
+                const doc = await db.collection('config').doc('site').get();
+                if (doc.exists) {
+                    const d = doc.data();
+                    if (d.fallbackFacebook) CONFIG.fallbackFacebook = d.fallbackFacebook;
+                    if (d.fallbackTiktok) CONFIG.fallbackTiktok = d.fallbackTiktok;
+                    if (d.fallbackYoutube) CONFIG.fallbackYoutube = d.fallbackYoutube;
+                    if (d.whatsappAdmin) CONFIG.whatsappAdmin = d.whatsappAdmin;
+                    if (d.whatsappDev) CONFIG.whatsappDev = d.whatsappDev;
+                    if (d.emailContact) CONFIG.emailContact = d.emailContact;
+                    if (d.messageAccueil) CONFIG.messageAccueil = d.messageAccueil;
+                }
+            } catch (err) {
+                console.warn('Config Firestore non chargée, valeurs par défaut utilisées.', err);
+            }
+        }
+
         function cloudinaryUrl(url, width = 800) {
             if (!url) return '';
             return `https://res.cloudinary.com/${cloudName}/image/fetch/w_${width},f_auto/${encodeURIComponent(url)}`;
@@ -1639,7 +1670,8 @@
                     groupeBandeauLien.textContent = 'Voir tous les événements';
                     groupeBandeauLien.href = 'evenements.html#evenements';
                     if (data.participation && data.participation.toLowerCase().includes('inscription')) {
-                        inscriptionBtn.href = 'https://wa.me/22967668799?text=Bonjour%2C%20je%20souhaite%20m%27inscrire%20%C3%A0%20%3A%20' +
+                        // MODIFIÉ PHASE 4 : utilise CONFIG.whatsappAdmin
+                        inscriptionBtn.href = 'https://wa.me/' + CONFIG.whatsappAdmin + '?text=Bonjour%2C%20je%20souhaite%20m%27inscrire%20%C3%A0%20%3A%20' +
                             encodeURIComponent(data.titre || '');
                         inscriptionBtn.style.display = 'inline-flex';
                     } else {
@@ -1676,7 +1708,7 @@
         // ============================================================
         // MENU MOBILE + CHATBOT
         // ============================================================
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', async () => {
 
             // LOADER
             setTimeout(() => document.getElementById('loader').classList.add('cache'), 600);
@@ -1744,6 +1776,9 @@
                     }, 400);
                 });
             });
+
+            // CHARGER LA CONFIG D'ABORD (AJOUT PHASE 4)
+            await chargerConfig();
 
             // CHARGER L'ARTICLE
             chargerArticle();
