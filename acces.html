@@ -322,6 +322,116 @@ p { max-width: var(--largeur-texte); }
 .acces-info-bas a { color: var(--or-clair); border-bottom: 1px solid rgba(184,146,46,0.3); }
 
 /* ============================================================
+   FICHE CONTENU PAYANT (NOUVEAU)
+   ============================================================ */
+.fiche-contenu {
+  display: none;
+  text-align: left;
+  margin-bottom: var(--espace-md);
+}
+.fiche-contenu.visible { display: block; }
+
+.fiche-affiche {
+  width: 100%;
+  aspect-ratio: 16/9;
+  background: var(--noir-3);
+  background-size: cover;
+  background-position: center;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  margin-bottom: var(--espace-sm);
+  position: relative;
+  overflow: hidden;
+}
+.fiche-affiche::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.5) 100%);
+  pointer-events: none;
+}
+
+.fiche-badge-type {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, var(--or-clair), var(--or-fonce));
+  color: var(--noir);
+  font-family: var(--font-titres);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.fiche-titre {
+  font-family: var(--font-titres);
+  font-size: clamp(1.2rem, 3vw, 1.6rem);
+  color: var(--blanc);
+  margin-bottom: 10px;
+  line-height: 1.3;
+}
+
+.fiche-description {
+  color: var(--blanc-doux);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin-bottom: var(--espace-sm);
+  white-space: pre-line;
+}
+
+.fiche-prix-bloc {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: rgba(184,146,46,0.08);
+  border: 1px solid rgba(184,146,46,0.35);
+  border-radius: 6px;
+  padding: 14px 18px;
+  margin-bottom: var(--espace-sm);
+  flex-wrap: wrap;
+}
+.fiche-prix-label {
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+.fiche-prix-valeur {
+  font-family: var(--font-titres);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--or-clair);
+  letter-spacing: 0.02em;
+}
+
+.fiche-paiement-info {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-bottom: var(--espace-sm);
+  padding: 12px 14px;
+  border-left: 2px solid var(--or);
+  background: rgba(184,146,46,0.03);
+  border-radius: 0 4px 4px 0;
+}
+.fiche-paiement-info strong {
+  color: var(--blanc-doux);
+  display: block;
+  margin-bottom: 4px;
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+}
+
+.fiche-btn-payer {
+  width: 100%;
+  margin-bottom: var(--espace-sm);
+}
+
+/* ============================================================
    FOOTER (version allégée)
    ============================================================ */
 .footer { background: var(--noir-2); border-top: 1px solid var(--border); padding: 40px 0 20px; }
@@ -377,10 +487,45 @@ p { max-width: var(--largeur-texte); }
 
     <div class="acces-carte">
 
-      <div class="acces-icone" aria-hidden="true">🔐</div>
+      <!-- ============================================================
+           BLOC SIMPLE (affiché si PAS de paramètres URL)
+           ============================================================ -->
+      <div id="blocSimple">
+        <div class="acces-icone" aria-hidden="true">🔐</div>
+        <h1 class="acces-titre">Accéder à votre contenu</h1>
+        <p class="acces-sous-titre">Entrez le code unique que vous avez reçu pour rejoindre un live, consulter un livre, ou accéder à un contenu réservé.</p>
+      </div>
 
-      <h1 class="acces-titre">Accéder à votre contenu</h1>
-      <p class="acces-sous-titre">Entrez le code unique que vous avez reçu pour rejoindre un live, consulter un livre, ou accéder à un contenu réservé.</p>
+      <!-- ============================================================
+           BLOC FICHE (affiché si ?type=...&slug=... dans l'URL)
+           ============================================================ -->
+      <div class="fiche-contenu" id="ficheContenu">
+        <div class="fiche-affiche" id="ficheAffiche"></div>
+        <div>
+          <span class="fiche-badge-type" id="ficheBadgeType">📺 Contenu</span>
+        </div>
+        <h1 class="fiche-titre" id="ficheTitre">Chargement…</h1>
+        <div class="fiche-description" id="ficheDescription"></div>
+
+        <div class="fiche-prix-bloc" id="fichePrixBloc" style="display:none;">
+          <span class="fiche-prix-label">Accès payant</span>
+          <span class="fiche-prix-valeur" id="fichePrix">0 FCFA</span>
+        </div>
+
+        <div class="fiche-paiement-info">
+          <strong>💳 Comment payer</strong>
+          Envoyez le montant par <strong>MoMo</strong> ou <strong>Wave</strong> puis envoyez la capture d'écran par WhatsApp. Vous recevrez votre code d'accès.
+        </div>
+
+        <a class="btn-or fiche-btn-payer" id="ficheBtnPayer" href="#" target="_blank" rel="noopener">
+          📱 Payer maintenant
+        </a>
+      </div>
+
+      <!-- ============================================================
+           SÉPARATEUR + FORMULAIRE CODE
+           ============================================================ -->
+      <div class="acces-separateur" id="separateurCode">Vous avez déjà un code ?</div>
 
       <form class="acces-form" id="formAcces" autocomplete="off">
         <div class="acces-champ-wrap">
@@ -405,7 +550,7 @@ p { max-width: var(--largeur-texte); }
 
       <div class="acces-message" id="message" role="alert"></div>
 
-      <div class="acces-separateur">Pas de code ?</div>
+      <div class="acces-separateur" id="separateurSansCode">Pas de code ?</div>
 
       <div class="acces-aide">
         <strong>Besoin d'un code d'accès ?</strong>
@@ -493,7 +638,6 @@ function mettreAJourWhatsApp() {
 }
 
 function mettreAJourEmail() {
-  // Déjà en HTML par défaut, mais on peut le rendre dynamique si besoin
   const lienMail = document.querySelector('.acces-info-bas a[href^="mailto:"]');
   if (lienMail) {
     lienMail.href = 'mailto:' + CONFIG.emailContact;
@@ -527,8 +671,140 @@ function cacherMessage() {
 // ============================================================
 function nettoyerCode(valeur) {
   if (!valeur) return '';
-  // Uppercase, trim, retire espaces et caractères indésirables
   return valeur.trim().toUpperCase().replace(/[^A-Z0-9-]/g, '');
+}
+
+// ============================================================
+// ÉCHAPPER LE HTML
+// ============================================================
+function escapeHtml(str) {
+  if (!str) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
+// ============================================================
+// CLOUDINARY — optimisation d'images
+// ============================================================
+const cloudName = 'bvcdjwg7';
+function cloudinaryUrl(url, width) {
+  if (!url) return '';
+  width = width || 800;
+  return 'https://res.cloudinary.com/' + cloudName + '/image/fetch/w_' + width + ',f_auto/' + encodeURIComponent(url);
+}
+
+// ============================================================
+// CHARGER LA FICHE DU CONTENU (nouveau — si ?type=...&slug=...)
+// ============================================================
+async function chargerFicheContenu() {
+  const params = new URLSearchParams(window.location.search);
+  const type = (params.get('type') || '').toLowerCase();
+  const slug = params.get('slug');
+
+  // Pas de paramètres → on garde la vue simple
+  if (!type || !slug) return;
+
+  // Afficher le bloc fiche, cacher le bloc simple
+  document.getElementById('blocSimple').style.display = 'none';
+  document.getElementById('ficheContenu').classList.add('visible');
+
+  // Adapter le séparateur
+  document.getElementById('separateurCode').textContent = 'Vous avez déjà un code ?';
+
+  // Charger le contenu
+  try {
+    let data = null;
+    let badgeIcone = '📺';
+    let badgeTexte = 'Contenu';
+
+    if (type === 'live') {
+      // Live : on cherche dans la collection 'live' le doc avec ce slug
+      const snap = await db.collection('live').get();
+      snap.forEach(doc => {
+        const d = doc.data();
+        if (d.slug === slug && d.payant === true) {
+          data = d;
+        }
+      });
+      badgeIcone = '🔴';
+      badgeTexte = 'Live en direct';
+    } else if (type === 'video') {
+      // Vidéo : on cherche dans medias_videos
+      const snap = await db.collection('medias_videos')
+        .where('slug', '==', slug)
+        .limit(1)
+        .get();
+      if (!snap.empty) {
+        const d = snap.docs[0].data();
+        if (d.payant === true) {
+          data = d;
+        }
+      }
+      badgeIcone = '🎬';
+      badgeTexte = 'Vidéo';
+    }
+
+    // Si rien trouvé → message
+    if (!data) {
+      document.getElementById('ficheTitre').textContent = 'Contenu introuvable';
+      document.getElementById('ficheDescription').textContent =
+        'Ce contenu n\'existe pas ou n\'est plus disponible. Contactez-nous si vous pensez qu\'il s\'agit d\'une erreur.';
+      document.getElementById('fichePrixBloc').style.display = 'none';
+      document.getElementById('ficheBtnPayer').style.display = 'none';
+      return;
+    }
+
+    // Remplir la fiche
+    const titre = data.titre || 'Sans titre';
+    const description = data.descriptionPayante || data.description || 'Découvrez ce contenu du Groupe Gbêmadoyomin.';
+    const prix = parseInt(data.prix, 10) || 0;
+    const affiche = data.affiche || (data.images && data.images[0]) || data.vignetteURL || '';
+
+    // Mettre à jour le titre de la page
+    document.title = titre + ' — Accès | Groupe Gbêmadoyomin';
+
+    // Badge type
+    document.getElementById('ficheBadgeType').textContent = badgeIcone + ' ' + badgeTexte;
+
+    // Affiche
+    if (affiche) {
+      document.getElementById('ficheAffiche').style.backgroundImage = 'url(' + cloudinaryUrl(affiche, 900) + ')';
+    } else {
+      document.getElementById('ficheAffiche').style.display = 'none';
+    }
+
+    // Titre + description
+    document.getElementById('ficheTitre').textContent = titre;
+    document.getElementById('ficheDescription').textContent = description;
+
+    // Prix
+    if (prix > 0) {
+      document.getElementById('fichePrixBloc').style.display = 'flex';
+      document.getElementById('fichePrix').textContent = prix.toLocaleString('fr-FR') + ' FCFA';
+    } else {
+      document.getElementById('fichePrixBloc').style.display = 'none';
+    }
+
+    // Bouton payer (WhatsApp)
+    const msgPayer = 'Bonjour, je souhaite acheter l\'accès à : « ' + titre + ' »'
+      + (prix > 0 ? ' — ' + prix.toLocaleString('fr-FR') + ' FCFA' : '')
+      + '. Pouvez-vous m\'indiquer les modalités de paiement ?';
+    const btnPayer = document.getElementById('ficheBtnPayer');
+    btnPayer.href = 'https://wa.me/' + CONFIG.whatsappAdmin + '?text=' + encodeURIComponent(msgPayer);
+
+    // Adapter le séparateur
+    document.getElementById('separateurCode').textContent = 'Vous avez déjà un code d\'accès ?';
+
+  } catch (err) {
+    console.error('Erreur chargement fiche:', err);
+    document.getElementById('ficheTitre').textContent = 'Erreur de chargement';
+    document.getElementById('ficheDescription').textContent =
+      'Impossible de charger les informations du contenu. Réessayez dans un instant.';
+  }
 }
 
 // ============================================================
@@ -538,7 +814,6 @@ async function verifierCode(code) {
   const btn = document.getElementById('btnVerifier');
   const spanText = btn.querySelector('.btn-text');
 
-  // État chargement
   btn.disabled = true;
   spanText.innerHTML = '<span class="acces-loader-inline"></span> Vérification…';
   cacherMessage();
@@ -547,7 +822,6 @@ async function verifierCode(code) {
     const docRef = db.collection('acces').doc(code);
     const doc = await docRef.get();
 
-    // 1. Code inexistant
     if (!doc.exists) {
       afficherMessage('erreur', 'Code inconnu',
         'Ce code n\'existe pas ou a été supprimé. Vérifiez la saisie (majuscules, tirets). Si le problème persiste, contactez-nous.');
@@ -556,14 +830,12 @@ async function verifierCode(code) {
 
     const d = doc.data();
 
-    // 2. Code désactivé
     if (!d.actif) {
       afficherMessage('erreur', 'Code désactivé',
         'Ce code a été désactivé par l\'administrateur. Contactez-nous pour en obtenir un nouveau.');
       return;
     }
 
-    // 3. Code expiré
     if (d.dateExpiration && d.dateExpiration.toDate) {
       const expDate = d.dateExpiration.toDate();
       if (expDate.getTime() < Date.now()) {
@@ -575,25 +847,21 @@ async function verifierCode(code) {
       }
     }
 
-    // 4. Usage unique et déjà utilisé
     if (d.usageUnique && d.utilise) {
       afficherMessage('erreur', 'Code déjà utilisé',
         'Ce code a déjà été utilisé une fois (usage unique). Contactez-nous si vous pensez qu\'il s\'agit d\'une erreur.');
       return;
     }
 
-    // 5. Vérifier le lien de destination
     if (!d.lien) {
       afficherMessage('erreur', 'Lien manquant',
         'Le code est valide mais aucun contenu n\'est associé. Contactez-nous.');
       return;
     }
 
-    // ✅ TOUT OK
     afficherMessage('succes', 'Code valide ! Redirection en cours…',
       'Accès autorisé à : ' + (d.titre || 'votre contenu') + '.');
 
-    // Marquer comme utilisé si usage unique
     if (d.usageUnique) {
       try {
         await docRef.update({
@@ -605,7 +873,6 @@ async function verifierCode(code) {
       }
     }
 
-    // Rediriger après un court délai
     setTimeout(function () {
       window.location.href = d.lien;
     }, 1200);
@@ -623,7 +890,7 @@ async function verifierCode(code) {
 // ============================================================
 // INITIALISATION
 // ============================================================
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', async function () {
 
   // Loader
   setTimeout(function () {
@@ -653,7 +920,6 @@ document.addEventListener('DOMContentLoaded', function () {
   input.addEventListener('input', function () {
     const pos = input.selectionStart;
     input.value = nettoyerCode(input.value);
-    // Repositionner le curseur
     try { input.setSelectionRange(pos, pos); } catch (e) {}
     cacherMessage();
   });
@@ -680,10 +946,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Config WhatsApp
   mettreAJourWhatsApp();
-  chargerConfig();
+
+  // Charger la config (nécessaire pour WhatsApp dans la fiche)
+  await chargerConfig();
+
+  // Charger la fiche contenu si ?type=...&slug=...
+  await chargerFicheContenu();
+
 });
 
-// ---- SERVICE WORKER (optionnel, silencieux si absent) ----
+// ---- SERVICE WORKER ----
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('service-worker.js')
     .then(function () { console.log('✅ Service Worker enregistré'); })
