@@ -950,7 +950,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
   document.querySelectorAll('.reveal, .reveal-stagger').forEach(el => observateur.observe(el));
 
-  // Ouverture / fermeture du panneau chatbot
   const toggleBtn = document.getElementById('chatbotToggle');
   const panel = document.getElementById('chatbotPanel');
   const closeBtn = document.getElementById('chatbotClose');
@@ -967,18 +966,25 @@ if ('serviceWorker' in navigator) {
 }
 </script>
 
-<script>
+<script type="module">
 // ============================================================
 // CHATBOT IA — Groupe Gbêmadoyomin
-// Utilise KeylessAI : aucune clé, aucun compte, fonctionne direct
+// Utilise GPT4Free.js avec PollinationsAI
+// Aucune clé API, aucun compte, fonctionne directement
 // ============================================================
 
-(function () {
-  const chatbotInput = document.getElementById('chatbotInput');
-  const chatbotSendBtn = document.getElementById('chatbotSendBtn');
-  const chatbotMessages = document.getElementById('chatbotMessages');
+import { Client, PollinationsAI } from 'https://g4f.dev/dist/js/client.js';
 
-  if (!chatbotInput || !chatbotSendBtn || !chatbotMessages) return;
+const chatbotInput = document.getElementById('chatbotInput');
+const chatbotSendBtn = document.getElementById('chatbotSendBtn');
+const chatbotMessages = document.getElementById('chatbotMessages');
+
+if (!chatbotInput || !chatbotSendBtn || !chatbotMessages) {
+  console.warn('Chatbot: éléments DOM introuvables');
+} else {
+
+  // Initialiser le client Pollinations
+  const client = new PollinationsAI();
 
   // Historique de la conversation
   let conversation = [
@@ -1028,21 +1034,12 @@ CONTACT :
     conversation.push({ role: 'user', content: texte });
 
     try {
-      const reponse = await fetch('https://keylessai.thryx.workers.dev/v1/chat/completions', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          model: 'gpt-4o',
-          messages: conversation
-        })
+      const result = await client.chat.completions.create({
+        model: 'gpt-4.1',
+        messages: conversation
       });
 
-      if (!reponse.ok) {
-        throw new Error('Statut : ' + reponse.status);
-      }
-
-      const data = await reponse.json();
-      const texteReponse = (data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content) || 'Je n\'ai pas pu répondre.';
+      const texteReponse = result.choices[0].message.content;
 
       bulleIA.textContent = texteReponse;
       conversation.push({ role: 'assistant', content: texteReponse });
@@ -1072,7 +1069,7 @@ CONTACT :
   window.ouvrirChat = function () {
     document.getElementById('chatbotPanel').classList.add('open');
   };
-})();
+}
 </script>
 
 </body>
