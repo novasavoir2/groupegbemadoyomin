@@ -491,6 +491,7 @@ section { padding-block: var(--espace-xl); }
   </button>
 </nav>
 
+  
 <header class="con-hero">
   <div class="con-hero-image" aria-hidden="true"></div>
   <div class="conteneur">
@@ -707,14 +708,18 @@ section { padding-block: var(--espace-xl); }
     <div class="chatbot-messages" id="chatbotMessages">
       <div class="chatbot-msg bot">Bonjour ! Je suis l'assistant du Groupe Gbêmadoyomin. Que recherchez-vous ?</div>
     </div>
-    <div class="chatbot-options" id="chatbotOptions">
-      <button class="chatbot-option" data-action="consultation">🔸 Consultation</button>
-      <button class="chatbot-option" data-action="rdv">📅 RDV</button>
-      <button class="chatbot-option" data-action="livres">📚 Livres</button>
-      <button class="chatbot-option" data-action="vibration">💜 Vibration Sacrée</button>
-      <button class="chatbot-option" data-action="don">❤️ Don</button>
-      <button class="chatbot-option" data-action="contact">📞 Contact</button>
-    </div>
+    <div style="display:flex; gap:6px; margin-top:10px;">
+  <input 
+    type="text" 
+    id="chatbotInput" 
+    placeholder="Écrivez votre question..." 
+    style="flex:1; padding:10px 14px; background:#161616; border:1px solid rgba(184,146,46,0.2); border-radius:6px; color:#f0ebe0; font-size:0.85rem;"
+  >
+  <button 
+    id="chatbotSendBtn"
+    style="padding:10px 16px; background:linear-gradient(135deg,#d4af5a,#8a6a1f); color:#0d0d0d; border:none; border-radius:6px; font-weight:700; cursor:pointer;"
+  >➤</button>
+</div>
   </div>
 </div>
 
@@ -1015,6 +1020,118 @@ if ('serviceWorker' in navigator) {
     .catch(() => console.log('⚠️ Service Worker non enregistré'));
 }
 </script>
+<script src="https://js.puter.com/v2/"></script>
+<script>
+// ============================================================
+// CHATBOT IA — Groupe Gbêmadoyomin
+// ============================================================
 
+const chatbotInput = document.getElementById('chatbotInput');
+const chatbotSendBtn = document.getElementById('chatbotSendBtn');
+const chatbotMessages = document.getElementById('chatbotMessages');
+
+// Historique de la conversation (pour que l'IA se souvienne)
+let conversation = [
+  {
+    role: 'system',
+    content: `Tu es l'assistant officiel du Groupe Gbêmadoyomin, fondé par le Professeur Bokônon Gbêmadoyômin.
+
+TON RÔLE :
+- Accueillir les visiteurs avec respect et bienveillance
+- Comprendre leur situation en posant des questions : ont-ils déjà fait une consultation du Fâ ? Quand ? Ont-ils respecté les interdits ? Ont-ils fait les sacrifices ?
+- Les orienter vers les services du Cabinet (consultations) ou les produits de TODAAA SHOP
+- Répondre aux questions sur : Le Livre du Fa (20000 FCFA), Le Code de Vie (20000 FCFA), Vodoun Dan (15000 FCFA), Le Livre d'Astuces (25000 FCFA), Programme Spirituel TODAAA (21000 FCFA), Boisson Spiritueuse TODAAA (30000 FCFA)
+
+RÈGLES :
+- Tu ne fais JAMAIS de diagnostic médical ou spirituel définitif
+- Tu proposes toujours une consultation pour les cas sérieux
+- Tu ne promets aucun résultat
+- Tu réponds en français, ton chaleureux et respectueux
+- Phrases courtes, maximum 4 phrases
+
+CONTACT :
+- WhatsApp : +229 01 67 66 87 99
+- Email : cabinetgbemadoyomin@gmail.com
+- Localisation : Abomey-Calavi, Bénin`
+  }
+];
+
+// Afficher une bulle dans le chat
+function ajouterBulle(texte, expediteur) {
+  const bulle = document.createElement('div');
+  bulle.className = 'chatbot-msg ' + expediteur;
+  bulle.textContent = texte;
+  chatbotMessages.appendChild(bulle);
+  chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+  return bulle;
+}
+
+// Envoyer un message à l'IA
+async function envoyerMessage() {
+  const texte = chatbotInput.value.trim();
+  if (!texte) return;
+
+  // Vider le champ
+  chatbotInput.value = '';
+  chatbotSendBtn.disabled = true;
+
+  // Afficher le message de l'utilisateur
+  ajouterBulle(texte, 'user');
+
+  // Afficher un indicateur "..." en attendant
+  const bulleIA = ajouterBulle('...', 'bot');
+
+  // Ajouter à l'historique
+  conversation.push({ role: 'user', content: texte });
+
+  try {
+    // APPEL À L'IA (Puter.js)
+    const reponse = await puter.ai.chat(conversation);
+
+    // Récupérer le texte de la réponse
+    let texteReponse = '';
+    if (typeof reponse === 'string') {
+      texteReponse = reponse;
+    } else if (reponse && reponse.message && reponse.message.content) {
+      texteReponse = reponse.message.content;
+    } else if (reponse && reponse.text) {
+      texteReponse = reponse.text;
+    } else {
+      texteReponse = String(reponse);
+    }
+
+    // Afficher la réponse
+    bulleIA.textContent = texteReponse;
+
+    // Ajouter à l'historique
+    conversation.push({ role: 'assistant', content: texteReponse });
+
+    // Garder seulement les 20 derniers messages (pour ne pas surcharger)
+    if (conversation.length > 21) {
+      conversation = [conversation[0], ...conversation.slice(-20)];
+    }
+
+  } catch (erreur) {
+    console.error('Erreur IA:', erreur);
+    bulleIA.textContent = "Je n'arrive pas à répondre. Contactez-nous sur WhatsApp : +229 01 67 66 87 99";
+  } finally {
+    chatbotSendBtn.disabled = false;
+    chatbotInput.focus();
+  }
+}
+
+// Bouton d'envoi
+chatbotSendBtn.addEventListener('click', envoyerMessage);
+
+// Touche Entrée
+chatbotInput.addEventListener('keypress', function(e) {
+  if (e.key === 'Enter') envoyerMessage();
+});
+
+// Ouvrir le chat automatiquement la première fois
+window.ouvrirChat = function() {
+  document.getElementById('chatbotPanel').classList.add('open');
+};
+</script>  
 </body>
 </html>
