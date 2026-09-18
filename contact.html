@@ -966,27 +966,19 @@ if ('serviceWorker' in navigator) {
 }
 </script>
 
-<script type="module">
+<script>
 // ============================================================
 // CHATBOT IA — Groupe Gbêmadoyomin
-// Utilise GPT4Free.js avec PollinationsAI
-// Aucune clé API, aucun compte, fonctionne directement
+// Appel direct à l'API Pollinations (gratuit, sans clé)
 // ============================================================
 
-import { Client, PollinationsAI } from 'https://g4f.dev/dist/js/client.js';
+(function () {
+  const chatbotInput = document.getElementById('chatbotInput');
+  const chatbotSendBtn = document.getElementById('chatbotSendBtn');
+  const chatbotMessages = document.getElementById('chatbotMessages');
 
-const chatbotInput = document.getElementById('chatbotInput');
-const chatbotSendBtn = document.getElementById('chatbotSendBtn');
-const chatbotMessages = document.getElementById('chatbotMessages');
+  if (!chatbotInput || !chatbotSendBtn || !chatbotMessages) return;
 
-if (!chatbotInput || !chatbotSendBtn || !chatbotMessages) {
-  console.warn('Chatbot: éléments DOM introuvables');
-} else {
-
-  // Initialiser le client Pollinations
-  const client = new PollinationsAI();
-
-  // Historique de la conversation
   let conversation = [
     {
       role: 'system',
@@ -1021,6 +1013,67 @@ CONTACT :
     return bulle;
   }
 
+  // Liste des endpoints à essayer dans l'ordre
+  const endpoints = [
+    'https://text.pollinations.ai/openai',
+    'https://text.pollinations.ai/v1/chat/completions'
+  ];
+
+  async function appelerIA(messages) {
+    let derniereErreur = null;
+
+    for (const url of endpoints) {
+      try {
+        console.log('Tentative avec:', url);
+
+        const reponse = await fetch(url, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify({
+            model: 'openai',
+            messages: messages,
+            temperature: 0.7,
+            max_tokens: 500
+          })
+        });
+
+        if (!reponse.ok) {
+          throw new Error('HTTP ' + reponse.status);
+        }
+
+        const data = await reponse.json();
+        console.log('Réponse reçue:', data);
+
+        // Extraire le texte de la réponse (format OpenAI ou format brut)
+        let texte = null;
+        if (data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content) {
+          texte = data.choices[0].message.content;
+        } else if (data.choices && data.choices[0] && data.choices[0].text) {
+          texte = data.choices[0].text;
+        } else if (typeof data === 'string') {
+          texte = data;
+        } else if (data.content) {
+          texte = data.content;
+        }
+
+        if (texte) {
+          return texte;
+        }
+
+        throw new Error('Format de réponse non reconnu');
+
+      } catch (err) {
+        console.warn('Échec avec ' + url + ':', err.message);
+        derniereErreur = err;
+      }
+    }
+
+    throw derniereErreur || new Error('Tous les endpoints ont échoué');
+  }
+
   async function envoyerMessage() {
     const texte = chatbotInput.value.trim();
     if (!texte) return;
@@ -1034,12 +1087,7 @@ CONTACT :
     conversation.push({ role: 'user', content: texte });
 
     try {
-      const result = await client.chat.completions.create({
-        model: 'gpt-4.1',
-        messages: conversation
-      });
-
-      const texteReponse = result.choices[0].message.content;
+      const texteReponse = await appelerIA(conversation);
 
       bulleIA.textContent = texteReponse;
       conversation.push({ role: 'assistant', content: texteReponse });
@@ -1069,7 +1117,7 @@ CONTACT :
   window.ouvrirChat = function () {
     document.getElementById('chatbotPanel').classList.add('open');
   };
-}
+})();
 </script>
 
 </body>
