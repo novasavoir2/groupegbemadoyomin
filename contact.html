@@ -117,9 +117,6 @@ section { padding-block: var(--espace-xl); }
 }
 .btn-contour:hover { border-color: var(--or); color: var(--or-clair); }
 
-/* ============================================================
-   BANDEAU DÉFILANT
-   ============================================================ */
 .bandeau-defilant {
   position: sticky; top: 0; z-index: 50;
   background: linear-gradient(135deg, var(--rouge), var(--noir-2));
@@ -146,9 +143,6 @@ section { padding-block: var(--espace-xl); }
 .bandeau-defilant-inner .bandeau-lien img { width: 24px; height: 30px; object-fit: cover; border-radius: 2px; border: 1px solid rgba(255,255,255,0.2); }
 @keyframes defilement { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
 
-/* ============================================================
-   LIVE BANNER
-   ============================================================ */
 .live-banner {
   background: linear-gradient(135deg, #7a1515, #4a0d0d);
   border-bottom: 1px solid var(--or);
@@ -166,9 +160,6 @@ section { padding-block: var(--espace-xl); }
 .live-banner a { color: var(--or-clair); font-size: 0.82rem; border-bottom: 1px solid var(--or-clair); transition: color 0.3s ease; }
 .live-banner a:hover { color: var(--blanc); }
 
-/* ============================================================
-   LIVE FALLBACK
-   ============================================================ */
 .live-fallback {
   display: none;
   aspect-ratio: 16/9;
@@ -199,9 +190,6 @@ section { padding-block: var(--espace-xl); }
 .live-fallback-btns .btn-fb { background: #1877f2; color: white; }
 .live-fallback-btns .btn-tk { background: #000000; color: white; border: 1px solid #fe2c55; }
 
-/* ============================================================
-   LOADER
-   ============================================================ */
 .loader {
   position: fixed; inset: 0; z-index: 999; background: var(--noir);
   display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px;
@@ -226,9 +214,6 @@ section { padding-block: var(--espace-xl); }
   50% { width: 80px; opacity: 1; }
 }
 
-/* ============================================================
-   NAVIGATION
-   ============================================================ */
 .nav {
   position: sticky; top: 0; z-index: 100; background: rgba(8, 8, 8, 0.92); backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border); padding-inline: clamp(20px, 4vw, 32px); height: 72px;
@@ -260,9 +245,6 @@ section { padding-block: var(--espace-xl); }
   .nav-burger { display: flex; }
 }
 
-/* ============================================================
-   CHATBOT
-   ============================================================ */
 .chatbot-container {
   position: fixed; bottom: 100px; left: 20px; z-index: 98;
   display: flex; flex-direction: column; align-items: flex-start; gap: 10px;
@@ -278,7 +260,7 @@ section { padding-block: var(--espace-xl); }
 .chatbot-btn svg { width: 28px; height: 28px; fill: none; stroke: white; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 .chatbot-panel {
   position: fixed; bottom: 160px; left: 20px; z-index: 97;
-  width: 340px; max-width: 90vw;
+  width: 360px; max-width: 90vw;
   background: var(--noir-2); border: 1px solid var(--border); border-radius: 16px;
   padding: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.6);
   transform: translateY(20px) scale(0.95); opacity: 0; pointer-events: none;
@@ -287,27 +269,32 @@ section { padding-block: var(--espace-xl); }
 .chatbot-panel.open { transform: translateY(0) scale(1); opacity: 1; pointer-events: auto; }
 .chatbot-panel h3 { font-family: var(--font-titres); font-size: 0.9rem; color: var(--or); margin-bottom: 4px; }
 .chatbot-panel .chatbot-sub { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 14px; }
-.chatbot-messages { max-height: 200px; overflow-y: auto; margin-bottom: 12px; display: flex; flex-direction: column; gap: 6px; }
-.chatbot-msg { padding: 8px 12px; border-radius: 8px; font-size: 0.85rem; max-width: 85%; }
+.chatbot-messages { max-height: 280px; overflow-y: auto; margin-bottom: 12px; display: flex; flex-direction: column; gap: 6px; }
+.chatbot-msg { padding: 8px 12px; border-radius: 8px; font-size: 0.85rem; max-width: 85%; line-height: 1.45; }
 .chatbot-msg.bot { background: var(--noir-3); color: var(--blanc-doux); align-self: flex-start; border-bottom-left-radius: 2px; }
 .chatbot-msg.user { background: linear-gradient(135deg, var(--or-clair), var(--or-fonce)); color: var(--noir); align-self: flex-end; border-bottom-right-radius: 2px; }
-.chatbot-options { display: flex; flex-wrap: wrap; gap: 6px; }
-.chatbot-option {
-  background: var(--noir-3); border: 1px solid var(--border-discret); border-radius: 6px;
-  padding: 8px 14px; font-size: 0.8rem; color: var(--blanc-doux);
-  transition: border-color var(--vitesse), background var(--vitesse); cursor: pointer; flex: 1 0 auto;
-}
-.chatbot-option:hover { border-color: var(--or); background: rgba(184,146,46,0.08); }
 .chatbot-close { position: absolute; top: 8px; right: 12px; font-size: 1.2rem; color: var(--text-discret); cursor: pointer; background: none; border: none; }
+.chatbot-input-zone { display: flex; gap: 6px; margin-top: 10px; }
+.chatbot-input-zone input {
+  flex: 1; padding: 10px 14px; background: #161616;
+  border: 1px solid rgba(184,146,46,0.2); border-radius: 6px;
+  color: #f0ebe0; font-size: 0.85rem;
+}
+.chatbot-input-zone input:focus { outline: none; border-color: var(--or); }
+.chatbot-input-zone button {
+  padding: 10px 16px;
+  background: linear-gradient(135deg,#d4af5a,#8a6a1f);
+  color: #0d0d0d; border: none; border-radius: 6px;
+  font-weight: 700; cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+.chatbot-input-zone button:disabled { opacity: 0.5; cursor: not-allowed; }
 @media (max-width: 640px) {
-  .chatbot-panel { width: 280px; bottom: 150px; left: 10px; }
+  .chatbot-panel { width: 300px; bottom: 150px; left: 10px; }
   .chatbot-btn { width: 48px; height: 48px; }
   .chatbot-btn svg { width: 24px; height: 24px; }
 }
 
-/* ============================================================
-   FLOTTANTS
-   ============================================================ */
 .flottants { position: fixed; right: 20px; bottom: 20px; z-index: 90; display: flex; flex-direction: column; align-items: flex-end; gap: 12px; }
 .flottant-wa { width: 52px; height: 52px; background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(37, 211, 102, .35); transition: transform 0.3s ease; }
 .flottant-wa:hover { transform: scale(1.08); }
@@ -315,9 +302,6 @@ section { padding-block: var(--espace-xl); }
 .flottant-rdv { background: linear-gradient(135deg, var(--or-clair), var(--or-fonce)); color: var(--noir); font-family: var(--font-titres); font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 12px 20px; border-radius: 3px; box-shadow: var(--lueur-or); transition: transform 0.3s ease; }
 .flottant-rdv:hover { transform: translateY(-2px); }
 
-/* ============================================================
-   ANIMATIONS
-   ============================================================ */
 .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.8s ease, transform 0.8s ease; }
 .reveal.est-visible { opacity: 1; transform: translateY(0); }
 .reveal-stagger { opacity: 0; transform: translateY(28px); transition: opacity 0.8s ease, transform 0.8s ease; }
@@ -333,9 +317,6 @@ section { padding-block: var(--espace-xl); }
 .shine:hover::before { transform: translateX(45%); }
 @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } .reveal-stagger { opacity: 1; transform: none; transition: none; } .pulse-doux { animation: none; } }
 
-/* ============================================================
-   HERO CONTACT
-   ============================================================ */
 .con-hero {
   min-height: 38vh; display: flex; align-items: center; text-align: center;
   padding-block: calc(var(--espace-xl) + 72px) var(--espace-md);
@@ -379,9 +360,6 @@ section { padding-block: var(--espace-xl); }
 @media (max-width: 900px) { .entites-mini-grille { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 560px) { .entites-mini-grille { grid-template-columns: 1fr; } }
 
-/* ============================================================
-   FOOTER
-   ============================================================ */
 .footer { background: var(--noir-2); border-top: 1px solid var(--border); padding: 56px 0 24px; }
 .footer-grille { display: grid; grid-template-columns: 1.8fr 1fr 1fr 1.4fr; gap: 40px; padding-bottom: 32px; border-bottom: 1px solid var(--border-discret); }
 .f-logo { font-family: var(--font-titres); font-size: 19px; color: var(--or); letter-spacing: 0.1em; margin-bottom: 4px; display: flex; align-items: center; gap: 10px; }
@@ -491,7 +469,6 @@ section { padding-block: var(--espace-xl); }
   </button>
 </nav>
 
-  
 <header class="con-hero">
   <div class="con-hero-image" aria-hidden="true"></div>
   <div class="conteneur">
@@ -704,22 +681,19 @@ section { padding-block: var(--espace-xl); }
   <div class="chatbot-panel" id="chatbotPanel">
     <button class="chatbot-close" id="chatbotClose" aria-label="Fermer l'assistant">✕</button>
     <h3>🤖 Assistant Gbêmadoyomin</h3>
-    <p class="chatbot-sub">Poser une question</p>
+    <p class="chatbot-sub">Posez votre question, je vous réponds</p>
     <div class="chatbot-messages" id="chatbotMessages">
-      <div class="chatbot-msg bot">Bonjour ! Je suis l'assistant du Groupe Gbêmadoyomin. Que recherchez-vous ?</div>
+      <div class="chatbot-msg bot">Bonjour ! Je suis l'assistant du Groupe Gbêmadoyomin. Comment puis-je vous aider aujourd'hui ?</div>
     </div>
-    <div style="display:flex; gap:6px; margin-top:10px;">
-  <input 
-    type="text" 
-    id="chatbotInput" 
-    placeholder="Écrivez votre question..." 
-    style="flex:1; padding:10px 14px; background:#161616; border:1px solid rgba(184,146,46,0.2); border-radius:6px; color:#f0ebe0; font-size:0.85rem;"
-  >
-  <button 
-    id="chatbotSendBtn"
-    style="padding:10px 16px; background:linear-gradient(135deg,#d4af5a,#8a6a1f); color:#0d0d0d; border:none; border-radius:6px; font-weight:700; cursor:pointer;"
-  >➤</button>
-</div>
+    <div class="chatbot-input-zone">
+      <input
+        type="text"
+        id="chatbotInput"
+        placeholder="Écrivez votre question..."
+        autocomplete="off"
+      >
+      <button id="chatbotSendBtn" aria-label="Envoyer">➤</button>
+    </div>
   </div>
 </div>
 
@@ -976,41 +950,13 @@ document.addEventListener('DOMContentLoaded', () => {
   }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
   document.querySelectorAll('.reveal, .reveal-stagger').forEach(el => observateur.observe(el));
 
+  // Ouverture / fermeture du panneau chatbot
   const toggleBtn = document.getElementById('chatbotToggle');
   const panel = document.getElementById('chatbotPanel');
   const closeBtn = document.getElementById('chatbotClose');
-  const messagesContainer = document.getElementById('chatbotMessages');
 
   toggleBtn.addEventListener('click', () => panel.classList.toggle('open'));
   closeBtn.addEventListener('click', () => panel.classList.remove('open'));
-
-  function addMessage(text, sender) {
-    const msg = document.createElement('div');
-    msg.className = `chatbot-msg ${sender}`;
-    msg.textContent = text;
-    messagesContainer.appendChild(msg);
-    messagesContainer.scrollTop = messagesContainer.scrollHeight;
-  }
-
-  const responses = {
-    'consultation': '🔸 Je vous propose une consultation du Fa. Nous avons deux formats : en présentiel à Abomey-Calavi (Bénin) ou à distance (WhatsApp / appel). Le Professeur Gbêmadoyômin vous accompagne avec écoute et tradition. Souhaitez-vous un RDV ?',
-    'rdv': '📅 Prendre rendez-vous est simple. Contactez-nous directement sur WhatsApp : +229 01 67 66 87 99. Nous vous répondrons dans les meilleurs délais pour fixer un créneau selon vos disponibilités.',
-    'livres': '📚 Découvrez les ouvrages du Professeur sur TODAAA SHOP : "Le Livre du Fa", "Le Code de Vie", "Vodoun Dan", "Le Livre d\'Astuces", et bien d\'autres. Chaque livre est une porte vers la connaissance traditionnelle.',
-    'vibration': '💜 Vibration Sacrée est une communauté de fraternité, de loyauté et de partage. Contactez-nous sur WhatsApp (+229 01 67 66 87 99) pour rejoindre cet espace de transmission et de solidarité.',
-    'don': '❤️ Merci pour votre générosité ! Vous pouvez faire un don directement via WhatsApp ou payer via MoMo Pay, Wave ou PayPal. Chaque contribution aide à soutenir les actions sociales du Groupe et à diffuser les traditions.',
-    'contact': '📞 Pour toute question, contactez-nous par WhatsApp : +229 01 67 66 87 99 ou par email : cabinetgbemadoyomin@gmail.com. Nous vous répondons dans les meilleurs délais.'
-  };
-
-  document.querySelectorAll('.chatbot-option').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const action = btn.dataset.action;
-      const label = btn.textContent.trim();
-      addMessage(label, 'user');
-      setTimeout(() => {
-        addMessage(responses[action] || 'Je peux vous aider avec autre chose.', 'bot');
-      }, 400);
-    });
-  });
 
 });
 
@@ -1020,118 +966,114 @@ if ('serviceWorker' in navigator) {
     .catch(() => console.log('⚠️ Service Worker non enregistré'));
 }
 </script>
-<script src="https://js.puter.com/v2/"></script>
+
 <script>
 // ============================================================
 // CHATBOT IA — Groupe Gbêmadoyomin
+// Utilise KeylessAI : aucune clé, aucun compte, fonctionne direct
 // ============================================================
 
-const chatbotInput = document.getElementById('chatbotInput');
-const chatbotSendBtn = document.getElementById('chatbotSendBtn');
-const chatbotMessages = document.getElementById('chatbotMessages');
+(function () {
+  const chatbotInput = document.getElementById('chatbotInput');
+  const chatbotSendBtn = document.getElementById('chatbotSendBtn');
+  const chatbotMessages = document.getElementById('chatbotMessages');
 
-// Historique de la conversation (pour que l'IA se souvienne)
-let conversation = [
-  {
-    role: 'system',
-    content: `Tu es l'assistant officiel du Groupe Gbêmadoyomin, fondé par le Professeur Bokônon Gbêmadoyômin.
+  if (!chatbotInput || !chatbotSendBtn || !chatbotMessages) return;
+
+  // Historique de la conversation
+  let conversation = [
+    {
+      role: 'system',
+      content: `Tu es l'assistant officiel du Groupe Gbêmadoyomin, fondé par le Professeur Bokônon Gbêmadoyômin.
 
 TON RÔLE :
-- Accueillir les visiteurs avec respect et bienveillance
+- Accueillir les visiteurs avec respect et bienveillance.
 - Comprendre leur situation en posant des questions : ont-ils déjà fait une consultation du Fâ ? Quand ? Ont-ils respecté les interdits ? Ont-ils fait les sacrifices ?
-- Les orienter vers les services du Cabinet (consultations) ou les produits de TODAAA SHOP
-- Répondre aux questions sur : Le Livre du Fa (20000 FCFA), Le Code de Vie (20000 FCFA), Vodoun Dan (15000 FCFA), Le Livre d'Astuces (25000 FCFA), Programme Spirituel TODAAA (21000 FCFA), Boisson Spiritueuse TODAAA (30000 FCFA)
+- Les orienter vers les services du Cabinet (consultations) ou les produits de TODAAA SHOP.
+- Répondre aux questions sur : Le Livre du Fa (20000 FCFA), Le Code de Vie (20000 FCFA), Vodoun Dan (15000 FCFA), Le Livre d'Astuces (25000 FCFA), Programme Spirituel TODAAA (21000 FCFA), Boisson Spiritueuse TODAAA (30000 FCFA).
 
 RÈGLES :
-- Tu ne fais JAMAIS de diagnostic médical ou spirituel définitif
-- Tu proposes toujours une consultation pour les cas sérieux
-- Tu ne promets aucun résultat
-- Tu réponds en français, ton chaleureux et respectueux
-- Phrases courtes, maximum 4 phrases
+- Tu ne fais JAMAIS de diagnostic médical ou spirituel définitif.
+- Tu proposes toujours une consultation pour les cas sérieux.
+- Tu ne promets aucun résultat.
+- Tu réponds en français, avec un ton chaleureux et respectueux.
+- Tes phrases sont courtes, quatre phrases maximum.
 
 CONTACT :
 - WhatsApp : +229 01 67 66 87 99
 - Email : cabinetgbemadoyomin@gmail.com
 - Localisation : Abomey-Calavi, Bénin`
-  }
-];
-
-// Afficher une bulle dans le chat
-function ajouterBulle(texte, expediteur) {
-  const bulle = document.createElement('div');
-  bulle.className = 'chatbot-msg ' + expediteur;
-  bulle.textContent = texte;
-  chatbotMessages.appendChild(bulle);
-  chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
-  return bulle;
-}
-
-// Envoyer un message à l'IA
-async function envoyerMessage() {
-  const texte = chatbotInput.value.trim();
-  if (!texte) return;
-
-  // Vider le champ
-  chatbotInput.value = '';
-  chatbotSendBtn.disabled = true;
-
-  // Afficher le message de l'utilisateur
-  ajouterBulle(texte, 'user');
-
-  // Afficher un indicateur "..." en attendant
-  const bulleIA = ajouterBulle('...', 'bot');
-
-  // Ajouter à l'historique
-  conversation.push({ role: 'user', content: texte });
-
-  try {
-    // APPEL À L'IA (Puter.js)
-    const reponse = await puter.ai.chat(conversation);
-
-    // Récupérer le texte de la réponse
-    let texteReponse = '';
-    if (typeof reponse === 'string') {
-      texteReponse = reponse;
-    } else if (reponse && reponse.message && reponse.message.content) {
-      texteReponse = reponse.message.content;
-    } else if (reponse && reponse.text) {
-      texteReponse = reponse.text;
-    } else {
-      texteReponse = String(reponse);
     }
+  ];
 
-    // Afficher la réponse
-    bulleIA.textContent = texteReponse;
-
-    // Ajouter à l'historique
-    conversation.push({ role: 'assistant', content: texteReponse });
-
-    // Garder seulement les 20 derniers messages (pour ne pas surcharger)
-    if (conversation.length > 21) {
-      conversation = [conversation[0], ...conversation.slice(-20)];
-    }
-
-  } catch (erreur) {
-    console.error('Erreur IA:', erreur);
-    bulleIA.textContent = "Je n'arrive pas à répondre. Contactez-nous sur WhatsApp : +229 01 67 66 87 99";
-  } finally {
-    chatbotSendBtn.disabled = false;
-    chatbotInput.focus();
+  function ajouterBulle(texte, expediteur) {
+    const bulle = document.createElement('div');
+    bulle.className = 'chatbot-msg ' + expediteur;
+    bulle.textContent = texte;
+    chatbotMessages.appendChild(bulle);
+    chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+    return bulle;
   }
-}
 
-// Bouton d'envoi
-chatbotSendBtn.addEventListener('click', envoyerMessage);
+  async function envoyerMessage() {
+    const texte = chatbotInput.value.trim();
+    if (!texte) return;
 
-// Touche Entrée
-chatbotInput.addEventListener('keypress', function(e) {
-  if (e.key === 'Enter') envoyerMessage();
-});
+    chatbotInput.value = '';
+    chatbotSendBtn.disabled = true;
 
-// Ouvrir le chat automatiquement la première fois
-window.ouvrirChat = function() {
-  document.getElementById('chatbotPanel').classList.add('open');
-};
-</script>  
+    ajouterBulle(texte, 'user');
+    const bulleIA = ajouterBulle('...', 'bot');
+
+    conversation.push({ role: 'user', content: texte });
+
+    try {
+      const reponse = await fetch('https://keylessai.thryx.workers.dev/v1/chat/completions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: 'gpt-4o',
+          messages: conversation
+        })
+      });
+
+      if (!reponse.ok) {
+        throw new Error('Statut : ' + reponse.status);
+      }
+
+      const data = await reponse.json();
+      const texteReponse = (data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content) || 'Je n\'ai pas pu répondre.';
+
+      bulleIA.textContent = texteReponse;
+      conversation.push({ role: 'assistant', content: texteReponse });
+
+      if (conversation.length > 21) {
+        conversation = [conversation[0], ...conversation.slice(-20)];
+      }
+
+    } catch (erreur) {
+      console.error('Erreur IA:', erreur);
+      bulleIA.textContent = "Je n'arrive pas à répondre. Contactez-nous sur WhatsApp : +229 01 67 66 87 99";
+    } finally {
+      chatbotSendBtn.disabled = false;
+      chatbotInput.focus();
+    }
+  }
+
+  chatbotSendBtn.addEventListener('click', envoyerMessage);
+
+  chatbotInput.addEventListener('keypress', function (e) {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      envoyerMessage();
+    }
+  });
+
+  window.ouvrirChat = function () {
+    document.getElementById('chatbotPanel').classList.add('open');
+  };
+})();
+</script>
+
 </body>
 </html>
