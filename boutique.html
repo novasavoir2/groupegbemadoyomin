@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TODAAA SHOP — Boutique du Groupe Gbêmadoyomin</title>
 <meta name="description" content="TODAAA SHOP — ouvrages du Professeur, mode et accessoires, objets traditionnels de chance, purification et protection, bijoux symboliques, sceaux et art. Entité commerciale du Groupe Gbêmadoyomin.">
-<meta name="keywords" content="TODAAA SHOP, boutique, livres, mode, accessoires, spiritualité, bijoux, sceaux, art, coffrets, Groupe Gbêmadoyomin, GG">
 <meta name="author" content="Groupe Gbêmadoyomin">
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
 <link rel="canonical" href="https://groupegbemadoyomin.com/boutique.html">
@@ -29,6 +28,7 @@
 
 <link rel="manifest" href="manifest.json">
 
+<!-- ⚠️ À REMPLACER : ID Google Analytics réel (G-XXXXXXXXXX) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -133,7 +133,7 @@ section { padding-block: var(--espace-xl); }
 @keyframes defilement { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
 
 /* ============================================================
-   LIVE BANNER + FALLBACK (comme sur les autres pages)
+   LIVE BANNER + FALLBACK
    ============================================================ */
 .live-banner {
   background: linear-gradient(135deg, #7a1515, #4a0d0d);
@@ -332,6 +332,7 @@ section { padding-block: var(--espace-xl); }
 .produit-titre { font-family: var(--font-titres); font-size: .82rem; color: var(--blanc); }
 .produit-desc { font-size: .78rem; color: var(--text-muted); flex: 1; }
 .produit-prix { font-size: .85rem; color: var(--or); font-weight: 700; }
+.produit-prix.demande { color: var(--or-clair); font-style: italic; font-weight: 400; font-family: var(--font-accent); font-size: .9rem; }
 .produit-cta {
   margin-top: auto; display: inline-flex; align-items: center; justify-content: center; gap: 6px;
   font-size: .68rem; font-weight: 700; letter-spacing: .06em;
@@ -341,6 +342,19 @@ section { padding-block: var(--espace-xl); }
 .produit-cta:hover { background: rgba(37,211,102,.1); }
 .produit-cta.acces { color: var(--or-clair); border-color: rgba(184,146,46,.5); }
 .produit-cta.acces:hover { background: rgba(184,146,46,.1); }
+
+/* Cartes sans visuel (Mode Polo/Accessoires + Coffrets) */
+.produit-carte.sans-visuel { min-height: 240px; justify-content: center; padding: 28px 20px; text-align: center; }
+.produit-carte.sans-visuel .produit-corps { padding: 0; gap: 14px; }
+.produit-carte.sans-visuel .produit-titre { font-size: 1rem; line-height: 1.3; }
+.produit-carte.sans-visuel::before {
+  content: '✦';
+  display: block;
+  font-size: 1.4rem;
+  color: var(--or);
+  margin-bottom: 8px;
+  opacity: 0.8;
+}
 
 .categories-grille { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--espace-sm); }
 .categorie-carte {
@@ -403,6 +417,9 @@ section { padding-block: var(--espace-xl); }
   .produits-grille { grid-template-columns: repeat(2, 1fr); }
   .categories-grille { grid-template-columns: 1fr; }
 }
+@media (max-width: 420px) {
+  .produits-grille { grid-template-columns: 1fr; }
+}
 </style>
 </head>
 <body data-page="boutique">
@@ -430,7 +447,7 @@ section { padding-block: var(--espace-xl); }
 </div>
 
 <!-- ============================================================
-   LIVE BANNER (AJOUT)
+   LIVE BANNER
    ============================================================ -->
 <div class="live-banner" id="liveBanner">
   <div class="conteneur live-banner-inner">
@@ -476,7 +493,7 @@ section { padding-block: var(--espace-xl); }
 </header>
 
 <!-- ============================================================
-   LIVE EMBED (AJOUT)
+   LIVE EMBED
    ============================================================ -->
 <section id="live-embed" style="display:none; padding-block: var(--espace-md);">
   <div class="conteneur">
@@ -508,6 +525,9 @@ section { padding-block: var(--espace-xl); }
   </div>
 </nav>
 
+<!-- ============================================================
+     LIVRES & ÉDITIONS — 11 ouvrages
+     ============================================================ -->
 <section class="bou-section" id="livres">
   <div class="conteneur">
     <div class="bou-section-titre reveal">
@@ -547,26 +567,6 @@ section { padding-block: var(--espace-xl); }
       </div>
 
       <div class="produit-carte reveal-stagger">
-        <div class="produit-visuel" style="background:linear-gradient(160deg, var(--noir-3), var(--noir-2)); display:flex; align-items:center; justify-content:center; color:var(--text-discret); font-size:.72rem; text-align:center; padding:14px;">Livre de Prières T1</div>
-        <div class="produit-corps">
-          <span class="produit-titre">Livre de Prières — Tome 1</span>
-          <p class="produit-desc">Un recueil de prières destiné à accompagner la pratique spirituelle.</p>
-          <span class="produit-prix">5 000 FCFA</span>
-          <a class="produit-cta" href="https://wa.me/22967668799?text=Bonjour%2C%20je%20souhaite%20commander%20%3A%20Livre%20de%20Pri%C3%A8res%20Tome%201" target="_blank" rel="noopener">Commander sur WhatsApp</a>
-        </div>
-      </div>
-
-      <div class="produit-carte reveal-stagger">
-        <div class="produit-visuel" style="background:linear-gradient(160deg, var(--noir-3), var(--noir-2)); display:flex; align-items:center; justify-content:center; color:var(--text-discret); font-size:.72rem; text-align:center; padding:14px;">Livre de Prières T2</div>
-        <div class="produit-corps">
-          <span class="produit-titre">Livre de Prières — Tome 2 : Prières pour les Vodoun</span>
-          <p class="produit-desc">Un ouvrage consacré aux prières adressées aux Vodoun.</p>
-          <span class="produit-prix">15 000 FCFA</span>
-          <a class="produit-cta" href="https://wa.me/22967668799?text=Bonjour%2C%20je%20souhaite%20commander%20%3A%20Livre%20de%20Pri%C3%A8res%20Tome%202" target="_blank" rel="noopener">Commander sur WhatsApp</a>
-        </div>
-      </div>
-
-      <div class="produit-carte reveal-stagger">
         <div class="produit-visuel shine" style="background-image:url('livre-astuces.jpeg');" role="img" aria-label="Couverture du Livre d'Astuces"></div>
         <div class="produit-corps">
           <span class="produit-titre">Le Livre d'Astuces</span>
@@ -577,17 +577,27 @@ section { padding-block: var(--espace-xl); }
       </div>
 
       <div class="produit-carte reveal-stagger">
-        <div class="produit-visuel" style="background:linear-gradient(160deg, var(--noir-3), var(--noir-2)); display:flex; align-items:center; justify-content:center; color:var(--text-discret); font-size:.72rem; text-align:center; padding:14px;">Neuf Archétypes</div>
+        <div class="produit-visuel shine" style="background-image:url('rituel-longevite.jpeg');" role="img" aria-label="Couverture du livre Rituel de Longévité et de Protection Vitale"></div>
         <div class="produit-corps">
-          <span class="produit-titre">Les Neuf Archétypes</span>
-          <p class="produit-desc">Numérologie & connaissance de soi — les neuf grands archétypes et leurs influences sur les personnalités et parcours de vie.</p>
-          <span class="produit-prix">20 000 FCFA</span>
-          <a class="produit-cta" href="https://wa.me/22967668799?text=Bonjour%2C%20je%20souhaite%20commander%20%3A%20Les%20Neuf%20Arch%C3%A9types" target="_blank" rel="noopener">Commander sur WhatsApp</a>
+          <span class="produit-titre">Rituel de Longévité &amp; Protection Vitale</span>
+          <p class="produit-desc">Un ouvrage consacré aux rituels de longévité et à la protection vitale selon la tradition ancestrale.</p>
+          <span class="produit-prix demande">Prix sur demande</span>
+          <a class="produit-cta" href="https://wa.me/22967668799?text=Bonjour%2C%20je%20souhaite%20commander%20%3A%20Rituel%20de%20Long%C3%A9vit%C3%A9%20et%20de%20Protection%20Vitale" target="_blank" rel="noopener">Commander sur WhatsApp</a>
         </div>
       </div>
 
       <div class="produit-carte reveal-stagger">
-        <div class="produit-visuel" style="background:linear-gradient(160deg, var(--noir-3), var(--noir-2)); display:flex; align-items:center; justify-content:center; color:var(--text-discret); font-size:.72rem; text-align:center; padding:14px;">Clé des Naissances</div>
+        <div class="produit-visuel shine" style="background-image:url('09-archetypes.jpeg');" role="img" aria-label="Couverture des 09 Archétypes"></div>
+        <div class="produit-corps">
+          <span class="produit-titre">Les 09 Archétypes</span>
+          <p class="produit-desc">Numérologie &amp; connaissance de soi — les neuf grands archétypes et leurs influences sur les personnalités et parcours de vie.</p>
+          <span class="produit-prix">20 000 FCFA</span>
+          <a class="produit-cta" href="https://wa.me/22967668799?text=Bonjour%2C%20je%20souhaite%20commander%20%3A%20Les%2009%20Arch%C3%A9types" target="_blank" rel="noopener">Commander sur WhatsApp</a>
+        </div>
+      </div>
+
+      <div class="produit-carte reveal-stagger">
+        <div class="produit-visuel shine" style="background-image:url('cle-naissances.jpeg');" role="img" aria-label="Couverture de La Clé des Naissances"></div>
         <div class="produit-corps">
           <span class="produit-titre">La Clé des Naissances</span>
           <p class="produit-desc">Un ouvrage consacré à la compréhension des informations et symboliques liées à la naissance.</p>
@@ -597,32 +607,42 @@ section { padding-block: var(--espace-xl); }
       </div>
 
       <div class="produit-carte reveal-stagger">
-        <div class="produit-visuel" style="background:linear-gradient(160deg, var(--noir-3), var(--noir-2)); display:flex; align-items:center; justify-content:center; color:var(--text-discret); font-size:.72rem; text-align:center; padding:14px;">Livre sur les Cauris</div>
+        <div class="produit-visuel shine" style="background-image:url('programme-spirituel.jpeg');" role="img" aria-label="Couverture du Programme Spirituel TODAAA 2026"></div>
         <div class="produit-corps">
-          <span class="produit-titre">Le Livre sur les Cauris</span>
-          <p class="produit-desc">Consacré au langage des cauris, à leurs différentes positions et à leur interprétation.</p>
-          <span class="produit-prix">25 000 FCFA</span>
-          <a class="produit-cta" href="https://wa.me/22967668799?text=Bonjour%2C%20je%20souhaite%20commander%20%3A%20Le%20Livre%20sur%20les%20Cauris" target="_blank" rel="noopener">Commander sur WhatsApp</a>
-        </div>
-      </div>
-
-      <div class="produit-carte reveal-stagger">
-        <div class="produit-visuel" style="background:linear-gradient(160deg, var(--noir-3), var(--noir-2)); display:flex; align-items:center; justify-content:center; color:var(--text-discret); font-size:.72rem; text-align:center; padding:14px;">Programme Spirituel</div>
-        <div class="produit-corps">
-          <span class="produit-titre">Programme Spirituel TODAAA..!</span>
+          <span class="produit-titre">Programme Spirituel TODAAA 2026 !</span>
           <p class="produit-desc">Un programme pratique pour accompagner l'année : orientations, exercices, recommandations et outils de suivi personnel et spirituel.</p>
           <span class="produit-prix">21 000 FCFA</span>
-          <a class="produit-cta" href="https://wa.me/22967668799?text=Bonjour%2C%20je%20souhaite%20commander%20%3A%20Programme%20Spirituel%20TODAAA" target="_blank" rel="noopener">Commander sur WhatsApp</a>
+          <a class="produit-cta" href="https://wa.me/22967668799?text=Bonjour%2C%20je%20souhaite%20commander%20%3A%20Programme%20Spirituel%20TODAAA%202026" target="_blank" rel="noopener">Commander sur WhatsApp</a>
         </div>
       </div>
 
       <div class="produit-carte reveal-stagger">
-        <div class="produit-visuel" style="background:linear-gradient(160deg, var(--noir-3), var(--noir-2)); display:flex; align-items:center; justify-content:center; color:var(--text-discret); font-size:.72rem; text-align:center; padding:14px;">Boisson Spiritueuse</div>
+        <div class="produit-visuel shine" style="background-image:url('codex-du-bo.jpeg');" role="img" aria-label="Couverture du Codex du Bo"></div>
         <div class="produit-corps">
-          <span class="produit-titre">Boisson Spiritueuse TODAAA..!</span>
-          <p class="produit-desc">Une création de l'univers TODAAA..! Composition, format et conditions de vente précisées sur sa fiche produit.</p>
-          <span class="produit-prix">30 000 FCFA</span>
-          <a class="produit-cta" href="https://wa.me/22967668799?text=Bonjour%2C%20je%20souhaite%20commander%20%3A%20Boisson%20Spiritueuse%20TODAAA" target="_blank" rel="noopener">Commander sur WhatsApp</a>
+          <span class="produit-titre">Codex du Bo</span>
+          <p class="produit-desc">Un ouvrage de référence consacré au Bo, à sa symbolique et à sa compréhension dans la tradition.</p>
+          <span class="produit-prix demande">Prix sur demande</span>
+          <a class="produit-cta" href="https://wa.me/22967668799?text=Bonjour%2C%20je%20souhaite%20commander%20%3A%20Codex%20du%20Bo" target="_blank" rel="noopener">Commander sur WhatsApp</a>
+        </div>
+      </div>
+
+      <div class="produit-carte reveal-stagger">
+        <div class="produit-visuel shine" style="background-image:url('livre-prieres.jpeg');" role="img" aria-label="Couverture du Livret de Prière"></div>
+        <div class="produit-corps">
+          <span class="produit-titre">Livret de Prière</span>
+          <p class="produit-desc">Un recueil de prières destiné à accompagner la pratique spirituelle quotidienne.</p>
+          <span class="produit-prix">5 000 FCFA</span>
+          <a class="produit-cta" href="https://wa.me/22967668799?text=Bonjour%2C%20je%20souhaite%20commander%20%3A%20Livret%20de%20Pri%C3%A8re" target="_blank" rel="noopener">Commander sur WhatsApp</a>
+        </div>
+      </div>
+
+      <div class="produit-carte reveal-stagger">
+        <div class="produit-visuel shine" style="background-image:url('caurissacres.jpeg');" role="img" aria-label="Couverture du Livre de Cauris Sacrés"></div>
+        <div class="produit-corps">
+          <span class="produit-titre">Le Livre de Cauris Sacrés</span>
+          <p class="produit-desc">Consacré au langage des cauris sacrés, à leurs différentes positions et à leur interprétation traditionnelle.</p>
+          <span class="produit-prix">25 000 FCFA</span>
+          <a class="produit-cta" href="https://wa.me/22967668799?text=Bonjour%2C%20je%20souhaite%20commander%20%3A%20Le%20Livre%20de%20Cauris%20Sacr%C3%A9s" target="_blank" rel="noopener">Commander sur WhatsApp</a>
         </div>
       </div>
 
@@ -630,38 +650,54 @@ section { padding-block: var(--espace-xl); }
   </div>
 </section>
 
+<!-- ============================================================
+     MODE TODAAA 2026 — 1 carte T-shirt+Casquette + 2 cartes sans image
+     ============================================================ -->
 <section class="bou-section" id="mode">
   <div class="conteneur">
     <div class="bou-section-titre reveal">
-      <h2>👕 Mode TODAAA..!</h2>
+      <h2>👕 Mode TODAAA 2026</h2>
       <span>Collection 2026 — édition actuelle</span>
     </div>
-    <p class="reveal" style="color: var(--blanc-doux); max-width: var(--largeur-texte); margin-bottom: var(--espace-md);">Chaque année, une nouvelle édition officielle TODAAA..! voit le jour, avec des modèles pensés pour cette période : t-shirts, chemises, polos, manches longues, casquettes et accessoires. Certains modèles sont proposés en édition limitée.</p>
+    <p class="reveal" style="color: var(--blanc-doux); max-width: var(--largeur-texte); margin-bottom: var(--espace-md);">Chaque année, une nouvelle édition officielle TODAAA voit le jour, avec des modèles pensés pour cette période : t-shirts, chemises, polos, manches longues, casquettes et accessoires. Certains modèles sont proposés en édition limitée.</p>
     <div class="produits-grille">
+
       <div class="produit-carte reveal-stagger">
-        <div class="produit-visuel shine" style="background-image:url('tshirt-2026.jpeg');" role="img" aria-label="T-shirt Collection 2026"></div>
-        <div class="produit-corps"><span class="produit-titre">T-shirt — Collection 2026</span><p class="produit-desc">Édition actuelle TODAAA..!</p><a class="produit-cta" href="https://wa.me/22967668799?text=Bonjour%2C%20je%20souhaite%20des%20infos%20sur%20la%20collection%20T-shirt%202026" target="_blank" rel="noopener">Renseignements WhatsApp</a></div>
+        <div class="produit-visuel shine" style="background-image:url('tshirt-2026.jpeg');" role="img" aria-label="T-shirt et Casquette Collection 2026"></div>
+        <div class="produit-corps">
+          <span class="produit-titre">T-shirt &amp; Casquette — Collection 2026</span>
+          <p class="produit-desc">Édition actuelle TODAAA — pack comprenant le t-shirt et la casquette officiels 2026.</p>
+          <a class="produit-cta" href="https://wa.me/22967668799?text=Bonjour%2C%20je%20souhaite%20des%20infos%20sur%20le%20T-shirt%20et%20la%20Casquette%202026" target="_blank" rel="noopener">Renseignements WhatsApp</a>
+        </div>
       </div>
-      <div class="produit-carte reveal-stagger">
-        <div class="produit-visuel shine" style="background-image:url('casquette-2026.jpeg');" role="img" aria-label="Casquette TODAAA"></div>
-        <div class="produit-corps"><span class="produit-titre">Casquette — Collection 2026</span><p class="produit-desc">Édition actuelle TODAAA..!</p><a class="produit-cta" href="https://wa.me/22967668799?text=Bonjour%2C%20je%20souhaite%20des%20infos%20sur%20la%20casquette%202026" target="_blank" rel="noopener">Renseignements WhatsApp</a></div>
+
+      <div class="produit-carte sans-visuel reveal-stagger">
+        <div class="produit-corps">
+          <span class="produit-titre">Polo — Collection 2026</span>
+          <p class="produit-desc">Édition actuelle TODAAA.</p>
+          <a class="produit-cta" href="https://wa.me/22967668799?text=Bonjour%2C%20je%20souhaite%20des%20infos%20sur%20le%20polo%202026" target="_blank" rel="noopener">Renseignements WhatsApp</a>
+        </div>
       </div>
-      <div class="produit-carte reveal-stagger">
-        <div class="produit-visuel shine" style="background-image:url('polo-2026.jpeg');" role="img" aria-label="Polo TODAAA"></div>
-        <div class="produit-corps"><span class="produit-titre">Polo — Collection 2026</span><p class="produit-desc">Édition actuelle TODAAA..!</p><a class="produit-cta" href="https://wa.me/22967668799?text=Bonjour%2C%20je%20souhaite%20des%20infos%20sur%20le%20polo%202026" target="_blank" rel="noopener">Renseignements WhatsApp</a></div>
+
+      <div class="produit-carte sans-visuel reveal-stagger">
+        <div class="produit-corps">
+          <span class="produit-titre">Accessoires — Collection 2026</span>
+          <p class="produit-desc">Sacs, bracelets, chaînes, médailles.</p>
+          <a class="produit-cta" href="https://wa.me/22967668799?text=Bonjour%2C%20je%20souhaite%20des%20infos%20sur%20les%20accessoires%202026" target="_blank" rel="noopener">Renseignements WhatsApp</a>
+        </div>
       </div>
-      <div class="produit-carte reveal-stagger">
-        <div class="produit-visuel shine" style="background-image:url('accessoire-2026.jpeg');" role="img" aria-label="Accessoires TODAAA"></div>
-        <div class="produit-corps"><span class="produit-titre">Accessoires — Collection 2026</span><p class="produit-desc">Sacs, bracelets, chaînes, médailles.</p><a class="produit-cta" href="https://wa.me/22967668799?text=Bonjour%2C%20je%20souhaite%20des%20infos%20sur%20les%20accessoires%202026" target="_blank" rel="noopener">Renseignements WhatsApp</a></div>
-      </div>
+
     </div>
   </div>
 </section>
 
+<!-- ============================================================
+     SPIRITUALITÉ & OBJETS
+     ============================================================ -->
 <section class="bou-section" id="spiritualite">
   <div class="conteneur">
     <div class="bou-section-titre reveal">
-      <h2>✨ Spiritualité & Objets traditionnels</h2>
+      <h2>✨ Spiritualité &amp; Objets traditionnels</h2>
       <span>Issus de l'univers traditionnel du Cabinet</span>
     </div>
     <div class="categories-grille">
@@ -688,6 +724,9 @@ section { padding-block: var(--espace-xl); }
   </div>
 </section>
 
+<!-- ============================================================
+     BIJOUX
+     ============================================================ -->
 <section class="bou-section" id="bijoux">
   <div class="conteneur">
     <div class="bou-section-titre reveal">
@@ -701,10 +740,13 @@ section { padding-block: var(--espace-xl); }
   </div>
 </section>
 
+<!-- ============================================================
+     SCEAUX
+     ============================================================ -->
 <section class="bou-section" id="sceaux">
   <div class="conteneur">
     <div class="bou-section-titre reveal">
-      <h2>🔯 Sceaux & Symboles</h2>
+      <h2>🔯 Sceaux &amp; Symboles</h2>
       <span>Sceaux de protection, prospérité et chance</span>
     </div>
     <p class="reveal" style="color: var(--blanc-doux); max-width: var(--largeur-texte); margin-bottom: var(--espace-md);">Sceaux de protection, sceaux de prospérité, sceaux de chance, symboles traditionnels, créations exclusives — disponibles selon les modèles sous différentes formes : supports imprimés, objets, médailles ou créations décoratives.</p>
@@ -714,44 +756,67 @@ section { padding-block: var(--espace-xl); }
   </div>
 </section>
 
+<!-- ============================================================
+     ART
+     ============================================================ -->
 <section class="bou-section" id="art">
   <div class="conteneur">
     <div class="bou-section-titre reveal">
-      <h2>🖼️ Tableaux & Décoration</h2>
+      <h2>🖼️ Tableaux &amp; Décoration</h2>
       <span>L'univers traditionnel rencontre la décoration contemporaine</span>
     </div>
-    <p class="reveal" style="color: var(--blanc-doux); max-width: var(--largeur-texte); margin-bottom: var(--espace-md);">Tableaux symboliques, œuvres inspirées du Fa et du Vodoun, décorations murales, pièces artisanales, créations TODAAA..!, éditions limitées — pour la maison, le bureau, le cabinet ou comme objet de collection.</p>
+    <p class="reveal" style="color: var(--blanc-doux); max-width: var(--largeur-texte); margin-bottom: var(--espace-md);">Tableaux symboliques, œuvres inspirées du Fa et du Vodoun, décorations murales, pièces artisanales, créations TODAAA, éditions limitées — pour la maison, le bureau, le cabinet ou comme objet de collection.</p>
     <div style="text-align:center;">
       <a class="btn-or" href="https://wa.me/22967668799?text=Bonjour%2C%20je%20souhaite%20voir%20les%20tableaux" target="_blank" rel="noopener">Voir les tableaux</a>
     </div>
   </div>
 </section>
 
+<!-- ============================================================
+     COFFRETS — noms uniquement, sans image
+     ============================================================ -->
 <section class="bou-section" id="coffrets">
   <div class="conteneur">
     <div class="bou-section-titre reveal">
-      <h2>🎁 Coffrets TODAAA..!</h2>
+      <h2>🎁 Coffrets TODAAA</h2>
       <span>Plusieurs produits réunis autour d'une thématique</span>
     </div>
     <div class="produits-grille">
-      <div class="produit-carte reveal-stagger">
-        <div class="produit-visuel shine" style="background-image:url('coffret-purification.jpeg');" role="img" aria-label="Coffret Purification"></div>
-        <div class="produit-corps"><span class="produit-titre">Coffret Purification</span><a class="produit-cta" href="https://wa.me/22967668799?text=Bonjour%2C%20je%20souhaite%20des%20infos%20sur%20le%20Coffret%20Purification" target="_blank" rel="noopener">Commander sur WhatsApp</a></div>
+
+      <div class="produit-carte sans-visuel reveal-stagger">
+        <div class="produit-corps">
+          <span class="produit-titre">Coffret Purification</span>
+          <p class="produit-desc">Un ensemble de produits dédiés à la purification traditionnelle.</p>
+          <a class="produit-cta" href="https://wa.me/22967668799?text=Bonjour%2C%20je%20souhaite%20des%20infos%20sur%20le%20Coffret%20Purification" target="_blank" rel="noopener">Commander sur WhatsApp</a>
+        </div>
       </div>
-      <div class="produit-carte reveal-stagger">
-        <div class="produit-visuel shine" style="background-image:url('coffret-protection.jpeg');" role="img" aria-label="Coffret Protection"></div>
-        <div class="produit-corps"><span class="produit-titre">Coffret Protection</span><a class="produit-cta" href="https://wa.me/22967668799?text=Bonjour%2C%20je%20souhaite%20des%20infos%20sur%20le%20Coffret%20Protection" target="_blank" rel="noopener">Commander sur WhatsApp</a></div>
+
+      <div class="produit-carte sans-visuel reveal-stagger">
+        <div class="produit-corps">
+          <span class="produit-titre">Coffret Protection</span>
+          <p class="produit-desc">Un ensemble de produits dédiés à la protection traditionnelle.</p>
+          <a class="produit-cta" href="https://wa.me/22967668799?text=Bonjour%2C%20je%20souhaite%20des%20infos%20sur%20le%20Coffret%20Protection" target="_blank" rel="noopener">Commander sur WhatsApp</a>
+        </div>
       </div>
-      <div class="produit-carte reveal-stagger">
-        <div class="produit-visuel shine" style="background-image:url('coffret-chance.jpeg');" role="img" aria-label="Coffret Chance & Prospérité"></div>
-        <div class="produit-corps"><span class="produit-titre">Coffret Chance & Prospérité</span><a class="produit-cta" href="https://wa.me/22967668799?text=Bonjour%2C%20je%20souhaite%20des%20infos%20sur%20le%20Coffret%20Chance%20%26%20Prosp%C3%A9rit%C3%A9" target="_blank" rel="noopener">Commander sur WhatsApp</a></div>
+
+      <div class="produit-carte sans-visuel reveal-stagger">
+        <div class="produit-corps">
+          <span class="produit-titre">Coffret Chance &amp; Prospérité</span>
+          <p class="produit-desc">Un ensemble de produits dédiés à la chance et à la prospérité.</p>
+          <a class="produit-cta" href="https://wa.me/22967668799?text=Bonjour%2C%20je%20souhaite%20des%20infos%20sur%20le%20Coffret%20Chance%20%26%20Prosp%C3%A9rit%C3%A9" target="_blank" rel="noopener">Commander sur WhatsApp</a>
+        </div>
       </div>
-      <div class="produit-carte reveal-stagger">
-        <div class="produit-visuel shine" style="background-image:url('coffret-bienetre.jpeg');" role="img" aria-label="Coffret Bien-être traditionnel"></div>
-        <div class="produit-corps"><span class="produit-titre">Coffret Bien-être traditionnel</span><a class="produit-cta" href="https://wa.me/22967668799?text=Bonjour%2C%20je%20souhaite%20des%20infos%20sur%20le%20Coffret%20Bien-%C3%AAtre" target="_blank" rel="noopener">Commander sur WhatsApp</a></div>
+
+      <div class="produit-carte sans-visuel reveal-stagger">
+        <div class="produit-corps">
+          <span class="produit-titre">Coffret Bien-être traditionnel</span>
+          <p class="produit-desc">Un ensemble de produits dédiés au bien-être selon la tradition.</p>
+          <a class="produit-cta" href="https://wa.me/22967668799?text=Bonjour%2C%20je%20souhaite%20des%20infos%20sur%20le%20Coffret%20Bien-%C3%AAtre" target="_blank" rel="noopener">Commander sur WhatsApp</a>
+        </div>
       </div>
+
     </div>
-    <p class="bou-avertissement reveal" style="margin-top: var(--espace-md);">Le contenu et le prix de chaque coffret sont indiqués sur sa fiche.</p>
+    <p class="bou-avertissement reveal" style="margin-top: var(--espace-md);">Le contenu et le prix de chaque coffret sont indiqués sur sa fiche produit.</p>
   </div>
 </section>
 
@@ -784,7 +849,6 @@ section { padding-block: var(--espace-xl); }
         <div class="f-socials">
           <a class="f-social" href="https://www.facebook.com/share/1KLJbHgA74/?mibextid=wwXIfr" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
           <a class="f-social" href="https://www.tiktok.com/@bokonon.gbemadoyomin" target="_blank" rel="noopener" aria-label="TikTok"><svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V9.97a8.16 8.16 0 004.77 1.52V8.05a4.85 4.85 0 01-1-.36z"/></svg></a>
-          <a class="f-social" href="#" target="_blank" rel="noopener" aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 00-1.94-1.96C18.88 4 12 4 12 4s-6.88 0-8.6.46A2.78 2.78 0 001.46 6.42 29 29 0 001 12a29 29 0 00.46 5.58A2.78 2.78 0 003.4 19.54C5.12 20 12 20 12 20s6.88 0 8.6-.46a2.78 2.78 0 001.94-1.96A29 29 0 0023 12a29 29 0 00-.46-5.58zM9.75 15.02V8.98L15.5 12l-5.75 3.02z"/></svg></a>
         </div>
       </div>
       <div>
@@ -802,7 +866,7 @@ section { padding-block: var(--espace-xl); }
         <div class="f-col-titre">Univers</div>
         <div class="f-liens">
           <a class="f-lien" href="boutique.html">TODAAA SHOP</a>
-          <a class="f-lien" href="boutique.html#livres">Livres & Éditions</a>
+          <a class="f-lien" href="boutique.html#livres">Livres &amp; Éditions</a>
           <a class="f-lien" href="boutique.html#mode">Mode TODAAA 2026</a>
           <a class="f-lien" href="vibration-sacree.html">Vibration Sacrée</a>
           <a class="f-lien" href="vibration-sacree.html#avs">AVS</a>
@@ -824,11 +888,6 @@ section { padding-block: var(--espace-xl); }
       <a class="dev-link" href="https://wa.me/229015252106?text=Bonjour%20Novasavoir%2C%20je%20souhaite%20en%20savoir%20plus%20sur%20vos%20services." target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
         Novasavoir
-      </a>
-      <span>|</span>
-      <a class="dev-link" href="https://wa.me/229015252106?text=Bonjour%20Novasavoir%2C%20je%20souhaite%20en%20savoir%20plus%20sur%20vos%20services." target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
-        +229 01 52 52 106
       </a>
     </div>
   </div>
@@ -868,13 +927,17 @@ section { padding-block: var(--espace-xl); }
 </div>
 
 <!-- ============================================================
-     FIREBASE COMPLET (comme sur les autres pages)
+     FIREBASE
      ============================================================ -->
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 <script>
 (function () {
   try {
+    if (typeof firebase === 'undefined') {
+      console.warn('Firebase SDK non chargé — mode dégradé.');
+      return;
+    }
     var firebaseConfig = {
       apiKey: "AIzaSyBkn-26DnNoQBBfiR4-rRrPfOszW24KRRc",
       authDomain: "groupe-gbemadoyomin.firebaseapp.com",
@@ -889,7 +952,6 @@ section { padding-block: var(--espace-xl); }
     var db = firebase.firestore();
     var cloudName = 'bvcdjwg7';
 
-    // CONFIG GLOBALE
     var CONFIG = {
       fallbackFacebook: 'https://www.facebook.com/share/1KLJbHgA74/?mibextid=wwXIfr',
       fallbackTiktok: 'https://www.tiktok.com/@bokonon.gbemadoyomin',
@@ -917,7 +979,6 @@ section { padding-block: var(--espace-xl); }
       }
     }
 
-    // UTILITAIRES
     function cloudinaryUrl(url, width) {
       if (!url) return '';
       width = width || 800;
@@ -961,7 +1022,6 @@ section { padding-block: var(--espace-xl); }
       return { valide: true };
     }
 
-    // LIVE — identique aux autres pages
     async function chargerLive() {
       try {
         var snap = await db.collection('live').get();
@@ -984,7 +1044,6 @@ section { padding-block: var(--espace-xl); }
         zone.innerHTML = '';
         fallback.classList.remove('visible');
 
-        // CAS PAYANT
         if (data.payant === true && data.slug) {
           var urlAcces = 'acces.html?type=live&slug=' + encodeURIComponent(data.slug);
           var prix = parseInt(data.prix, 10) || 0;
@@ -1007,7 +1066,6 @@ section { padding-block: var(--espace-xl); }
           return;
         }
 
-        // CAS GRATUIT
         if (!data.embedURL) return;
 
         var plateforme = detecterPlateforme(data.embedURL);
@@ -1075,16 +1133,15 @@ section { padding-block: var(--espace-xl); }
         zone.appendChild(iframe);
 
         var liveLoaded = false;
-        iframe.onload = function () { liveLoaded = true; };
-        iframe.onerror = function () { afficherFallback(); };
-        setTimeout(function () { if (!liveLoaded) afficherFallback(); }, 6000);
+        var timeoutId = setTimeout(function () { if (!liveLoaded) afficherFallback(); }, 6000);
+        iframe.onload = function () { liveLoaded = true; clearTimeout(timeoutId); };
+        iframe.onerror = function () { clearTimeout(timeoutId); afficherFallback(); };
 
       } catch (err) {
         console.error('Erreur live:', err);
       }
     }
 
-    // PRODUITS PAYANTS
     function activerProduitsPayants() {
       var produits = document.querySelectorAll('.produit-carte');
       produits.forEach(function (carte) {
@@ -1117,7 +1174,7 @@ section { padding-block: var(--espace-xl); }
 <script>
 document.addEventListener('DOMContentLoaded', () => {
 
-  setTimeout(() => document.getElementById('loader').classList.add('cache'), 600);
+  setTimeout(() => document.getElementById('loader').classList.add('cache'), 1500);
 
   const burger = document.getElementById('nav-burger');
   const liens = document.getElementById('nav-liens');
@@ -1149,36 +1206,38 @@ document.addEventListener('DOMContentLoaded', () => {
   const closeBtn = document.getElementById('chatbotClose');
   const messagesContainer = document.getElementById('chatbotMessages');
 
-  toggleBtn.addEventListener('click', () => panel.classList.toggle('open'));
-  closeBtn.addEventListener('click', () => panel.classList.remove('open'));
+  if (toggleBtn && panel && closeBtn) {
+    toggleBtn.addEventListener('click', () => panel.classList.toggle('open'));
+    closeBtn.addEventListener('click', () => panel.classList.remove('open'));
 
-  function addMessage(text, sender) {
-    const msg = document.createElement('div');
-    msg.className = `chatbot-msg ${sender}`;
-    msg.textContent = text;
-    messagesContainer.appendChild(msg);
-    messagesContainer.scrollTop = messagesContainer.scrollHeight;
-  }
+    function addMessage(text, sender) {
+      const msg = document.createElement('div');
+      msg.className = `chatbot-msg ${sender}`;
+      msg.textContent = text;
+      messagesContainer.appendChild(msg);
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
 
-  const responses = {
-    'consultation': '🔸 Je vous propose une consultation du Fa. Nous avons deux formats : en présentiel à Abomey-Calavi (Bénin) ou à distance (WhatsApp / appel). Le Professeur Gbêmadoyômin vous accompagne avec écoute et tradition. Souhaitez-vous un RDV ?',
-    'rdv': '📅 Prendre rendez-vous est simple. Contactez-nous directement sur WhatsApp : +229 01 67 66 87 99. Nous vous répondrons dans les meilleurs délais pour fixer un créneau selon vos disponibilités.',
-    'livres': '📚 Découvrez les ouvrages du Professeur sur TODAAA SHOP : "Le Livre du Fa", "Le Code de Vie", "Vodoun Dan", "Le Livre d\'Astuces", et bien d\'autres. Chaque livre est une porte vers la connaissance traditionnelle.',
-    'vibration': '💜 Vibration Sacrée est une communauté de fraternité, de loyauté et de partage. Contactez-nous sur WhatsApp (+229 01 67 66 87 99) pour rejoindre cet espace de transmission et de solidarité.',
-    'don': '❤️ Merci pour votre générosité ! Vous pouvez faire un don directement via WhatsApp ou payer via MoMo Pay. Chaque contribution aide à soutenir les actions sociales du Groupe et à diffuser les traditions.',
-    'contact': '📞 Pour toute question, contactez-nous par WhatsApp : +229 01 67 66 87 99 ou par email : cabinetgbemadoyomin@gmail.com. Nous vous répondons dans les meilleurs délais.'
-  };
+    const responses = {
+      'consultation': '🔸 Je vous propose une consultation du Fa. Nous avons deux formats : en présentiel à Abomey-Calavi (Bénin) ou à distance (WhatsApp / appel). Le Professeur Gbêmadoyômin vous accompagne avec écoute et tradition. Souhaitez-vous un RDV ?',
+      'rdv': '📅 Prendre rendez-vous est simple. Contactez-nous directement sur WhatsApp : +229 01 67 66 87 99. Nous vous répondrons dans les meilleurs délais pour fixer un créneau selon vos disponibilités.',
+      'livres': '📚 Découvrez les ouvrages du Professeur sur TODAAA SHOP : "Le Livre du Fa", "Le Code de Vie", "Vodoun Dan", "Le Livre d\'Astuces", et bien d\'autres. Chaque livre est une porte vers la connaissance traditionnelle.',
+      'vibration': '💜 Vibration Sacrée est une communauté de fraternité, de loyauté et de partage. Contactez-nous sur WhatsApp (+229 01 67 66 87 99) pour rejoindre cet espace de transmission et de solidarité.',
+      'don': '❤️ Merci pour votre générosité ! Vous pouvez faire un don directement via WhatsApp ou payer via MoMo Pay. Chaque contribution aide à soutenir les actions sociales du Groupe et à diffuser les traditions.',
+      'contact': '📞 Pour toute question, contactez-nous par WhatsApp : +229 01 67 66 87 99 ou par email : cabinetgbemadoyomin@gmail.com. Nous vous répondons dans les meilleurs délais.'
+    };
 
-  document.querySelectorAll('.chatbot-option').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const action = btn.dataset.action;
-      const label = btn.textContent.trim();
-      addMessage(label, 'user');
-      setTimeout(() => {
-        addMessage(responses[action] || 'Je peux vous aider avec autre chose.', 'bot');
-      }, 400);
+    document.querySelectorAll('.chatbot-option').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const action = btn.dataset.action;
+        const label = btn.textContent.trim();
+        addMessage(label, 'user');
+        setTimeout(() => {
+          addMessage(responses[action] || 'Je peux vous aider avec autre chose.', 'bot');
+        }, 400);
+      });
     });
-  });
+  }
 
 });
 
