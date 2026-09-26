@@ -11,111 +11,44 @@
 
 <style>
 :root {
-  --noir: #0d0d0d;
-  --noir-2: #111111;
-  --noir-3: #161616;
-  --or: #b8922e;
-  --or-clair: #d4af5a;
-  --or-fonce: #8a6a1f;
-  --rouge: #7a1515;
-  --rouge-clair: #a83030;
-  --vert: #22c55e;
-  --blanc: #f0ebe0;
-  --blanc-doux: #c8c0b0;
-  --text-muted: #9a9080;
-  --text-discret: #7a7060;
-  --border: rgba(184, 146, 46, 0.2);
-  --border-discret: rgba(184, 146, 46, 0.1);
-  --font-titres: 'Cinzel', serif;
-  --font-accent: 'Cormorant Garamond', serif;
-  --font-corps: 'Lato', sans-serif;
-  --rayon: 4px;
-  --vitesse: 0.3s ease;
+  --noir: #0d0d0d; --noir-2: #111111; --noir-3: #161616;
+  --or: #b8922e; --or-clair: #d4af5a; --or-fonce: #8a6a1f;
+  --rouge: #7a1515; --vert: #22c55e;
+  --blanc: #f0ebe0; --blanc-doux: #c8c0b0;
+  --text-muted: #9a9080; --text-discret: #7a7060;
+  --border: rgba(184, 146, 46, 0.2); --border-discret: rgba(184, 146, 46, 0.1);
+  --font-titres: 'Cinzel', serif; --font-accent: 'Cormorant Garamond', serif; --font-corps: 'Lato', sans-serif;
+  --rayon: 4px; --vitesse: 0.3s ease;
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
-body {
-  background: var(--noir);
-  color: var(--blanc);
-  font-family: var(--font-corps);
-  font-weight: 300;
-  line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
-  min-height: 100vh;
-}
+body { background: var(--noir); color: var(--blanc); font-family: var(--font-corps); font-weight: 300; line-height: 1.6; -webkit-font-smoothing: antialiased; min-height: 100vh; }
 a { color: inherit; text-decoration: none; }
 button { font: inherit; cursor: pointer; border: none; background: none; color: inherit; }
 input, textarea, select { font: inherit; }
 h1, h2, h3 { font-family: var(--font-titres); font-weight: 700; color: var(--blanc); }
-
 .conteneur { max-width: 1180px; margin-inline: auto; padding-inline: clamp(16px, 4vw, 32px); }
 
-/* ============================================================
-   BOUTONS
-   ============================================================ */
-.btn {
-  display: inline-flex; align-items: center; gap: 8px;
-  padding: 10px 20px; border-radius: var(--rayon);
-  font-family: var(--font-corps); font-weight: 700; font-size: 0.82rem;
-  letter-spacing: 0.03em; transition: all var(--vitesse); cursor: pointer;
-}
-.btn-or {
-  background: linear-gradient(135deg, var(--or-clair), var(--or-fonce));
-  color: var(--noir); border: none;
-}
+.btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; border-radius: var(--rayon); font-family: var(--font-corps); font-weight: 700; font-size: 0.82rem; letter-spacing: 0.03em; transition: all var(--vitesse); cursor: pointer; }
+.btn-or { background: linear-gradient(135deg, var(--or-clair), var(--or-fonce)); color: var(--noir); border: none; }
 .btn-or:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(184,146,46,0.35); }
 .btn-or:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
-
-.btn-outline {
-  background: transparent; color: var(--blanc-doux);
-  border: 1px solid var(--border);
-}
+.btn-outline { background: transparent; color: var(--blanc-doux); border: 1px solid var(--border); }
 .btn-outline:hover { border-color: var(--or); color: var(--or-clair); }
-
 .btn-danger { border-color: var(--rouge) !important; color: #ff8888 !important; }
 .btn-danger:hover { background: rgba(122,21,21,0.2) !important; }
-
 .btn-vert { background: linear-gradient(135deg, #22c55e, #16a34a); color: white; }
 .btn-vert:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(34,197,94,0.35); }
-
 .btn-sm { padding: 6px 12px; font-size: 0.72rem; }
-
-.btn-tool {
-  display: inline-flex; align-items: center; gap: 5px;
-  padding: 6px 10px; border-radius: 3px; font-size: 0.72rem;
-  background: rgba(184,146,46,0.1); border: 1px solid var(--border-discret);
-  color: var(--or-clair); transition: all var(--vitesse);
-}
+.btn-tool { display: inline-flex; align-items: center; gap: 5px; padding: 6px 10px; border-radius: 3px; font-size: 0.72rem; background: rgba(184,146,46,0.1); border: 1px solid var(--border-discret); color: var(--or-clair); transition: all var(--vitesse); }
 .btn-tool:hover { background: rgba(184,146,46,0.2); border-color: var(--or); }
-
-.btn-add {
-  display: inline-flex; align-items: center; gap: 6px;
-  padding: 8px 14px; border-radius: 4px; font-size: 0.78rem;
-  background: rgba(34,197,94,0.1); border: 1px dashed rgba(34,197,94,0.4);
-  color: #4ade80; font-weight: 600;
-}
+.btn-add { display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; border-radius: 4px; font-size: 0.78rem; background: rgba(34,197,94,0.1); border: 1px dashed rgba(34,197,94,0.4); color: #4ade80; font-weight: 600; }
 .btn-add:hover { background: rgba(34,197,94,0.2); border-style: solid; }
-
-.btn-remove {
-  width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
-  background: rgba(122,21,21,0.15); border: 1px solid rgba(122,21,21,0.4);
-  color: #ff8888; font-size: 0.9rem; display: flex; align-items: center; justify-content: center;
-  transition: all var(--vitesse);
-}
+.btn-remove { width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0; background: rgba(122,21,21,0.15); border: 1px solid rgba(122,21,21,0.4); color: #ff8888; font-size: 0.9rem; display: flex; align-items: center; justify-content: center; transition: all var(--vitesse); }
 .btn-remove:hover { background: rgba(122,21,21,0.3); }
 
-/* ============================================================
-   HEADER
-   ============================================================ */
-.admin-header {
-  background: rgba(8,8,8,0.95); backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--border);
-  padding: 14px 0; position: sticky; top: 0; z-index: 100;
-}
-.admin-header-inner {
-  display: flex; align-items: center; justify-content: space-between;
-  gap: 16px; flex-wrap: wrap;
-}
+.admin-header { background: rgba(8,8,8,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 14px 0; position: sticky; top: 0; z-index: 100; }
+.admin-header-inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
 .admin-logo { display: flex; align-items: center; gap: 10px; }
 .admin-logo img { height: 36px; width: auto; border-radius: 4px; }
 .admin-logo-texte { display: flex; flex-direction: column; }
@@ -124,158 +57,91 @@ h1, h2, h3 { font-family: var(--font-titres); font-weight: 700; color: var(--bla
 .admin-user { display: flex; align-items: center; gap: 12px; font-size: 0.82rem; color: var(--text-muted); }
 .admin-user strong { color: var(--blanc-doux); }
 
-/* ============================================================
-   LOGIN
-   ============================================================ */
 .login-wrap { min-height: calc(100vh - 70px); display: flex; align-items: center; justify-content: center; padding: 20px; }
-.login-box {
-  width: 100%; max-width: 420px;
-  background: var(--noir-2); border: 1px solid var(--border);
-  border-radius: 8px; padding: 40px 32px;
-}
+.login-box { width: 100%; max-width: 420px; background: var(--noir-2); border: 1px solid var(--border); border-radius: 8px; padding: 40px 32px; }
 .login-box h2 { margin-bottom: 8px; font-size: 1.5rem; }
 .login-box p { color: var(--text-muted); font-size: 0.88rem; margin-bottom: 24px; }
 
-/* ============================================================
-   FORMULAIRES
-   ============================================================ */
 .form-group { margin-bottom: 16px; }
-.form-group label {
-  display: block; font-size: 0.75rem; font-weight: 700;
-  color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em;
-  margin-bottom: 6px;
-}
+.form-group label { display: block; font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; }
 .form-group label .req { color: var(--or); margin-left: 2px; }
 .form-group .hint { font-size: 0.72rem; color: var(--text-discret); margin-top: 4px; font-style: italic; }
-.form-group input,
-.form-group textarea,
-.form-group select {
-  width: 100%; padding: 11px 14px;
-  background: var(--noir-3); border: 1px solid var(--border-discret);
-  border-radius: 4px; color: var(--blanc); font-size: 0.9rem;
-  transition: border-color var(--vitesse);
-}
-.form-group input:focus,
-.form-group textarea:focus,
-.form-group select:focus { outline: none; border-color: var(--or); }
+.form-group input, .form-group textarea, .form-group select { width: 100%; padding: 11px 14px; background: var(--noir-3); border: 1px solid var(--border-discret); border-radius: 4px; color: var(--blanc); font-size: 0.9rem; transition: border-color var(--vitesse); }
+.form-group input:focus, .form-group textarea:focus, .form-group select:focus { outline: none; border-color: var(--or); }
 .form-group textarea { resize: vertical; min-height: 80px; font-family: var(--font-corps); }
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 .form-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
 @media (max-width: 640px) { .form-row, .form-row-3 { grid-template-columns: 1fr; } }
 
-/* Ligne d'URL avec outils */
-.url-row {
-  display: flex; gap: 8px; align-items: stretch; margin-bottom: 8px;
-}
+.url-row { display: flex; gap: 8px; align-items: stretch; margin-bottom: 8px; }
 .url-row input { flex: 1; }
-.url-row .url-tools {
-  display: flex; gap: 4px; flex-wrap: wrap; align-items: center;
-}
-
-/* Liste dynamique */
+.url-row .url-tools { display: flex; gap: 4px; flex-wrap: wrap; align-items: center; }
 .dyn-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; }
 
-/* ============================================================
-   TABS
-   ============================================================ */
-.tabs {
-  display: flex; gap: 4px; flex-wrap: wrap;
-  border-bottom: 1px solid var(--border-discret);
-  margin-bottom: 24px; padding-bottom: 8px;
-}
-.tab-btn {
-  padding: 10px 18px; border-radius: 4px; font-size: 0.82rem;
-  font-weight: 600; color: var(--text-muted);
-  border: 1px solid transparent; transition: all var(--vitesse);
-}
+.tabs { display: flex; gap: 4px; flex-wrap: wrap; border-bottom: 1px solid var(--border-discret); margin-bottom: 24px; padding-bottom: 8px; }
+.tab-btn { padding: 10px 18px; border-radius: 4px; font-size: 0.82rem; font-weight: 600; color: var(--text-muted); border: 1px solid transparent; transition: all var(--vitesse); }
 .tab-btn:hover { color: var(--blanc-doux); }
-.tab-btn.active {
-  color: var(--or); border-color: var(--or);
-  background: rgba(184,146,46,0.08);
-}
-
+.tab-btn.active { color: var(--or); border-color: var(--or); background: rgba(184,146,46,0.08); }
 .tab-pane { display: none; }
 .tab-pane.active { display: block; animation: fadeIn 0.3s ease; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
-/* ============================================================
-   CARTES DE SECTION
-   ============================================================ */
-.card {
-  background: var(--noir-2); border: 1px solid var(--border-discret);
-  border-radius: 6px; padding: 24px; margin-bottom: 24px;
-}
-.card-title {
-  font-family: var(--font-titres); font-size: 1rem; color: var(--or);
-  margin-bottom: 4px; display: flex; align-items: center; gap: 8px;
-}
+.card { background: var(--noir-2); border: 1px solid var(--border-discret); border-radius: 6px; padding: 24px; margin-bottom: 24px; }
+.card-title { font-family: var(--font-titres); font-size: 1rem; color: var(--or); margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
 .card-sub { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 20px; }
 
-/* ============================================================
-   LISTE D'ÉLÉMENTS
-   ============================================================ */
-.items-list { display: flex; flex-direction: column; gap: 10px; }
-.item-row {
-  display: flex; align-items: center; gap: 12px;
-  padding: 12px 16px; background: var(--noir-3);
-  border: 1px solid var(--border-discret); border-radius: 4px;
+/* ✨ NOUVEAU — SEARCH BAR */
+.search-wrap { position: relative; margin-bottom: 14px; }
+.search-wrap input {
+  width: 100%; padding: 10px 40px 10px 14px;
+  background: var(--noir-3); border: 1px solid var(--border-discret);
+  border-radius: 4px; color: var(--blanc); font-size: 0.85rem;
   transition: border-color var(--vitesse);
 }
-.item-row:hover { border-color: var(--border); }
-.item-thumb {
-  width: 44px; height: 44px; border-radius: 4px; flex-shrink: 0;
-  background: var(--noir); border: 1px solid var(--border-discret);
-  background-size: cover; background-position: center;
+.search-wrap input:focus { outline: none; border-color: var(--or); }
+.search-wrap::after {
+  content: '🔍'; position: absolute; right: 14px; top: 50%;
+  transform: translateY(-50%); opacity: 0.5; pointer-events: none;
+  font-size: 0.9rem;
 }
+
+/* ✨ NOUVEAU — COMPTEUR DE CODES */
+.codes-counter { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 18px; }
+@media (max-width: 640px) { .codes-counter { grid-template-columns: repeat(2, 1fr); } }
+.counter-box { padding: 14px 12px; border-radius: 6px; text-align: center; background: var(--noir-3); border: 1px solid var(--border-discret); }
+.counter-box .num { font-family: var(--font-titres); font-size: 1.6rem; font-weight: 700; line-height: 1; display: block; }
+.counter-box .lbl { font-size: 0.65rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); margin-top: 6px; display: block; }
+.counter-actif .num { color: #4ade80; }
+.counter-utilise .num { color: #fcd34d; }
+.counter-expire .num { color: #ff8888; }
+.counter-inactif .num { color: var(--text-discret); }
+
+/* ✨ NOUVEAU — BOUTON TOUT COPIER */
+.list-actions { display: flex; gap: 8px; justify-content: flex-end; margin-bottom: 12px; flex-wrap: wrap; }
+
+.items-list { display: flex; flex-direction: column; gap: 10px; }
+.item-row { display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: var(--noir-3); border: 1px solid var(--border-discret); border-radius: 4px; transition: border-color var(--vitesse); }
+.item-row:hover { border-color: var(--border); }
+.item-thumb { width: 44px; height: 44px; border-radius: 4px; flex-shrink: 0; background: var(--noir); border: 1px solid var(--border-discret); background-size: cover; background-position: center; }
 .item-info { flex: 1; min-width: 0; }
 .item-title { font-size: 0.88rem; color: var(--blanc); font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .item-meta { font-size: 0.72rem; color: var(--text-discret); margin-top: 2px; }
 .item-actions { display: flex; gap: 6px; flex-shrink: 0; flex-wrap: wrap; }
+.empty-state { text-align: center; padding: 40px 20px; color: var(--text-discret); border: 1px dashed var(--border-discret); border-radius: 4px; font-size: 0.85rem; }
 
-.empty-state {
-  text-align: center; padding: 40px 20px; color: var(--text-discret);
-  border: 1px dashed var(--border-discret); border-radius: 4px;
-  font-size: 0.85rem;
-}
-
-/* ============================================================
-   ACCÈS — CODE MONO
-   ============================================================ */
-.code-mono {
-  font-family: 'Courier New', monospace;
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: var(--or-clair);
-  letter-spacing: 0.05em;
-}
-.badge {
-  display: inline-flex; align-items: center; gap: 4px;
-  padding: 2px 8px; border-radius: 10px;
-  font-size: 0.68rem; font-weight: 700;
-  letter-spacing: 0.03em;
-}
+.code-mono { font-family: 'Courier New', monospace; font-size: 0.95rem; font-weight: 700; color: var(--or-clair); letter-spacing: 0.05em; }
+.badge { display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 10px; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.03em; }
 .badge-actif { background: rgba(34,197,94,0.15); color: #4ade80; border: 1px solid rgba(34,197,94,0.4); }
 .badge-inactif { background: rgba(122,21,21,0.15); color: #ff8888; border: 1px solid rgba(122,21,21,0.4); }
 .badge-utilise { background: rgba(245,158,11,0.15); color: #fcd34d; border: 1px solid rgba(245,158,11,0.4); }
 .badge-expire { background: rgba(122,21,21,0.2); color: #ff8888; border: 1px solid rgba(122,21,21,0.5); }
 .badge-payant { background: rgba(184,146,46,0.15); color: var(--or-clair); border: 1px solid rgba(184,146,46,0.5); }
 .badge-gratuit { background: rgba(34,197,94,0.12); color: #4ade80; border: 1px solid rgba(34,197,94,0.4); }
+.badge-cat { background: rgba(99,102,241,0.15); color: #a5b4fc; border: 1px solid rgba(99,102,241,0.4); }
+.badge-inactifprod { background: rgba(122,21,21,0.15); color: #ff8888; border: 1px solid rgba(122,21,21,0.4); }
 
-/* ============================================================
-   TOAST (notifications)
-   ============================================================ */
-.toast-container {
-  position: fixed; bottom: 24px; right: 24px; z-index: 9999;
-  display: flex; flex-direction: column; gap: 10px; max-width: 360px;
-}
-.toast {
-  padding: 14px 18px; border-radius: 6px;
-  font-size: 0.88rem; color: white;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-  display: flex; align-items: flex-start; gap: 10px;
-  animation: slideIn 0.3s ease;
-  border-left: 4px solid;
-}
+.toast-container { position: fixed; bottom: 24px; right: 24px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; max-width: 360px; }
+.toast { padding: 14px 18px; border-radius: 6px; font-size: 0.88rem; color: white; box-shadow: 0 10px 30px rgba(0,0,0,0.5); display: flex; align-items: flex-start; gap: 10px; animation: slideIn 0.3s ease; border-left: 4px solid; }
 .toast.success { background: #14532d; border-color: #22c55e; }
 .toast.error { background: #7f1d1d; border-color: #ef4444; }
 .toast.info { background: #1e3a8a; border-color: #3b82f6; }
@@ -286,115 +152,53 @@ h1, h2, h3 { font-family: var(--font-titres); font-weight: 700; color: var(--bla
 .toast-msg { font-size: 0.82rem; opacity: 0.9; }
 @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
 
-/* ============================================================
-   SPINNER
-   ============================================================ */
-.spinner {
-  display: inline-block; width: 16px; height: 16px;
-  border: 2px solid currentColor; border-top-color: transparent;
-  border-radius: 50%; animation: spin 0.7s linear infinite;
-}
+.spinner { display: inline-block; width: 16px; height: 16px; border: 2px solid currentColor; border-top-color: transparent; border-radius: 50%; animation: spin 0.7s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
-/* ============================================================
-   LIVE STATUS
-   ============================================================ */
-.live-status-box {
-  display: flex; align-items: center; gap: 12px;
-  padding: 14px 18px; border-radius: 6px;
-  background: var(--noir-3); border: 1px solid var(--border-discret);
-  margin-bottom: 16px;
-}
-.live-dot {
-  width: 12px; height: 12px; border-radius: 50%; background: #555;
-  flex-shrink: 0;
-}
+.live-status-box { display: flex; align-items: center; gap: 12px; padding: 14px 18px; border-radius: 6px; background: var(--noir-3); border: 1px solid var(--border-discret); margin-bottom: 16px; }
+.live-dot { width: 12px; height: 12px; border-radius: 50%; background: #555; flex-shrink: 0; }
 .live-dot.on { background: #ff2d2d; animation: pulseLive 1.2s ease-in-out infinite; box-shadow: 0 0 12px #ff2d2d; }
-@keyframes pulseLive {
-  0%, 100% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(0.85); opacity: 0.6; }
-}
+@keyframes pulseLive { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(0.85); opacity: 0.6; } }
 .live-status-text { font-size: 0.88rem; color: var(--blanc-doux); }
 
-/* ============================================================
-   AVERTISSEMENT
-   ============================================================ */
-.alert {
-  padding: 12px 16px; border-radius: 4px; font-size: 0.82rem;
-  margin-bottom: 16px; display: flex; gap: 10px; align-items: flex-start;
-}
+.alert { padding: 12px 16px; border-radius: 4px; font-size: 0.82rem; margin-bottom: 16px; display: flex; gap: 10px; align-items: flex-start; }
 .alert-info { background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.3); color: #93c5fd; }
 .alert-warn { background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.3); color: #fcd34d; }
 .alert-tip { background: rgba(34,197,94,0.08); border: 1px solid rgba(34,197,94,0.3); color: #86efac; }
 
-/* ============================================================
-   VALIDATION URL
-   ============================================================ */
-.url-validation {
-  font-size: 0.78rem;
-  margin-top: 6px;
-  padding: 8px 12px;
-  border-radius: 4px;
-  display: none;
-  line-height: 1.4;
-}
+.url-validation { font-size: 0.78rem; margin-top: 6px; padding: 8px 12px; border-radius: 4px; display: none; line-height: 1.4; }
 .url-validation.visible { display: block; }
-.url-validation.valide {
-  background: rgba(34,197,94,0.15);
-  color: #4ade80;
-  border: 1px solid rgba(34,197,94,0.4);
-}
-.url-validation.invalide {
-  background: rgba(122,21,21,0.2);
-  color: #ff8888;
-  border: 1px solid rgba(122,21,21,0.5);
-}
+.url-validation.valide { background: rgba(34,197,94,0.15); color: #4ade80; border: 1px solid rgba(34,197,94,0.4); }
+.url-validation.invalide { background: rgba(122,21,21,0.2); color: #ff8888; border: 1px solid rgba(122,21,21,0.5); }
 .url-validation small { opacity: 0.85; }
 
-/* ============================================================
-   SECTION SECOURS (fallback)
-   ============================================================ */
-.fallback-section {
-  border-top: 1px dashed var(--border-discret);
-  padding-top: 16px;
-  margin-top: 20px;
-}
-.fallback-section-title {
-  color: var(--or);
-  font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  margin-bottom: 6px;
-  display: flex; align-items: center; gap: 6px;
-}
+.fallback-section { border-top: 1px dashed var(--border-discret); padding-top: 16px; margin-top: 20px; }
+.fallback-section-title { color: var(--or); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
 
-/* ============================================================
-   BLOC PAYANT (NOUVEAU)
-   ============================================================ */
-.payant-block {
-  border: 1px dashed rgba(184,146,46,0.5);
-  background: rgba(184,146,46,0.04);
-  border-radius: 6px;
-  padding: 16px;
-  margin-top: 16px;
+.payant-block { border: 1px dashed rgba(184,146,46,0.5); background: rgba(184,146,46,0.04); border-radius: 6px; padding: 16px; margin-top: 16px; }
+.payant-block-title { color: var(--or); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+
+/* Preview produit */
+.produit-preview {
+  display: flex; gap: 16px; align-items: flex-start;
+  padding: 16px; background: var(--noir-3); border: 1px solid var(--border-discret);
+  border-radius: 6px; margin-top: 12px;
 }
-.payant-block-title {
-  color: var(--or);
-  font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  margin-bottom: 12px;
-  display: flex; align-items: center; gap: 6px;
+.produit-preview-img {
+  width: 80px; height: 106px; flex-shrink: 0;
+  background: var(--noir-2); border: 1px solid var(--border-discret);
+  border-radius: 4px; background-size: cover; background-position: center;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text-discret); font-size: 0.65rem;
 }
+.produit-preview-info { flex: 1; min-width: 0; }
+.produit-preview-title { font-family: var(--font-titres); font-size: 0.95rem; color: var(--blanc); margin-bottom: 4px; }
+.produit-preview-desc { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 6px; }
+.produit-preview-prix { font-size: 0.9rem; color: var(--or); font-weight: 700; }
 </style>
 </head>
 <body>
 
-<!-- ============================================================
-     HEADER
-     ============================================================ -->
 <header class="admin-header">
   <div class="conteneur admin-header-inner">
     <div class="admin-logo">
@@ -451,6 +255,8 @@ h1, h2, h3 { font-family: var(--font-titres); font-weight: 700; color: var(--bla
     <button class="tab-btn" data-tab="photos">🖼️ Photos</button>
     <button class="tab-btn" data-tab="videos">🎬 Vidéos</button>
     <button class="tab-btn" data-tab="presse">📰 Presse</button>
+    <!-- ✨ NOUVEAU ONGLET PRODUITS -->
+    <button class="tab-btn" data-tab="produits">🛍️ Produits</button>
     <button class="tab-btn" data-tab="live">🔴 Live</button>
     <button class="tab-btn" data-tab="acces">🔐 Accès payant</button>
     <button class="tab-btn" data-tab="config">⚙️ Configuration</button>
@@ -545,7 +351,6 @@ h1, h2, h3 { font-family: var(--font-titres); font-weight: 700; color: var(--bla
           <textarea id="evContenu" rows="6" required placeholder="Texte complet de l'article / événement"></textarea>
         </div>
 
-        <!-- ----- AFFICHES (plusieurs) ----- -->
         <div class="form-group">
           <label>🖼️ Affiches / Images (plusieurs possibles)</label>
           <div class="dyn-list" id="evImagesList"></div>
@@ -558,7 +363,6 @@ h1, h2, h3 { font-family: var(--font-titres); font-weight: 700; color: var(--bla
           <div class="hint">La première image servira d'affiche principale.</div>
         </div>
 
-        <!-- ----- VIDÉOS (plusieurs) ----- -->
         <div class="form-group">
           <label>🎬 Vidéos (plusieurs possibles)</label>
           <div class="dyn-list" id="evVideosList"></div>
@@ -567,7 +371,6 @@ h1, h2, h3 { font-family: var(--font-titres); font-weight: 700; color: var(--bla
             <a class="btn-tool" href="https://www.youtube.com/" target="_blank" rel="noopener">▶️ Ouvrir YouTube</a>
             <a class="btn-tool" href="https://drive.google.com/" target="_blank" rel="noopener">📁 Ouvrir Google Drive</a>
           </div>
-          <div class="hint">Formats acceptés : YouTube (embed/), Google Drive, TikTok, Facebook, Vimeo, Dailymotion…</div>
         </div>
 
         <div style="display:flex; gap:12px; margin-top:20px; flex-wrap:wrap;">
@@ -584,6 +387,10 @@ h1, h2, h3 { font-family: var(--font-titres); font-weight: 700; color: var(--bla
     <div class="card">
       <div class="card-title">📋 Événements enregistrés</div>
       <div class="card-sub">Total : <span id="evCount">0</span></div>
+      <!-- ✨ NOUVEAU : SEARCH BAR -->
+      <div class="search-wrap">
+        <input type="text" class="search-input" data-target="evList" placeholder="Rechercher un événement…">
+      </div>
       <div class="items-list" id="evList">
         <div class="empty-state">Chargement…</div>
       </div>
@@ -653,7 +460,6 @@ h1, h2, h3 { font-family: var(--font-titres); font-weight: 700; color: var(--bla
           <textarea id="acContenu" rows="6" required placeholder="Texte complet de l'actualité"></textarea>
         </div>
 
-        <!-- ----- IMAGES (plusieurs) ----- -->
         <div class="form-group">
           <label>🖼️ Images (plusieurs possibles)</label>
           <div class="dyn-list" id="acImagesList"></div>
@@ -666,7 +472,6 @@ h1, h2, h3 { font-family: var(--font-titres); font-weight: 700; color: var(--bla
           <div class="hint">La première image servira d'image principale.</div>
         </div>
 
-        <!-- ----- VIDÉO ----- -->
         <div class="form-group">
           <label>🎬 Vidéo (optionnelle)</label>
           <div class="url-row">
@@ -694,6 +499,10 @@ h1, h2, h3 { font-family: var(--font-titres); font-weight: 700; color: var(--bla
     <div class="card">
       <div class="card-title">📋 Actualités enregistrées</div>
       <div class="card-sub">Total : <span id="acCount">0</span></div>
+      <!-- ✨ NOUVEAU : SEARCH BAR -->
+      <div class="search-wrap">
+        <input type="text" class="search-input" data-target="acList" placeholder="Rechercher une actualité…">
+      </div>
       <div class="items-list" id="acList">
         <div class="empty-state">Chargement…</div>
       </div>
@@ -754,6 +563,10 @@ h1, h2, h3 { font-family: var(--font-titres); font-weight: 700; color: var(--bla
     <div class="card">
       <div class="card-title">📋 Photos enregistrées</div>
       <div class="card-sub">Total : <span id="phCount">0</span></div>
+      <!-- ✨ NOUVEAU : SEARCH BAR -->
+      <div class="search-wrap">
+        <input type="text" class="search-input" data-target="phList" placeholder="Rechercher une photo…">
+      </div>
       <div class="items-list" id="phList">
         <div class="empty-state">Chargement…</div>
       </div>
@@ -761,7 +574,7 @@ h1, h2, h3 { font-family: var(--font-titres); font-weight: 700; color: var(--bla
   </div>
 
   <!-- ============================================================
-       TAB VIDÉOS (avec bloc payant)
+       TAB VIDÉOS
        ============================================================ -->
   <div class="tab-pane" id="pane-videos">
     <div class="alert alert-info">
@@ -814,14 +627,12 @@ h1, h2, h3 { font-family: var(--font-titres); font-weight: 700; color: var(--bla
           </div>
         </div>
 
-        <!-- ----- LIEN DE SECOURS ----- -->
         <div class="form-group">
           <label>🔁 Lien de secours (optionnel)</label>
           <input type="url" id="viFallbackURL" placeholder="https://... (utilisé si l'iframe échoue)">
           <div class="hint">Facultatif — sinon, le lien direct de la plateforme est utilisé.</div>
         </div>
 
-        <!-- ----- BLOC PAYANT (NOUVEAU) ----- -->
         <div class="payant-block">
           <div class="payant-block-title">💰 Cette vidéo est-elle payante ?</div>
           <div class="form-row">
@@ -868,6 +679,10 @@ h1, h2, h3 { font-family: var(--font-titres); font-weight: 700; color: var(--bla
     <div class="card">
       <div class="card-title">📋 Vidéos enregistrées</div>
       <div class="card-sub">Total : <span id="viCount">0</span></div>
+      <!-- ✨ NOUVEAU : SEARCH BAR -->
+      <div class="search-wrap">
+        <input type="text" class="search-input" data-target="viList" placeholder="Rechercher une vidéo…">
+      </div>
       <div class="items-list" id="viList">
         <div class="empty-state">Chargement…</div>
       </div>
@@ -912,6 +727,10 @@ h1, h2, h3 { font-family: var(--font-titres); font-weight: 700; color: var(--bla
     <div class="card">
       <div class="card-title">📋 Articles enregistrés</div>
       <div class="card-sub">Total : <span id="prCount">0</span></div>
+      <!-- ✨ NOUVEAU : SEARCH BAR -->
+      <div class="search-wrap">
+        <input type="text" class="search-input" data-target="prList" placeholder="Rechercher un article…">
+      </div>
       <div class="items-list" id="prList">
         <div class="empty-state">Chargement…</div>
       </div>
@@ -919,7 +738,130 @@ h1, h2, h3 { font-family: var(--font-titres); font-weight: 700; color: var(--bla
   </div>
 
   <!-- ============================================================
-       TAB LIVE (avec bloc payant)
+       ✨✨✨ TAB PRODUITS — NOUVEAU ✨✨✨
+       ============================================================ -->
+  <div class="tab-pane" id="pane-produits">
+
+    <div class="alert alert-info">
+      <span>🛍️</span>
+      <span>Gérez ici tous les produits de la boutique <strong>TODAAA SHOP</strong>. Les nouveaux produits apparaîtront automatiquement sur le site.</span>
+    </div>
+
+    <div class="card">
+      <div class="card-title">➕ Ajouter / modifier un produit</div>
+      <div class="card-sub">Tous les champs marqués d'un <span style="color: var(--or);">*</span> sont obligatoires.</div>
+
+      <form id="formProduit" autocomplete="off">
+        <input type="hidden" id="prdId" value="">
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Titre <span class="req">*</span></label>
+            <input type="text" id="prdTitre" required placeholder="Ex: Le Livre du Fa">
+          </div>
+          <div class="form-group">
+            <label>Slug (identifiant) <span class="req">*</span></label>
+            <input type="text" id="prdSlug" required placeholder="Ex: livre-du-fa">
+            <div class="hint">Sans espaces, minuscules. Utilisé dans les liens.</div>
+          </div>
+        </div>
+
+        <div class="form-row-3">
+          <div class="form-group">
+            <label>Catégorie <span class="req">*</span></label>
+            <select id="prdCategorie" required>
+              <option value="">— Choisir —</option>
+              <option value="livres">📚 Livres &amp; Éditions</option>
+              <option value="mode">👕 Mode TODAAA</option>
+              <option value="spiritualite">✨ Spiritualité &amp; Objets</option>
+              <option value="bijoux">💍 Bijoux &amp; Symbolique</option>
+              <option value="sceaux">🔯 Sceaux &amp; Symboles</option>
+              <option value="art">🖼️ Art &amp; Décoration</option>
+              <option value="coffrets">🎁 Coffrets</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Prix (FCFA)</label>
+            <input type="number" id="prdPrix" min="0" step="500" placeholder="0 = Prix sur demande" value="0">
+            <div class="hint">Laissez 0 pour « Prix sur demande ».</div>
+          </div>
+          <div class="form-group">
+            <label>Ordre d'affichage</label>
+            <input type="number" id="prdOrdre" min="0" value="100">
+            <div class="hint">Plus petit = affiché en premier.</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Description</label>
+          <textarea id="prdDescription" rows="3" placeholder="Courte description du produit qui apparaîtra sur la carte."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>🖼️ Image du produit</label>
+          <div class="url-row">
+            <input type="url" id="prdImage" placeholder="https://i.postimg.cc/... ou Cloudinary">
+            <div class="url-tools">
+              <a class="btn-tool" href="https://postimages.org/fr/" target="_blank" rel="noopener">📤 PostImage</a>
+              <a class="btn-tool" href="https://console.cloudinary.com/" target="_blank" rel="noopener">☁️ Cloudinary</a>
+              <a class="btn-tool" href="https://imgbb.com/" target="_blank" rel="noopener">🖼️ ImgBB</a>
+            </div>
+          </div>
+          <div class="hint">Laissez vide si le produit n'a pas d'image (carte sans visuel).</div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Produit actif ?</label>
+            <select id="prdActif">
+              <option value="true">✅ Oui — visible sur le site</option>
+              <option value="false">🚫 Non — caché</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Carte sans visuel ?</label>
+            <select id="prdSansVisuel">
+              <option value="false">Non — carte avec image normale</option>
+              <option value="true">Oui — carte avec symbole doré (sans image)</option>
+            </select>
+            <div class="hint">À cocher si le produit n'a pas de photo (ex: coffrets, polo).</div>
+          </div>
+        </div>
+
+        <!-- Aperçu en direct -->
+        <div class="produit-preview" id="prdPreview" style="display:none;">
+          <div class="produit-preview-img" id="prdPreviewImg">Aperçu</div>
+          <div class="produit-preview-info">
+            <div class="produit-preview-title" id="prdPreviewTitle">Titre du produit</div>
+            <div class="produit-preview-desc" id="prdPreviewDesc">Description…</div>
+            <div class="produit-preview-prix" id="prdPreviewPrix">Prix</div>
+          </div>
+        </div>
+
+        <div style="display:flex; gap:12px; margin-top:20px; flex-wrap:wrap;">
+          <button type="submit" class="btn btn-or" id="btnSavePrd">
+            <span class="btn-text">💾 Enregistrer le produit</span>
+          </button>
+          <button type="button" class="btn btn-outline" id="btnCancelPrd" style="display:none;">❌ Annuler la modification</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📋 Produits enregistrés</div>
+      <div class="card-sub">Total : <span id="prdCount">0</span></div>
+      <!-- ✨ SEARCH BAR -->
+      <div class="search-wrap">
+        <input type="text" class="search-input" data-target="prdList" placeholder="Rechercher un produit…">
+      </div>
+      <div class="items-list" id="prdList">
+        <div class="empty-state">Chargement…</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       TAB LIVE
        ============================================================ -->
   <div class="tab-pane" id="pane-live">
     <div class="alert alert-warn">
@@ -984,7 +926,6 @@ h1, h2, h3 { font-family: var(--font-titres); font-weight: 700; color: var(--bla
           </div>
         </div>
 
-        <!-- ----- BLOC PAYANT (NOUVEAU) ----- -->
         <div class="payant-block">
           <div class="payant-block-title">💰 Ce live est-il payant ?</div>
           <div class="form-row">
@@ -1018,7 +959,6 @@ h1, h2, h3 { font-family: var(--font-titres); font-weight: 700; color: var(--bla
           </div>
         </div>
 
-        <!-- ----- LIENS DE SECOURS ----- -->
         <div class="fallback-section">
           <div class="fallback-section-title">🔁 Liens de secours (si l'iframe refuse de se connecter)</div>
           <div class="hint" style="margin-bottom: 12px;">Laissez vide pour utiliser les liens par défaut du site (config/site).</div>
@@ -1057,13 +997,37 @@ h1, h2, h3 { font-family: var(--font-titres); font-weight: 700; color: var(--bla
   </div>
 
   <!-- ============================================================
-       TAB ACCÈS PAYANT
+       TAB ACCÈS PAYANT — avec compteur + tout copier
        ============================================================ -->
   <div class="tab-pane" id="pane-acces">
 
     <div class="alert alert-tip">
       <span>🔐</span>
       <span><strong>Fonctionnement :</strong> L'acheteur vous paie (MoMo/Wave/virement), vous lui envoyez un <strong>code unique</strong> par WhatsApp, il le saisit sur <code>acces.html</code> et accède au contenu.</span>
+    </div>
+
+    <!-- ✨ NOUVEAU : COMPTEUR DE CODES -->
+    <div class="card">
+      <div class="card-title">📊 Aperçu des codes</div>
+      <div class="card-sub">Répartition en temps réel de tous les codes générés.</div>
+      <div class="codes-counter">
+        <div class="counter-box counter-actif">
+          <span class="num" id="cntActif">0</span>
+          <span class="lbl">✅ Actifs</span>
+        </div>
+        <div class="counter-box counter-utilise">
+          <span class="num" id="cntUtilise">0</span>
+          <span class="lbl">✔️ Utilisés</span>
+        </div>
+        <div class="counter-box counter-expire">
+          <span class="num" id="cntExpire">0</span>
+          <span class="lbl">⏰ Expirés</span>
+        </div>
+        <div class="counter-box counter-inactif">
+          <span class="num" id="cntInactif">0</span>
+          <span class="lbl">🚫 Désactivés</span>
+        </div>
+      </div>
     </div>
 
     <div class="card">
@@ -1137,6 +1101,15 @@ h1, h2, h3 { font-family: var(--font-titres); font-weight: 700; color: var(--bla
     <div class="card">
       <div class="card-title">📋 Codes générés</div>
       <div class="card-sub">Total : <span id="accCount">0</span></div>
+      <!-- ✨ NOUVEAU : SEARCH BAR -->
+      <div class="search-wrap">
+        <input type="text" class="search-input" data-target="accList" placeholder="Rechercher un code, un titre, une note…">
+      </div>
+      <!-- ✨ NOUVEAU : BOUTON TOUT COPIER -->
+      <div class="list-actions">
+        <button type="button" class="btn btn-outline btn-sm" id="btnCopyAllCodes">📋 Tout copier (codes actifs)</button>
+        <button type="button" class="btn btn-outline btn-sm" id="btnExportCsv">📥 Exporter CSV</button>
+      </div>
       <div class="items-list" id="accList">
         <div class="empty-state">Chargement…</div>
       </div>
@@ -1221,9 +1194,6 @@ h1, h2, h3 { font-family: var(--font-titres); font-weight: 700; color: var(--bla
 
 </div>
 
-<!-- ============================================================
-     TOASTS
-     ============================================================ -->
 <div class="toast-container" id="toastContainer"></div>
 
 <!-- ============================================================
@@ -1249,7 +1219,7 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
 
-// Cache local de la config (utilisé pour les liens par défaut)
+// Cache local de la config
 let CONFIG = {
   fallbackFacebook: '',
   fallbackTiktok: '',
@@ -1263,7 +1233,7 @@ let CONFIG = {
 };
 
 // ============================================================
-// 🎬 VALIDATION VIDÉO — TOUTES PLATEFORMES
+// VALIDATION VIDÉO — TOUTES PLATEFORMES
 // ============================================================
 function detecterPlateforme(url) {
   if (!url || typeof url !== 'string') {
@@ -1275,28 +1245,17 @@ function detecterPlateforme(url) {
     const m = url.match(/(?:embed\/|watch\?v=|youtu\.be\/|shorts\/|live\/)([^?&/]+)/);
     const id = m ? m[1] : '';
     return {
-      nom: 'YouTube',
-      icone: '▶️',
+      nom: 'YouTube', icone: '▶️',
       lienDirect: id ? 'https://www.youtube.com/watch?v=' + id : 'https://www.youtube.com/',
       embed: id ? 'https://www.youtube.com/embed/' + id : ''
     };
   }
-
   if (u.includes('drive.google.com')) {
     const m = url.match(/\/d\/([^/]+)/);
     const id = m ? m[1] : '';
-    return {
-      nom: 'Google Drive',
-      icone: '📁',
-      lienDirect: url,
-      embed: id ? 'https://drive.google.com/file/d/' + id + '/preview' : ''
-    };
+    return { nom: 'Google Drive', icone: '📁', lienDirect: url, embed: id ? 'https://drive.google.com/file/d/' + id + '/preview' : '' };
   }
-
-  if (u.includes('tiktok.com')) {
-    return { nom: 'TikTok', icone: '🎵', lienDirect: url, embed: url };
-  }
-
+  if (u.includes('tiktok.com')) return { nom: 'TikTok', icone: '🎵', lienDirect: url, embed: url };
   if (u.includes('facebook.com') || u.includes('fb.watch')) {
     let embed = url;
     if (u.includes('facebook.com') && !u.includes('plugins/video')) {
@@ -1304,41 +1263,19 @@ function detecterPlateforme(url) {
     }
     return { nom: 'Facebook', icone: '📘', lienDirect: url, embed: embed };
   }
-
   if (u.includes('vimeo.com')) {
     const m = url.match(/vimeo\.com\/(\d+)/);
     const id = m ? m[1] : '';
-    return {
-      nom: 'Vimeo',
-      icone: '🎬',
-      lienDirect: url,
-      embed: id ? 'https://player.vimeo.com/video/' + id : ''
-    };
+    return { nom: 'Vimeo', icone: '🎬', lienDirect: url, embed: id ? 'https://player.vimeo.com/video/' + id : '' };
   }
-
-  if (u.includes('dailymotion.com') || u.includes('dai.ly')) {
-    return { nom: 'Dailymotion', icone: '🎥', lienDirect: url, embed: url };
-  }
-
+  if (u.includes('dailymotion.com') || u.includes('dai.ly')) return { nom: 'Dailymotion', icone: '🎥', lienDirect: url, embed: url };
   if (u.includes('twitch.tv')) {
     const m = url.match(/twitch\.tv\/([^?&/]+)/);
     const chaine = m ? m[1] : '';
-    return {
-      nom: 'Twitch',
-      icone: '🎮',
-      lienDirect: url,
-      embed: chaine ? 'https://player.twitch.tv/?channel=' + chaine + '&parent=groupegbemadoyomin.com' : ''
-    };
+    return { nom: 'Twitch', icone: '🎮', lienDirect: url, embed: chaine ? 'https://player.twitch.tv/?channel=' + chaine + '&parent=groupegbemadoyomin.com' : '' };
   }
-
-  if (u.includes('instagram.com')) {
-    return { nom: 'Instagram', icone: '📸', lienDirect: url, embed: url };
-  }
-
-  if (u.includes('twitter.com') || u.includes('x.com')) {
-    return { nom: 'Twitter/X', icone: '🐦', lienDirect: url, embed: url };
-  }
-
+  if (u.includes('instagram.com')) return { nom: 'Instagram', icone: '📸', lienDirect: url, embed: url };
+  if (u.includes('twitter.com') || u.includes('x.com')) return { nom: 'Twitter/X', icone: '🐦', lienDirect: url, embed: url };
   return { nom: 'Vidéo', icone: '🔗', lienDirect: url, embed: url };
 }
 
@@ -1346,51 +1283,36 @@ function validerEmbedURL(url, plateforme) {
   if (!url || typeof url !== 'string' || url.trim() === '') {
     return { valide: false, raison: 'URL manquante ou vide' };
   }
-
-  const u = url.toLowerCase().trim();
-
   if (plateforme.nom === 'YouTube') {
     const m = url.match(/embed\/([^?&/]+)/);
-    if (!m || !m[1] || m[1].length < 5) {
-      return { valide: false, raison: 'ID de vidéo YouTube manquant (ex: .../embed/dQw4w9WgXcQ)' };
-    }
+    if (!m || !m[1] || m[1].length < 5) return { valide: false, raison: 'ID de vidéo YouTube manquant' };
     return { valide: true };
   }
-
   if (plateforme.nom === 'Google Drive') {
     const m = url.match(/\/d\/([^/]+)/);
-    if (!m || !m[1] || m[1].length < 10) {
-      return { valide: false, raison: 'ID de fichier Drive manquant' };
-    }
+    if (!m || !m[1] || m[1].length < 10) return { valide: false, raison: 'ID de fichier Drive manquant' };
     return { valide: true };
   }
-
   if (plateforme.nom === 'Vimeo') {
     const m = url.match(/vimeo\.com\/(\d+)/);
-    if (!m || !m[1]) {
-      return { valide: false, raison: 'ID de vidéo Vimeo manquant' };
-    }
+    if (!m || !m[1]) return { valide: false, raison: 'ID de vidéo Vimeo manquant' };
     return { valide: true };
   }
-
   if (plateforme.nom === 'TikTok') {
-    if (!u.includes('/video/') && !u.includes('/live/')) {
+    if (!url.toLowerCase().includes('/video/') && !url.toLowerCase().includes('/live/')) {
       return { valide: false, raison: 'Lien TikTok invalide (doit contenir /video/ ou /live/)' };
     }
     return { valide: true };
   }
-
   if (plateforme.nom === 'Facebook') {
-    if (!u.includes('facebook.com') && !u.includes('fb.watch')) {
+    if (!url.toLowerCase().includes('facebook.com') && !url.toLowerCase().includes('fb.watch')) {
       return { valide: false, raison: 'Lien Facebook invalide' };
     }
     return { valide: true };
   }
-
   return { valide: true };
 }
 
-// Validation visuelle d'un champ URL — BUG CORRIGÉ
 function validerChampURL(inputEl, validationEl) {
   if (!inputEl || !validationEl) return;
   const url = inputEl.value.trim();
@@ -1399,17 +1321,13 @@ function validerChampURL(inputEl, validationEl) {
     validationEl.innerHTML = '';
     return;
   }
-
   const plateforme = detecterPlateforme(url);
   const validation = validerEmbedURL(url, plateforme);
-
   validationEl.className = 'url-validation visible ' + (validation.valide ? 'valide' : 'invalide');
-
   if (validation.valide) {
-    validationEl.innerHTML = '✅ URL valide — Plateforme détectée : <strong>' + plateforme.nom + '</strong>';
+    validationEl.innerHTML = '✅ URL valide — Plateforme : <strong>' + plateforme.nom + '</strong>';
   } else {
-    validationEl.innerHTML = '❌ URL invalide : ' + validation.raison +
-      '<br><small>Formats acceptés : YouTube (embed/), Google Drive, TikTok, Facebook, Vimeo, Dailymotion</small>';
+    validationEl.innerHTML = '❌ URL invalide : ' + validation.raison;
   }
 }
 
@@ -1484,10 +1402,46 @@ function genererCode(type) {
   const prefix = prefixes[type] || 'ACC';
   const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
   let random = '';
-  for (let i = 0; i < 6; i++) {
-    random += chars.charAt(Math.floor(Math.random() * chars.length));
-  }
+  for (let i = 0; i < 6; i++) random += chars.charAt(Math.floor(Math.random() * chars.length));
   return 'GG-' + prefix + '-' + random;
+}
+
+// ============================================================
+// ✨ NOUVEAU — SEARCH BAR GLOBAL
+// ============================================================
+function initSearchBars() {
+  document.querySelectorAll('.search-input').forEach(input => {
+    input.addEventListener('input', () => {
+      const targetId = input.dataset.target;
+      const target = document.getElementById(targetId);
+      if (!target) return;
+      const query = input.value.trim().toLowerCase();
+      const rows = target.querySelectorAll('.item-row');
+      let visibleCount = 0;
+
+      rows.forEach(row => {
+        const text = row.textContent.toLowerCase();
+        const match = !query || text.includes(query);
+        row.style.display = match ? '' : 'none';
+        if (match) visibleCount++;
+      });
+
+      // Message si aucun résultat
+      let emptyMsg = target.querySelector('.empty-search-result');
+      if (visibleCount === 0 && query) {
+        if (!emptyMsg) {
+          emptyMsg = document.createElement('div');
+          emptyMsg.className = 'empty-state empty-search-result';
+          emptyMsg.textContent = 'Aucun résultat pour « ' + input.value.trim() + ' »';
+          target.appendChild(emptyMsg);
+        } else {
+          emptyMsg.textContent = 'Aucun résultat pour « ' + input.value.trim() + ' »';
+        }
+      } else if (emptyMsg) {
+        emptyMsg.remove();
+      }
+    });
+  });
 }
 
 // ============================================================
@@ -1528,6 +1482,7 @@ auth.onAuthStateChanged(async (user) => {
     userEmailDisplay.textContent = user.email;
     await chargerConfig();
     loadAll();
+    initSearchBars();
   } else {
     loginWrap.style.display = 'flex';
     dashboard.style.display = 'none';
@@ -1549,7 +1504,7 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
 });
 
 // ============================================================
-// DYNAMIC LISTS (images/videos) — AVEC VALIDATION
+// DYNAMIC LISTS
 // ============================================================
 function addImageRow(container, value = '') {
   const row = document.createElement('div');
@@ -1566,21 +1521,17 @@ function addVideoRow(container, value = '') {
   wrapper.style.marginBottom = '8px';
   wrapper.innerHTML = `
     <div class="url-row" style="margin-bottom:0;">
-      <input type="url" class="vid-input" placeholder="https://www.youtube.com/embed/... ou TikTok, Facebook, Vimeo, Drive" value="${value}">
+      <input type="url" class="vid-input" placeholder="https://www.youtube.com/embed/..." value="${value}">
       <button type="button" class="btn-remove" title="Supprimer">✕</button>
     </div>
     <div class="url-validation vid-validation"></div>`;
-
   const input = wrapper.querySelector('.vid-input');
   const validation = wrapper.querySelector('.vid-validation');
-
   const valider = () => validerChampURL(input, validation);
   input.addEventListener('input', valider);
   input.addEventListener('blur', valider);
-
   wrapper.querySelector('.btn-remove').addEventListener('click', () => wrapper.remove());
   container.appendChild(wrapper);
-
   if (value) valider();
 }
 
@@ -1606,15 +1557,13 @@ function verifierVideos(containerId) {
     if (!url) continue;
     const plateforme = detecterPlateforme(url);
     const validation = validerEmbedURL(url, plateforme);
-    if (!validation.valide) {
-      return { valide: false, raison: validation.raison, url: url };
-    }
+    if (!validation.valide) return { valide: false, raison: validation.raison, url: url };
   }
   return { valide: true };
 }
 
 // ============================================================
-// VALIDATION LIVE / VIDÉO / ACTUALITÉ EN TEMPS RÉEL
+// VALIDATION LIVE / VIDÉO / ACTUALITÉ
 // ============================================================
 const liEmbedInput = document.getElementById('liEmbedURL');
 const liValidationBox = document.getElementById('liEmbedValidation');
@@ -1640,6 +1589,7 @@ function loadAll() {
   loadPhotos();
   loadVideos();
   loadPresse();
+  loadProduits();     // ✨ NOUVEAU
   loadLive();
   loadAcces();
   loadConfigForm();
@@ -1652,14 +1602,16 @@ async function loadEvenements() {
   const list = document.getElementById('evList');
   list.innerHTML = '<div class="empty-state">Chargement…</div>';
   try {
-    const snap = await db.collection('evenements').orderBy('date', 'desc').get();
+    const snap = await db.collection('evenements').get();
     document.getElementById('evCount').textContent = snap.size;
-    if (snap.empty) {
-      list.innerHTML = '<div class="empty-state">Aucun événement pour le moment.</div>';
-      return;
-    }
+    if (snap.empty) { list.innerHTML = '<div class="empty-state">Aucun événement pour le moment.</div>'; return; }
+    const docs = snap.docs.slice().sort((a, b) => {
+      const da = a.data().date || '';
+      const db_ = b.data().date || '';
+      return db_.localeCompare(da);
+    });
     list.innerHTML = '';
-    snap.forEach(doc => {
+    docs.forEach(doc => {
       const d = doc.data();
       const affiche = (d.images && d.images[0]) || d.afficheURL || '';
       const thumb = affiche ? `style="background-image:url('${affiche}')"` : '';
@@ -1707,24 +1659,19 @@ async function editEvenement(id) {
     document.getElementById('evArchive').value = d.archive ? 'true' : 'false';
     document.getElementById('evDescription').value = d.description || '';
     document.getElementById('evContenu').value = d.contenu || '';
-
     clearImages('evImagesList');
     const imgs = d.images && d.images.length ? d.images : (d.afficheURL ? [d.afficheURL] : []);
     if (imgs.length === 0) addImageRow(document.getElementById('evImagesList'));
     else imgs.forEach(u => addImageRow(document.getElementById('evImagesList'), u));
-
     clearVideos('evVideosList');
     const vids = d.videos && d.videos.length ? d.videos : (d.videoURL ? [d.videoURL] : []);
     if (vids.length === 0) addVideoRow(document.getElementById('evVideosList'));
     else vids.forEach(u => addVideoRow(document.getElementById('evVideosList'), u));
-
     document.getElementById('btnCancelEv').style.display = 'inline-flex';
     document.getElementById('btnSaveEv').querySelector('.btn-text').textContent = '💾 Mettre à jour';
     document.getElementById('formEvenement').scrollIntoView({ behavior: 'smooth', block: 'start' });
     toast('info', 'Mode modification', 'Modifiez puis enregistrez.');
-  } catch (err) {
-    toast('error', 'Erreur', err.message);
-  }
+  } catch (err) { toast('error', 'Erreur', err.message); }
 }
 
 async function deleteEvenement(id) {
@@ -1733,9 +1680,7 @@ async function deleteEvenement(id) {
     await db.collection('evenements').doc(id).delete();
     toast('success', 'Événement supprimé');
     loadEvenements();
-  } catch (err) {
-    toast('error', 'Erreur', err.message);
-  }
+  } catch (err) { toast('error', 'Erreur', err.message); }
 }
 
 document.getElementById('formEvenement').addEventListener('submit', async (e) => {
@@ -1744,13 +1689,11 @@ document.getElementById('formEvenement').addEventListener('submit', async (e) =>
   const id = document.getElementById('evId').value;
   const images = getImages('evImagesList');
   const videos = getVideos('evVideosList');
-
   const validationVideos = verifierVideos('evVideosList');
   if (!validationVideos.valide) {
-    toast('error', 'Vidéo invalide', validationVideos.raison + ' — ' + validationVideos.url);
+    toast('error', 'Vidéo invalide', validationVideos.raison);
     return;
   }
-
   const data = {
     titre: document.getElementById('evTitre').value.trim(),
     slug: document.getElementById('evSlug').value.trim(),
@@ -1763,8 +1706,7 @@ document.getElementById('formEvenement').addEventListener('submit', async (e) =>
     archive: document.getElementById('evArchive').value === 'true',
     description: document.getElementById('evDescription').value.trim(),
     contenu: document.getElementById('evContenu').value.trim(),
-    images: images,
-    videos: videos,
+    images: images, videos: videos,
     afficheURL: images[0] || '',
     videoURL: videos[0] || '',
     dateAjout: firebase.firestore.FieldValue.serverTimestamp()
@@ -1775,21 +1717,11 @@ document.getElementById('formEvenement').addEventListener('submit', async (e) =>
   }
   setLoading(btn, true);
   try {
-    if (id) {
-      delete data.dateAjout;
-      await db.collection('evenements').doc(id).update(data);
-      toast('success', 'Événement mis à jour ✅');
-    } else {
-      await db.collection('evenements').add(data);
-      toast('success', 'Événement ajouté ✅');
-    }
-    resetEvenementForm();
-    loadEvenements();
-  } catch (err) {
-    toast('error', 'Erreur d\'enregistrement', err.message);
-  } finally {
-    setLoading(btn, false);
-  }
+    if (id) { delete data.dateAjout; await db.collection('evenements').doc(id).update(data); toast('success', 'Événement mis à jour ✅'); }
+    else { await db.collection('evenements').add(data); toast('success', 'Événement ajouté ✅'); }
+    resetEvenementForm(); loadEvenements();
+  } catch (err) { toast('error', 'Erreur d\'enregistrement', err.message); }
+  finally { setLoading(btn, false); }
 });
 
 document.getElementById('btnCancelEv').addEventListener('click', () => {
@@ -1805,7 +1737,6 @@ function resetEvenementForm() {
   document.getElementById('btnCancelEv').style.display = 'none';
   document.getElementById('btnSaveEv').querySelector('.btn-text').textContent = '💾 Enregistrer l\'événement';
 }
-
 addImageRow(document.getElementById('evImagesList'));
 addVideoRow(document.getElementById('evVideosList'));
 
@@ -1816,12 +1747,9 @@ async function loadActualites() {
   const list = document.getElementById('acList');
   list.innerHTML = '<div class="empty-state">Chargement…</div>';
   try {
-    const snap = await db.collection('actualites').orderBy('datePublication', 'desc').get();
+    const snap = await db.collection('actualites').get();
     document.getElementById('acCount').textContent = snap.size;
-    if (snap.empty) {
-      list.innerHTML = '<div class="empty-state">Aucune actualité pour le moment.</div>';
-      return;
-    }
+    if (snap.empty) { list.innerHTML = '<div class="empty-state">Aucune actualité pour le moment.</div>'; return; }
     list.innerHTML = '';
     snap.forEach(doc => {
       const d = doc.data();
@@ -1838,7 +1766,6 @@ async function loadActualites() {
             ${d.datePublication ? formatDateReadable(d.datePublication) : ''}
             ${d.categorie ? ' • ' + d.categorie : ''}
             ${d.auteur ? ' • ' + d.auteur : ''}
-            ${epingle ? ' • <span style="color:#f59e0b;">Épinglée</span>' : ''}
           </div>
         </div>
         <div class="item-actions">
@@ -1850,9 +1777,7 @@ async function loadActualites() {
       row.querySelector('[data-del]').addEventListener('click', () => deleteActualite(doc.id));
       list.appendChild(row);
     });
-  } catch (err) {
-    list.innerHTML = `<div class="empty-state">Erreur : ${err.message}</div>`;
-  }
+  } catch (err) { list.innerHTML = `<div class="empty-state">Erreur : ${err.message}</div>`; }
 }
 
 async function editActualite(id) {
@@ -1870,19 +1795,15 @@ async function editActualite(id) {
     document.getElementById('acResume').value = d.resume || '';
     document.getElementById('acContenu').value = d.contenu || '';
     acVideoInput.value = d.videoURL || '';
-
     clearImages('acImagesList');
     const imgs = d.images && d.images.length ? d.images : (d.imageURL ? [d.imageURL] : []);
     if (imgs.length === 0) addImageRow(document.getElementById('acImagesList'));
     else imgs.forEach(u => addImageRow(document.getElementById('acImagesList'), u));
-
     document.getElementById('btnCancelAc').style.display = 'inline-flex';
     document.getElementById('btnSaveAc').querySelector('.btn-text').textContent = '💾 Mettre à jour';
     document.getElementById('formActualite').scrollIntoView({ behavior: 'smooth', block: 'start' });
     toast('info', 'Mode modification', 'Modifiez puis enregistrez.');
-  } catch (err) {
-    toast('error', 'Erreur', err.message);
-  }
+  } catch (err) { toast('error', 'Erreur', err.message); }
 }
 
 async function deleteActualite(id) {
@@ -1891,9 +1812,7 @@ async function deleteActualite(id) {
     await db.collection('actualites').doc(id).delete();
     toast('success', 'Actualité supprimée');
     loadActualites();
-  } catch (err) {
-    toast('error', 'Erreur', err.message);
-  }
+  } catch (err) { toast('error', 'Erreur', err.message); }
 }
 
 document.getElementById('formActualite').addEventListener('submit', async (e) => {
@@ -1902,16 +1821,11 @@ document.getElementById('formActualite').addEventListener('submit', async (e) =>
   const id = document.getElementById('acId').value;
   const images = getImages('acImagesList');
   const videoURL = acVideoInput.value.trim();
-
   if (videoURL) {
     const plateforme = detecterPlateforme(videoURL);
     const validation = validerEmbedURL(videoURL, plateforme);
-    if (!validation.valide) {
-      toast('error', 'Vidéo invalide', validation.raison);
-      return;
-    }
+    if (!validation.valide) { toast('error', 'Vidéo invalide', validation.raison); return; }
   }
-
   const data = {
     titre: document.getElementById('acTitre').value.trim(),
     slug: document.getElementById('acSlug').value.trim(),
@@ -1932,28 +1846,14 @@ document.getElementById('formActualite').addEventListener('submit', async (e) =>
   }
   setLoading(btn, true);
   try {
-    if (id) {
-      delete data.dateAjout;
-      await db.collection('actualites').doc(id).update(data);
-      toast('success', 'Actualité mise à jour ✅');
-    } else {
-      await db.collection('actualites').add(data);
-      toast('success', 'Actualité ajoutée ✅');
-    }
-    resetActualiteForm();
-    loadActualites();
-  } catch (err) {
-    toast('error', 'Erreur d\'enregistrement', err.message);
-  } finally {
-    setLoading(btn, false);
-  }
+    if (id) { delete data.dateAjout; await db.collection('actualites').doc(id).update(data); toast('success', 'Actualité mise à jour ✅'); }
+    else { await db.collection('actualites').add(data); toast('success', 'Actualité ajoutée ✅'); }
+    resetActualiteForm(); loadActualites();
+  } catch (err) { toast('error', 'Erreur', err.message); }
+  finally { setLoading(btn, false); }
 });
 
-document.getElementById('btnCancelAc').addEventListener('click', () => {
-  resetActualiteForm();
-  toast('info', 'Modification annulée');
-});
-
+document.getElementById('btnCancelAc').addEventListener('click', () => { resetActualiteForm(); toast('info', 'Annulé'); });
 function resetActualiteForm() {
   document.getElementById('formActualite').reset();
   document.getElementById('acId').value = '';
@@ -1963,7 +1863,6 @@ function resetActualiteForm() {
   document.getElementById('btnCancelAc').style.display = 'none';
   document.getElementById('btnSaveAc').querySelector('.btn-text').textContent = '💾 Enregistrer l\'actualité';
 }
-
 addImageRow(document.getElementById('acImagesList'));
 
 // ============================================================
@@ -1973,7 +1872,7 @@ async function loadPhotos() {
   const list = document.getElementById('phList');
   list.innerHTML = '<div class="empty-state">Chargement…</div>';
   try {
-    const snap = await db.collection('medias_photos').orderBy('dateAjout', 'desc').get();
+    const snap = await db.collection('medias_photos').get();
     document.getElementById('phCount').textContent = snap.size;
     if (snap.empty) { list.innerHTML = '<div class="empty-state">Aucune photo.</div>'; return; }
     list.innerHTML = '';
@@ -1995,9 +1894,7 @@ async function loadPhotos() {
       row.querySelector('[data-del]').addEventListener('click', () => deletePhoto(doc.id));
       list.appendChild(row);
     });
-  } catch (err) {
-    list.innerHTML = `<div class="empty-state">Erreur : ${err.message}</div>`;
-  }
+  } catch (err) { list.innerHTML = `<div class="empty-state">Erreur : ${err.message}</div>`; }
 }
 
 async function editPhoto(id) {
@@ -2049,13 +1946,13 @@ function resetPhotoForm() {
 }
 
 // ============================================================
-// VIDÉOS (médias) — avec bloc payant
+// VIDÉOS
 // ============================================================
 async function loadVideos() {
   const list = document.getElementById('viList');
   list.innerHTML = '<div class="empty-state">Chargement…</div>';
   try {
-    const snap = await db.collection('medias_videos').orderBy('dateAjout', 'desc').get();
+    const snap = await db.collection('medias_videos').get();
     document.getElementById('viCount').textContent = snap.size;
     if (snap.empty) { list.innerHTML = '<div class="empty-state">Aucune vidéo.</div>'; return; }
     list.innerHTML = '';
@@ -2081,9 +1978,7 @@ async function loadVideos() {
       row.querySelector('[data-del]').addEventListener('click', () => deleteVideo(doc.id));
       list.appendChild(row);
     });
-  } catch (err) {
-    list.innerHTML = `<div class="empty-state">Erreur : ${err.message}</div>`;
-  }
+  } catch (err) { list.innerHTML = `<div class="empty-state">Erreur : ${err.message}</div>`; }
 }
 
 async function editVideo(id) {
@@ -2120,22 +2015,13 @@ document.getElementById('formVideo').addEventListener('submit', async (e) => {
   const id = document.getElementById('viId').value;
   const url = viUrlInput.value.trim();
   const payant = document.getElementById('viPayant').value === 'true';
-
   if (url) {
     const plateforme = detecterPlateforme(url);
     const validation = validerEmbedURL(url, plateforme);
-    if (!validation.valide) {
-      toast('error', 'Vidéo invalide', validation.raison);
-      return;
-    }
+    if (!validation.valide) { toast('error', 'Vidéo invalide', validation.raison); return; }
   }
-
   const slug = document.getElementById('viSlug').value.trim();
-  if (payant && !slug) {
-    toast('warning', 'Slug manquant', 'Une vidéo payante doit avoir un slug (identifiant URL).');
-    return;
-  }
-
+  if (payant && !slug) { toast('warning', 'Slug manquant', 'Une vidéo payante doit avoir un slug.'); return; }
   const data = {
     titre: document.getElementById('viTitre').value.trim(),
     categorie: document.getElementById('viCategorie').value,
@@ -2176,7 +2062,7 @@ async function loadPresse() {
   const list = document.getElementById('prList');
   list.innerHTML = '<div class="empty-state">Chargement…</div>';
   try {
-    const snap = await db.collection('presse').orderBy('dateAjout', 'desc').get();
+    const snap = await db.collection('presse').get();
     document.getElementById('prCount').textContent = snap.size;
     if (snap.empty) { list.innerHTML = '<div class="empty-state">Aucun article.</div>'; return; }
     list.innerHTML = '';
@@ -2198,9 +2084,7 @@ async function loadPresse() {
       row.querySelector('[data-del]').addEventListener('click', () => deletePresse(doc.id));
       list.appendChild(row);
     });
-  } catch (err) {
-    list.innerHTML = `<div class="empty-state">Erreur : ${err.message}</div>`;
-  }
+  } catch (err) { list.innerHTML = `<div class="empty-state">Erreur : ${err.message}</div>`; }
 }
 
 async function editPresse(id) {
@@ -2254,7 +2138,222 @@ function resetPresseForm() {
 }
 
 // ============================================================
-// LIVE — AVEC VALIDATION + FALLBACK + PAYANT
+// ✨✨✨ PRODUITS — NOUVEAU ✨✨✨
+// ============================================================
+async function loadProduits() {
+  const list = document.getElementById('prdList');
+  list.innerHTML = '<div class="empty-state">Chargement…</div>';
+  try {
+    const snap = await db.collection('produits').get();
+    document.getElementById('prdCount').textContent = snap.size;
+    if (snap.empty) {
+      list.innerHTML = '<div class="empty-state">Aucun produit pour le moment. Ajoutez-en un ci-dessus.</div>';
+      return;
+    }
+    // Tri par ordre croissant puis par titre
+    const docs = snap.docs.slice().sort((a, b) => {
+      const da = a.data();
+      const db_ = b.data();
+      const oa = typeof da.ordre === 'number' ? da.ordre : 999;
+      const ob = typeof db_.ordre === 'number' ? db_.ordre : 999;
+      if (oa !== ob) return oa - ob;
+      return (da.titre || '').localeCompare(db_.titre || '');
+    });
+    list.innerHTML = '';
+
+    const catLabels = {
+      livres: '📚 Livres',
+      mode: '👕 Mode',
+      spiritualite: '✨ Spiritualité',
+      bijoux: '💍 Bijoux',
+      sceaux: '🔯 Sceaux',
+      art: '🖼️ Art',
+      coffrets: '🎁 Coffrets'
+    };
+
+    docs.forEach(doc => {
+      const d = doc.data();
+      const img = d.image || '';
+      const thumb = img ? `style="background-image:url('${img}')"` : '';
+      const catLabel = catLabels[d.categorie] || d.categorie || '';
+      const prix = typeof d.prix === 'number' && d.prix > 0
+        ? d.prix.toLocaleString('fr-FR') + ' FCFA'
+        : '<em>Prix sur demande</em>';
+      const actif = d.actif !== false;
+      const sansVisuel = d.sansVisuel === true;
+      const badgeActif = actif
+        ? '<span class="badge badge-actif">✅ Actif</span>'
+        : '<span class="badge badge-inactifprod">🚫 Inactif</span>';
+
+      const row = document.createElement('div');
+      row.className = 'item-row';
+      row.innerHTML = `
+        <div class="item-thumb" ${thumb}>
+          ${!img && sansVisuel ? '<div style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;font-size:1.2rem;color:var(--or);">✦</div>' : ''}
+        </div>
+        <div class="item-info">
+          <div class="item-title">${d.titre || 'Sans titre'} ${badgeActif}</div>
+          <div class="item-meta">
+            <span class="badge badge-cat">${catLabel}</span>
+            • ${prix}
+            ${typeof d.ordre === 'number' ? ' • ordre ' + d.ordre : ''}
+            ${d.slug ? ' • /' + d.slug : ''}
+          </div>
+        </div>
+        <div class="item-actions">
+          <button class="btn btn-outline btn-sm" data-edit="${doc.id}">✏️ Modifier</button>
+          <button class="btn btn-outline btn-danger btn-sm" data-del="${doc.id}">🗑️</button>
+        </div>`;
+      row.querySelector('[data-edit]').addEventListener('click', () => editProduit(doc.id));
+      row.querySelector('[data-del]').addEventListener('click', () => deleteProduit(doc.id));
+      list.appendChild(row);
+    });
+  } catch (err) {
+    list.innerHTML = `<div class="empty-state">Erreur : ${err.message}</div>`;
+    console.error('Erreur loadProduits:', err);
+  }
+}
+
+async function editProduit(id) {
+  try {
+    const doc = await db.collection('produits').doc(id).get();
+    if (!doc.exists) { toast('error', 'Produit introuvable'); return; }
+    const d = doc.data();
+    document.getElementById('prdId').value = id;
+    document.getElementById('prdTitre').value = d.titre || '';
+    document.getElementById('prdSlug').value = d.slug || '';
+    document.getElementById('prdCategorie').value = d.categorie || '';
+    document.getElementById('prdPrix').value = typeof d.prix === 'number' ? d.prix : 0;
+    document.getElementById('prdOrdre').value = typeof d.ordre === 'number' ? d.ordre : 100;
+    document.getElementById('prdDescription').value = d.description || '';
+    document.getElementById('prdImage').value = d.image || '';
+    document.getElementById('prdActif').value = d.actif === false ? 'false' : 'true';
+    document.getElementById('prdSansVisuel').value = d.sansVisuel === true ? 'true' : 'false';
+    updatePrdPreview();
+    document.getElementById('btnCancelPrd').style.display = 'inline-flex';
+    document.getElementById('btnSavePrd').querySelector('.btn-text').textContent = '💾 Mettre à jour';
+    document.getElementById('formProduit').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    toast('info', 'Mode modification', 'Modifiez puis enregistrez.');
+  } catch (err) { toast('error', 'Erreur', err.message); }
+}
+
+async function deleteProduit(id) {
+  if (!confirm('Confirmer la suppression de ce produit ?')) return;
+  try {
+    await db.collection('produits').doc(id).delete();
+    toast('success', 'Produit supprimé');
+    loadProduits();
+  } catch (err) { toast('error', 'Erreur', err.message); }
+}
+
+document.getElementById('formProduit').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = document.getElementById('btnSavePrd');
+  const id = document.getElementById('prdId').value;
+
+  const data = {
+    titre: document.getElementById('prdTitre').value.trim(),
+    slug: document.getElementById('prdSlug').value.trim(),
+    categorie: document.getElementById('prdCategorie').value,
+    prix: parseInt(document.getElementById('prdPrix').value, 10) || 0,
+    ordre: parseInt(document.getElementById('prdOrdre').value, 10) || 0,
+    description: document.getElementById('prdDescription').value.trim(),
+    image: document.getElementById('prdImage').value.trim(),
+    actif: document.getElementById('prdActif').value === 'true',
+    sansVisuel: document.getElementById('prdSansVisuel').value === 'true'
+  };
+
+  if (!data.titre || !data.slug || !data.categorie) {
+    toast('warning', 'Champs manquants', 'Titre, slug et catégorie sont obligatoires.');
+    return;
+  }
+
+  // Vérifier si le slug est déjà utilisé par un autre produit
+  try {
+    const existing = await db.collection('produits').where('slug', '==', data.slug).get();
+    if (!existing.empty) {
+      const conflit = existing.docs.find(d => d.id !== id);
+      if (conflit) {
+        toast('error', 'Slug déjà utilisé', 'Un autre produit utilise déjà ce slug. Changez-le.');
+        return;
+      }
+    }
+  } catch (err) {
+    console.warn('Vérif slug:', err);
+  }
+
+  setLoading(btn, true);
+  try {
+    if (id) {
+      await db.collection('produits').doc(id).update(data);
+      toast('success', 'Produit mis à jour ✅');
+    } else {
+      data.dateAjout = firebase.firestore.FieldValue.serverTimestamp();
+      await db.collection('produits').add(data);
+      toast('success', 'Produit ajouté ✅');
+    }
+    resetProduitForm();
+    loadProduits();
+  } catch (err) {
+    toast('error', 'Erreur d\'enregistrement', err.message);
+  } finally {
+    setLoading(btn, false);
+  }
+});
+
+document.getElementById('btnCancelPrd').addEventListener('click', () => {
+  resetProduitForm();
+  toast('info', 'Modification annulée');
+});
+
+function resetProduitForm() {
+  document.getElementById('formProduit').reset();
+  document.getElementById('prdId').value = '';
+  document.getElementById('prdOrdre').value = 100;
+  document.getElementById('prdPrix').value = 0;
+  document.getElementById('prdActif').value = 'true';
+  document.getElementById('prdSansVisuel').value = 'false';
+  document.getElementById('prdPreview').style.display = 'none';
+  document.getElementById('btnCancelPrd').style.display = 'none';
+  document.getElementById('btnSavePrd').querySelector('.btn-text').textContent = '💾 Enregistrer le produit';
+}
+
+// Aperçu en direct du produit
+function updatePrdPreview() {
+  const titre = document.getElementById('prdTitre').value.trim();
+  const desc = document.getElementById('prdDescription').value.trim();
+  const img = document.getElementById('prdImage').value.trim();
+  const prix = parseInt(document.getElementById('prdPrix').value, 10) || 0;
+  const preview = document.getElementById('prdPreview');
+
+  if (!titre && !img && !desc) {
+    preview.style.display = 'none';
+    return;
+  }
+  preview.style.display = 'flex';
+  document.getElementById('prdPreviewTitle').textContent = titre || 'Titre du produit';
+  document.getElementById('prdPreviewDesc').textContent = desc || 'Description…';
+  document.getElementById('prdPreviewPrix').textContent = prix > 0
+    ? prix.toLocaleString('fr-FR') + ' FCFA'
+    : 'Prix sur demande';
+  const imgEl = document.getElementById('prdPreviewImg');
+  if (img) {
+    imgEl.style.backgroundImage = `url('${img}')`;
+    imgEl.textContent = '';
+  } else {
+    imgEl.style.backgroundImage = '';
+    imgEl.textContent = 'Aperçu';
+  }
+}
+
+// Brancher les listeners sur les champs pour l'aperçu
+['prdTitre','prdDescription','prdImage','prdPrix'].forEach(fid => {
+  const el = document.getElementById(fid);
+  if (el) el.addEventListener('input', updatePrdPreview);
+});
+
+// ============================================================
+// LIVE
 // ============================================================
 async function loadLive() {
   try {
@@ -2304,7 +2403,6 @@ async function loadLive() {
     document.getElementById('liAffiche').value = d.affiche || '';
 
     validerChampURL(liEmbedInput, liValidationBox);
-
     const plateforme = detecterPlateforme(d.embedURL);
     const validation = validerEmbedURL(d.embedURL, plateforme);
 
@@ -2365,7 +2463,7 @@ document.getElementById('formLive').addEventListener('submit', async (e) => {
 
   if (data.actif && !payant) {
     if (!url) {
-      toast('warning', 'URL manquante', 'Un live actif et gratuit doit avoir une URL d\'intégration.');
+      toast('warning', 'URL manquante', 'Un live actif et gratuit doit avoir une URL.');
       return;
     }
     const plateforme = detecterPlateforme(url);
@@ -2401,14 +2499,14 @@ document.getElementById('btnDeleteLive').addEventListener('click', async () => {
     await db.collection('live').doc(id).delete();
     toast('success', 'Live supprimé');
     loadLive();
-  } catch (err) {
-    toast('error', 'Erreur', err.message);
-  }
+  } catch (err) { toast('error', 'Erreur', err.message); }
 });
 
 // ============================================================
-// ACCÈS PAYANT
+// ACCÈS PAYANT — avec compteur + tout copier + export CSV
 // ============================================================
+let codesCache = []; // ✨ stocke les codes pour "Tout copier" et "Export CSV"
+
 async function loadAcces() {
   const list = document.getElementById('accList');
   list.innerHTML = '<div class="empty-state">Chargement…</div>';
@@ -2417,6 +2515,8 @@ async function loadAcces() {
     document.getElementById('accCount').textContent = snap.size;
     if (snap.empty) {
       list.innerHTML = '<div class="empty-state">Aucun code généré pour le moment.</div>';
+      updateCounter(0, 0, 0, 0);
+      codesCache = [];
       return;
     }
 
@@ -2428,19 +2528,48 @@ async function loadAcces() {
       return tb - ta;
     });
 
+    // ✨ Compteur
+    let countActif = 0, countUtilise = 0, countExpire = 0, countInactif = 0;
+    const now = Date.now();
+
+    codesCache = []; // reset cache
+
     list.innerHTML = '';
     docs.forEach(doc => {
       const code = doc.id;
       const d = doc.data();
-      const now = Date.now();
       const expire = d.dateExpiration && d.dateExpiration.toDate ? d.dateExpiration.toDate().getTime() : null;
       const estExpire = expire && expire < now && d.dureeValidite > 0;
 
       let badge = '';
-      if (!d.actif) badge = '<span class="badge badge-inactif">🚫 Désactivé</span>';
-      else if (estExpire) badge = '<span class="badge badge-expire">⏰ Expiré</span>';
-      else if (d.usageUnique && d.utilise) badge = '<span class="badge badge-utilise">✔️ Utilisé</span>';
-      else badge = '<span class="badge badge-actif">✅ Actif</span>';
+      if (!d.actif) {
+        badge = '<span class="badge badge-inactif">🚫 Désactivé</span>';
+        countInactif++;
+      } else if (estExpire) {
+        badge = '<span class="badge badge-expire">⏰ Expiré</span>';
+        countExpire++;
+      } else if (d.usageUnique && d.utilise) {
+        badge = '<span class="badge badge-utilise">✔️ Utilisé</span>';
+        countUtilise++;
+      } else {
+        badge = '<span class="badge badge-actif">✅ Actif</span>';
+        countActif++;
+      }
+
+      // Ajouter au cache pour "Tout copier" et "CSV"
+      codesCache.push({
+        code: code,
+        titre: d.titre || '',
+        type: d.type || '',
+        lien: d.lien || '',
+        actif: d.actif ? 'OUI' : 'NON',
+        utilise: d.utilise ? 'OUI' : 'NON',
+        expire: estExpire ? 'OUI' : 'NON',
+        duree: d.dureeValidite || 0,
+        email: d.email || '',
+        note: d.note || '',
+        statut: badge.replace(/<[^>]+>/g, '').trim()
+      });
 
       const row = document.createElement('div');
       row.className = 'item-row';
@@ -2497,15 +2626,63 @@ async function loadAcces() {
 
       list.appendChild(row);
     });
+
+    updateCounter(countActif, countUtilise, countExpire, countInactif);
+
   } catch (err) {
     list.innerHTML = `<div class="empty-state">Erreur : ${err.message}</div>`;
   }
 }
 
+// ✨ Mise à jour du compteur
+function updateCounter(actif, utilise, expire, inactif) {
+  document.getElementById('cntActif').textContent = actif;
+  document.getElementById('cntUtilise').textContent = utilise;
+  document.getElementById('cntExpire').textContent = expire;
+  document.getElementById('cntInactif').textContent = inactif;
+}
+
+// ✨ Bouton "Tout copier"
+document.getElementById('btnCopyAllCodes').addEventListener('click', () => {
+  const actifs = codesCache.filter(c => c.statut.includes('Actif'));
+  if (actifs.length === 0) {
+    toast('warning', 'Aucun code actif', 'Il n\'y a aucun code actif à copier.');
+    return;
+  }
+  const texte = actifs.map(c => `${c.code}  —  ${c.titre}`).join('\n');
+  navigator.clipboard.writeText(texte).then(() => {
+    toast('success', actifs.length + ' code(s) copié(s)', 'Collez-les où vous voulez.');
+  }).catch(err => {
+    toast('error', 'Erreur de copie', err.message);
+  });
+});
+
+// ✨ Bouton "Exporter CSV"
+document.getElementById('btnExportCsv').addEventListener('click', () => {
+  if (codesCache.length === 0) {
+    toast('warning', 'Aucun code', 'Il n\'y a rien à exporter.');
+    return;
+  }
+  const headers = ['Code', 'Titre', 'Type', 'Statut', 'Actif', 'Utilisé', 'Expiré', 'Durée (jours)', 'Email', 'Note', 'Lien'];
+  const rows = codesCache.map(c => [
+    c.code, c.titre, c.type, c.statut, c.actif, c.utilise, c.expire, c.duree, c.email, c.note, c.lien
+  ]);
+  const csv = [headers, ...rows]
+    .map(row => row.map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(','))
+    .join('\n');
+  const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'codes-acces-' + new Date().toISOString().slice(0, 10) + '.csv';
+  a.click();
+  URL.revokeObjectURL(url);
+  toast('success', 'CSV exporté', codesCache.length + ' ligne(s)');
+});
+
 document.getElementById('formAcces').addEventListener('submit', async (e) => {
   e.preventDefault();
   const btn = document.getElementById('btnSaveAcc');
-
   const titre = document.getElementById('accTitre').value.trim();
   const type = document.getElementById('accType').value;
   const lien = document.getElementById('accLien').value.trim();
@@ -2515,13 +2692,9 @@ document.getElementById('formAcces').addEventListener('submit', async (e) => {
   const email = document.getElementById('accEmail').value.trim();
   const note = document.getElementById('accNote').value.trim();
 
-  if (!titre || !lien) {
-    toast('warning', 'Champs manquants', 'Titre et lien obligatoires.');
-    return;
-  }
+  if (!titre || !lien) { toast('warning', 'Champs manquants', 'Titre et lien obligatoires.'); return; }
 
   let code = codeManuel || genererCode(type);
-
   setLoading(btn, true, 'Génération…');
   try {
     const existing = await db.collection('acces').doc(code).get();
@@ -2536,19 +2709,14 @@ document.getElementById('formAcces').addEventListener('submit', async (e) => {
     }
 
     const data = {
-      titre: titre,
-      type: type,
-      lien: lien,
-      actif: true,
-      utilise: false,
+      titre: titre, type: type, lien: lien,
+      actif: true, utilise: false,
       usageUnique: usageUnique,
       dureeValidite: duree,
-      email: email,
-      note: note,
+      email: email, note: note,
       dateCreation: firebase.firestore.FieldValue.serverTimestamp(),
       dateUtilisation: null
     };
-
     if (duree > 0) {
       const exp = new Date();
       exp.setDate(exp.getDate() + duree);
@@ -2617,7 +2785,6 @@ function loadConfigForm() {
 document.getElementById('formConfig').addEventListener('submit', async (e) => {
   e.preventDefault();
   const btn = document.getElementById('btnSaveConfig');
-
   const data = {
     fallbackFacebook: document.getElementById('cfgFallbackFacebook').value.trim(),
     fallbackTiktok: document.getElementById('cfgFallbackTiktok').value.trim(),
@@ -2630,7 +2797,6 @@ document.getElementById('formConfig').addEventListener('submit', async (e) => {
     messageAccueil: document.getElementById('cfgMessageAccueil').value.trim(),
     dateMaj: firebase.firestore.FieldValue.serverTimestamp()
   };
-
   setLoading(btn, true);
   try {
     await db.collection('config').doc('site').set(data, { merge: true });
@@ -2650,7 +2816,7 @@ document.getElementById('btnReloadConfig').addEventListener('click', async () =>
   toast('info', 'Configuration rechargée');
 });
 
-console.log('✅ Admin prête — version complète avec Live/Vidéo payants + Accès payant + Configuration');
+console.log('✅ Admin prête — version complète avec Produits + Compteur + Search + Tout copier');
 </script>
 
 </body>
