@@ -28,7 +28,6 @@
 
 <link rel="manifest" href="manifest.json">
 
-<!-- ⚠️ À REMPLACER : ID Google Analytics réel (G-XXXXXXXXXX) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -132,9 +131,6 @@ section { padding-block: var(--espace-xl); }
 .bandeau-defilant-inner .bandeau-lien img { width: 24px; height: 30px; object-fit: cover; border-radius: 2px; border: 1px solid rgba(255,255,255,0.2); }
 @keyframes defilement { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
 
-/* ============================================================
-   LIVE BANNER + FALLBACK
-   ============================================================ */
 .live-banner {
   background: linear-gradient(135deg, #7a1515, #4a0d0d);
   border-bottom: 1px solid var(--or);
@@ -316,6 +312,11 @@ section { padding-block: var(--espace-xl); }
 .bou-section-titre span { color: var(--text-discret); font-size: .85rem; }
 
 .produits-grille { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--espace-sm); }
+/* ✨ NOUVEAU : grille centrée quand il y a une seule carte */
+.produits-grille.unique {
+  grid-template-columns: minmax(260px, 380px);
+  justify-content: center;
+}
 .produit-carte {
   border: 1px solid var(--border-discret); border-radius: 4px; overflow: hidden; display: flex; flex-direction: column;
   transition: border-color var(--vitesse), transform var(--vitesse), box-shadow var(--vitesse);
@@ -343,7 +344,6 @@ section { padding-block: var(--espace-xl); }
 .produit-cta.acces { color: var(--or-clair); border-color: rgba(184,146,46,.5); }
 .produit-cta.acces:hover { background: rgba(184,146,46,.1); }
 
-/* Cartes sans visuel (Mode Polo/Accessoires + Coffrets) */
 .produit-carte.sans-visuel { min-height: 240px; justify-content: center; padding: 28px 20px; text-align: center; }
 .produit-carte.sans-visuel .produit-corps { padding: 0; gap: 14px; }
 .produit-carte.sans-visuel .produit-titre { font-size: 1rem; line-height: 1.3; }
@@ -354,6 +354,15 @@ section { padding-block: var(--espace-xl); }
   color: var(--or);
   margin-bottom: 8px;
   opacity: 0.8;
+}
+
+/* ✨ NOUVEAU : animation d'apparition des cartes Firestore */
+@keyframes fadeInCard {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.produit-carte[data-firestore] {
+  animation: fadeInCard 0.6s ease forwards;
 }
 
 .categories-grille { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--espace-sm); }
@@ -446,9 +455,6 @@ section { padding-block: var(--espace-xl); }
   </div>
 </div>
 
-<!-- ============================================================
-   LIVE BANNER
-   ============================================================ -->
 <div class="live-banner" id="liveBanner">
   <div class="conteneur live-banner-inner">
     <span class="live-dot"></span>
@@ -492,9 +498,6 @@ section { padding-block: var(--espace-xl); }
   </div>
 </header>
 
-<!-- ============================================================
-   LIVE EMBED
-   ============================================================ -->
 <section id="live-embed" style="display:none; padding-block: var(--espace-md);">
   <div class="conteneur">
     <div style="border: 1px solid var(--or); border-radius: 6px; overflow: hidden; background: var(--noir-2);">
@@ -526,7 +529,7 @@ section { padding-block: var(--espace-xl); }
 </nav>
 
 <!-- ============================================================
-     LIVRES & ÉDITIONS — 11 ouvrages
+     LIVRES & ÉDITIONS — 11 ouvrages (existants)
      ============================================================ -->
 <section class="bou-section" id="livres">
   <div class="conteneur">
@@ -651,7 +654,7 @@ section { padding-block: var(--espace-xl); }
 </section>
 
 <!-- ============================================================
-     MODE TODAAA 2026 — 1 carte T-shirt+Casquette + 2 cartes sans image
+     MODE TODAAA 2026 — 1 carte T-shirt+Casquette (centrée)
      ============================================================ -->
 <section class="bou-section" id="mode">
   <div class="conteneur">
@@ -671,7 +674,6 @@ section { padding-block: var(--espace-xl); }
         </div>
       </div>
 
-     
     </div>
   </div>
 </section>
@@ -706,6 +708,8 @@ section { padding-block: var(--espace-xl); }
       </div>
     </div>
     <p class="bou-avertissement reveal" style="margin-top: var(--espace-md);">Les descriptions des produits traditionnels présentent leur usage dans le cadre des pratiques et croyances traditionnelles et ne constituent pas une garantie de résultat.</p>
+    <!-- ✨ AJOUT : grille dynamique pour les produits Firestore "spiritualite" -->
+    <div class="produits-grille" data-dynamic-grid="spiritualite" style="margin-top: var(--espace-lg);"></div>
   </div>
 </section>
 
@@ -722,6 +726,8 @@ section { padding-block: var(--espace-xl); }
     <div style="text-align:center;">
       <a class="btn-or" href="https://wa.me/22967668799?text=Bonjour%2C%20je%20souhaite%20voir%20la%20collection%20de%20bijoux%20et%20talismans" target="_blank" rel="noopener">Voir la collection</a>
     </div>
+    <!-- ✨ AJOUT : grille dynamique pour les produits Firestore "bijoux" -->
+    <div class="produits-grille" data-dynamic-grid="bijoux" style="margin-top: var(--espace-lg);"></div>
   </div>
 </section>
 
@@ -738,6 +744,8 @@ section { padding-block: var(--espace-xl); }
     <div style="text-align:center;">
       <a class="btn-or" href="https://wa.me/22967668799?text=Bonjour%2C%20je%20souhaite%20d%C3%A9couvrir%20les%20sceaux" target="_blank" rel="noopener">Découvrir les sceaux</a>
     </div>
+    <!-- ✨ AJOUT : grille dynamique pour les produits Firestore "sceaux" -->
+    <div class="produits-grille" data-dynamic-grid="sceaux" style="margin-top: var(--espace-lg);"></div>
   </div>
 </section>
 
@@ -754,11 +762,13 @@ section { padding-block: var(--espace-xl); }
     <div style="text-align:center;">
       <a class="btn-or" href="https://wa.me/22967668799?text=Bonjour%2C%20je%20souhaite%20voir%20les%20tableaux" target="_blank" rel="noopener">Voir les tableaux</a>
     </div>
+    <!-- ✨ AJOUT : grille dynamique pour les produits Firestore "art" -->
+    <div class="produits-grille" data-dynamic-grid="art" style="margin-top: var(--espace-lg);"></div>
   </div>
 </section>
 
 <!-- ============================================================
-     COFFRETS — noms uniquement, sans image
+     COFFRETS — noms uniquement, sans image (existants)
      ============================================================ -->
 <section class="bou-section" id="coffrets">
   <div class="conteneur">
@@ -834,6 +844,8 @@ section { padding-block: var(--espace-xl); }
         <div class="f-socials">
           <a class="f-social" href="https://www.facebook.com/share/1KLJbHgA74/?mibextid=wwXIfr" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
           <a class="f-social" href="https://www.tiktok.com/@bokonon.gbemadoyomin" target="_blank" rel="noopener" aria-label="TikTok"><svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V9.97a8.16 8.16 0 004.77 1.52V8.05a4.85 4.85 0 01-1-.36z"/></svg></a>
+          <!-- ✨ AJOUT : bouton YouTube -->
+          <a class="f-social" href="#" id="footerYouTube" target="_blank" rel="noopener" aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 00-1.94-1.96C18.88 4 12 4 12 4s-6.88 0-8.6.46A2.78 2.78 0 001.46 6.42 29 29 0 001 12a29 29 0 00.46 5.58A2.78 2.78 0 003.4 19.54C5.12 20 12 20 12 20s6.88 0 8.6-.46a2.78 2.78 0 001.94-1.96A29 29 0 0023 12a29 29 0 00-.46-5.58zM9.75 15.02V8.98L15.5 12l-5.75 3.02z"/></svg></a>
         </div>
       </div>
       <div>
@@ -911,9 +923,6 @@ section { padding-block: var(--espace-xl); }
   </div>
 </div>
 
-<!-- ============================================================
-     FIREBASE
-     ============================================================ -->
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 <script>
@@ -1145,10 +1154,140 @@ section { padding-block: var(--espace-xl); }
       });
     }
 
+    // ============================================================
+    // ✨ NOUVEAU : CHARGEMENT DES PRODUITS DEPUIS FIRESTORE
+    // Ajoute les produits EN PLUS de ceux déjà présents dans le HTML.
+    // ============================================================
+    async function chargerProduitsFirestore() {
+      try {
+        const snap = await db.collection('produits').get();
+        if (snap.empty) return;
+
+        const produits = [];
+        snap.forEach(doc => {
+          const d = doc.data();
+          // On ne charge que les produits actifs
+          if (d.actif === false) return;
+          produits.push({ id: doc.id, ...d });
+        });
+
+        if (produits.length === 0) return;
+
+        // Trier par ordre croissant puis par titre
+        produits.sort((a, b) => {
+          const oa = typeof a.ordre === 'number' ? a.ordre : 999;
+          const ob = typeof b.ordre === 'number' ? b.ordre : 999;
+          if (oa !== ob) return oa - ob;
+          return (a.titre || '').localeCompare(b.titre || '');
+        });
+
+        // Grouper par catégorie
+        const parCat = {};
+        produits.forEach(p => {
+          if (!p.categorie) return;
+          if (!parCat[p.categorie]) parCat[p.categorie] = [];
+          parCat[p.categorie].push(p);
+        });
+
+        // Trouver la grille cible pour chaque catégorie
+        Object.keys(parCat).forEach(cat => {
+          const section = document.getElementById(cat);
+          if (!section) return;
+
+          // Priorité à la grille dynamique dédiée, sinon la grille existante
+          let grille = section.querySelector('[data-dynamic-grid="' + cat + '"]');
+          if (!grille) {
+            grille = section.querySelector('.produits-grille');
+          }
+          if (!grille) return;
+
+          parCat[cat].forEach(produit => {
+            const carte = creerCarteProduitFirestore(produit);
+            grille.appendChild(carte);
+          });
+        });
+
+        // Ajuster la mise en page (centrer si 1 seule carte par catégorie)
+        ['livres', 'mode', 'spiritualite', 'bijoux', 'sceaux', 'art', 'coffrets'].forEach(updateGridLayout);
+
+      } catch (err) {
+        console.warn('Erreur chargement produits Firestore:', err);
+      }
+    }
+
+    function creerCarteProduitFirestore(p) {
+      const carte = document.createElement('div');
+      carte.className = 'produit-carte';
+      carte.dataset.firestore = 'true';
+      if (p.slug) carte.dataset.slug = p.slug;
+
+      const prixAffiche = (typeof p.prix === 'number' && p.prix > 0)
+        ? p.prix.toLocaleString('fr-FR') + ' FCFA'
+        : null;
+
+      const sansVisuel = p.sansVisuel === true || !p.image;
+      const whatsappNum = (CONFIG.whatsappAdmin || '22967668799').replace(/\D/g, '');
+      const msgWa = encodeURIComponent('Bonjour, je souhaite commander : ' + (p.titre || ''));
+      const lienWa = 'https://wa.me/' + whatsappNum + '?text=' + msgWa;
+
+      let html = '';
+
+      if (sansVisuel) {
+        carte.classList.add('sans-visuel');
+        html += '<div class="produit-corps">';
+        html += '<span class="produit-titre">' + escapeHtml(p.titre || '') + '</span>';
+        if (p.description) html += '<p class="produit-desc">' + escapeHtml(p.description) + '</p>';
+        if (prixAffiche) html += '<span class="produit-prix">' + escapeHtml(prixAffiche) + '</span>';
+        else html += '<span class="produit-prix demande">Prix sur demande</span>';
+        html += '<a class="produit-cta" href="' + lienWa + '" target="_blank" rel="noopener">Commander sur WhatsApp</a>';
+        html += '</div>';
+      } else {
+        html += '<div class="produit-visuel shine" style="background-image:url(\'' + escapeHtml(p.image) + '\');" role="img" aria-label="' + escapeHtml(p.titre || '') + '"></div>';
+        html += '<div class="produit-corps">';
+        html += '<span class="produit-titre">' + escapeHtml(p.titre || '') + '</span>';
+        if (p.description) html += '<p class="produit-desc">' + escapeHtml(p.description) + '</p>';
+        if (prixAffiche) html += '<span class="produit-prix">' + escapeHtml(prixAffiche) + '</span>';
+        else html += '<span class="produit-prix demande">Prix sur demande</span>';
+        html += '<a class="produit-cta" href="' + lienWa + '" target="_blank" rel="noopener">Commander sur WhatsApp</a>';
+        html += '</div>';
+      }
+
+      carte.innerHTML = html;
+      return carte;
+    }
+
+    function updateGridLayout(sectionId) {
+      const section = document.getElementById(sectionId);
+      if (!section) return;
+      const grille = section.querySelector('.produits-grille');
+      if (!grille) return;
+      const cards = grille.querySelectorAll('.produit-carte');
+      if (cards.length === 1) {
+        grille.classList.add('unique');
+      } else {
+        grille.classList.remove('unique');
+      }
+    }
+
+    // Mettre à jour le lien YouTube dans le footer avec la config
+    function updateFooterYouTube() {
+      const ytLink = document.getElementById('footerYouTube');
+      if (!ytLink) return;
+      if (CONFIG.fallbackYoutube) {
+        ytLink.href = CONFIG.fallbackYoutube;
+      } else {
+        // Si pas de config, désactiver le clic
+        ytLink.addEventListener('click', (e) => e.preventDefault());
+      }
+    }
+
     document.addEventListener('DOMContentLoaded', async function () {
       await chargerConfig();
       chargerLive();
+      await chargerProduitsFirestore();
       activerProduitsPayants();
+      updateGridLayout('mode'); // Centrer la carte Mode si unique
+      updateFooterYouTube();
     });
   } catch (e) {
     console.error('Erreur init Firebase:', e);
