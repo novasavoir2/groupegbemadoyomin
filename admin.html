@@ -9,6 +9,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,400;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
 
+<!-- ⭐ AJOUT 1 : Chart.js pour le graphique -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
 <style>
 :root {
   --noir: #0d0d0d; --noir-2: #111111; --noir-3: #161616;
@@ -90,7 +93,6 @@ h1, h2, h3 { font-family: var(--font-titres); font-weight: 700; color: var(--bla
 .card-title { font-family: var(--font-titres); font-size: 1rem; color: var(--or); margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
 .card-sub { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 20px; }
 
-/* ✨ NOUVEAU — SEARCH BAR */
 .search-wrap { position: relative; margin-bottom: 14px; }
 .search-wrap input {
   width: 100%; padding: 10px 40px 10px 14px;
@@ -105,7 +107,6 @@ h1, h2, h3 { font-family: var(--font-titres); font-weight: 700; color: var(--bla
   font-size: 0.9rem;
 }
 
-/* ✨ NOUVEAU — COMPTEUR DE CODES */
 .codes-counter { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 18px; }
 @media (max-width: 640px) { .codes-counter { grid-template-columns: repeat(2, 1fr); } }
 .counter-box { padding: 14px 12px; border-radius: 6px; text-align: center; background: var(--noir-3); border: 1px solid var(--border-discret); }
@@ -116,7 +117,6 @@ h1, h2, h3 { font-family: var(--font-titres); font-weight: 700; color: var(--bla
 .counter-expire .num { color: #ff8888; }
 .counter-inactif .num { color: var(--text-discret); }
 
-/* ✨ NOUVEAU — BOUTON TOUT COPIER */
 .list-actions { display: flex; gap: 8px; justify-content: flex-end; margin-bottom: 12px; flex-wrap: wrap; }
 
 .items-list { display: flex; flex-direction: column; gap: 10px; }
@@ -178,7 +178,6 @@ h1, h2, h3 { font-family: var(--font-titres); font-weight: 700; color: var(--bla
 .payant-block { border: 1px dashed rgba(184,146,46,0.5); background: rgba(184,146,46,0.04); border-radius: 6px; padding: 16px; margin-top: 16px; }
 .payant-block-title { color: var(--or); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
 
-/* Preview produit */
 .produit-preview {
   display: flex; gap: 16px; align-items: flex-start;
   padding: 16px; background: var(--noir-3); border: 1px solid var(--border-discret);
@@ -195,6 +194,87 @@ h1, h2, h3 { font-family: var(--font-titres); font-weight: 700; color: var(--bla
 .produit-preview-title { font-family: var(--font-titres); font-size: 0.95rem; color: var(--blanc); margin-bottom: 4px; }
 .produit-preview-desc { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 6px; }
 .produit-preview-prix { font-size: 0.9rem; color: var(--or); font-weight: 700; }
+
+/* ⭐ AJOUT 2 : STYLES STATISTIQUES ADMIN */
+.stats-kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 24px; }
+@media (max-width: 900px) { .stats-kpis { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 480px) { .stats-kpis { grid-template-columns: 1fr; } }
+
+.kpi-card {
+  background: linear-gradient(160deg, var(--noir-2), var(--noir-3));
+  border: 1px solid var(--border);
+  border-radius: 8px; padding: 22px 18px;
+  display: flex; flex-direction: column; gap: 6px;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+.kpi-card:hover { transform: translateY(-3px); border-color: var(--or); }
+.kpi-icon { font-size: 1.5rem; }
+.kpi-value {
+  font-family: var(--font-titres);
+  font-size: 1.9rem; font-weight: 700;
+  color: var(--or-clair); line-height: 1;
+}
+.kpi-label {
+  font-size: 0.68rem; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--text-muted);
+}
+
+.stats-chart-box {
+  background: linear-gradient(160deg, var(--noir-2), var(--noir-3));
+  border: 1px solid var(--border);
+  border-radius: 8px; padding: 22px 18px;
+  margin-bottom: 24px;
+}
+.stats-chart-header {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 10px; flex-wrap: wrap; margin-bottom: 16px;
+}
+.stats-chart-header h3 {
+  font-family: var(--font-titres);
+  font-size: 0.95rem; color: var(--or);
+  letter-spacing: 0.05em;
+}
+.stats-chart-inner { position: relative; height: 300px; }
+
+.ranking-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+@media (max-width: 780px) { .ranking-grid { grid-template-columns: 1fr; } }
+
+.ranking-box {
+  background: linear-gradient(160deg, var(--noir-2), var(--noir-3));
+  border: 1px solid var(--border);
+  border-radius: 8px; padding: 20px;
+}
+.ranking-box h3 {
+  font-family: var(--font-titres);
+  font-size: 0.9rem; color: var(--or);
+  margin-bottom: 14px; letter-spacing: 0.05em;
+}
+.ranking-list { display: flex; flex-direction: column; gap: 8px; }
+.ranking-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 12px;
+  background: var(--noir-3);
+  border: 1px solid var(--border-discret);
+  border-radius: 4px;
+  transition: border-color 0.3s ease;
+}
+.ranking-item:hover { border-color: var(--or); }
+.ranking-rank {
+  font-family: var(--font-titres); font-weight: 700;
+  font-size: 0.85rem; color: var(--or-clair);
+  width: 26px; text-align: center; flex-shrink: 0;
+}
+.ranking-label {
+  flex: 1; min-width: 0;
+  font-size: 0.85rem; color: var(--blanc-doux);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.ranking-value {
+  font-family: var(--font-titres); font-weight: 700;
+  color: var(--or-clair); font-size: 0.9rem;
+}
+.stats-empty { text-align: center; padding: 24px; color: var(--text-discret); font-size: 0.85rem; }
+.stats-actions { display: flex; gap: 10px; justify-content: flex-end; margin-bottom: 18px; flex-wrap: wrap; }
 </style>
 </head>
 <body>
@@ -255,11 +335,11 @@ h1, h2, h3 { font-family: var(--font-titres); font-weight: 700; color: var(--bla
     <button class="tab-btn" data-tab="photos">🖼️ Photos</button>
     <button class="tab-btn" data-tab="videos">🎬 Vidéos</button>
     <button class="tab-btn" data-tab="presse">📰 Presse</button>
-    <!-- ✨ NOUVEAU ONGLET PRODUITS -->
     <button class="tab-btn" data-tab="produits">🛍️ Produits</button>
     <button class="tab-btn" data-tab="live">🔴 Live</button>
     <button class="tab-btn" data-tab="acces">🔐 Accès payant</button>
     <button class="tab-btn" data-tab="config">⚙️ Configuration</button>
+    <button class="tab-btn" data-tab="stats">📊 Statistiques</button>
   </div>
 
   <!-- ============================================================
@@ -387,7 +467,6 @@ h1, h2, h3 { font-family: var(--font-titres); font-weight: 700; color: var(--bla
     <div class="card">
       <div class="card-title">📋 Événements enregistrés</div>
       <div class="card-sub">Total : <span id="evCount">0</span></div>
-      <!-- ✨ NOUVEAU : SEARCH BAR -->
       <div class="search-wrap">
         <input type="text" class="search-input" data-target="evList" placeholder="Rechercher un événement…">
       </div>
@@ -499,7 +578,6 @@ h1, h2, h3 { font-family: var(--font-titres); font-weight: 700; color: var(--bla
     <div class="card">
       <div class="card-title">📋 Actualités enregistrées</div>
       <div class="card-sub">Total : <span id="acCount">0</span></div>
-      <!-- ✨ NOUVEAU : SEARCH BAR -->
       <div class="search-wrap">
         <input type="text" class="search-input" data-target="acList" placeholder="Rechercher une actualité…">
       </div>
@@ -563,7 +641,6 @@ h1, h2, h3 { font-family: var(--font-titres); font-weight: 700; color: var(--bla
     <div class="card">
       <div class="card-title">📋 Photos enregistrées</div>
       <div class="card-sub">Total : <span id="phCount">0</span></div>
-      <!-- ✨ NOUVEAU : SEARCH BAR -->
       <div class="search-wrap">
         <input type="text" class="search-input" data-target="phList" placeholder="Rechercher une photo…">
       </div>
@@ -679,7 +756,6 @@ h1, h2, h3 { font-family: var(--font-titres); font-weight: 700; color: var(--bla
     <div class="card">
       <div class="card-title">📋 Vidéos enregistrées</div>
       <div class="card-sub">Total : <span id="viCount">0</span></div>
-      <!-- ✨ NOUVEAU : SEARCH BAR -->
       <div class="search-wrap">
         <input type="text" class="search-input" data-target="viList" placeholder="Rechercher une vidéo…">
       </div>
@@ -727,7 +803,6 @@ h1, h2, h3 { font-family: var(--font-titres); font-weight: 700; color: var(--bla
     <div class="card">
       <div class="card-title">📋 Articles enregistrés</div>
       <div class="card-sub">Total : <span id="prCount">0</span></div>
-      <!-- ✨ NOUVEAU : SEARCH BAR -->
       <div class="search-wrap">
         <input type="text" class="search-input" data-target="prList" placeholder="Rechercher un article…">
       </div>
@@ -738,7 +813,7 @@ h1, h2, h3 { font-family: var(--font-titres); font-weight: 700; color: var(--bla
   </div>
 
   <!-- ============================================================
-       ✨✨✨ TAB PRODUITS — NOUVEAU ✨✨✨
+       TAB PRODUITS
        ============================================================ -->
   <div class="tab-pane" id="pane-produits">
 
@@ -828,7 +903,6 @@ h1, h2, h3 { font-family: var(--font-titres); font-weight: 700; color: var(--bla
           </div>
         </div>
 
-        <!-- Aperçu en direct -->
         <div class="produit-preview" id="prdPreview" style="display:none;">
           <div class="produit-preview-img" id="prdPreviewImg">Aperçu</div>
           <div class="produit-preview-info">
@@ -850,7 +924,6 @@ h1, h2, h3 { font-family: var(--font-titres); font-weight: 700; color: var(--bla
     <div class="card">
       <div class="card-title">📋 Produits enregistrés</div>
       <div class="card-sub">Total : <span id="prdCount">0</span></div>
-      <!-- ✨ SEARCH BAR -->
       <div class="search-wrap">
         <input type="text" class="search-input" data-target="prdList" placeholder="Rechercher un produit…">
       </div>
@@ -997,7 +1070,7 @@ h1, h2, h3 { font-family: var(--font-titres); font-weight: 700; color: var(--bla
   </div>
 
   <!-- ============================================================
-       TAB ACCÈS PAYANT — avec compteur + tout copier
+       TAB ACCÈS PAYANT
        ============================================================ -->
   <div class="tab-pane" id="pane-acces">
 
@@ -1006,7 +1079,6 @@ h1, h2, h3 { font-family: var(--font-titres); font-weight: 700; color: var(--bla
       <span><strong>Fonctionnement :</strong> L'acheteur vous paie (MoMo/Wave/virement), vous lui envoyez un <strong>code unique</strong> par WhatsApp, il le saisit sur <code>acces.html</code> et accède au contenu.</span>
     </div>
 
-    <!-- ✨ NOUVEAU : COMPTEUR DE CODES -->
     <div class="card">
       <div class="card-title">📊 Aperçu des codes</div>
       <div class="card-sub">Répartition en temps réel de tous les codes générés.</div>
@@ -1101,11 +1173,9 @@ h1, h2, h3 { font-family: var(--font-titres); font-weight: 700; color: var(--bla
     <div class="card">
       <div class="card-title">📋 Codes générés</div>
       <div class="card-sub">Total : <span id="accCount">0</span></div>
-      <!-- ✨ NOUVEAU : SEARCH BAR -->
       <div class="search-wrap">
         <input type="text" class="search-input" data-target="accList" placeholder="Rechercher un code, un titre, une note…">
       </div>
-      <!-- ✨ NOUVEAU : BOUTON TOUT COPIER -->
       <div class="list-actions">
         <button type="button" class="btn btn-outline btn-sm" id="btnCopyAllCodes">📋 Tout copier (codes actifs)</button>
         <button type="button" class="btn btn-outline btn-sm" id="btnExportCsv">📥 Exporter CSV</button>
@@ -1189,6 +1259,73 @@ h1, h2, h3 { font-family: var(--font-titres); font-weight: 700; color: var(--bla
           </button>
         </div>
       </form>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       ⭐ AJOUT 3 : TAB STATISTIQUES
+       ============================================================ -->
+  <div class="tab-pane" id="pane-stats">
+    <div class="alert alert-tip">
+      <span>📊</span>
+      <span><strong>Statistiques en temps réel.</strong> Les chiffres se mettent à jour automatiquement. Le compteur de vues exclut la page admin.</span>
+    </div>
+
+    <div class="stats-actions">
+      <button type="button" class="btn btn-outline btn-sm" id="btnRefreshStats">🔄 Rafraîchir</button>
+      <button type="button" class="btn btn-outline btn-sm" id="btnResetTodayStats">🧹 Réinitialiser aujourd'hui</button>
+    </div>
+
+    <div class="stats-kpis">
+      <div class="kpi-card">
+        <span class="kpi-icon">👁️</span>
+        <span class="kpi-value" id="kpiVues">0</span>
+        <span class="kpi-label">Vues totales</span>
+      </div>
+      <div class="kpi-card">
+        <span class="kpi-icon">🖱️</span>
+        <span class="kpi-value" id="kpiClics">0</span>
+        <span class="kpi-label">Clics totaux</span>
+      </div>
+      <div class="kpi-card">
+        <span class="kpi-icon">📅</span>
+        <span class="kpi-value" id="kpiVuesJour">0</span>
+        <span class="kpi-label">Vues aujourd'hui</span>
+      </div>
+      <div class="kpi-card">
+        <span class="kpi-icon">🔥</span>
+        <span class="kpi-value" id="kpiClicsJour">0</span>
+        <span class="kpi-label">Clics aujourd'hui</span>
+      </div>
+    </div>
+
+    <div class="stats-chart-box">
+      <div class="stats-chart-header">
+        <h3>📈 Activité des 30 derniers jours</h3>
+        <div style="font-size:0.75rem; color:var(--text-muted);">
+          <span style="display:inline-block; width:10px; height:10px; background:#d4af5a; border-radius:50%; margin-right:4px; vertical-align:middle;"></span>Vues
+          &nbsp;&nbsp;
+          <span style="display:inline-block; width:10px; height:10px; background:#c73a3a; border-radius:50%; margin-right:4px; vertical-align:middle;"></span>Clics
+        </div>
+      </div>
+      <div class="stats-chart-inner">
+        <canvas id="adminStatsGraph"></canvas>
+      </div>
+    </div>
+
+    <div class="ranking-grid">
+      <div class="ranking-box">
+        <h3>🏆 Pages les plus vues</h3>
+        <div class="ranking-list" id="rankingPages">
+          <div class="stats-empty">Chargement…</div>
+        </div>
+      </div>
+      <div class="ranking-box">
+        <h3>🎯 Boutons les plus cliqués</h3>
+        <div class="ranking-list" id="rankingBtns">
+          <div class="stats-empty">Chargement…</div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -1407,7 +1544,7 @@ function genererCode(type) {
 }
 
 // ============================================================
-// ✨ NOUVEAU — SEARCH BAR GLOBAL
+// SEARCH BAR GLOBAL
 // ============================================================
 function initSearchBars() {
   document.querySelectorAll('.search-input').forEach(input => {
@@ -1426,7 +1563,6 @@ function initSearchBars() {
         if (match) visibleCount++;
       });
 
-      // Message si aucun résultat
       let emptyMsg = target.querySelector('.empty-search-result');
       if (visibleCount === 0 && query) {
         if (!emptyMsg) {
@@ -1500,6 +1636,10 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
     btn.classList.add('active');
     const pane = document.getElementById('pane-' + btn.dataset.tab);
     if (pane) pane.classList.add('active');
+    // ⭐ Chargement automatique des stats quand on ouvre l'onglet
+    if (btn.dataset.tab === 'stats') {
+      setTimeout(loadAllStats, 100);
+    }
   });
 });
 
@@ -1589,7 +1729,7 @@ function loadAll() {
   loadPhotos();
   loadVideos();
   loadPresse();
-  loadProduits();     // ✨ NOUVEAU
+  loadProduits();
   loadLive();
   loadAcces();
   loadConfigForm();
@@ -2138,7 +2278,7 @@ function resetPresseForm() {
 }
 
 // ============================================================
-// ✨✨✨ PRODUITS — NOUVEAU ✨✨✨
+// PRODUITS
 // ============================================================
 async function loadProduits() {
   const list = document.getElementById('prdList');
@@ -2150,7 +2290,6 @@ async function loadProduits() {
       list.innerHTML = '<div class="empty-state">Aucun produit pour le moment. Ajoutez-en un ci-dessus.</div>';
       return;
     }
-    // Tri par ordre croissant puis par titre
     const docs = snap.docs.slice().sort((a, b) => {
       const da = a.data();
       const db_ = b.data();
@@ -2268,7 +2407,6 @@ document.getElementById('formProduit').addEventListener('submit', async (e) => {
     return;
   }
 
-  // Vérifier si le slug est déjà utilisé par un autre produit
   try {
     const existing = await db.collection('produits').where('slug', '==', data.slug).get();
     if (!existing.empty) {
@@ -2318,7 +2456,6 @@ function resetProduitForm() {
   document.getElementById('btnSavePrd').querySelector('.btn-text').textContent = '💾 Enregistrer le produit';
 }
 
-// Aperçu en direct du produit
 function updatePrdPreview() {
   const titre = document.getElementById('prdTitre').value.trim();
   const desc = document.getElementById('prdDescription').value.trim();
@@ -2346,7 +2483,6 @@ function updatePrdPreview() {
   }
 }
 
-// Brancher les listeners sur les champs pour l'aperçu
 ['prdTitre','prdDescription','prdImage','prdPrix'].forEach(fid => {
   const el = document.getElementById(fid);
   if (el) el.addEventListener('input', updatePrdPreview);
@@ -2503,9 +2639,9 @@ document.getElementById('btnDeleteLive').addEventListener('click', async () => {
 });
 
 // ============================================================
-// ACCÈS PAYANT — avec compteur + tout copier + export CSV
+// ACCÈS PAYANT
 // ============================================================
-let codesCache = []; // ✨ stocke les codes pour "Tout copier" et "Export CSV"
+let codesCache = [];
 
 async function loadAcces() {
   const list = document.getElementById('accList');
@@ -2528,11 +2664,10 @@ async function loadAcces() {
       return tb - ta;
     });
 
-    // ✨ Compteur
     let countActif = 0, countUtilise = 0, countExpire = 0, countInactif = 0;
     const now = Date.now();
 
-    codesCache = []; // reset cache
+    codesCache = [];
 
     list.innerHTML = '';
     docs.forEach(doc => {
@@ -2556,7 +2691,6 @@ async function loadAcces() {
         countActif++;
       }
 
-      // Ajouter au cache pour "Tout copier" et "CSV"
       codesCache.push({
         code: code,
         titre: d.titre || '',
@@ -2634,7 +2768,6 @@ async function loadAcces() {
   }
 }
 
-// ✨ Mise à jour du compteur
 function updateCounter(actif, utilise, expire, inactif) {
   document.getElementById('cntActif').textContent = actif;
   document.getElementById('cntUtilise').textContent = utilise;
@@ -2642,7 +2775,6 @@ function updateCounter(actif, utilise, expire, inactif) {
   document.getElementById('cntInactif').textContent = inactif;
 }
 
-// ✨ Bouton "Tout copier"
 document.getElementById('btnCopyAllCodes').addEventListener('click', () => {
   const actifs = codesCache.filter(c => c.statut.includes('Actif'));
   if (actifs.length === 0) {
@@ -2657,7 +2789,6 @@ document.getElementById('btnCopyAllCodes').addEventListener('click', () => {
   });
 });
 
-// ✨ Bouton "Exporter CSV"
 document.getElementById('btnExportCsv').addEventListener('click', () => {
   if (codesCache.length === 0) {
     toast('warning', 'Aucun code', 'Il n\'y a rien à exporter.');
@@ -2816,7 +2947,174 @@ document.getElementById('btnReloadConfig').addEventListener('click', async () =>
   toast('info', 'Configuration rechargée');
 });
 
-console.log('✅ Admin prête — version complète avec Produits + Compteur + Search + Tout copier');
+// ============================================================
+// ⭐ AJOUT 4 : STATISTIQUES — ADMIN
+// ============================================================
+let adminStatsChart = null;
+
+function todayKeyAdmin() {
+  const d = new Date();
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return y + '-' + m + '-' + day;
+}
+
+function setText(id, val) {
+  const el = document.getElementById(id);
+  if (el) el.textContent = (parseInt(val || 0, 10)).toLocaleString('fr-FR');
+}
+
+async function loadStatsGlobal() {
+  try {
+    const snap = await db.collection('stats').doc('global').get();
+    const d = snap.exists ? snap.data() : { vues: 0, clics: 0 };
+    setText('kpiVues', d.vues);
+    setText('kpiClics', d.clics);
+  } catch (err) { console.warn('Stats globales:', err); }
+}
+
+async function loadStatsJour() {
+  try {
+    const dateId = todayKeyAdmin();
+    const snap = await db.collection('stats_par_jour').doc(dateId).get();
+    const d = snap.exists ? snap.data() : { vues: 0, clics: 0 };
+    setText('kpiVuesJour', d.vues);
+    setText('kpiClicsJour', d.clics);
+  } catch (err) { console.warn('Stats jour:', err); }
+}
+
+async function loadStatsGraphe() {
+  const canvas = document.getElementById('adminStatsGraph');
+  if (!canvas || typeof Chart === 'undefined') return;
+
+  const jours = [], labels = [];
+  const now = new Date();
+  for (let i = 29; i >= 0; i--) {
+    const d = new Date(now); d.setDate(d.getDate() - i);
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    jours.push(y + '-' + m + '-' + day);
+    labels.push(d.toLocaleDateString('fr-FR', { day: '2-digit', month: 'short' }));
+  }
+
+  let docs = [];
+  try {
+    const snap = await db.collection('stats_par_jour')
+      .where(firebase.firestore.FieldPath.documentId(), '>=', jours[0])
+      .get();
+    docs = snap.docs;
+  } catch (err) { console.warn('Graphe admin:', err); }
+
+  const map = {};
+  docs.forEach(d => { map[d.id] = d.data(); });
+
+  const vuesData = jours.map(j => (map[j] && map[j].vues) || 0);
+  const clicsData = jours.map(j => (map[j] && map[j].clics) || 0);
+
+  const ctx = canvas.getContext('2d');
+  const gV = ctx.createLinearGradient(0, 0, 0, 300);
+  gV.addColorStop(0, 'rgba(212, 175, 90, 0.35)');
+  gV.addColorStop(1, 'rgba(212, 175, 90, 0.02)');
+  const gC = ctx.createLinearGradient(0, 0, 0, 300);
+  gC.addColorStop(0, 'rgba(199, 58, 58, 0.30)');
+  gC.addColorStop(1, 'rgba(199, 58, 58, 0.02)');
+
+  if (adminStatsChart) adminStatsChart.destroy();
+  adminStatsChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [
+        { label: 'Vues', data: vuesData, borderColor: '#d4af5a', backgroundColor: gV, fill: true, tension: 0.35, borderWidth: 2, pointRadius: 3, pointHoverRadius: 6 },
+        { label: 'Clics', data: clicsData, borderColor: '#c73a3a', backgroundColor: gC, fill: true, tension: 0.35, borderWidth: 2, pointRadius: 3, pointHoverRadius: 6 }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      interaction: { intersect: false, mode: 'index' },
+      plugins: {
+        legend: { labels: { color: '#c8c0b0', font: { family: 'Lato', size: 12 } } },
+        tooltip: {
+          backgroundColor: 'rgba(17,17,17,0.96)',
+          borderColor: '#b8922e', borderWidth: 1,
+          titleColor: '#f0ebe0', bodyColor: '#c8c0b0',
+          padding: 10, cornerRadius: 4
+        }
+      },
+      scales: {
+        x: { ticks: { color: '#7a7060', font: { size: 10 }, maxRotation: 0, autoSkip: true }, grid: { color: 'rgba(184,146,46,0.06)' } },
+        y: { beginAtZero: true, ticks: { color: '#7a7060', font: { size: 10 }, precision: 0 }, grid: { color: 'rgba(184,146,46,0.06)' } }
+      }
+    }
+  });
+}
+
+async function loadStatsRankings() {
+  try {
+    const snapP = await db.collection('stats_pages').get();
+    const pages = snapP.docs.map(d => ({ id: d.id, ...d.data() }))
+      .sort((a, b) => (b.vues || 0) - (a.vues || 0)).slice(0, 10);
+    const zoneP = document.getElementById('rankingPages');
+    if (!pages.length) { zoneP.innerHTML = '<div class="stats-empty">Aucune donnée.</div>'; }
+    else {
+      zoneP.innerHTML = pages.map((p, i) =>
+        '<div class="ranking-item">' +
+          '<span class="ranking-rank">#' + (i + 1) + '</span>' +
+          '<span class="ranking-label">' + (p.page || p.id) + '</span>' +
+          '<span class="ranking-value">' + (p.vues || 0).toLocaleString('fr-FR') + ' vues</span>' +
+        '</div>'
+      ).join('');
+    }
+  } catch (err) { console.warn('Rankings pages:', err); }
+
+  try {
+    const snapB = await db.collection('stats_boutons').get();
+    const btns = snapB.docs.map(d => ({ id: d.id, ...d.data() }))
+      .sort((a, b) => (b.clics || 0) - (a.clics || 0)).slice(0, 10);
+    const zoneB = document.getElementById('rankingBtns');
+    if (!btns.length) { zoneB.innerHTML = '<div class="stats-empty">Aucune donnée.</div>'; }
+    else {
+      zoneB.innerHTML = btns.map((b, i) =>
+        '<div class="ranking-item">' +
+          '<span class="ranking-rank">#' + (i + 1) + '</span>' +
+          '<span class="ranking-label">' + (b.btn || b.id) + '</span>' +
+          '<span class="ranking-value">' + (b.clics || 0).toLocaleString('fr-FR') + ' clics</span>' +
+        '</div>'
+      ).join('');
+    }
+  } catch (err) { console.warn('Rankings boutons:', err); }
+}
+
+async function loadAllStats() {
+  await Promise.all([
+    loadStatsGlobal(),
+    loadStatsJour(),
+    loadStatsGraphe(),
+    loadStatsRankings()
+  ]);
+}
+
+// Boutons d'action
+document.addEventListener('click', async (e) => {
+  if (e.target.id === 'btnRefreshStats') {
+    toast('info', 'Rafraîchissement…');
+    await loadAllStats();
+    toast('success', 'Statistiques à jour');
+  }
+  if (e.target.id === 'btnResetTodayStats') {
+    if (!confirm('Réinitialiser les compteurs du jour ? (les vues/clics d\'aujourd\'hui seront remis à 0)')) return;
+    try {
+      const dateId = todayKeyAdmin();
+      await db.collection('stats_par_jour').doc(dateId).set({ date: dateId, vues: 0, clics: 0 });
+      toast('success', 'Compteurs du jour réinitialisés');
+      loadAllStats();
+    } catch (err) { toast('error', 'Erreur', err.message); }
+  }
+});
+
+console.log('✅ Admin prête — version complète avec Produits + Compteur + Search + Tout copier + Statistiques');
 </script>
 
 </body>
