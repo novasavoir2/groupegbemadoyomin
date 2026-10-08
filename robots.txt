@@ -1,0 +1,24 @@
+# robots.txt — Groupe Gbêmadoyomin
+# https://groupegbemadoyomin.com
+
+User-agent: *
+Allow: /
+Allow: /*.jpeg$
+Allow: /*.jpg$
+Allow: /*.png$
+Allow: /*.webp$
+Allow: /*.svg$
+
+# Google Images — accès complet
+User-agent: Googlebot-Image
+Allow: /
+
+# Pages privées / techniques
+Disallow: /acces.html
+Disallow: /merci.html
+Disallow: /404.html
+Disallow: /service-worker.js
+Disallow: /manifest.json
+Disallow: /*.log$
+
+Sitemap: https://groupegbemadoyomin.com/sitemap.xml
