@@ -37,6 +37,9 @@
   gtag('config', 'G-XXXXXXXXXX');
 </script>
 
+<!-- ⭐ AJOUT 1 : Chart.js pour le graphique des statistiques -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -1038,6 +1041,113 @@ section { padding-block: var(--espace-xl); }
   background: rgba(184,146,46,0.08);
   transform: translateY(-2px);
 }
+
+/* ⭐ AJOUT 2 : SECTION STATISTIQUES */
+#stats-site .stats-intro {
+  text-align: center;
+  max-width: 640px;
+  margin-inline: auto;
+  margin-bottom: var(--espace-lg);
+}
+#stats-site .stats-intro p {
+  margin-inline: auto;
+  color: var(--blanc-doux);
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 32px;
+}
+@media (max-width: 900px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 480px) { .stats-grid { grid-template-columns: 1fr; } }
+
+.stat-card {
+  background: linear-gradient(160deg, var(--noir-2), var(--noir-3));
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 24px 16px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+  overflow: hidden;
+  transition: transform var(--vitesse), border-color var(--vitesse), box-shadow var(--vitesse);
+}
+.stat-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 0%, rgba(184,146,46,0.10), transparent 60%);
+  pointer-events: none;
+}
+.stat-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--or);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.4), 0 0 20px rgba(184,146,46,0.10);
+}
+.stat-card .stat-icon {
+  font-size: 1.8rem;
+  line-height: 1;
+}
+.stat-card .stat-value {
+  font-family: var(--font-titres);
+  font-size: clamp(1.6rem, 3vw, 2.1rem);
+  font-weight: 700;
+  color: var(--or-clair);
+  line-height: 1;
+  letter-spacing: 0.02em;
+}
+.stat-card .stat-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.stat-value.pulse { animation: statPulse 0.5s ease; }
+@keyframes statPulse {
+  0%, 100% { transform: scale(1); color: var(--or-clair); }
+  50% { transform: scale(1.12); color: #fff; }
+}
+
+.stats-graph-wrap {
+  background: linear-gradient(160deg, var(--noir-2), var(--noir-3));
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 24px 20px;
+}
+.stats-graph-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+.stats-graph-header h3 {
+  font-family: var(--font-titres);
+  font-size: 0.95rem;
+  color: var(--or);
+  letter-spacing: 0.05em;
+}
+.stats-graph-legend {
+  display: flex;
+  gap: 14px;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+.stats-graph-legend .dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 4px;
+  vertical-align: middle;
+}
+.stats-graph-inner { position: relative; height: 320px; }
+@media (max-width: 600px) { .stats-graph-inner { height: 240px; } }
 </style>
 </head>
 <body data-page="accueil">
@@ -1365,6 +1475,51 @@ section { padding-block: var(--espace-xl); }
         <div style="margin-top: var(--espace-sm);">
           <a class="btn-or" href="vibration-sacree.html">Rejoindre la communauté</a>
         </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ⭐ AJOUT 3 : SECTION STATISTIQUES -->
+<section id="stats-site">
+  <div class="conteneur">
+    <div class="stats-intro reveal">
+      <p class="eyebrow" style="text-align:center;">Notre communauté en direct</p>
+      <h2 style="text-align:center;">Le Groupe en chiffres</h2>
+      <p>Fréquentation et engagement du site, mis à jour en temps réel.</p>
+    </div>
+    <div class="stats-grid reveal">
+      <div class="stat-card">
+        <span class="stat-icon">👁️</span>
+        <span class="stat-value" id="statVues" data-val="0">0</span>
+        <span class="stat-label">Vues totales</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-icon">🖱️</span>
+        <span class="stat-value" id="statClics" data-val="0">0</span>
+        <span class="stat-label">Clics totaux</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-icon">📅</span>
+        <span class="stat-value" id="statVuesJour" data-val="0">0</span>
+        <span class="stat-label">Vues aujourd'hui</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-icon">🔥</span>
+        <span class="stat-value" id="statClicsJour" data-val="0">0</span>
+        <span class="stat-label">Clics aujourd'hui</span>
+      </div>
+    </div>
+    <div class="stats-graph-wrap reveal">
+      <div class="stats-graph-header">
+        <h3>📈 Activité des 30 derniers jours</h3>
+        <div class="stats-graph-legend">
+          <span><span class="dot" style="background:#d4af5a;"></span>Vues</span>
+          <span><span class="dot" style="background:#7a1515;"></span>Clics</span>
+        </div>
+      </div>
+      <div class="stats-graph-inner">
+        <canvas id="statsGraph"></canvas>
       </div>
     </div>
   </div>
@@ -2000,6 +2155,194 @@ if ('serviceWorker' in navigator) {
     .then(() => console.log('✅ Service Worker enregistré'))
     .catch(() => console.log('⚠️ Service Worker non enregistré'));
 }
+</script>
+
+<!-- ⭐ AJOUT 4 : SCRIPT STATISTIQUES -->
+<script>
+(function() {
+  if (!window.firebase || !firebase.firestore) return;
+  const db = firebase.firestore();
+  const statsRef = db.collection('stats').doc('global');
+
+  function todayKey() {
+    const d = new Date();
+    return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+  }
+  function pageId() {
+    let p = window.location.pathname || '/';
+    let name = p.split('/').pop() || 'index.html';
+    name = name.replace(/\.html?$/i, '').replace(/[^a-z0-9_-]/gi, '_').toLowerCase();
+    return name || 'index';
+  }
+  function btnId(nom) {
+    return String(nom).toLowerCase().replace(/[^a-z0-9]/gi, '_').slice(0, 60) || 'bouton';
+  }
+  function isAdminPage() {
+    return window.location.pathname.toLowerCase().indexOf('admin') !== -1;
+  }
+
+  async function incrementerVues() {
+    if (isAdminPage()) return;
+    const pId = pageId();
+    const dateId = todayKey();
+    const sessionKey = 'gg_vue_' + pId + '_' + dateId;
+    if (sessionStorage.getItem(sessionKey)) return;
+    try {
+      const batch = db.batch();
+      batch.set(statsRef, { vues: firebase.firestore.FieldValue.increment(1) }, { merge: true });
+      batch.set(db.collection('stats_par_jour').doc(dateId), { date: dateId, vues: firebase.firestore.FieldValue.increment(1) }, { merge: true });
+      batch.set(db.collection('stats_pages').doc(pId), { page: pId, vues: firebase.firestore.FieldValue.increment(1) }, { merge: true });
+      await batch.commit();
+      sessionStorage.setItem(sessionKey, '1');
+    } catch (err) { console.warn('Stats vues:', err); }
+  }
+
+  async function incrementerClic(nomBouton) {
+    const bId = btnId(nomBouton);
+    const dateId = todayKey();
+    const pId = pageId();
+    try {
+      const batch = db.batch();
+      batch.set(statsRef, { clics: firebase.firestore.FieldValue.increment(1) }, { merge: true });
+      batch.set(db.collection('stats_par_jour').doc(dateId), { date: dateId, clics: firebase.firestore.FieldValue.increment(1) }, { merge: true });
+      batch.set(db.collection('stats_pages').doc(pId), { page: pId, clics: firebase.firestore.FieldValue.increment(1) }, { merge: true });
+      batch.set(db.collection('stats_boutons').doc(bId), { btn: String(nomBouton).slice(0, 80), clics: firebase.firestore.FieldValue.increment(1) }, { merge: true });
+      await batch.commit();
+    } catch (err) { console.warn('Stats clics:', err); }
+  }
+
+  function ecouterStats(cb) {
+    return statsRef.onSnapshot(snap => {
+      if (snap.exists) cb(snap.data());
+      else cb({ vues: 0, clics: 0 });
+    }, err => console.warn('Stats snapshot:', err));
+  }
+  function ecouterJour(cb) {
+    const dateId = todayKey();
+    return db.collection('stats_par_jour').doc(dateId).onSnapshot(snap => {
+      if (snap.exists) cb(snap.data());
+      else cb({ vues: 0, clics: 0 });
+    }, err => console.warn('Stats jour:', err));
+  }
+
+  function animerValeur(el, nouvelleValeur) {
+    if (!el) return;
+    const ancienne = parseInt(el.dataset.val || '0', 10);
+    const cible = parseInt(nouvelleValeur || 0, 10);
+    if (ancienne === cible) return;
+    el.classList.add('pulse');
+    setTimeout(() => el.classList.remove('pulse'), 500);
+    const duree = 800, debut = performance.now(), diff = cible - ancienne;
+    const animer = (now) => {
+      const progres = Math.min((now - debut) / duree, 1);
+      const easeOut = 1 - Math.pow(1 - progres, 3);
+      const val = Math.floor(ancienne + diff * easeOut);
+      el.textContent = val.toLocaleString('fr-FR');
+      if (progres < 1) requestAnimationFrame(animer);
+      else { el.textContent = cible.toLocaleString('fr-FR'); el.dataset.val = cible; }
+    };
+    requestAnimationFrame(animer);
+    el.dataset.val = cible;
+  }
+
+  let grapheInstance = null;
+  async function chargerGraphe() {
+    const canvas = document.getElementById('statsGraph');
+    if (!canvas || typeof Chart === 'undefined') return;
+    const jours = [], labels = [];
+    const now = new Date();
+    for (let i = 29; i >= 0; i--) {
+      const d = new Date(now); d.setDate(d.getDate() - i);
+      jours.push(d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'));
+      labels.push(d.toLocaleDateString('fr-FR', { day: '2-digit', month: 'short' }));
+    }
+    let docs = [];
+    try {
+      const snap = await db.collection('stats_par_jour').where(firebase.firestore.FieldPath.documentId(), '>=', jours[0]).get();
+      docs = snap.docs;
+    } catch (err) { console.warn('Graphe:', err); }
+    const map = {};
+    docs.forEach(d => { map[d.id] = d.data(); });
+    const vuesData = jours.map(j => (map[j] && map[j].vues) || 0);
+    const clicsData = jours.map(j => (map[j] && map[j].clics) || 0);
+    const ctx = canvas.getContext('2d');
+    const gV = ctx.createLinearGradient(0, 0, 0, 300);
+    gV.addColorStop(0, 'rgba(212, 175, 90, 0.35)');
+    gV.addColorStop(1, 'rgba(212, 175, 90, 0.02)');
+    const gC = ctx.createLinearGradient(0, 0, 0, 300);
+    gC.addColorStop(0, 'rgba(122, 21, 21, 0.30)');
+    gC.addColorStop(1, 'rgba(122, 21, 21, 0.02)');
+    if (grapheInstance) grapheInstance.destroy();
+    grapheInstance = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels,
+        datasets: [
+          { label: 'Vues', data: vuesData, borderColor: '#d4af5a', backgroundColor: gV, fill: true, tension: 0.35, borderWidth: 2, pointBackgroundColor: '#d4af5a', pointBorderColor: '#0d0d0d', pointRadius: 3, pointHoverRadius: 6 },
+          { label: 'Clics', data: clicsData, borderColor: '#c73a3a', backgroundColor: gC, fill: true, tension: 0.35, borderWidth: 2, pointBackgroundColor: '#c73a3a', pointBorderColor: '#0d0d0d', pointRadius: 3, pointHoverRadius: 6 }
+        ]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        interaction: { intersect: false, mode: 'index' },
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            backgroundColor: 'rgba(17,17,17,0.96)',
+            borderColor: '#b8922e', borderWidth: 1,
+            titleColor: '#f0ebe0', bodyColor: '#c8c0b0',
+            titleFont: { family: 'Cinzel', size: 12 },
+            bodyFont: { family: 'Lato', size: 12 },
+            padding: 12, cornerRadius: 4
+          }
+        },
+        scales: {
+          x: { ticks: { color: '#7a7060', font: { size: 10, family: 'Lato' }, maxRotation: 0, autoSkip: true, autoSkipPadding: 20 }, grid: { color: 'rgba(184,146,46,0.06)', drawBorder: false } },
+          y: { beginAtZero: true, ticks: { color: '#7a7060', font: { size: 10, family: 'Lato' }, precision: 0 }, grid: { color: 'rgba(184,146,46,0.06)', drawBorder: false } }
+        }
+      }
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    incrementerVues();
+
+    ecouterStats(data => {
+      animerValeur(document.getElementById('statVues'), data.vues);
+      animerValeur(document.getElementById('statClics'), data.clics);
+    });
+    ecouterJour(data => {
+      animerValeur(document.getElementById('statVuesJour'), data.vues);
+      animerValeur(document.getElementById('statClicsJour'), data.clics);
+    });
+
+    setTimeout(chargerGraphe, 600);
+
+    document.addEventListener('click', (e) => {
+      const el = e.target.closest('a, button');
+      if (!el) return;
+      if (el.classList.contains('chatbot-option') ||
+          el.classList.contains('chatbot-btn') ||
+          el.classList.contains('chatbot-close') ||
+          el.id === 'nav-burger') return;
+      const href = el.getAttribute('href') || '';
+      if (href.startsWith('#') && href.length > 1) return;
+
+      let nom = el.dataset.track;
+      if (!nom) {
+        const txt = (el.textContent || '').trim().replace(/\s+/g, ' ').slice(0, 40);
+        nom = txt || href || 'bouton';
+      }
+
+      const key = 'gg_clic_' + btnId(nom);
+      const last = localStorage.getItem(key);
+      const now = Date.now();
+      if (last && now - parseInt(last, 10) < 30000) return;
+      localStorage.setItem(key, String(now));
+      incrementerClic(nom);
+    }, true);
+  });
+})();
 </script>
 
 </body>
