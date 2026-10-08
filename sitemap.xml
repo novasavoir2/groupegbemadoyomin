@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+
+  <!-- ==================== ACCUEIL ==================== -->
+  <url>
+    <loc>https://groupegbemadoyomin.com/</loc>
+    <lastmod>2026-10-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://groupegbemadoyomin.com/hero-groupe-bg.jpeg</image:loc>
+      <image:title>Groupe Gbêmadoyomin — Cabinet, ONG, TODAAA SHOP et Vibration Sacrée</image:title>
+      <image:caption>Quatre entités, une même vision : savoir, transmission, héritage et innovation.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://groupegbemadoyomin.com/professeur-portrait.jpeg</image:loc>
+      <image:title>Bokônon Gbêmadoyômin — Fondateur du Groupe Gbêmadoyomin</image:title>
+      <image:caption>Professeur de Fa, auteur et chercheur contemporain.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://groupegbemadoyomin.com/communaute-vs.jpeg</image:loc>
+      <image:title>Communauté Vibration Sacrée</image:title>
+      <image:caption>Fraternité, loyauté, connaissance, solidarité, responsabilité et prospérité.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://groupegbemadoyomin.com/logo-gg.jpeg</image:loc>
+      <image:title>Logo Groupe Gbêmadoyomin</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://groupegbemadoyomin.com/logo-cabinet.png</image:loc>
+      <image:title>Logo Cabinet Gbêmadoyomin</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://groupegbemadoyomin.com/logo-ong.png</image:loc>
+      <image:title>Logo ONG Gbêmadoyomin</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://groupegbemadoyomin.com/logo-todaaa.png</image:loc>
+      <image:title>Logo TODAAA SHOP</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://groupegbemadoyomin.com/logo-vibration.png</image:loc>
+      <image:title>Logo Vibration Sacrée</image:title>
+    </image:image>
+  </url>
+
+  <!-- ==================== LE PROFESSEUR ==================== -->
+  <url>
+    <loc>https://groupegbemadoyomin.com/le-professeur.html</loc>
+    <lastmod>2026-10-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://groupegbemadoyomin.com/professeur-hero.jpeg</image:loc>
+      <image:title>Portrait du Professeur Bokônon Gbêmadoyômin</image:title>
+      <image:caption>Érudit Professeur de Fa, auteur, chercheur contemporain et tradi-praticien.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://groupegbemadoyomin.com/professeur-portrait.jpeg</image:loc>
+      <image:title>Bokônon Gbêmadoyômin — portrait officiel</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://groupegbemadoyomin.com/professeur-galerie-1.jpeg</image:loc>
+      <image:title>Le Professeur Gbêmadoyômin — portrait 1</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://groupegbemadoyomin.com/professeur-galerie-3.jpeg</image:loc>
+      <image:title>Le Professeur Gbêmadoyômin — portrait 3</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://groupegbemadoyomin.com/professeur-galerie-4.jpeg</image:loc>
+      <image:title>Le Professeur Gbêmadoyômin — portrait 4</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://groupegbemadoyomin.com/livre-du-fa.jpeg</image:loc>
+      <image:title>Le Livre du Fa — ouvrage du Professeur Gbêmadoyômin</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://groupegbemadoyomin.com/code-de-vie.jpeg</image:loc>
+      <image:title>Le Code de Vie — ouvrage du Professeur Gbêmadoyômin</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://groupegbemadoyomin.com/vodoun-dan.jpeg</image:loc>
+      <image:title>Vodoun Dan — ouvrage du Professeur Gbêmadoyômin</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://groupegbemadoyomin.com/livre-astuces.jpeg</image:loc>
+      <image:title>Le Livre d'Astuces — ouvrage du Professeur Gbêmadoyômin</image:title>
+    </image:image>
+  </url>
+
+  <!-- ==================== CABINET / CONSULTATIONS ==================== -->
+  <url>
+    <loc>https://groupegbemadoyomin.com/consultations.html</loc>
+    <lastmod>2026-10-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://groupegbemadoyomin.com/logo-cabinet.png</image:loc>
+      <image:title>Cabinet Gbêmadoyomin — Consultations du Fa</image:title>
+      <image:caption>Consultation du Fa, orientation et accompagnement traditionnel.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://groupegbemadoyomin.com/professeur-hero.jpeg</image:loc>
+      <image:title>Professeur Bokônon Gbêmadoyômin — Cabinet Gbêmadoyomin</image:title>
+    </image:image>
+  </url>
+
+  <!-- ==================== ONG ==================== -->
+  <url>
+    <loc>https://groupegbemadoyomin.com/ong.html</loc>
+    <lastmod>2026-10-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://groupegbemadoyomin.com/ong-hero.jpeg</image:loc>
+      <image:title>ONG Gbêmadoyomin — Solidarité et engagement social</image:title>
+      <image:caption>Le volet social du Groupe Gbêmadoyomin.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://groupegbemadoyomin.com/ong-action-1.jpeg</image:loc>
+      <image:title>Action sociale ONG Gbêmadoyomin — 1</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://groupegbemadoyomin.com/ong-action-2.jpeg</image:loc>
+      <image:title>Action sociale ONG Gbêmadoyomin — 2</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://groupegbemadoyomin.com/ong-action-3.jpeg</image:loc>
+      <image:title>Action sociale ONG Gbêmadoyomin — 3</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://groupegbemadoyomin.com/ong-action-4.jpeg</image:loc>
+      <image:title>Action sociale ONG Gbêmadoyomin — 4</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://groupegbemadoyomin.com/wave.jpeg</image:loc>
+      <image:title>QR Code Wave / MoMo Pay — Faire un don à l'ONG Gbêmadoyomin</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://groupegbemadoyomin.com/paypal.jpeg</image:loc>
+      <image:title>QR Code PayPal — Faire un don à l'ONG Gbêmadoyomin</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://groupegbemadoyomin.com/logo-ong.png</image:loc>
+      <image:title>Logo ONG Gbêmadoyomin</image:title>
+    </image:image>
+  </url>
+
+  <!-- ==================== DÉCOUVRIR ==================== -->
+  <url>
+    <loc>https://groupegbemadoyomin.com/decouvrir.html</loc>
+    <lastmod>2026-10-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://groupegbemadoyomin.com/decouvrir-hero.jpeg</image:loc>
+      <image:title>Découvrir le Fa, le Vodoun et les traditions africaines</image:title>
+      <image:caption>Enseignements et contenus du Professeur Gbêmadoyômin.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://groupegbemadoyomin.com/decouvrir-symboles.jpeg</image:loc>
+      <image:title>Systèmes symboliques africains</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://groupegbemadoyomin.com/decouvrir-principes.jpeg</image:loc>
+      <image:title>Principes de vie — connaissance de soi et discipline</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://groupegbemadoyomin.com/decouvrir-spiritualite.jpeg</image:loc>
+      <image:title>Spiritualité traditionnelle africaine</image:title>
+    </image:image>
+  </url>
+
+  <!-- ==================== TODAAA SHOP ==================== -->
+  <url>
+    <loc>https://groupegbemadoyomin.com/boutique.html</loc>
+    <lastmod>2026-10-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://groupegbemadoyomin.com/logo-todaaa.png</image:loc>
+      <image:title>Logo TODAAA SHOP</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://groupegbemadoyomin.com/livre-du-fa.jpeg</image:loc>
+      <image:title>Le Livre du Fa — TODAAA SHOP</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://groupegbemadoyomin.com/code-de-vie.jpeg</image:loc>
+      <image:title>Le Code de Vie — TODAAA SHOP</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://groupegbemadoyomin.com/vodoun-dan.jpeg</image:loc>
+      <image:title>Vodoun Dan — TODAAA SHOP</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://groupegbemadoyomin.com/livre-astuces.jpeg</image:loc>
+      <image:title>Le Livre d'Astuces — TODAAA SHOP</image:title>
+    </image:image>
+  </url>
+
+  <!-- ==================== ÉVÉNEMENTS ==================== -->
+  <url>
+    <loc>https://groupegbemadoyomin.com/evenements.html</loc>
+    <lastmod>2026-10-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://groupegbemadoyomin.com/hero-groupe-bg.jpeg</image:loc>
+      <image:title>Événements du Groupe Gbêmadoyomin</image:title>
+    </image:image>
+  </url>
+
+  <!-- ==================== VIBRATION SACRÉE ==================== -->
+  <url>
+    <loc>https://groupegbemadoyomin.com/vibration-sacree.html</loc>
+    <lastmod>2026-10-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://groupegbemadoyomin.com/vs-hero.jpeg</image:loc>
+      <image:title>Vibration Sacrée — Communauté du Groupe Gbêmadoyomin</image:title>
+      <image:caption>Une communauté • Une vision • Une fraternité.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://groupegbemadoyomin.com/communaute-vs.jpeg</image:loc>
+      <image:title>Communauté Vibration Sacrée — AVS</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://groupegbemadoyomin.com/logo-vibration.png</image:loc>
+      <image:title>Logo Vibration Sacrée</image:title>
+    </image:image>
+  </url>
+
+  <!-- ==================== MÉDIAS ==================== -->
+  <url>
+    <loc>https://groupegbemadoyomin.com/medias.html</loc>
+    <lastmod>2026-10-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://groupegbemadoyomin.com/logo-gg.jpeg</image:loc>
+      <image:title>Médias — Groupe Gbêmadoyomin</image:title>
+    </image:image>
+  </url>
+
+  <!-- ==================== CONTACT ==================== -->
+  <url>
+    <loc>https://groupegbemadoyomin.com/contact.html</loc>
+    <lastmod>2026-10-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://groupegbemadoyomin.com/contact-hero.jpeg</image:loc>
+      <image:title>Contact — Groupe Gbêmadoyomin</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://groupegbemadoyomin.com/logo-gg.jpeg</image:loc>
+      <image:title>Logo Groupe Gbêmadoyomin</image:title>
+    </image:image>
+  </url>
+
+</urlset>
