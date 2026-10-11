@@ -1,6 +1,12 @@
-# robots.txt — Groupe Gbêmadoyomin
-# https://groupegbemadoyomin.com
+# ================================================================
+# robots.txt — BOKONON GBÊMADOYÔMIN / Groupe Gbêmadoyomin
+# Domaine officiel : https://www.groupegbemadoyomin.com
+# Priorité SEO : BOKONON GBÊMADOYÔMIN (Bokônon Gbêmadoyômin)
+# ================================================================
 
+# ----------------------------------------------------------------
+# RÈGLES GÉNÉRALES — Tous les moteurs de recherche
+# ----------------------------------------------------------------
 User-agent: *
 Allow: /
 Allow: /*.jpeg$
@@ -8,17 +14,244 @@ Allow: /*.jpg$
 Allow: /*.png$
 Allow: /*.webp$
 Allow: /*.svg$
+Allow: /*.ico$
+Allow: /*.gif$
+Allow: /*.avif$
+Allow: /*.mp4$
+Allow: /*.webm$
 
-# Google Images — accès complet
-User-agent: Googlebot-Image
-Allow: /
-
-# Pages privées / techniques
+# Pages privées / techniques — accès restreint
 Disallow: /acces.html
 Disallow: /merci.html
 Disallow: /404.html
 Disallow: /service-worker.js
 Disallow: /manifest.json
+Disallow: /browserconfig.xml
+Disallow: /admin/
+Disallow: /private/
+Disallow: /config/
+Disallow: /*?s=
+Disallow: /*?q=
+Disallow: /*?utm_
+Disallow: /*&
 Disallow: /*.log$
+Disallow: /*.env$
+Disallow: /*.json$
+Disallow: /*.sql$
 
-Sitemap: https://groupegbemadoyomin.com/sitemap.xml
+# ----------------------------------------------------------------
+# GOOGLE — Recherche générale
+# ----------------------------------------------------------------
+User-agent: Googlebot
+Allow: /
+Disallow: /acces.html
+Disallow: /merci.html
+Disallow: /admin/
+Disallow: /private/
+
+# ----------------------------------------------------------------
+# GOOGLE IMAGES — Accès complet aux images (référencement photos)
+# ----------------------------------------------------------------
+User-agent: Googlebot-Image
+Allow: /
+Allow: /*.jpeg$
+Allow: /*.jpg$
+Allow: /*.png$
+Allow: /*.webp$
+Allow: /*.svg$
+Allow: /*.ico$
+Allow: /*.gif$
+Allow: /*.avif$
+Disallow: /admin/
+Disallow: /private/
+Disallow: /acces.html
+
+# ----------------------------------------------------------------
+# GOOGLE VIDÉOS — Référencement des vidéos
+# ----------------------------------------------------------------
+User-agent: Googlebot-Video
+Allow: /
+Disallow: /admin/
+Disallow: /private/
+
+# ----------------------------------------------------------------
+# GOOGLE NEWS — Si publication presse
+# ----------------------------------------------------------------
+User-agent: Googlebot-News
+Allow: /
+Allow: /medias.html
+Allow: /evenements.html
+Disallow: /acces.html
+Disallow: /admin/
+
+# ----------------------------------------------------------------
+# BING — Moteur Microsoft
+# ----------------------------------------------------------------
+User-agent: Bingbot
+Allow: /
+Disallow: /acces.html
+Disallow: /admin/
+Disallow: /private/
+Crawl-delay: 1
+
+# ----------------------------------------------------------------
+# YANDEX — Moteur russe
+# ----------------------------------------------------------------
+User-agent: Yandex
+Allow: /
+Disallow: /acces.html
+Disallow: /admin/
+Disallow: /private/
+Crawl-delay: 2
+
+# ----------------------------------------------------------------
+# DUCKDUCKGO
+# ----------------------------------------------------------------
+User-agent: DuckDuckBot
+Allow: /
+Disallow: /acces.html
+Disallow: /admin/
+
+# ----------------------------------------------------------------
+# QWANT — Moteur français
+# ----------------------------------------------------------------
+User-agent: Qwantify
+Allow: /
+Disallow: /acces.html
+Disallow: /admin/
+
+# ----------------------------------------------------------------
+# IA & ASSISTANTS — Autoriser la découverte pour visibilité IA
+# (ChatGPT, Claude, Perplexity, Gemini, etc.)
+# ----------------------------------------------------------------
+User-agent: GPTBot
+Allow: /
+Disallow: /acces.html
+Disallow: /admin/
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot
+Allow: /
+Disallow: /admin/
+Disallow: /acces.html
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+Disallow: /admin/
+
+User-agent: Bytespider
+Allow: /
+Disallow: /admin/
+
+User-agent: CCBot
+Allow: /
+
+User-agent: cohere-ai
+Allow: /
+
+# ----------------------------------------------------------------
+# RÉSEAUX SOCIAUX — Prévisualisation des liens (Open Graph)
+# ----------------------------------------------------------------
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: LinkedInBot
+Allow: /
+
+User-agent: WhatsApp
+Allow: /
+
+User-agent: TelegramBot
+Allow: /
+
+User-agent: Slackbot
+Allow: /
+
+User-agent: Discordbot
+Allow: /
+
+User-agent: Pinterestbot
+Allow: /
+
+# ----------------------------------------------------------------
+# SCRAPERS ABUSIFS — Blocage
+# ----------------------------------------------------------------
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+User-agent: MegaIndex.ru
+Disallow: /
+
+User-agent: ZoominfoBot
+Disallow: /
+
+User-agent: BLEXBot
+Disallow: /
+
+User-agent: DataForSeoBot
+Disallow: /
+
+User-agent: serpstatbot
+Disallow: /
+
+User-agent: PetalBot
+Disallow: /
+
+# ----------------------------------------------------------------
+# BAD BOTS — Blocage strict
+# ----------------------------------------------------------------
+User-agent: SemrushBot-SA
+Disallow: /
+
+User-agent: SiteAuditBot
+Disallow: /
+
+User-agent: SEOkicks
+Disallow: /
+
+# ----------------------------------------------------------------
+# SITEMAPS OFFICIELS
+# ----------------------------------------------------------------
+Sitemap: https://www.groupegbemadoyomin.com/sitemap.xml
+Sitemap: https://www.groupegbemadoyomin.com/sitemap-images.xml
+Sitemap: https://www.groupegbemadoyomin.com/sitemap-videos.xml
+
+# ----------------------------------------------------------------
+# HÔTE PRÉFÉRÉ (indication supplémentaire pour Google)
+# ----------------------------------------------------------------
+Host: www.groupegbemadoyomin.com
