@@ -12,10 +12,12 @@
 <meta name="author" content="BOKONON GBÊMADOYÔMIN — Groupe Gbêmadoyomin">
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
 <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large">
+<meta name="googlebot-image" content="index, follow">
 <meta name="bingbot" content="index, follow, max-snippet:-1, max-image-preview:large">
 <link rel="canonical" href="https://www.groupegbemadoyomin.com/evenements.html">
 <link rel="alternate" hreflang="fr" href="https://www.groupegbemadoyomin.com/evenements.html">
 <link rel="alternate" hreflang="x-default" href="https://www.groupegbemadoyomin.com/evenements.html">
+<link rel="sitemap" type="application/xml" title="Sitemap" href="https://www.groupegbemadoyomin.com/sitemap.xml">
 
 <!-- ================= SEO LOCAL (BÉNIN) ================= -->
 <meta name="geo.region" content="BJ-AQ">
@@ -23,14 +25,14 @@
 <meta name="geo.position" content="6.4499;2.3553">
 <meta name="ICBM" content="6.4499, 2.3553">
 
-<!-- ================= FAVICON MULTI-FORMAT ================= -->
-<link rel="icon" type="image/x-icon" href="/favicon.ico">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#b8922e">
-<link rel="shortcut icon" href="/favicon.ico">
+<!-- ================= FAVICON MULTI-FORMAT — PHOTO DU CLIENT ================= -->
+<link rel="icon" type="image/jpeg" sizes="any" href="/professeur-portrait.jpeg">
+<link rel="apple-touch-icon" sizes="180x180" href="/professeur-portrait.jpeg">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230d0d0d'/%3E%3Ctext x='50' y='68' font-size='52' font-family='Georgia,serif' font-weight='700' fill='%23d4af5a' text-anchor='middle'%3EGG%3C/text%3E%3C/svg%3E">
+<link rel="mask-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%230d0d0d'/%3E%3Ctext x='50' y='68' font-size='52' font-family='Georgia,serif' font-weight='700' fill='%23d4af5a' text-anchor='middle'%3EGG%3C/text%3E%3C/svg%3E" color="#b8922e">
+<link rel="shortcut icon" href="/professeur-portrait.jpeg">
 <meta name="msapplication-TileColor" content="#0D0D0D">
+<meta name="msapplication-TileImage" content="/professeur-portrait.jpeg">
 <meta name="msapplication-config" content="/browserconfig.xml">
 <meta name="theme-color" content="#0D0D0D">
 
@@ -46,7 +48,7 @@
 <meta property="og:image" content="https://www.groupegbemadoyomin.com/professeur-portrait.jpeg">
 <meta property="og:image:secure_url" content="https://www.groupegbemadoyomin.com/professeur-portrait.jpeg">
 <meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
+<meta property="og:image:height" content="1500">
 <meta property="og:image:alt" content="BOKONON GBÊMADOYÔMIN — Événements et actualités">
 <meta property="og:image:type" content="image/jpeg">
 
@@ -58,12 +60,12 @@
 <meta name="twitter:image:alt" content="BOKONON GBÊMADOYÔMIN — Événements">
 
 <!-- ================= GOOGLE ANALYTICS ================= -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-E29S4XJS2V"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-  gtag('config', 'G-XXXXXXXXXX');
+  gtag('config', 'G-E29S4XJS2V');
 </script>
 
 <!-- ================= JSON-LD @GRAPH COMPLET (Event + ItemList + Breadcrumb) ================= -->
@@ -190,6 +192,9 @@ section { padding-block: var(--espace-xl); }
 @media (max-width: 640px) { section { padding-block: var(--espace-lg); } }
 
 .eyebrow { font-family: var(--font-accent); font-style: italic; font-size: 0.95rem; color: var(--text-muted); margin-bottom: var(--espace-xs); }
+
+/* Helper image */
+.img-cover { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
 
 .btn-or {
   display: inline-flex; align-items: center; gap: 8px;
@@ -437,11 +442,13 @@ section { padding-block: var(--espace-xl); }
   display: grid; grid-template-columns: 1fr 1.2fr;
 }
 .evt-une-affiche {
+  position: relative;
   min-height: 340px; background: linear-gradient(160deg, var(--rouge), var(--noir));
-  background-size: cover; background-position: center;
   display: flex; align-items: center; justify-content: center;
   color: var(--text-discret); font-size: .85rem; text-align: center; padding: 24px;
+  overflow: hidden;
 }
+.evt-une-affiche .img-cover { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
 .evt-une-details { padding: var(--espace-md); }
 .evt-une-meta { display: flex; flex-wrap: wrap; gap: 8px 20px; font-size: .85rem; color: var(--blanc-doux); margin-block: var(--espace-sm); }
 @media (max-width: 780px) { .evt-une { grid-template-columns: 1fr; } }
@@ -467,11 +474,13 @@ section { padding-block: var(--espace-xl); }
 }
 .agenda-carte:hover { border-color: var(--or); transform: translateY(-4px); box-shadow: 0 12px 30px rgba(0,0,0,0.3); }
 .agenda-affiche {
+  position: relative;
   aspect-ratio: 4/3; background: var(--noir-3);
-  background-size: cover; background-position: center;
   display: flex; align-items: center; justify-content: center;
   color: var(--text-discret); font-size: .72rem; text-align: center; padding: 14px;
+  overflow: hidden;
 }
+.agenda-affiche .img-cover { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
 .agenda-corps { padding: 16px; }
 .agenda-titre { font-family: var(--font-titres); font-size: .88rem; color: var(--blanc); margin-bottom: 8px; }
 .agenda-meta { font-size: .78rem; color: var(--text-muted); display: flex; flex-direction: column; gap: 4px; margin-bottom: 14px; }
@@ -490,16 +499,18 @@ section { padding-block: var(--espace-xl); }
 }
 .actu-carte:hover { border-color: var(--or); transform: translateY(-4px); box-shadow: 0 15px 40px rgba(0,0,0,0.4); }
 .actu-image {
-  aspect-ratio: 16/10; background: var(--noir-3);
-  background-size: cover; background-position: center;
   position: relative;
+  aspect-ratio: 16/10; background: var(--noir-3);
+  overflow: hidden;
 }
+.actu-image .img-cover { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
 .actu-badge {
   position: absolute; top: 12px; left: 12px;
   background: linear-gradient(135deg, var(--or-clair), var(--or-fonce));
   color: var(--noir); padding: 5px 10px; border-radius: 3px;
   font-family: var(--font-titres); font-size: 0.62rem; font-weight: 700;
   letter-spacing: 0.08em; text-transform: uppercase;
+  z-index: 2;
 }
 .actu-badge.epingle { background: linear-gradient(135deg, #ff4757, #c0392b); color: white; }
 .actu-corps { padding: 18px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
@@ -1160,11 +1171,16 @@ function afficherProchainEvenement(liste) {
   }
 
   const affiche = (prochain.images && prochain.images[0]) || prochain.afficheURL || '';
-  const styleAffiche = affiche ? `background-image: url('${cloudinaryUrl(affiche, 800)}');` : '';
+  const afficheURL = affiche ? cloudinaryUrl(affiche, 800) : '';
+  const imgHTML = afficheURL
+    ? `<img class="img-cover" src="${afficheURL}" alt="${escapeHtml(prochain.titre)} — BOKONON GBÊMADOYÔMIN" width="800" height="600" loading="lazy">`
+    : '';
 
   zone.innerHTML = `
     <div class="evt-une reveal">
-      <div class="evt-une-affiche shine" style="${styleAffiche}" role="img" aria-label="${escapeHtml(prochain.titre)} — BOKONON GBÊMADOYÔMIN"></div>
+      <div class="evt-une-affiche shine">
+        ${imgHTML}
+      </div>
       <div class="evt-une-details">
         <p class="eyebrow">${escapeHtml(prochain.categorie || 'Événement')}</p>
         <h3>${escapeHtml(prochain.titre)}</h3>
@@ -1192,10 +1208,13 @@ function afficherAgenda(liste) {
 
   grille.innerHTML = liste.map((e, index) => {
     const affiche = (e.images && e.images[0]) || e.afficheURL || '';
-    const bg = affiche ? cloudinaryUrl(affiche, 600) : ('event-' + (index + 1) + '.jpeg');
+    const imgSrc = affiche ? cloudinaryUrl(affiche, 600) : ('event-' + (index + 1) + '.jpeg');
+    const altTxt = escapeHtml(e.titre) + ' — BOKONON GBÊMADOYÔMIN';
     return `
     <div class="agenda-carte reveal-stagger">
-      <div class="agenda-affiche shine" style="background-image:url('${bg}');" role="img" aria-label="${escapeHtml(e.titre)} — BOKONON GBÊMADOYÔMIN"></div>
+      <div class="agenda-affiche shine">
+        <img class="img-cover" src="${imgSrc}" alt="${altTxt}" width="600" height="450" loading="lazy">
+      </div>
       <div class="agenda-corps">
         <div class="agenda-titre">${escapeHtml(e.titre)}</div>
         <div class="agenda-meta">
@@ -1222,10 +1241,13 @@ function afficherArchives(liste) {
 
   grille.innerHTML = liste.map((e) => {
     const affiche = (e.images && e.images[0]) || e.afficheURL || '';
-    const bg = affiche ? cloudinaryUrl(affiche, 600) : 'archive.jpeg';
+    const imgSrc = affiche ? cloudinaryUrl(affiche, 600) : 'archive.jpeg';
+    const altTxt = escapeHtml(e.titre) + ' — BOKONON GBÊMADOYÔMIN';
     return `
     <div class="agenda-carte reveal-stagger">
-      <div class="agenda-affiche shine" style="background-image:url('${bg}');" role="img" aria-label="${escapeHtml(e.titre)} — BOKONON GBÊMADOYÔMIN"></div>
+      <div class="agenda-affiche shine">
+        <img class="img-cover" src="${imgSrc}" alt="${altTxt}" width="600" height="450" loading="lazy">
+      </div>
       <div class="agenda-corps">
         <div class="agenda-titre">${escapeHtml(e.titre)}</div>
         <div class="agenda-meta">
@@ -1316,8 +1338,10 @@ function injecterActualitesDynamiques(liste) {
 
 function carteActualite(actu) {
   const img = (actu.images && actu.images[0]) || actu.imageURL || '';
-  const bg = img ? cloudinaryUrl(img, 800) : '';
-  const styleBg = bg ? `background-image:url('${bg}');` : '';
+  const imgSrc = img ? cloudinaryUrl(img, 800) : '';
+  const imgTag = imgSrc
+    ? `<img class="img-cover" src="${imgSrc}" alt="${escapeHtml(actu.titre || 'Actualité BOKONON GBÊMADOYÔMIN')}" width="800" height="500" loading="lazy">`
+    : '';
   const estEpingle = actu.epingle === true || actu.epingle === 'true';
   const badge = estEpingle
     ? '<span class="actu-badge epingle">📌 À la une</span>'
@@ -1326,7 +1350,8 @@ function carteActualite(actu) {
   return `
     <article class="actu-carte reveal-stagger">
       <a href="article.html?type=actualite&slug=${encodeURIComponent(actu.slug || actu.id)}" style="display:block;">
-        <div class="actu-image shine" style="${styleBg}" role="img" aria-label="${escapeHtml(actu.titre || 'Actualité BOKONON GBÊMADOYÔMIN')}">
+        <div class="actu-image shine">
+          ${imgTag}
           ${badge}
         </div>
       </a>
@@ -1429,20 +1454,19 @@ async function chargerLive() {
       const urlAcces = 'acces.html?type=live&slug=' + encodeURIComponent(data.slug);
       const prix = parseInt(data.prix, 10) || 0;
       const affiche = data.affiche || '';
-
-      const fondStyle = affiche
-        ? "background-image:url('" + cloudinaryUrl(affiche, 900) + "'); background-size:cover; background-position:center; background-color:var(--noir-3);"
-        : 'background-color: var(--noir-2);';
+      const afficheURL = affiche ? cloudinaryUrl(affiche, 900) : '';
+      const imgLive = afficheURL
+        ? `<img class="img-cover" src="${afficheURL}" alt="${escapeHtml(data.titre || 'Live')} — Groupe Gbêmadoyomin" loading="lazy">`
+        : '';
 
       zone.innerHTML =
         '<a href="' + urlAcces + '" style="display:block; width:100%; height:100%; text-decoration:none; position:absolute; inset:0;">' +
-          '<div style="position:absolute; inset:0; ' + fondStyle + '">' +
-            '<div style="position:absolute; inset:0; background:linear-gradient(180deg, rgba(0,0,0,0.3), rgba(0,0,0,0.85)); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px; padding:24px; text-align:center;">' +
-              '<span style="background:linear-gradient(135deg, var(--or-clair), var(--or-fonce)); color:var(--noir); padding:6px 14px; border-radius:20px; font-family:var(--font-titres); font-size:0.7rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase;">💰 Live payant</span>' +
-              '<div style="font-family:var(--font-titres); color:var(--blanc); font-size:clamp(1.1rem, 2.5vw, 1.5rem); line-height:1.3;">' + escapeHtml(data.titre || 'Live en cours') + '</div>' +
-              (prix > 0 ? '<div style="font-family:var(--font-titres); color:var(--or-clair); font-size:1.3rem; font-weight:700;">' + prix.toLocaleString('fr-FR') + ' FCFA</div>' : '') +
-              '<div style="background:linear-gradient(135deg, var(--or-clair), var(--or-fonce)); color:var(--noir); padding:12px 28px; border-radius:4px; font-family:var(--font-titres); font-size:0.82rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; margin-top:8px;">🎟 Accéder au live</div>' +
-            '</div>' +
+          imgLive +
+          '<div style="position:absolute; inset:0; background:linear-gradient(180deg, rgba(0,0,0,0.3), rgba(0,0,0,0.85)); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px; padding:24px; text-align:center;">' +
+            '<span style="background:linear-gradient(135deg, var(--or-clair), var(--or-fonce)); color:var(--noir); padding:6px 14px; border-radius:20px; font-family:var(--font-titres); font-size:0.7rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase;">💰 Live payant</span>' +
+            '<div style="font-family:var(--font-titres); color:var(--blanc); font-size:clamp(1.1rem, 2.5vw, 1.5rem); line-height:1.3;">' + escapeHtml(data.titre || 'Live en cours') + '</div>' +
+            (prix > 0 ? '<div style="font-family:var(--font-titres); color:var(--or-clair); font-size:1.3rem; font-weight:700;">' + prix.toLocaleString('fr-FR') + ' FCFA</div>' : '') +
+            '<div style="background:linear-gradient(135deg, var(--or-clair), var(--or-fonce)); color:var(--noir); padding:12px 28px; border-radius:4px; font-family:var(--font-titres); font-size:0.82rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; margin-top:8px;">🎟 Accéder au live</div>' +
           '</div>' +
         '</a>';
       return;
