@@ -12,10 +12,12 @@
 <meta name="author" content="BOKONON GBÊMADOYÔMIN — Groupe Gbêmadoyomin">
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
 <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large">
+<meta name="googlebot-image" content="index, follow">
 <meta name="bingbot" content="index, follow, max-snippet:-1, max-image-preview:large">
 <link rel="canonical" href="https://www.groupegbemadoyomin.com/le-professeur.html">
 <link rel="alternate" hreflang="fr" href="https://www.groupegbemadoyomin.com/le-professeur.html">
 <link rel="alternate" hreflang="x-default" href="https://www.groupegbemadoyomin.com/le-professeur.html">
+<link rel="sitemap" type="application/xml" title="Sitemap" href="https://www.groupegbemadoyomin.com/sitemap.xml">
 
 <!-- ================= SEO LOCAL (MASSÈ, PLATEAU, BÉNIN) ================= -->
 <meta name="geo.region" content="BJ-PL">
@@ -23,14 +25,14 @@
 <meta name="geo.position" content="7.1500;2.6167">
 <meta name="ICBM" content="7.1500, 2.6167">
 
-<!-- ================= FAVICON MULTI-FORMAT (icône dans les SERP) ================= -->
-<link rel="icon" type="image/x-icon" href="/favicon.ico">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#b8922e">
-<link rel="shortcut icon" href="/favicon.ico">
+<!-- ================= FAVICON MULTI-FORMAT — PHOTO DU CLIENT ================= -->
+<link rel="icon" type="image/jpeg" sizes="any" href="/professeur-portrait.jpeg">
+<link rel="apple-touch-icon" sizes="180x180" href="/professeur-portrait.jpeg">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230d0d0d'/%3E%3Ctext x='50' y='68' font-size='52' font-family='Georgia,serif' font-weight='700' fill='%23d4af5a' text-anchor='middle'%3EGG%3C/text%3E%3C/svg%3E">
+<link rel="mask-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%230d0d0d'/%3E%3Ctext x='50' y='68' font-size='52' font-family='Georgia,serif' font-weight='700' fill='%23d4af5a' text-anchor='middle'%3EGG%3C/text%3E%3C/svg%3E" color="#b8922e">
+<link rel="shortcut icon" href="/professeur-portrait.jpeg">
 <meta name="msapplication-TileColor" content="#0D0D0D">
+<meta name="msapplication-TileImage" content="/professeur-portrait.jpeg">
 <meta name="msapplication-config" content="/browserconfig.xml">
 <meta name="theme-color" content="#0D0D0D">
 
@@ -46,7 +48,7 @@
 <meta property="og:image" content="https://www.groupegbemadoyomin.com/professeur-portrait.jpeg">
 <meta property="og:image:secure_url" content="https://www.groupegbemadoyomin.com/professeur-portrait.jpeg">
 <meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
+<meta property="og:image:height" content="1500">
 <meta property="og:image:alt" content="Portrait de BOKONON GBÊMADOYÔMIN — Bokônon Gbêmadoyômin">
 <meta property="og:image:type" content="image/jpeg">
 <meta property="profile:first_name" content="Bokônon">
@@ -60,12 +62,12 @@
 <meta name="twitter:image:alt" content="BOKONON GBÊMADOYÔMIN — Bokônon Gbêmadoyômin">
 
 <!-- ================= GOOGLE ANALYTICS ================= -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-E29S4XJS2V"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-  gtag('config', 'G-XXXXXXXXXX');
+  gtag('config', 'G-E29S4XJS2V');
 </script>
 
 <!-- ================= JSON-LD @GRAPH COMPLET (Knowledge Panel + Wikipédia) ================= -->
@@ -275,6 +277,9 @@ section { padding-block: var(--espace-xl); }
 
 .eyebrow { font-family: var(--font-accent); font-style: italic; font-size: 0.95rem; color: var(--text-muted); margin-bottom: var(--espace-xs); }
 
+/* Helper image */
+.img-cover { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+
 .btn-or {
   display: inline-flex; align-items: center; gap: 8px;
   background: linear-gradient(135deg, var(--or-clair), var(--or-fonce)); color: var(--noir);
@@ -476,14 +481,16 @@ section { padding-block: var(--espace-xl); }
 .ouvrages-grille { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--espace-sm); }
 .ouvrage-carte { border: 1px solid var(--border-discret); border-radius: 4px; overflow: hidden; transition: border-color var(--vitesse), transform var(--vitesse), box-shadow var(--vitesse); background: var(--noir-2); }
 .ouvrage-carte:hover { border-color: var(--or); transform: translateY(-4px); box-shadow: 0 12px 30px rgba(0,0,0,0.3); }
-.ouvrage-couverture { aspect-ratio: 3/4; background: var(--noir-3); background-size: cover; background-position: center; display: flex; align-items: center; justify-content: center; color: var(--text-discret); font-size: .72rem; text-align: center; padding: 14px; }
+.ouvrage-couverture { position: relative; aspect-ratio: 3/4; background: var(--noir-3); display: flex; align-items: center; justify-content: center; color: var(--text-discret); font-size: .72rem; text-align: center; padding: 14px; overflow: hidden; }
+.ouvrage-couverture .img-cover { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
 .ouvrage-infos { padding: 12px 14px; }
 .ouvrage-titre { font-family: var(--font-titres); font-size: .8rem; color: var(--blanc); }
 
 .galerie-grille { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
-.galerie-item { aspect-ratio: 1; background: var(--noir-2); border: 1px solid var(--border-discret); border-radius: 4px; background-size: cover; background-position: center; cursor: pointer; position: relative; transition: transform var(--vitesse), border-color var(--vitesse), box-shadow var(--vitesse); }
+.galerie-item { position: relative; aspect-ratio: 1; background: var(--noir-2); border: 1px solid var(--border-discret); border-radius: 4px; cursor: pointer; overflow: hidden; transition: transform var(--vitesse), border-color var(--vitesse), box-shadow var(--vitesse); }
+.galerie-item .img-cover { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
 .galerie-item:hover { transform: translateY(-4px); border-color: var(--or); box-shadow: 0 15px 35px rgba(0,0,0,0.4); }
-.galerie-item::after { content: '🔍'; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.55); font-size: 2rem; opacity: 0; transition: opacity 0.3s ease; border-radius: 4px; }
+.galerie-item::after { content: '🔍'; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.55); font-size: 2rem; opacity: 0; transition: opacity 0.3s ease; border-radius: 4px; z-index: 2; }
 .galerie-item:hover::after { opacity: 1; }
 @media (max-width: 900px) { .galerie-grille { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 560px) { .galerie-grille { grid-template-columns: 1fr; } }
@@ -717,15 +724,21 @@ section { padding-block: var(--espace-xl); }
       <p>Écrivain prolifique, Gbêmadoyômin développe une œuvre destinée à documenter et transmettre une partie de ces connaissances, afin que le savoir puisse traverser les générations et dépasser les frontières.</p>
       <div class="ouvrages-grille">
         <div class="ouvrage-carte reveal-stagger">
-          <div class="ouvrage-couverture shine" style="background-image:url('livre-du-fa.jpeg');" role="img" aria-label="Couverture du Livre du Fa de BOKONON GBÊMADOYÔMIN"></div>
+          <div class="ouvrage-couverture shine">
+            <img class="img-cover" src="livre-du-fa.jpeg" alt="Couverture du Livre du Fa de BOKONON GBÊMADOYÔMIN — Professeur de Fa" title="Le Livre du Fa — BOKONON GBÊMADOYÔMIN" width="600" height="800" loading="lazy">
+          </div>
           <div class="ouvrage-infos"><span class="ouvrage-titre">Le Livre du Fa</span></div>
         </div>
         <div class="ouvrage-carte reveal-stagger">
-          <div class="ouvrage-couverture shine" style="background-image:url('code-de-vie.jpeg');" role="img" aria-label="Couverture du Code de Vie de BOKONON GBÊMADOYÔMIN"></div>
+          <div class="ouvrage-couverture shine">
+            <img class="img-cover" src="code-de-vie.jpeg" alt="Couverture du Code de Vie de BOKONON GBÊMADOYÔMIN" title="Le Code de Vie — BOKONON GBÊMADOYÔMIN" width="600" height="800" loading="lazy">
+          </div>
           <div class="ouvrage-infos"><span class="ouvrage-titre">Le Code de Vie</span></div>
         </div>
         <div class="ouvrage-carte reveal-stagger">
-          <div class="ouvrage-couverture shine" style="background-image:url('vodoun-dan.jpeg');" role="img" aria-label="Couverture de Vodoun Dan de BOKONON GBÊMADOYÔMIN"></div>
+          <div class="ouvrage-couverture shine">
+            <img class="img-cover" src="vodoun-dan.jpeg" alt="Couverture de Vodoun Dan de BOKONON GBÊMADOYÔMIN" title="Vodoun Dan — BOKONON GBÊMADOYÔMIN" width="600" height="800" loading="lazy">
+          </div>
           <div class="ouvrage-infos"><span class="ouvrage-titre">Vodoun Dan</span></div>
         </div>
         <div class="ouvrage-carte reveal-stagger">
@@ -783,10 +796,18 @@ section { padding-block: var(--espace-xl); }
       <h2>Galerie</h2>
       <p style="color: var(--text-muted); font-size: .88rem; margin-bottom: var(--espace-sm);">Cliquez sur une photo pour l'agrandir — utilisez les flèches ← → pour naviguer, Échap pour fermer.</p>
       <div class="galerie-grille" id="galerieProfesseur">
-        <div class="galerie-item shine" style="background-image:url('professeur-galerie-1.jpeg');" data-src="professeur-galerie-1.jpeg" data-caption="BOKONON GBÊMADOYÔMIN — portrait 1" role="img" aria-label="Photo de BOKONON GBÊMADOYÔMIN 1"></div>
-        <div class="galerie-item shine" style="background-image:url('professeur-hero.jpeg');" data-src="professeur-hero.jpeg" data-caption="BOKONON GBÊMADOYÔMIN — portrait 2" role="img" aria-label="Photo de BOKONON GBÊMADOYÔMIN 2"></div>
-        <div class="galerie-item shine" style="background-image:url('professeur-galerie-3.jpeg');" data-src="professeur-galerie-3.jpeg" data-caption="BOKONON GBÊMADOYÔMIN — portrait 3" role="img" aria-label="Photo de BOKONON GBÊMADOYÔMIN 3"></div>
-        <div class="galerie-item shine" style="background-image:url('professeur-galerie-4.jpeg');" data-src="professeur-galerie-4.jpeg" data-caption="BOKONON GBÊMADOYÔMIN — portrait 4" role="img" aria-label="Photo de BOKONON GBÊMADOYÔMIN 4"></div>
+        <div class="galerie-item shine" data-src="professeur-galerie-1.jpeg" data-caption="BOKONON GBÊMADOYÔMIN — portrait 1" role="img" aria-label="Photo de BOKONON GBÊMADOYÔMIN 1">
+          <img class="img-cover" src="professeur-galerie-1.jpeg" alt="BOKONON GBÊMADOYÔMIN — portrait 1" width="600" height="600" loading="lazy">
+        </div>
+        <div class="galerie-item shine" data-src="professeur-hero.jpeg" data-caption="BOKONON GBÊMADOYÔMIN — portrait 2" role="img" aria-label="Photo de BOKONON GBÊMADOYÔMIN 2">
+          <img class="img-cover" src="professeur-hero.jpeg" alt="BOKONON GBÊMADOYÔMIN — portrait 2" width="600" height="600" loading="lazy">
+        </div>
+        <div class="galerie-item shine" data-src="professeur-galerie-3.jpeg" data-caption="BOKONON GBÊMADOYÔMIN — portrait 3" role="img" aria-label="Photo de BOKONON GBÊMADOYÔMIN 3">
+          <img class="img-cover" src="professeur-galerie-3.jpeg" alt="BOKONON GBÊMADOYÔMIN — portrait 3" width="600" height="600" loading="lazy">
+        </div>
+        <div class="galerie-item shine" data-src="professeur-galerie-4.jpeg" data-caption="BOKONON GBÊMADOYÔMIN — portrait 4" role="img" aria-label="Photo de BOKONON GBÊMADOYÔMIN 4">
+          <img class="img-cover" src="professeur-galerie-4.jpeg" alt="BOKONON GBÊMADOYÔMIN — portrait 4" width="600" height="600" loading="lazy">
+        </div>
       </div>
     </div>
 
@@ -1025,19 +1046,19 @@ section { padding-block: var(--espace-xl); }
           var urlAcces = 'acces.html?type=live&slug=' + encodeURIComponent(data.slug);
           var prix = parseInt(data.prix, 10) || 0;
           var affiche = data.affiche || '';
-          var fondStyle = affiche
-            ? "background-image:url('" + cloudinaryUrl(affiche, 900) + "'); background-size:cover; background-position:center; background-color:var(--noir-3);"
-            : 'background-color: var(--noir-2);';
+          var afficheURL = affiche ? cloudinaryUrl(affiche, 900) : '';
+          var imgAcces = afficheURL
+            ? '<img class="img-cover" src="' + afficheURL + '" alt="' + escapeHtml(data.titre || 'Live') + ' — Groupe Gbêmadoyomin" loading="lazy">'
+            : '';
 
           zone.innerHTML =
             '<a href="' + urlAcces + '" style="display:block; width:100%; height:100%; text-decoration:none; position:absolute; inset:0;">' +
-              '<div style="position:absolute; inset:0; ' + fondStyle + '">' +
-                '<div style="position:absolute; inset:0; background:linear-gradient(180deg, rgba(0,0,0,0.3), rgba(0,0,0,0.85)); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px; padding:24px; text-align:center;">' +
-                  '<span style="background:linear-gradient(135deg, var(--or-clair), var(--or-fonce)); color:var(--noir); padding:6px 14px; border-radius:20px; font-family:var(--font-titres); font-size:0.7rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase;">💰 Live payant</span>' +
-                  '<div style="font-family:var(--font-titres); color:var(--blanc); font-size:clamp(1.1rem, 2.5vw, 1.5rem); line-height:1.3;">' + escapeHtml(data.titre || 'Live en cours') + '</div>' +
-                  (prix > 0 ? '<div style="font-family:var(--font-titres); color:var(--or-clair); font-size:1.3rem; font-weight:700;">' + prix.toLocaleString('fr-FR') + ' FCFA</div>' : '') +
-                  '<div style="background:linear-gradient(135deg, var(--or-clair), var(--or-fonce)); color:var(--noir); padding:12px 28px; border-radius:4px; font-family:var(--font-titres); font-size:0.82rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; margin-top:8px;">🎟 Accéder au live</div>' +
-                '</div>' +
+              imgAcces +
+              '<div style="position:absolute; inset:0; background:linear-gradient(180deg, rgba(0,0,0,0.3), rgba(0,0,0,0.85)); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px; padding:24px; text-align:center;">' +
+                '<span style="background:linear-gradient(135deg, var(--or-clair), var(--or-fonce)); color:var(--noir); padding:6px 14px; border-radius:20px; font-family:var(--font-titres); font-size:0.7rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase;">💰 Live payant</span>' +
+                '<div style="font-family:var(--font-titres); color:var(--blanc); font-size:clamp(1.1rem, 2.5vw, 1.5rem); line-height:1.3;">' + escapeHtml(data.titre || 'Live en cours') + '</div>' +
+                (prix > 0 ? '<div style="font-family:var(--font-titres); color:var(--or-clair); font-size:1.3rem; font-weight:700;">' + prix.toLocaleString('fr-FR') + ' FCFA</div>' : '') +
+                '<div style="background:linear-gradient(135deg, var(--or-clair), var(--or-fonce)); color:var(--noir); padding:12px 28px; border-radius:4px; font-family:var(--font-titres); font-size:0.82rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; margin-top:8px;">🎟 Accéder au live</div>' +
               '</div>' +
             '</a>';
           return;
