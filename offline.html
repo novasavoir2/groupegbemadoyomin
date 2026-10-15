@@ -4,33 +4,68 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Hors ligne — Groupe Gbêmadoyomin</title>
+<meta name="robots" content="noindex, nofollow">
 <style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
-    background: #0d0d0d; color: #f0ebe0;
-    font-family: 'Lato', sans-serif;
-    display: flex; align-items: center; justify-content: center;
-    min-height: 100vh; margin: 0; text-align: center; padding: 20px;
+    background: #0d0d0d;
+    color: #f0ebe0;
+    font-family: 'Lato', system-ui, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 24px;
   }
-  .box { max-width: 480px; }
-  h1 { font-family: 'Cinzel', serif; color: #b8922e; margin-bottom: 16px; }
-  p { color: #9a9080; margin-bottom: 24px; line-height: 1.6; }
-  a {
-    display: inline-block; padding: 14px 30px;
+  .offline-box {
+    max-width: 520px;
+    border: 1px solid rgba(184,146,46,0.2);
+    border-radius: 8px;
+    padding: 40px 28px;
+    background: #111;
+  }
+  .offline-logo {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    margin: 0 auto 20px;
+    object-fit: cover;
+    border: 2px solid #b8922e;
+  }
+  h1 {
+    font-family: 'Cinzel', Georgia, serif;
+    color: #d4af5a;
+    font-size: 1.4rem;
+    margin-bottom: 12px;
+    letter-spacing: 0.05em;
+  }
+  p { color: #c8c0b0; font-size: 0.95rem; line-height: 1.6; margin-bottom: 14px; }
+  .offline-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
     background: linear-gradient(135deg, #d4af5a, #8a6a1f);
-    color: #0d0d0d; font-weight: 700; text-decoration: none;
-    border-radius: 3px; letter-spacing: 0.08em; font-size: 0.82rem;
+    color: #0d0d0d;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    padding: 14px 28px;
+    border-radius: 3px;
+    text-decoration: none;
+    margin-top: 16px;
+    font-size: 0.85rem;
     text-transform: uppercase;
   }
-  a:hover { opacity: 0.9; }
-  .icon { font-size: 3rem; margin-bottom: 16px; }
+  .offline-btn:hover { transform: translateY(-2px); }
 </style>
 </head>
 <body>
-  <div class="box">
-    <div class="icon">📶</div>
+  <div class="offline-box">
+    <img src="/professeur-portrait.jpeg" alt="BOKONON GBÊMADOYÔMIN" class="offline-logo">
     <h1>Vous êtes hors ligne</h1>
-    <p>Il semble que vous n'ayez pas de connexion internet. Certaines pages restent accessibles grâce à notre système hors ligne, mais d'autres nécessitent une connexion.</p>
-    <a href="index.html">🏠 Retour à l'accueil</a>
+    <p>Impossible de se connecter au réseau. Vérifiez votre connexion internet puis réessayez.</p>
+    <p>Certaines pages déjà visitées peuvent rester accessibles.</p>
+    <a href="/" class="offline-btn">Réessayer</a>
   </div>
 </body>
 </html>
