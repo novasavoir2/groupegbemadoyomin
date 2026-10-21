@@ -1003,6 +1003,8 @@ section { padding-block: var(--espace-xl); }
 
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+<script src="engagement.js"></script>
+  
 
 <script>
 // ============================================================
@@ -1180,13 +1182,14 @@ async function chargerPhotos() {
     grille.innerHTML = toutesPhotos.map((p, i) => {
       const src = cloudinaryUrl(p.url, 500);
       const alt = escapeHtml(p.titre || 'Photo de BOKONON GBÊMADOYÔMIN');
-      return `
+           return `
       <div class="galerie-item reveal-stagger shine"
            data-index="${i}"
            role="button"
            tabindex="0"
            aria-label="${alt}">
         <img class="img-cover" src="${src}" alt="${alt}" width="500" height="500" loading="lazy">
+        <div class="eng-inline" data-type="photo" data-id="${p.id}" data-titre="${alt}" data-url="${location.href}#photo-${p.id}" style="position:absolute; bottom:0; left:0; right:0; background:rgba(0,0,0,0.7); padding:6px 10px; z-index:4; margin:0; border:none; border-radius:0;"></div>
       </div>
     `;
     }).join('');
@@ -1243,7 +1246,8 @@ function ouvrirLightbox(index) {
   const lb = document.getElementById('lightbox');
   document.getElementById('lightboxImg').src = cloudinaryUrl(photo.url, 1600);
   document.getElementById('lightboxImg').alt = photo.titre || 'Photo de BOKONON GBÊMADOYÔMIN';
-  document.getElementById('lightboxCaption').textContent = photo.titre || '';
+   document.getElementById('lightboxCaption').textContent = photo.titre || '';
+  if (typeof Engagement !== 'undefined') Engagement.view('photo', photo.id);
   lb.classList.add('open');
   document.body.style.overflow = 'hidden';
 }
@@ -1339,10 +1343,11 @@ async function chargerVideos() {
                       data-video-fallback="${escapeHtml(v.fallbackURL || '')}">
                 ▶ Lire ici
               </button>
-              <a class="btn-contour btn-sm" href="${escapeHtml(plateforme.lienDirect)}" target="_blank" rel="noopener">
+                            <a class="btn-contour btn-sm" href="${escapeHtml(plateforme.lienDirect)}" target="_blank" rel="noopener">
                 ${plateforme.icone} Ouvrir
               </a>
             </div>
+            <div class="eng-inline" data-type="video" data-id="${doc.id}" data-titre="${altVignette}" data-url="${location.href}#video-${doc.id}"></div>
           </div>
         </div>
       `;
@@ -1471,6 +1476,9 @@ function ouvrirVideoModal(url, titre, fallbackCustom) {
     }
   }
 
+    // Comptage de vue : on utilise l'URL de la vidéo comme ID
+  const itemId = url.replace(/[^a-zA-Z0-9]/g,'_').slice(-40);
+  if (typeof Engagement !== 'undefined') Engagement.view('video', itemId);
   modal.classList.add('open');
   document.body.style.overflow = 'hidden';
 }
@@ -1530,15 +1538,22 @@ async function chargerPresse() {
 
     const articles = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 
-    liste.innerHTML = articles.map(p => `
+        liste.innerHTML = articles.map(p => `
       <div class="presse-item reveal-stagger">
         <h3>${escapeHtml(p.titre || 'Sans titre')}</h3>
         ${p.description ? `<p>${escapeHtml(p.description)}</p>` : ''}
         <div class="presse-meta">${p.datePublication ? '📅 ' + formatDate(p.datePublication) : ''}</div>
-        <a class="presse-lien" href="${escapeHtml(p.url)}" target="_blank" rel="noopener">Lire l'article →</a>
+        <a class="presse-lien" href="${escapeHtml(p.url)}" target="_blank" rel="noopener" data-press-id="${p.id}">Lire l'article →</a>
+        <div class="eng-inline" data-type="presse" data-id="${p.id}" data-titre="${escapeHtml(p.titre || 'Presse')}" data-url="${escapeHtml(p.url)}"></div>
       </div>
     `).join('');
 
+    // Comptage des vues presse au clic
+    liste.querySelectorAll('.presse-lien').forEach(a => {
+      a.addEventListener('click', () => {
+        if (typeof Engagement !== 'undefined') Engagement.view('presse', a.dataset.pressId);
+      });
+    });
     injecterNewsArticlesDynamiques(articles);
 
     reprendreReveal();
