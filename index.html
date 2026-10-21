@@ -1850,6 +1850,7 @@ section { padding-block: var(--espace-xl); }
 <!-- ===================== FIREBASE CONFIG ===================== -->
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+<script src="engagement.js"></script>  
 <script>
   (function () {
     try {
@@ -1996,9 +1997,10 @@ section { padding-block: var(--espace-xl); }
                   '<span>🎟 ' + escapeHtml(prochain.participation || 'Sur inscription') + '</span>' +
                 '</div>' +
                 '<p style="color: var(--blanc-doux); font-size: 0.92rem; margin-bottom: var(--espace-sm);">' + escapeHtml(prochain.description || '') + '</p>' +
-                '<div style="display:flex; gap:10px; flex-wrap:wrap;">' +
+                                '<div style="display:flex; gap:10px; flex-wrap:wrap;">' +
                   '<a class="btn-or" href="article.html?type=evenement&slug=' + encodeURIComponent(prochain.slug || prochain.id) + '">Voir les détails</a>' +
                 '</div>' +
+                '<div class="eng-inline" data-type="evenement" data-id="' + (prochain.slug || prochain.id) + '" data-titre="' + escapeHtml(prochain.titre) + '" data-url="' + location.origin + '/article.html?type=evenement&slug=' + encodeURIComponent(prochain.slug || prochain.id) + '"></div>' +
               '</div>' +
             '</div>';
         } catch (err) {
@@ -2054,7 +2056,8 @@ section { padding-block: var(--espace-xl); }
                   '<span>📅 ' + formaterDate(actu.datePublication) + '</span>' +
                   (actu.auteur ? '<span>✍️ ' + escapeHtml(actu.auteur) + '</span>' : '') +
                 '</div>' +
-                '<a class="actu-home-lire" href="' + slugURL + '">Lire l\'article →</a>' +
+                                '<a class="actu-home-lire" href="' + slugURL + '">Lire l\'article →</a>' +
+                '<div class="eng-inline" data-type="actualite" data-id="' + (actu.slug || actu.id) + '" data-titre="' + escapeHtml(actu.titre || 'Sans titre') + '" data-url="' + location.origin + '/' + slugURL + '"></div>' +
               '</div>' +
             '</article>';
           }).join('');
