@@ -931,6 +931,7 @@ section { padding-block: var(--espace-xl); }
 
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+<script src="engagement.js"></script>
 
 <script>
 const firebaseConfig = {
@@ -1192,8 +1193,9 @@ function afficherProchainEvenement(liste) {
         <p style="color: var(--text-muted); font-size: .92rem; margin-bottom: var(--espace-sm);">${escapeHtml(prochain.description || '')}</p>
         <div style="display:flex; gap:10px; flex-wrap:wrap;">
           <a class="btn-or" href="article.html?type=evenement&slug=${encodeURIComponent(prochain.slug || prochain.id)}">Voir les détails</a>
-          <a class="btn-contour" href="https://wa.me/${CONFIG.whatsappAdmin}?text=Bonjour%2C%20je%20souhaite%20m%27inscrire%20%C3%A0%20%3A%20${encodeURIComponent(prochain.titre)}" target="_blank" rel="noopener">S'inscrire</a>
+                   <a class="btn-contour" href="https://wa.me/${CONFIG.whatsappAdmin}?text=Bonjour%2C%20je%20souhaite%20m%27inscrire%20%C3%A0%20%3A%20${encodeURIComponent(prochain.titre)}" target="_blank" rel="noopener">S'inscrire</a>
         </div>
+        <div class="eng-inline" data-type="evenement" data-id="${prochain.slug || prochain.id}" data-titre="${escapeHtml(prochain.titre)}" data-url="https://www.groupegbemadoyomin.com/article.html?type=evenement&slug=${encodeURIComponent(prochain.slug || prochain.id)}"></div>
       </div>
     </div>`;
 }
@@ -1222,10 +1224,11 @@ function afficherAgenda(liste) {
           <span>📍 ${escapeHtml(e.lieu || 'Lieu à confirmer')}</span>
           <span>🎟 ${escapeHtml(e.participation || 'Sur inscription')}</span>
         </div>
-        <div class="agenda-actions">
+                <div class="agenda-actions">
           <a class="btn-contour" href="article.html?type=evenement&slug=${encodeURIComponent(e.slug || e.id)}">Détails</a>
           <a class="btn-or" href="https://wa.me/${CONFIG.whatsappAdmin}?text=Bonjour%2C%20je%20souhaite%20m%27inscrire%20%C3%A0%20%3A%20${encodeURIComponent(e.titre)}" target="_blank" rel="noopener">S'inscrire</a>
         </div>
+        <div class="eng-inline" data-type="evenement" data-id="${e.slug || e.id}" data-titre="${escapeHtml(e.titre)}" data-url="https://www.groupegbemadoyomin.com/article.html?type=evenement&slug=${encodeURIComponent(e.slug || e.id)}"></div>
       </div>
     </div>`;
   }).join('');
@@ -1255,9 +1258,10 @@ function afficherArchives(liste) {
           <span>📍 ${escapeHtml(e.lieu || '')}</span>
           ${e.archive ? '<span>📁 Archivé</span>' : ''}
         </div>
-        <div class="agenda-actions">
+                <div class="agenda-actions">
           <a class="btn-contour" href="article.html?type=evenement&slug=${encodeURIComponent(e.slug || e.id)}">Lire l'article</a>
         </div>
+        <div class="eng-inline" data-type="evenement" data-id="${e.slug || e.id}" data-titre="${escapeHtml(e.titre)}" data-url="https://www.groupegbemadoyomin.com/article.html?type=evenement&slug=${encodeURIComponent(e.slug || e.id)}"></div>
       </div>
     </div>`;
   }).join('');
@@ -1365,9 +1369,10 @@ function carteActualite(actu) {
           <span>📅 ${formaterDate(actu.datePublication)}</span>
           ${actu.auteur ? `<span>✍️ ${escapeHtml(actu.auteur)}</span>` : ''}
         </div>
-        <a class="actu-lire" href="article.html?type=actualite&slug=${encodeURIComponent(actu.slug || actu.id)}">
+                <a class="actu-lire" href="article.html?type=actualite&slug=${encodeURIComponent(actu.slug || actu.id)}">
           Lire l'article →
         </a>
+        <div class="eng-inline" data-type="actualite" data-id="${actu.slug || actu.id}" data-titre="${escapeHtml(actu.titre || 'Sans titre')}" data-url="https://www.groupegbemadoyomin.com/article.html?type=actualite&slug=${encodeURIComponent(actu.slug || actu.id)}"></div>
       </div>
     </article>`;
 }
