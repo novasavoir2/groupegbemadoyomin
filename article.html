@@ -1252,11 +1252,13 @@
                     <div id="articleGalleryGrid" style="display:grid; grid-template-columns: repeat(2, 1fr); gap: 12px;"></div>
                 </div>
 
-                <div class="article-actions" id="articleActions">
+                <div id="engagementBarZone"></div>
+<div class="article-actions" id="articleActions">
                     <a class="btn-contour" id="articleRetourBtn" href="evenements.html">← Retour aux événements</a>
                     <a class="btn-or" id="articleInscriptionBtn" href="https://wa.me/22967668799?text=Bonjour%2C%20je%20souhaite%20m%27inscrire" target="_blank" rel="noopener">📝 S'inscrire</a>
                     <a class="btn-contour" id="articleDownloadBtn" href="#" target="_blank" rel="noopener" style="display:none;">⬇️ Télécharger la vidéo</a>
                 </div>
+                <div id="engagementCommentsZone"></div>
             </div>
         </section>
 
@@ -1385,6 +1387,7 @@
     </script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js">
     </script>
+    <script src="engagement.js"></script>
 
     <script>
         // ============================================================
@@ -1693,10 +1696,19 @@
                         // MODIFIÉ PHASE 4 : utilise CONFIG.whatsappAdmin
                         inscriptionBtn.href = 'https://wa.me/' + CONFIG.whatsappAdmin + '?text=Bonjour%2C%20je%20souhaite%20m%27inscrire%20%C3%A0%20%3A%20' +
                             encodeURIComponent(data.titre || '');
-                        inscriptionBtn.style.display = 'inline-flex';
+                                               inscriptionBtn.style.display = 'inline-flex';
                     } else {
                         inscriptionBtn.style.display = 'none';
                     }
+                }
+
+                // === ENGAGEMENT ===
+                if (typeof Engagement !== 'undefined') {
+                    Engagement.view(type, slug);
+                    const barZone = document.getElementById('engagementBarZone');
+                    const comZone = document.getElementById('engagementCommentsZone');
+                    if (barZone) Engagement.buildBar(barZone, type, slug, location.href, data.titre || 'Article');
+                    if (comZone) Engagement.buildComments(comZone, type, slug);
                 }
 
             } catch (err) {
