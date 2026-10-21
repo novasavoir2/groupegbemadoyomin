@@ -1378,8 +1378,8 @@ function detecterPlateforme(url) {
   }
   const u = url.toLowerCase().trim();
 
-  if (u.includes('youtube.com') || u.includes('youtu.be')) {
-    const m = url.match(/(?:embed\/|watch\?v=|youtu\.be\/|shorts\/|live\/)([^?&/]+)/);
+    if (u.includes('youtube.com') || u.includes('youtu.be')) {
+    const m = url.match(/(?:[?&]v=|youtu\.be\/|embed\/|shorts\/|live\/|v\/)([A-Za-z0-9_-]{5,})/);
     const id = m ? m[1] : '';
     return {
       nom: 'YouTube', icone: '▶️',
@@ -1420,9 +1420,10 @@ function validerEmbedURL(url, plateforme) {
   if (!url || typeof url !== 'string' || url.trim() === '') {
     return { valide: false, raison: 'URL manquante ou vide' };
   }
-  if (plateforme.nom === 'YouTube') {
-    const m = url.match(/embed\/([^?&/]+)/);
-    if (!m || !m[1] || m[1].length < 5) return { valide: false, raison: 'ID de vidéo YouTube manquant' };
+   if (plateforme.nom === 'YouTube') {
+    if (!plateforme.embed || plateforme.embed === 'https://www.youtube.com/embed/') {
+      return { valide: false, raison: 'ID de vidéo YouTube manquant' };
+    }
     return { valide: true };
   }
   if (plateforme.nom === 'Google Drive') {
