@@ -1640,32 +1640,12 @@ section { padding-block: var(--espace-xl); }
   <div class="conteneur">
     <p class="eyebrow reveal">TODAAA SHOP</p>
     <h2 class="reveal" style="margin-bottom: var(--espace-md);">Ouvrages de BOKONON GBÊMADOYÔMIN</h2>
-    <div class="livres-grille">
-      <div class="livre-carte reveal-stagger">
-        <div class="livre-couverture shine">
-          <img class="img-cover" src="livre-du-fa.jpeg" alt="Le Livre du Fa — ouvrage de BOKONON GBÊMADOYÔMIN, Professeur de Fa" title="Le Livre du Fa — BOKONON GBÊMADOYÔMIN" width="600" height="800" loading="lazy">
-        </div>
-        <div class="livre-infos"><div class="livre-titre">Le Livre du Fa</div><div class="livre-prix">20 000 FCFA</div></div>
-      </div>
-      <div class="livre-carte reveal-stagger">
-        <div class="livre-couverture shine">
-          <img class="img-cover" src="code-de-vie.jpeg" alt="Le Code de Vie — ouvrage de BOKONON GBÊMADOYÔMIN" title="Le Code de Vie — BOKONON GBÊMADOYÔMIN" width="600" height="800" loading="lazy">
-        </div>
-        <div class="livre-infos"><div class="livre-titre">Le Code de Vie</div><div class="livre-prix">20 000 FCFA</div></div>
-      </div>
-      <div class="livre-carte reveal-stagger">
-        <div class="livre-couverture shine">
-          <img class="img-cover" src="vodoun-dan.jpeg" alt="Vodoun Dan — ouvrage de BOKONON GBÊMADOYÔMIN" title="Vodoun Dan — BOKONON GBÊMADOYÔMIN" width="600" height="800" loading="lazy">
-        </div>
-        <div class="livre-infos"><div class="livre-titre">Vodoun Dan</div><div class="livre-prix">15 000 FCFA</div></div>
-      </div>
-      <div class="livre-carte reveal-stagger">
-        <div class="livre-couverture shine">
-          <img class="img-cover" src="livre-astuces.jpeg" alt="Le Livre d'Astuces — ouvrage de BOKONON GBÊMADOYÔMIN" title="Le Livre d'Astuces — BOKONON GBÊMADOYÔMIN" width="600" height="800" loading="lazy">
-        </div>
-        <div class="livre-infos"><div class="livre-titre">Le Livre d'Astuces</div><div class="livre-prix">25 000 FCFA</div></div>
-      </div>
+    
+    <!-- Les livres se chargeront automatiquement depuis l'admin ici -->
+    <div class="livres-grille" id="livres-home-zone">
+      <div class="actus-home-vide">Chargement des ouvrages…</div>
     </div>
+    
     <div style="text-align:center; margin-top: var(--espace-md);">
       <a class="btn-contour" href="boutique.html">Voir TODAAA SHOP</a>
     </div>
@@ -2189,11 +2169,60 @@ section { padding-block: var(--espace-xl); }
         }
       }
 
-      document.addEventListener('DOMContentLoaded', async function () {
+
+            async function chargerLivresAccueil() {
+        var zone = document.getElementById('livres-home-zone');
+        if (!zone) return;
+        try {
+          var snap = await db.collection('produits').where('categorie', '==', 'livres').get();
+          if (snap.empty) {
+            zone.innerHTML = '<div class="actus-home-vide">Aucun ouvrage disponible pour le moment.</div>';
+            return;
+          }
+          
+          var livres = [];
+          snap.forEach(function(doc) {
+            var d = doc.data();
+            if (d.actif !== false) livres.push(d);
+          });
+
+          // On trie par ordre puis on garde les 4 premiers pour l'accueil
+          livres.sort(function(a, b) {
+            var oa = typeof a.ordre === 'number' ? a.ordre : 999;
+            var ob = typeof b.ordre === 'number' ? b.ordre : 999;
+            return oa - ob;
+          });
+          
+          var liste = livres.slice(0, 4);
+
+          if (liste.length === 0) {
+            zone.innerHTML = '<div class="actus-home-vide">Aucun ouvrage disponible.</div>';
+            return;
+          }
+
+          zone.innerHTML = liste.map(function(livre) {
+            var img = livre.image || '';
+            var imgTag = img ? '<img class="img-cover" src="' + img + '" alt="' + escapeHtml(livre.titre) + '" loading="lazy">' : '';
+            var prix = (typeof livre.prix === 'number' && livre.prix > 0) ? livre.prix.toLocaleString('fr-FR') + ' FCFA' : 'Prix sur demande';
+            
+            return '<div class="livre-carte reveal-stagger est-visible">' +
+              '<div class="livre-couverture shine">' + imgTag + '</div>' +
+              '<div class="livre-infos"><div class="livre-titre">' + escapeHtml(livre.titre) + '</div><div class="livre-prix">' + prix + '</div></div>' +
+            '</div>';
+          }).join('');
+
+        } catch (err) {
+          console.error('Erreur chargement livres accueil:', err);
+          zone.innerHTML = '<div class="actus-home-vide">Erreur de chargement des ouvrages.</div>';
+        }
+      }
+
+           document.addEventListener('DOMContentLoaded', async function () {
         await chargerConfig();
         chargerProchainEvenement();
         chargerDernieresActualites();
         chargerLive();
+        chargerLivresAccueil(); // <-- LIGNE AJOUTÉE ICI
       });
     } catch (e) {
       console.error('Erreur init Firebase:', e);
