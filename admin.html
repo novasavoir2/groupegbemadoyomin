@@ -335,6 +335,7 @@ h1, h2, h3 { font-family: var(--font-titres); font-weight: 700; color: var(--bla
     <button class="tab-btn" data-tab="photos">🖼️ Photos</button>
     <button class="tab-btn" data-tab="videos">🎬 Vidéos</button>
     <button class="tab-btn" data-tab="presse">📰 Presse</button>
+    <button class="tab-btn" data-tab="decouvrir">📖 Découvrir</button>
     <button class="tab-btn" data-tab="produits">🛍️ Produits</button>
     <button class="tab-btn" data-tab="live">🔴 Live</button>
     <button class="tab-btn" data-tab="acces">🔐 Accès payant</button>
@@ -520,19 +521,26 @@ h1, h2, h3 { font-family: var(--font-titres); font-weight: 700; color: var(--bla
           </div>
         </div>
 
-        <div class="form-row">
-          <div class="form-group">
-            <label>Épingler à la une ?</label>
-            <select id="acEpingle">
-              <option value="false">Non</option>
-              <option value="true">Oui</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label>Résumé court</label>
-            <input type="text" id="acResume" placeholder="Résumé affiché dans les listes">
-          </div>
-        </div>
+       <div class="form-row">
+  <div class="form-group">
+    <label>Épingler à la une ?</label>
+    <select id="acEpingle">
+      <option value="false">Non</option>
+      <option value="true">Oui</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label>Archivé ?</label>
+    <select id="acArchive">
+      <option value="false">Non</option>
+      <option value="true">Oui (masqué sur l'accueil)</option>
+    </select>
+  </div>
+</div>
+<div class="form-group">
+  <label>Résumé court</label>
+  <input type="text" id="acResume" placeholder="Résumé affiché dans les listes">
+</div>
 
         <div class="form-group">
           <label>Contenu complet <span class="req">*</span></label>
@@ -1186,6 +1194,132 @@ h1, h2, h3 { font-family: var(--font-titres); font-weight: 700; color: var(--bla
     </div>
   </div>
 
+<!-- ============================================================
+     TAB DÉCOUVRIR
+     ============================================================ -->
+<div class="tab-pane" id="pane-decouvrir">
+
+  <div class="alert alert-info">
+    <span>📖</span>
+    <span><strong>Contenus « Découvrir » :</strong> Fa, Vodoun, types de Vodou à Abomey, feuilles &amp; vertus, astuces, signes du Fa, principes de vie… Tout apparaîtra automatiquement sur la page <code>decouvrir.html</code>, groupé par catégorie.</span>
+  </div>
+
+  <div class="card">
+    <div class="card-title">➕ Ajouter / modifier un contenu</div>
+    <div class="card-sub">Les champs marqués d'un <span style="color: var(--or);">*</span> sont obligatoires.</div>
+
+    <form id="formDecouvrir" autocomplete="off">
+      <input type="hidden" id="decId" value="">
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Titre <span class="req">*</span></label>
+          <input type="text" id="decTitre" required placeholder="Ex: Le Fâ, système de connaissance">
+        </div>
+        <div class="form-group">
+          <label>Slug (identifiant URL) <span class="req">*</span></label>
+          <input type="text" id="decSlug" required placeholder="Ex: le-fa-systeme-connaissance">
+          <div class="hint">Utilisé pour l'ancre : decouvrir.html#le-fa-systeme-connaissance</div>
+        </div>
+      </div>
+
+      <div class="form-row-3">
+        <div class="form-group">
+          <label>Catégorie <span class="req">*</span></label>
+          <select id="decCategorie" required>
+            <option value="">— Choisir —</option>
+            <option value="fa">🔮 Le Fa</option>
+            <option value="vodoun">⚱️ Le Vodoun</option>
+            <option value="types-vodoun">🏛️ Types de Vodoun (Abomey)</option>
+            <option value="feuilles">🌿 Feuilles &amp; Vertus</option>
+            <option value="astuces">✨ Astuces</option>
+            <option value="signes-fa">🔯 Signes du Fa</option>
+            <option value="principes">🧭 Principes de vie</option>
+            <option value="symboles">📐 Systèmes symboliques</option>
+            <option value="spiritualite">🌍 Spiritualité &amp; Tradition</option>
+            <option value="autre">📖 Autre</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Sous-catégorie (facultatif)</label>
+          <input type="text" id="decSousCategorie" placeholder="Ex: Vodoun Dan, Sakpata…">
+        </div>
+        <div class="form-group">
+          <label>Ordre d'affichage</label>
+          <input type="number" id="decOrdre" min="0" value="100">
+          <div class="hint">Plus petit = en premier.</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Résumé court</label>
+        <textarea id="decResume" rows="2" placeholder="Une ou deux phrases pour la carte."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Contenu complet <span class="req">*</span></label>
+        <textarea id="decContenu" rows="12" required placeholder="Texte complet…&#10;&#10;Séparez les paragraphes par une ligne vide.&#10;Pour une liste, commencez chaque ligne par « — »."></textarea>
+        <div class="hint">Les sauts de ligne et les listes « — » sont automatiquement convertis en paragraphes et puces.</div>
+      </div>
+
+      <div class="form-group">
+        <label>🖼️ Image (optionnelle)</label>
+        <div class="url-row">
+          <input type="url" id="decImage" placeholder="https://i.postimg.cc/...">
+          <div class="url-tools">
+            <a class="btn-tool" href="https://postimages.org/fr/" target="_blank" rel="noopener">📤 PostImage</a>
+            <a class="btn-tool" href="https://console.cloudinary.com/" target="_blank" rel="noopener">☁️ Cloudinary</a>
+            <a class="btn-tool" href="https://imgbb.com/" target="_blank" rel="noopener">🖼️ ImgBB</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Contenu actif ?</label>
+          <select id="decActif">
+            <option value="true">✅ Oui — visible</option>
+            <option value="false">🚫 Non — masqué</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Archivé ?</label>
+          <select id="decArchive">
+            <option value="false">Non</option>
+            <option value="true">Oui (caché du site)</option>
+          </select>
+        </div>
+      </div>
+
+      <div style="display:flex; gap:12px; margin-top:20px; flex-wrap:wrap;">
+        <button type="submit" class="btn btn-or" id="btnSaveDec">
+          <span class="btn-text">💾 Enregistrer</span>
+        </button>
+        <button type="button" class="btn btn-outline" id="btnCancelDec" style="display:none;">
+          ❌ Annuler la modification
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📋 Contenus enregistrés</div>
+    <div class="card-sub" style="display:flex; align-items:center; gap:14px; flex-wrap:wrap;">
+      <span>Total : <span id="decCount">0</span></span>
+      <label style="display:inline-flex; align-items:center; gap:6px; font-size:0.78rem; cursor:pointer; color:var(--text-muted);">
+        <input type="checkbox" id="decShowArchived" style="width:auto;"> Afficher les archivés
+      </label>
+    </div>
+    <div class="search-wrap">
+      <input type="text" class="search-input" data-target="decList" placeholder="Rechercher un contenu…">
+    </div>
+    <div class="items-list" id="decList">
+      <div class="empty-state">Chargement…</div>
+    </div>
+  </div>
+</div>
+
+  
   <!-- ============================================================
        TAB CONFIGURATION
        ============================================================ -->
@@ -1734,6 +1868,7 @@ function loadAll() {
   loadLive();
   loadAcces();
   loadConfigForm();
+  loadDecouvrir();
 }
 
 // ============================================================
@@ -1907,6 +2042,7 @@ async function loadActualites() {
             ${d.datePublication ? formatDateReadable(d.datePublication) : ''}
             ${d.categorie ? ' • ' + d.categorie : ''}
             ${d.auteur ? ' • ' + d.auteur : ''}
+            ${(d.archive === true || d.archive === 'true') ? ' • <span style="color:#f59e0b;">Archivé</span>' : ''}
           </div>
         </div>
         <div class="item-actions">
@@ -1933,6 +2069,7 @@ async function editActualite(id) {
     document.getElementById('acCategorie').value = d.categorie || '';
     document.getElementById('acAuteur').value = d.auteur || '';
     document.getElementById('acEpingle').value = (d.epingle === true || d.epingle === 'true') ? 'true' : 'false';
+    document.getElementById('acArchive').value = (d.archive === true || d.archive === 'true') ? 'true' : 'false';
     document.getElementById('acResume').value = d.resume || '';
     document.getElementById('acContenu').value = d.contenu || '';
     acVideoInput.value = d.videoURL || '';
@@ -1974,6 +2111,7 @@ document.getElementById('formActualite').addEventListener('submit', async (e) =>
     categorie: document.getElementById('acCategorie').value.trim(),
     auteur: document.getElementById('acAuteur').value.trim(),
     epingle: document.getElementById('acEpingle').value === 'true',
+    archive: document.getElementById('acArchive').value === 'true',
     resume: document.getElementById('acResume').value.trim(),
     contenu: document.getElementById('acContenu').value.trim(),
     images: images,
@@ -3116,6 +3254,174 @@ document.addEventListener('click', async (e) => {
 });
 
 console.log('✅ Admin prête — version complète avec Produits + Compteur + Search + Tout copier + Statistiques');
+
+// ============================================================
+// DÉCOUVRIR — contenus riches
+// ============================================================
+async function loadDecouvrir() {
+  const list = document.getElementById('decList');
+  const showArchived = document.getElementById('decShowArchived')?.checked;
+  list.innerHTML = '<div class="empty-state">Chargement…</div>';
+  try {
+    const snap = await db.collection('decouvrir').get();
+    let docs = snap.docs.slice();
+
+    if (!showArchived) {
+      docs = docs.filter(d => {
+        const v = d.data().archive;
+        return !(v === true || v === 'true');
+      });
+    }
+    document.getElementById('decCount').textContent = docs.length;
+
+    if (docs.length === 0) {
+      list.innerHTML = '<div class="empty-state">Aucun contenu pour le moment.</div>';
+      return;
+    }
+
+    docs.sort((a, b) => {
+      const da = a.data(), db_ = b.data();
+      const oa = typeof da.ordre === 'number' ? da.ordre : 999;
+      const ob = typeof db_.ordre === 'number' ? db_.ordre : 999;
+      if (oa !== ob) return oa - ob;
+      return (da.titre || '').localeCompare(db_.titre || '');
+    });
+
+    const catLabels = {
+      fa: '🔮 Fa', vodoun: '⚱️ Vodoun', 'types-vodoun': '🏛️ Types Vodoun',
+      feuilles: '🌿 Feuilles', astuces: '✨ Astuces', 'signes-fa': '🔯 Signes Fa',
+      principes: '🧭 Principes', symboles: '📐 Symboles',
+      spiritualite: '🌍 Spiritualité', autre: '📖 Autre'
+    };
+
+    list.innerHTML = '';
+    docs.forEach(doc => {
+      const d = doc.data();
+      const archived = (d.archive === true || d.archive === 'true');
+      const actif = d.actif !== false;
+      const badge = archived
+        ? '<span class="badge badge-inactif">📦 Archivé</span>'
+        : (actif
+            ? '<span class="badge badge-actif">✅ Actif</span>'
+            : '<span class="badge badge-inactif">🚫 Masqué</span>');
+
+      const row = document.createElement('div');
+      row.className = 'item-row';
+      row.innerHTML = `
+        <div class="item-thumb" style="background-image:url('${d.image || ''}')"></div>
+        <div class="item-info">
+          <div class="item-title">${d.titre || 'Sans titre'} ${badge}</div>
+          <div class="item-meta">
+            <span class="badge badge-cat">${catLabels[d.categorie] || d.categorie || '—'}</span>
+            ${d.sousCategorie ? ' • ' + d.sousCategorie : ''}
+            • ordre ${d.ordre || 0}
+            ${d.slug ? ' • /' + d.slug : ''}
+          </div>
+        </div>
+        <div class="item-actions">
+          <a class="btn btn-outline btn-sm" href="decouvrir.html#${encodeURIComponent(d.slug || doc.id)}" target="_blank">👁</a>
+          <button class="btn btn-outline btn-sm" data-edit="${doc.id}">✏️</button>
+          <button class="btn btn-outline btn-danger btn-sm" data-del="${doc.id}">🗑️</button>
+        </div>`;
+      row.querySelector('[data-edit]').addEventListener('click', () => editDecouvrir(doc.id));
+      row.querySelector('[data-del]').addEventListener('click', () => deleteDecouvrir(doc.id));
+      list.appendChild(row);
+    });
+  } catch (err) {
+    list.innerHTML = `<div class="empty-state">Erreur : ${err.message}</div>`;
+  }
+}
+
+async function editDecouvrir(id) {
+  try {
+    const doc = await db.collection('decouvrir').doc(id).get();
+    if (!doc.exists) { toast('error', 'Introuvable'); return; }
+    const d = doc.data();
+    document.getElementById('decId').value = id;
+    document.getElementById('decTitre').value = d.titre || '';
+    document.getElementById('decSlug').value = d.slug || '';
+    document.getElementById('decCategorie').value = d.categorie || '';
+    document.getElementById('decSousCategorie').value = d.sousCategorie || '';
+    document.getElementById('decOrdre').value = d.ordre || 100;
+    document.getElementById('decResume').value = d.resume || '';
+    document.getElementById('decContenu').value = d.contenu || '';
+    document.getElementById('decImage').value = d.image || '';
+    document.getElementById('decActif').value = d.actif === false ? 'false' : 'true';
+    document.getElementById('decArchive').value =
+      (d.archive === true || d.archive === 'true') ? 'true' : 'false';
+    document.getElementById('btnCancelDec').style.display = 'inline-flex';
+    document.getElementById('btnSaveDec').querySelector('.btn-text').textContent = '💾 Mettre à jour';
+    document.getElementById('formDecouvrir').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    toast('info', 'Mode modification', 'Modifiez puis enregistrez.');
+  } catch (err) { toast('error', 'Erreur', err.message); }
+}
+
+async function deleteDecouvrir(id) {
+  if (!confirm('Confirmer la suppression de ce contenu ?')) return;
+  try {
+    await db.collection('decouvrir').doc(id).delete();
+    toast('success', 'Contenu supprimé');
+    loadDecouvrir();
+  } catch (err) { toast('error', 'Erreur', err.message); }
+}
+
+document.getElementById('formDecouvrir').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = document.getElementById('btnSaveDec');
+  const id = document.getElementById('decId').value;
+  const data = {
+    titre: document.getElementById('decTitre').value.trim(),
+    slug: document.getElementById('decSlug').value.trim(),
+    categorie: document.getElementById('decCategorie').value,
+    sousCategorie: document.getElementById('decSousCategorie').value.trim(),
+    ordre: parseInt(document.getElementById('decOrdre').value, 10) || 100,
+    resume: document.getElementById('decResume').value.trim(),
+    contenu: document.getElementById('decContenu').value.trim(),
+    image: document.getElementById('decImage').value.trim(),
+    actif: document.getElementById('decActif').value === 'true',
+    archive: document.getElementById('decArchive').value === 'true',
+    dateAjout: firebase.firestore.FieldValue.serverTimestamp()
+  };
+  if (!data.titre || !data.slug || !data.categorie || !data.contenu) {
+    toast('warning', 'Champs manquants', 'Titre, slug, catégorie et contenu sont obligatoires.');
+    return;
+  }
+  setLoading(btn, true);
+  try {
+    if (id) {
+      delete data.dateAjout;
+      await db.collection('decouvrir').doc(id).update(data);
+      toast('success', 'Contenu mis à jour ✅');
+    } else {
+      await db.collection('decouvrir').add(data);
+      toast('success', 'Contenu ajouté ✅');
+    }
+    resetDecouvrirForm();
+    loadDecouvrir();
+  } catch (err) {
+    toast('error', 'Erreur', err.message);
+  } finally {
+    setLoading(btn, false);
+  }
+});
+
+document.getElementById('btnCancelDec').addEventListener('click', () => {
+  resetDecouvrirForm();
+  toast('info', 'Modification annulée');
+});
+
+function resetDecouvrirForm() {
+  document.getElementById('formDecouvrir').reset();
+  document.getElementById('decId').value = '';
+  document.getElementById('decOrdre').value = 100;
+  document.getElementById('decActif').value = 'true';
+  document.getElementById('decArchive').value = 'false';
+  document.getElementById('btnCancelDec').style.display = 'none';
+  document.getElementById('btnSaveDec').querySelector('.btn-text').textContent = '💾 Enregistrer';
+}
+
+document.getElementById('decShowArchived')?.addEventListener('change', loadDecouvrir);
+  
 </script>
 
 </body>
