@@ -1451,7 +1451,7 @@ if ('serviceWorker' in navigator) {
       ordreCat.forEach(function (cat) {
         if (!groups[cat] || groups[cat].length === 0) return;
         var meta = catLabels[cat] || { icon: '📖', titre: cat };
-        html += '<section class="dec-section reveal">' +
+                html += '<section class="dec-section">' +
           '<div class="dec-section-header">' +
             '<span class="dec-section-icon">' + meta.icon + '</span>' +
             '<h2>' + escapeHtml(meta.titre) + '</h2>' +
