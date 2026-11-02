@@ -1936,7 +1936,11 @@ section { padding-block: var(--espace-xl); }
           var aujourdhui = todayISO();
           var liste = snapshot.docs
             .map(function (doc) { return Object.assign({ id: doc.id }, doc.data()); })
-            .filter(function (e) { return !e.archive && e.date >= aujourdhui; })
+           // ✅ APRÈS
+.filter(function (e) {
+  var arch = (e.archive === true || e.archive === 'true');
+  return !arch && e.date >= aujourdhui;
+})
             .sort(function (a, b) { return a.date.localeCompare(b.date); });
           var prochain = liste[0];
 
@@ -1991,7 +1995,12 @@ section { padding-block: var(--espace-xl); }
         if (!zone) return;
         try {
           var snapshot = await db.collection('actualites').get();
-          var toutes = snapshot.docs.map(function (doc) { return Object.assign({ id: doc.id }, doc.data()); });
+          // ✅ APRÈS — on exclut les actualités archivées
+var toutes = snapshot.docs
+  .map(function (doc) { return Object.assign({ id: doc.id }, doc.data()); })
+  .filter(function (a) {
+    return !(a.archive === true || a.archive === 'true');
+  });
 
           toutes.sort(function (a, b) {
             var aEpingle = (a.epingle === true || a.epingle === 'true') ? 1 : 0;
