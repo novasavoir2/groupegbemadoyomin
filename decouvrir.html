@@ -281,6 +281,65 @@ section { padding-block: var(--espace-xl); }
 .live-banner a { color: var(--or-clair); font-size: 0.82rem; border-bottom: 1px solid var(--or-clair); transition: color 0.3s ease; }
 .live-banner a:hover { color: var(--blanc); }
 
+
+/* ================= DÉCOUVRIR — CONTENUS DYNAMIQUES ================= */
+.dec-section { margin-bottom: var(--espace-lg); }
+.dec-section-header { display: flex; align-items: center; gap: 12px; margin-bottom: var(--espace-md); flex-wrap: wrap; }
+.dec-section-icon { font-size: 1.8rem; flex-shrink: 0; }
+.dec-section-header h2 { margin: 0; }
+.dec-details-list { display: grid; gap: 14px; }
+
+.dec-detail {
+  background: var(--noir-2); border: 1px solid var(--border);
+  border-radius: 6px; overflow: hidden;
+  transition: border-color var(--vitesse), box-shadow var(--vitesse);
+}
+.dec-detail:hover { border-color: var(--or); }
+.dec-detail[open] { border-color: var(--or); box-shadow: 0 10px 30px rgba(0,0,0,0.35); }
+.dec-detail summary {
+  padding: 16px 20px; cursor: pointer; list-style: none;
+  display: flex; flex-wrap: wrap; align-items: center; gap: 10px;
+  font-family: var(--font-titres); color: var(--blanc);
+  font-size: 1.05rem; transition: background var(--vitesse);
+}
+.dec-detail summary::-webkit-details-marker { display: none; }
+.dec-detail summary::before {
+  content: '＋'; display: inline-flex; align-items: center; justify-content: center;
+  width: 26px; height: 26px; border-radius: 50%;
+  background: rgba(184,146,46,0.15); color: var(--or);
+  font-weight: 700; flex-shrink: 0; transition: transform var(--vitesse), background var(--vitesse);
+}
+.dec-detail[open] summary::before {
+  content: '−'; background: var(--or); color: var(--noir);
+}
+.dec-detail summary:hover { background: rgba(184,146,46,0.05); }
+.dec-detail-title { flex: 1; min-width: 200px; }
+.dec-detail-sub {
+  font-family: var(--font-accent); font-style: italic;
+  font-size: 0.85rem; color: var(--or-clair);
+}
+.dec-detail-body {
+  padding: 0 20px 20px; color: var(--blanc-doux);
+  border-top: 1px solid var(--border-discret);
+}
+.dec-detail-body p { margin-top: 14px; max-width: 100%; line-height: 1.75; }
+.dec-detail-body ul { margin-top: 14px; padding-left: 0; list-style: none; }
+.dec-detail-body ul li { padding: 6px 0 6px 24px; position: relative; }
+.dec-detail-body ul li::before {
+  content: '◆'; position: absolute; left: 4px; color: var(--or); font-size: 0.75rem; top: 10px;
+}
+.dec-detail-image { margin-top: 16px; max-width: 100%; border-radius: 4px; overflow: hidden; border: 1px solid var(--border-discret); }
+.dec-detail-image img { width: 100%; height: auto; display: block; }
+.dec-detail-resume { color: var(--or-clair); margin-top: 14px !important; }
+@media (max-width: 640px) {
+  .dec-detail summary { padding: 14px 16px; font-size: 0.95rem; }
+  .dec-detail-body { padding: 0 16px 16px; }
+  .dec-section-icon { font-size: 1.4rem; }
+  .dec-detail-title { min-width: 140px; }
+}
+  
+  
+
 /* ============================================================
    LIVE FALLBACK
    ============================================================ */
@@ -812,72 +871,10 @@ section { padding-block: var(--espace-xl); }
 
 <section>
   <div class="conteneur">
-
-    <div class="dec-bloc reveal">
-      <h2>Le Fa</h2>
-      <p>Le Fa est un système de connaissance et de divination transmis au sein des traditions du Bénin, mêlant observation, interprétation et orientation. Le Cabinet Gbêmadoyomin propose consultations, enseignements et publications pour rendre ce savoir accessible dans un langage contemporain.</p>
-      <a class="btn-contour" href="consultations.html">Découvrir les consultations du Fa</a>
+    <div id="dec-loading" style="text-align:center; padding:40px; color:var(--text-discret);">
+      Chargement des contenus…
     </div>
-
-    <div class="dec-bloc reveal">
-      <h2>Le Vodoun</h2>
-      <p>Bien au-delà des interprétations réductrices qui le limitent aux objets rituels, le Vodoun est présenté ici comme un ensemble de connaissances, de principes et de rapports entre l'être humain, la nature, l'invisible et les lois du cosmos — une compréhension approfondie portée par le Professeur Bokônon Gbêmadoyômin.</p>
-    </div>
-
-    <div class="dec-bloc reveal">
-      <h2>Grands thèmes abordés</h2>
-      <div class="themes-grille">
-        <div class="theme-carte reveal-stagger">
-          <div class="theme-image shine">
-            <img class="img-cover" src="decouvrir-symboles.jpeg" alt="Systèmes symboliques africains — Découvrir avec le Groupe Gbêmadoyomin" width="600" height="240" loading="lazy">
-          </div>
-          <span class="glyphe">🔮</span>
-          <h3>Systèmes symboliques africains</h3>
-          <p>Comprendre les langages symboliques transmis par la tradition.</p>
-        </div>
-        <div class="theme-carte reveal-stagger">
-          <div class="theme-image shine">
-            <img class="img-cover" src="decouvrir-principes.jpeg" alt="Principes de vie — Découvrir avec le Groupe Gbêmadoyomin" width="600" height="240" loading="lazy">
-          </div>
-          <span class="glyphe">🧭</span>
-          <h3>Principes de vie</h3>
-          <p>Connaissance de soi, discipline et responsabilité individuelle.</p>
-        </div>
-        <div class="theme-carte reveal-stagger">
-          <div class="theme-image shine">
-            <img class="img-cover" src="decouvrir-spiritualite.jpeg" alt="Spiritualité traditionnelle — Découvrir avec le Groupe Gbêmadoyomin" width="600" height="240" loading="lazy">
-          </div>
-          <span class="glyphe">🌍</span>
-          <h3>Spiritualité traditionnelle</h3>
-          <p>Rapports entre l'être humain, la nature et les forces qui structurent son environnement.</p>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<section>
-  <div class="conteneur">
-    <p class="eyebrow reveal">Contenus publiés</p>
-    <h2 class="reveal" style="margin-bottom: var(--espace-md);">Articles & enseignements</h2>
-    <div class="articles-liste">
-      <div class="article-item reveal-stagger">
-        <h3>À compléter avec les prochains articles du Professeur</h3>
-        <p>Les articles, publications et contenus pédagogiques seront ajoutés ici au fil de leur parution.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section>
-  <div class="conteneur">
-    <div class="academie-bloc reveal">
-      <p class="eyebrow">Aller plus loin</p>
-      <h2 style="margin-bottom: var(--espace-sm);">Formations & séminaires</h2>
-      <p style="color: var(--blanc-doux); margin-inline:auto; margin-bottom: var(--espace-md);">Le Cabinet organise séminaires, masterclass et conférences pour approfondir ces thèmes en groupe.</p>
-      <a class="btn-or" href="evenements.html">Voir les événements</a>
-    </div>
+    <div id="dec-contenu"></div>
   </div>
 </section>
 
@@ -1282,6 +1279,126 @@ if ('serviceWorker' in navigator) {
     .catch(() => console.log('⚠️ Service Worker non enregistré'));
 }
 </script>
+<!-- ================= CHARGEMENT DÉCOUVRIR ================= -->
+<script>
+(function () {
+  if (!window.firebase || !firebase.firestore) return;
+  const db = firebase.firestore();
 
+  const catLabels = {
+    fa:            { icon: '🔮', titre: 'Le Fa' },
+    vodoun:        { icon: '⚱️', titre: 'Le Vodoun' },
+    'types-vodoun':{ icon: '🏛️', titre: 'Les Types de Vodoun à Abomey' },
+    feuilles:      { icon: '🌿', titre: 'Feuilles & Vertus' },
+    astuces:       { icon: '✨', titre: 'Astuces' },
+    'signes-fa':   { icon: '🔯', titre: 'Signes du Fa' },
+    principes:     { icon: '🧭', titre: 'Principes de vie' },
+    symboles:      { icon: '📐', titre: 'Systèmes symboliques' },
+    spiritualite:  { icon: '🌍', titre: 'Spiritualité & Tradition' },
+    autre:         { icon: '📖', titre: 'Autres contenus' }
+  };
+  const ordreCat = ['fa','vodoun','types-vodoun','signes-fa','feuilles','astuces','principes','symboles','spiritualite','autre'];
+
+  function escapeHtml(str) {
+    if (!str) return '';
+    return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;')
+      .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+  function renderContenu(txt) {
+    if (!txt) return '';
+    return txt.split(/\n{2,}/).map(p => {
+      const t = p.trim();
+      if (!t) return '';
+      if (/^[—–-]\s/.test(t)) {
+        const items = t.split('\n').map(l => '<li>' + escapeHtml(l.replace(/^[—–-]\s*/, '')) + '</li>').join('');
+        return '<ul>' + items + '</ul>';
+      }
+      return '<p>' + escapeHtml(t).replace(/\n/g, '<br>') + '</p>';
+    }).join('');
+  }
+
+  async function loadDecouvrir() {
+    try {
+      const snap = await db.collection('decouvrir').get();
+      const items = snap.docs
+        .map(d => ({ id: d.id, ...d.data() }))
+        .filter(d => d.actif !== false && !(d.archive === true || d.archive === 'true'));
+
+      const zone = document.getElementById('dec-contenu');
+      const loader = document.getElementById('dec-loading');
+      if (loader) loader.style.display = 'none';
+
+      if (items.length === 0) {
+        zone.innerHTML = '<div class="empty-state" style="text-align:center; padding:40px; color:var(--text-discret); border:1px dashed var(--border); border-radius:6px;">Les contenus seront bientôt disponibles.</div>';
+        return;
+      }
+
+      // Regroupement par catégorie
+      const groups = {};
+      items.forEach(it => {
+        const cat = it.categorie || 'autre';
+        if (!groups[cat]) groups[cat] = [];
+        groups[cat].push(it);
+      });
+      Object.keys(groups).forEach(cat => {
+        groups[cat].sort((a, b) => (a.ordre || 999) - (b.ordre || 999));
+      });
+
+      let html = '';
+      ordreCat.forEach(cat => {
+        if (!groups[cat] || groups[cat].length === 0) return;
+        const meta = catLabels[cat] || { icon: '📖', titre: cat };
+        html += '<section class="dec-section reveal">' +
+          '<div class="dec-section-header">' +
+            '<span class="dec-section-icon">' + meta.icon + '</span>' +
+            '<h2>' + escapeHtml(meta.titre) + '</h2>' +
+          '</div>' +
+          '<div class="dec-details-list">';
+
+        groups[cat].forEach(item => {
+          const img = item.image
+            ? '<div class="dec-detail-image"><img src="' + escapeHtml(item.image) + '" alt="' + escapeHtml(item.titre) + '" loading="lazy"></div>'
+            : '';
+          const resume = item.resume
+            ? '<p class="dec-detail-resume"><em>' + escapeHtml(item.resume) + '</em></p>'
+            : '';
+          html += '<details class="dec-detail" id="' + escapeHtml(item.slug || item.id) + '">' +
+            '<summary>' +
+              '<span class="dec-detail-title">' + escapeHtml(item.titre) + '</span>' +
+              (item.sousCategorie ? '<span class="dec-detail-sub">' + escapeHtml(item.sousCategorie) + '</span>' : '') +
+            '</summary>' +
+            '<div class="dec-detail-body">' +
+              img + resume + renderContenu(item.contenu) +
+            '</div>' +
+          '</details>';
+        });
+
+        html += '</div></section>';
+      });
+
+      zone.innerHTML = html;
+
+      // Auto-ouverture si hash présent
+      if (location.hash) {
+        const target = document.getElementById(location.hash.slice(1));
+        if (target && target.tagName === 'DETAILS') {
+          target.open = true;
+          setTimeout(() => target.scrollIntoView({ behavior: 'smooth', block: 'start' }), 300);
+        }
+      }
+    } catch (err) {
+      console.error('Erreur chargement Découvrir:', err);
+      const loader = document.getElementById('dec-loading');
+      if (loader) loader.textContent = 'Erreur de chargement des contenus.';
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', loadDecouvrir);
+  } else {
+    loadDecouvrir();
+  }
+})();
+</script>
 </body>
 </html>
