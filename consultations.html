@@ -476,6 +476,53 @@ section { padding-block: var(--espace-xl); }
 @media (max-width: 900px) { .footer-grille { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 560px) { .footer-grille { grid-template-columns: 1fr; gap: 32px; } .footer-bas { flex-direction: column; align-items: flex-start; } }
 @media (max-width: 780px) { .cons-etapes { grid-template-columns: 1fr; } }
+
+/* ============================================================
+   CORRECTION ESPACEMENT NAV — toutes les pages
+   ============================================================ */
+
+/* Sur desktop (où le nav complet s'affiche, > 980px) */
+@media (min-width: 981px) {
+  .nav {
+    gap: clamp(20px, 3vw, 40px);
+  }
+  .nav-logo {
+    flex-shrink: 0;
+    margin-right: 4px;
+  }
+  .nav-liens {
+    flex: 1;
+    justify-content: center;
+    min-width: 0;
+    padding-inline: 8px;
+  }
+}
+
+/* Sur écrans intermédiaires 981px → 1180px : on compacte */
+@media (min-width: 981px) and (max-width: 1180px) {
+  .nav-logo-texte { display: none; }
+  .nav-logo { gap: 0; }
+  .nav-lien {
+    font-size: 9px;
+    padding: 6px 7px;
+    letter-spacing: 0.04em;
+  }
+  .nav-rdv {
+    font-size: 9px;
+    padding: 9px 14px;
+  }
+}
+
+/* Sur écrans 1181px → 1300px : on garde le titre, on cache le sous-titre */
+@media (min-width: 1181px) and (max-width: 1300px) {
+  .nav-logo-sous { display: none; }
+  .nav-logo-principal { font-size: 10px; }
+  .nav-lien {
+    font-size: 9.5px;
+    padding: 6px 8px;
+  }
+}
+  
 </style>
 </head>
 <body data-page="consultations">
