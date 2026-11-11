@@ -1,0 +1,3954 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Administration — Groupe Gbêmadoyomin</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,400;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+
+<!-- ⭐ AJOUT 1 : Chart.js pour le graphique -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+<style>
+:root {
+  --noir: #0d0d0d; --noir-2: #111111; --noir-3: #161616;
+  --or: #b8922e; --or-clair: #d4af5a; --or-fonce: #8a6a1f;
+  --rouge: #7a1515; --vert: #22c55e;
+  --blanc: #f0ebe0; --blanc-doux: #c8c0b0;
+  --text-muted: #9a9080; --text-discret: #7a7060;
+  --border: rgba(184, 146, 46, 0.2); --border-discret: rgba(184, 146, 46, 0.1);
+  --font-titres: 'Cinzel', serif; --font-accent: 'Cormorant Garamond', serif; --font-corps: 'Lato', sans-serif;
+  --rayon: 4px; --vitesse: 0.3s ease;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { background: var(--noir); color: var(--blanc); font-family: var(--font-corps); font-weight: 300; line-height: 1.6; -webkit-font-smoothing: antialiased; min-height: 100vh; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+input, textarea, select { font: inherit; }
+h1, h2, h3 { font-family: var(--font-titres); font-weight: 700; color: var(--blanc); }
+.conteneur { max-width: 1180px; margin-inline: auto; padding-inline: clamp(16px, 4vw, 32px); }
+
+.btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; border-radius: var(--rayon); font-family: var(--font-corps); font-weight: 700; font-size: 0.82rem; letter-spacing: 0.03em; transition: all var(--vitesse); cursor: pointer; }
+.btn-or { background: linear-gradient(135deg, var(--or-clair), var(--or-fonce)); color: var(--noir); border: none; }
+.btn-or:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(184,146,46,0.35); }
+.btn-or:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+.btn-outline { background: transparent; color: var(--blanc-doux); border: 1px solid var(--border); }
+.btn-outline:hover { border-color: var(--or); color: var(--or-clair); }
+.btn-danger { border-color: var(--rouge) !important; color: #ff8888 !important; }
+.btn-danger:hover { background: rgba(122,21,21,0.2) !important; }
+.btn-vert { background: linear-gradient(135deg, #22c55e, #16a34a); color: white; }
+.btn-vert:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(34,197,94,0.35); }
+.btn-sm { padding: 6px 12px; font-size: 0.72rem; }
+.btn-tool { display: inline-flex; align-items: center; gap: 5px; padding: 6px 10px; border-radius: 3px; font-size: 0.72rem; background: rgba(184,146,46,0.1); border: 1px solid var(--border-discret); color: var(--or-clair); transition: all var(--vitesse); }
+.btn-tool:hover { background: rgba(184,146,46,0.2); border-color: var(--or); }
+.btn-add { display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; border-radius: 4px; font-size: 0.78rem; background: rgba(34,197,94,0.1); border: 1px dashed rgba(34,197,94,0.4); color: #4ade80; font-weight: 600; }
+.btn-add:hover { background: rgba(34,197,94,0.2); border-style: solid; }
+.btn-remove { width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0; background: rgba(122,21,21,0.15); border: 1px solid rgba(122,21,21,0.4); color: #ff8888; font-size: 0.9rem; display: flex; align-items: center; justify-content: center; transition: all var(--vitesse); }
+.btn-remove:hover { background: rgba(122,21,21,0.3); }
+
+.admin-header { background: rgba(8,8,8,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 14px 0; position: sticky; top: 0; z-index: 100; }
+.admin-header-inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.admin-logo { display: flex; align-items: center; gap: 10px; }
+.admin-logo img { height: 36px; width: auto; border-radius: 4px; }
+.admin-logo-texte { display: flex; flex-direction: column; }
+.admin-logo-title { font-family: var(--font-titres); font-size: 13px; color: var(--or); font-weight: 700; letter-spacing: 0.08em; }
+.admin-logo-sub { font-size: 10px; color: var(--text-discret); letter-spacing: 0.05em; }
+.admin-user { display: flex; align-items: center; gap: 12px; font-size: 0.82rem; color: var(--text-muted); }
+.admin-user strong { color: var(--blanc-doux); }
+
+.login-wrap { min-height: calc(100vh - 70px); display: flex; align-items: center; justify-content: center; padding: 20px; }
+.login-box { width: 100%; max-width: 420px; background: var(--noir-2); border: 1px solid var(--border); border-radius: 8px; padding: 40px 32px; }
+.login-box h2 { margin-bottom: 8px; font-size: 1.5rem; }
+.login-box p { color: var(--text-muted); font-size: 0.88rem; margin-bottom: 24px; }
+
+.form-group { margin-bottom: 16px; }
+.form-group label { display: block; font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; }
+.form-group label .req { color: var(--or); margin-left: 2px; }
+.form-group .hint { font-size: 0.72rem; color: var(--text-discret); margin-top: 4px; font-style: italic; }
+.form-group input, .form-group textarea, .form-group select { width: 100%; padding: 11px 14px; background: var(--noir-3); border: 1px solid var(--border-discret); border-radius: 4px; color: var(--blanc); font-size: 0.9rem; transition: border-color var(--vitesse); }
+.form-group input:focus, .form-group textarea:focus, .form-group select:focus { outline: none; border-color: var(--or); }
+.form-group textarea { resize: vertical; min-height: 80px; font-family: var(--font-corps); }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.form-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+@media (max-width: 640px) { .form-row, .form-row-3 { grid-template-columns: 1fr; } }
+
+.url-row { display: flex; gap: 8px; align-items: stretch; margin-bottom: 8px; }
+.url-row input { flex: 1; }
+.url-row .url-tools { display: flex; gap: 4px; flex-wrap: wrap; align-items: center; }
+.dyn-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; }
+
+.tabs { display: flex; gap: 4px; flex-wrap: wrap; border-bottom: 1px solid var(--border-discret); margin-bottom: 24px; padding-bottom: 8px; }
+.tab-btn { padding: 10px 18px; border-radius: 4px; font-size: 0.82rem; font-weight: 600; color: var(--text-muted); border: 1px solid transparent; transition: all var(--vitesse); }
+.tab-btn:hover { color: var(--blanc-doux); }
+.tab-btn.active { color: var(--or); border-color: var(--or); background: rgba(184,146,46,0.08); }
+.tab-pane { display: none; }
+.tab-pane.active { display: block; animation: fadeIn 0.3s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+.card { background: var(--noir-2); border: 1px solid var(--border-discret); border-radius: 6px; padding: 24px; margin-bottom: 24px; }
+.card-title { font-family: var(--font-titres); font-size: 1rem; color: var(--or); margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+.card-sub { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 20px; }
+
+.search-wrap { position: relative; margin-bottom: 14px; }
+.search-wrap input {
+  width: 100%; padding: 10px 40px 10px 14px;
+  background: var(--noir-3); border: 1px solid var(--border-discret);
+  border-radius: 4px; color: var(--blanc); font-size: 0.85rem;
+  transition: border-color var(--vitesse);
+}
+.search-wrap input:focus { outline: none; border-color: var(--or); }
+.search-wrap::after {
+  content: '🔍'; position: absolute; right: 14px; top: 50%;
+  transform: translateY(-50%); opacity: 0.5; pointer-events: none;
+  font-size: 0.9rem;
+}
+
+.codes-counter { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 18px; }
+@media (max-width: 640px) { .codes-counter { grid-template-columns: repeat(2, 1fr); } }
+.counter-box { padding: 14px 12px; border-radius: 6px; text-align: center; background: var(--noir-3); border: 1px solid var(--border-discret); }
+.counter-box .num { font-family: var(--font-titres); font-size: 1.6rem; font-weight: 700; line-height: 1; display: block; }
+.counter-box .lbl { font-size: 0.65rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); margin-top: 6px; display: block; }
+.counter-actif .num { color: #4ade80; }
+.counter-utilise .num { color: #fcd34d; }
+.counter-expire .num { color: #ff8888; }
+.counter-inactif .num { color: var(--text-discret); }
+
+.list-actions { display: flex; gap: 8px; justify-content: flex-end; margin-bottom: 12px; flex-wrap: wrap; }
+
+.items-list { display: flex; flex-direction: column; gap: 10px; }
+.item-row { display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: var(--noir-3); border: 1px solid var(--border-discret); border-radius: 4px; transition: border-color var(--vitesse); }
+.item-row:hover { border-color: var(--border); }
+.item-thumb { width: 44px; height: 44px; border-radius: 4px; flex-shrink: 0; background: var(--noir); border: 1px solid var(--border-discret); background-size: cover; background-position: center; }
+.item-info { flex: 1; min-width: 0; }
+.item-title { font-size: 0.88rem; color: var(--blanc); font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.item-meta { font-size: 0.72rem; color: var(--text-discret); margin-top: 2px; }
+.item-actions { display: flex; gap: 6px; flex-shrink: 0; flex-wrap: wrap; }
+.empty-state { text-align: center; padding: 40px 20px; color: var(--text-discret); border: 1px dashed var(--border-discret); border-radius: 4px; font-size: 0.85rem; }
+
+.code-mono { font-family: 'Courier New', monospace; font-size: 0.95rem; font-weight: 700; color: var(--or-clair); letter-spacing: 0.05em; }
+.badge { display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 10px; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.03em; }
+.badge-actif { background: rgba(34,197,94,0.15); color: #4ade80; border: 1px solid rgba(34,197,94,0.4); }
+.badge-inactif { background: rgba(122,21,21,0.15); color: #ff8888; border: 1px solid rgba(122,21,21,0.4); }
+.badge-utilise { background: rgba(245,158,11,0.15); color: #fcd34d; border: 1px solid rgba(245,158,11,0.4); }
+.badge-expire { background: rgba(122,21,21,0.2); color: #ff8888; border: 1px solid rgba(122,21,21,0.5); }
+.badge-payant { background: rgba(184,146,46,0.15); color: var(--or-clair); border: 1px solid rgba(184,146,46,0.5); }
+.badge-gratuit { background: rgba(34,197,94,0.12); color: #4ade80; border: 1px solid rgba(34,197,94,0.4); }
+.badge-cat { background: rgba(99,102,241,0.15); color: #a5b4fc; border: 1px solid rgba(99,102,241,0.4); }
+.badge-inactifprod { background: rgba(122,21,21,0.15); color: #ff8888; border: 1px solid rgba(122,21,21,0.4); }
+
+.toast-container { position: fixed; bottom: 24px; right: 24px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; max-width: 360px; }
+.toast { padding: 14px 18px; border-radius: 6px; font-size: 0.88rem; color: white; box-shadow: 0 10px 30px rgba(0,0,0,0.5); display: flex; align-items: flex-start; gap: 10px; animation: slideIn 0.3s ease; border-left: 4px solid; }
+.toast.success { background: #14532d; border-color: #22c55e; }
+.toast.error { background: #7f1d1d; border-color: #ef4444; }
+.toast.info { background: #1e3a8a; border-color: #3b82f6; }
+.toast.warning { background: #78350f; border-color: #f59e0b; }
+.toast-icon { font-size: 1.1rem; flex-shrink: 0; }
+.toast-content { flex: 1; }
+.toast-title { font-weight: 700; margin-bottom: 2px; }
+.toast-msg { font-size: 0.82rem; opacity: 0.9; }
+@keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+
+.spinner { display: inline-block; width: 16px; height: 16px; border: 2px solid currentColor; border-top-color: transparent; border-radius: 50%; animation: spin 0.7s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.live-status-box { display: flex; align-items: center; gap: 12px; padding: 14px 18px; border-radius: 6px; background: var(--noir-3); border: 1px solid var(--border-discret); margin-bottom: 16px; }
+.live-dot { width: 12px; height: 12px; border-radius: 50%; background: #555; flex-shrink: 0; }
+.live-dot.on { background: #ff2d2d; animation: pulseLive 1.2s ease-in-out infinite; box-shadow: 0 0 12px #ff2d2d; }
+@keyframes pulseLive { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(0.85); opacity: 0.6; } }
+.live-status-text { font-size: 0.88rem; color: var(--blanc-doux); }
+
+.alert { padding: 12px 16px; border-radius: 4px; font-size: 0.82rem; margin-bottom: 16px; display: flex; gap: 10px; align-items: flex-start; }
+.alert-info { background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.3); color: #93c5fd; }
+.alert-warn { background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.3); color: #fcd34d; }
+.alert-tip { background: rgba(34,197,94,0.08); border: 1px solid rgba(34,197,94,0.3); color: #86efac; }
+
+.url-validation { font-size: 0.78rem; margin-top: 6px; padding: 8px 12px; border-radius: 4px; display: none; line-height: 1.4; }
+.url-validation.visible { display: block; }
+.url-validation.valide { background: rgba(34,197,94,0.15); color: #4ade80; border: 1px solid rgba(34,197,94,0.4); }
+.url-validation.invalide { background: rgba(122,21,21,0.2); color: #ff8888; border: 1px solid rgba(122,21,21,0.5); }
+.url-validation small { opacity: 0.85; }
+
+.fallback-section { border-top: 1px dashed var(--border-discret); padding-top: 16px; margin-top: 20px; }
+.fallback-section-title { color: var(--or); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
+
+.payant-block { border: 1px dashed rgba(184,146,46,0.5); background: rgba(184,146,46,0.04); border-radius: 6px; padding: 16px; margin-top: 16px; }
+.payant-block-title { color: var(--or); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+
+.produit-preview {
+  display: flex; gap: 16px; align-items: flex-start;
+  padding: 16px; background: var(--noir-3); border: 1px solid var(--border-discret);
+  border-radius: 6px; margin-top: 12px;
+}
+.produit-preview-img {
+  width: 80px; height: 106px; flex-shrink: 0;
+  background: var(--noir-2); border: 1px solid var(--border-discret);
+  border-radius: 4px; background-size: cover; background-position: center;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text-discret); font-size: 0.65rem;
+}
+.produit-preview-info { flex: 1; min-width: 0; }
+.produit-preview-title { font-family: var(--font-titres); font-size: 0.95rem; color: var(--blanc); margin-bottom: 4px; }
+.produit-preview-desc { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 6px; }
+.produit-preview-prix { font-size: 0.9rem; color: var(--or); font-weight: 700; }
+
+/* ⭐ AJOUT 2 : STYLES STATISTIQUES ADMIN */
+.stats-kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 24px; }
+@media (max-width: 900px) { .stats-kpis { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 480px) { .stats-kpis { grid-template-columns: 1fr; } }
+
+.kpi-card {
+  background: linear-gradient(160deg, var(--noir-2), var(--noir-3));
+  border: 1px solid var(--border);
+  border-radius: 8px; padding: 22px 18px;
+  display: flex; flex-direction: column; gap: 6px;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+.kpi-card:hover { transform: translateY(-3px); border-color: var(--or); }
+.kpi-icon { font-size: 1.5rem; }
+.kpi-value {
+  font-family: var(--font-titres);
+  font-size: 1.9rem; font-weight: 700;
+  color: var(--or-clair); line-height: 1;
+}
+.kpi-label {
+  font-size: 0.68rem; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--text-muted);
+}
+
+.stats-chart-box {
+  background: linear-gradient(160deg, var(--noir-2), var(--noir-3));
+  border: 1px solid var(--border);
+  border-radius: 8px; padding: 22px 18px;
+  margin-bottom: 24px;
+}
+.stats-chart-header {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 10px; flex-wrap: wrap; margin-bottom: 16px;
+}
+.stats-chart-header h3 {
+  font-family: var(--font-titres);
+  font-size: 0.95rem; color: var(--or);
+  letter-spacing: 0.05em;
+}
+.stats-chart-inner { position: relative; height: 300px; }
+
+.ranking-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+@media (max-width: 780px) { .ranking-grid { grid-template-columns: 1fr; } }
+
+.ranking-box {
+  background: linear-gradient(160deg, var(--noir-2), var(--noir-3));
+  border: 1px solid var(--border);
+  border-radius: 8px; padding: 20px;
+}
+.ranking-box h3 {
+  font-family: var(--font-titres);
+  font-size: 0.9rem; color: var(--or);
+  margin-bottom: 14px; letter-spacing: 0.05em;
+}
+.ranking-list { display: flex; flex-direction: column; gap: 8px; }
+.ranking-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 12px;
+  background: var(--noir-3);
+  border: 1px solid var(--border-discret);
+  border-radius: 4px;
+  transition: border-color 0.3s ease;
+}
+.ranking-item:hover { border-color: var(--or); }
+.ranking-rank {
+  font-family: var(--font-titres); font-weight: 700;
+  font-size: 0.85rem; color: var(--or-clair);
+  width: 26px; text-align: center; flex-shrink: 0;
+}
+.ranking-label {
+  flex: 1; min-width: 0;
+  font-size: 0.85rem; color: var(--blanc-doux);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.ranking-value {
+  font-family: var(--font-titres); font-weight: 700;
+  color: var(--or-clair); font-size: 0.9rem;
+}
+.stats-empty { text-align: center; padding: 24px; color: var(--text-discret); font-size: 0.85rem; }
+.stats-actions { display: flex; gap: 10px; justify-content: flex-end; margin-bottom: 18px; flex-wrap: wrap; }
+</style>
+</head>
+<body>
+
+<!-- ⚡ CHAMP CACHÉ POUR LE TÉLÉVERSEMENT CLOUDINARY -->
+<input type="file" id="cloudinaryInput" accept="image/*" style="display: none;">
+<header class="admin-header">
+  <div class="conteneur admin-header-inner">
+    <div class="admin-logo">
+      <img src="logo-gg.jpeg" alt="GG">
+      <div class="admin-logo-texte">
+        <span class="admin-logo-title">ADMINISTRATION</span>
+        <span class="admin-logo-sub">Groupe Gbêmadoyomin</span>
+      </div>
+    </div>
+    <div class="admin-user" id="adminUser" style="display:none;">
+      <span>Connecté : <strong id="userEmailDisplay"></strong></span>
+      <button class="btn btn-outline btn-sm" id="btnLogout">🚪 Déconnexion</button>
+    </div>
+  </div>
+</header>
+
+<!-- ============================================================
+     LOGIN
+     ============================================================ -->
+<div class="login-wrap" id="loginWrap">
+  <div class="login-box">
+    <h2>🔐 Accès administration</h2>
+    <p>Connectez-vous pour gérer le contenu du site.</p>
+    <form id="loginForm">
+      <div class="form-group">
+        <label for="loginEmail">Adresse email</label>
+        <input type="email" id="loginEmail" placeholder="clavier12541@gmail.com" required autocomplete="username">
+      </div>
+      <div class="form-group">
+        <label for="loginPassword">Mot de passe</label>
+        <input type="password" id="loginPassword" placeholder="••••••••" required autocomplete="current-password">
+      </div>
+      <button type="submit" class="btn btn-or" id="btnLogin" style="width:100%; justify-content:center; padding: 14px;">
+        <span class="btn-text">Se connecter</span>
+      </button>
+    </form>
+  </div>
+</div>
+
+<!-- ============================================================
+     DASHBOARD
+     ============================================================ -->
+<div class="conteneur" id="dashboard" style="display:none; padding-block: 32px;">
+
+  <div style="margin-bottom: 24px;">
+    <h1 style="font-size: 1.8rem; margin-bottom: 4px;">📊 Tableau de bord</h1>
+    <p style="color: var(--text-muted); font-size: 0.9rem;">Gérez les contenus du site en temps réel.</p>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="evenements">📅 Événements</button>
+    <button class="tab-btn" data-tab="actualites">📰 Actualités</button>
+    <button class="tab-btn" data-tab="photos">🖼️ Photos</button>
+    <button class="tab-btn" data-tab="videos">🎬 Vidéos</button>
+    <button class="tab-btn" data-tab="presse">📰 Presse</button>
+    <button class="tab-btn" data-tab="decouvrir">📖 Découvrir</button>
+    <button class="tab-btn" data-tab="ong">🌍 ONG</button>
+    <button class="tab-btn" data-tab="comments">💬 Commentaires</button>
+    <button class="tab-btn" data-tab="produits">🛍️ Produits</button>
+    <button class="tab-btn" data-tab="live">🔴 Live</button>
+    <button class="tab-btn" data-tab="acces">🔐 Accès payant</button>
+    <button class="tab-btn" data-tab="config">⚙️ Configuration</button>
+    <button class="tab-btn" data-tab="stats">📊 Statistiques</button>
+  </div>
+
+  <!-- ============================================================
+       TAB ÉVÉNEMENTS
+       ============================================================ -->
+  <div class="tab-pane active" id="pane-evenements">
+
+    <div class="alert alert-info">
+      <span>💡</span>
+      <span><strong>Astuce :</strong> Utilisez les boutons <em>PostImage</em> / <em>Cloudinary</em> / <em>ImgBB</em> pour héberger vos images gratuitement et coller le lien direct dans le champ.</span>
+    </div>
+
+    <div class="card">
+      <div class="card-title">➕ Ajouter / modifier un événement</div>
+      <div class="card-sub">Tous les champs marqués d'un <span style="color: var(--or);">*</span> sont obligatoires.</div>
+
+      <form id="formEvenement" autocomplete="off">
+        <input type="hidden" id="evId" value="">
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Titre <span class="req">*</span></label>
+            <input type="text" id="evTitre" required placeholder="Ex: Séminaire sur le Fa">
+          </div>
+          <div class="form-group">
+            <label>Slug (identifiant URL) <span class="req">*</span></label>
+            <input type="text" id="evSlug" required placeholder="Ex: seminaire-fa-2026">
+            <div class="hint">Utilisé pour l'URL : article.html?type=evenement&amp;slug=…</div>
+          </div>
+        </div>
+
+        <div class="form-row-3">
+          <div class="form-group">
+            <label>Date <span class="req">*</span></label>
+            <input type="date" id="evDate" required>
+          </div>
+          <div class="form-group">
+            <label>Heure</label>
+            <input type="text" id="evHeure" placeholder="10h00">
+          </div>
+          <div class="form-group">
+            <label>Catégorie</label>
+            <select id="evCategorie">
+              <option value="">— Choisir —</option>
+              <option value="séminaire">Séminaire</option>
+              <option value="conférence">Conférence</option>
+              <option value="célébration">Célébration traditionnelle</option>
+              <option value="actualité">Actualité</option>
+              <option value="événement">Autre événement</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Lieu</label>
+            <input type="text" id="evLieu" placeholder="Abomey-Calavi, Bénin">
+          </div>
+          <div class="form-group">
+            <label>Participation</label>
+            <input type="text" id="evParticipation" placeholder="Sur inscription / Gratuit / Payant">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>À la une ?</label>
+            <select id="evALaUne">
+              <option value="false">Non</option>
+              <option value="true">Oui</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Archivé ?</label>
+            <select id="evArchive">
+              <option value="false">Non (à venir)</option>
+              <option value="true">Oui (passé)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Résumé court (pour la liste)</label>
+          <textarea id="evDescription" rows="2" placeholder="Brève description affichée dans les listes"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Contenu complet <span class="req">*</span></label>
+          <textarea id="evContenu" rows="6" required placeholder="Texte complet de l'article / événement"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>🖼️ Affiches / Images (plusieurs possibles)</label>
+          <div class="dyn-list" id="evImagesList"></div>
+           <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
+            <button type="button" class="btn-add" id="evAddImage">➕ Ajouter une image</button>
+            <button type="button" class="btn-vert" onclick="uploadToCloudinary('evImagesList', true)">📤 Téléverser des images</button>
+            <a class="btn-tool" href="https://postimages.org/fr/" target="_blank" rel="noopener">📤 Ouvrir PostImage</a>
+            <a class="btn-tool" href="https://console.cloudinary.com/" target="_blank" rel="noopener">☁️ Ouvrir Cloudinary</a>
+            <a class="btn-tool" href="https://imgbb.com/" target="_blank" rel="noopener">🖼️ Ouvrir ImgBB</a>
+          </div>
+          <div class="hint">La première image servira d'affiche principale.</div>
+        </div>
+
+        <div class="form-group">
+          <label>🎬 Vidéos (plusieurs possibles)</label>
+          <div class="dyn-list" id="evVideosList"></div>
+          <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
+            <button type="button" class="btn-add" id="evAddVideo">➕ Ajouter une vidéo</button>
+            <a class="btn-tool" href="https://www.youtube.com/" target="_blank" rel="noopener">▶️ Ouvrir YouTube</a>
+            <a class="btn-tool" href="https://drive.google.com/" target="_blank" rel="noopener">📁 Ouvrir Google Drive</a>
+          </div>
+        </div>
+
+        <div style="display:flex; gap:12px; margin-top:20px; flex-wrap:wrap;">
+          <button type="submit" class="btn btn-or" id="btnSaveEv">
+            <span class="btn-text">💾 Enregistrer l'événement</span>
+          </button>
+          <button type="button" class="btn btn-outline" id="btnCancelEv" style="display:none;">
+            ❌ Annuler la modification
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📋 Événements enregistrés</div>
+      <div class="card-sub">Total : <span id="evCount">0</span></div>
+      <div class="search-wrap">
+        <input type="text" class="search-input" data-target="evList" placeholder="Rechercher un événement…">
+      </div>
+      <div class="items-list" id="evList">
+        <div class="empty-state">Chargement…</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       TAB ACTUALITÉS
+       ============================================================ -->
+  <div class="tab-pane" id="pane-actualites">
+
+    <div class="alert alert-tip">
+      <span>📰</span>
+      <span><strong>Actualités :</strong> Elles apparaissent sur la page Événements (onglet Actualités) et peuvent être épinglées « À la une ».</span>
+    </div>
+
+    <div class="card">
+      <div class="card-title">➕ Ajouter / modifier une actualité</div>
+      <div class="card-sub">Tous les champs marqués d'un <span style="color: var(--or);">*</span> sont obligatoires.</div>
+
+      <form id="formActualite" autocomplete="off">
+        <input type="hidden" id="acId" value="">
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Titre <span class="req">*</span></label>
+            <input type="text" id="acTitre" required placeholder="Ex: Nouvelle parution du Livre du Fa">
+          </div>
+          <div class="form-group">
+            <label>Slug (identifiant URL) <span class="req">*</span></label>
+            <input type="text" id="acSlug" required placeholder="Ex: nouvelle-parution-livre-fa">
+            <div class="hint">Utilisé pour l'URL : article.html?type=actualite&amp;slug=…</div>
+          </div>
+        </div>
+
+        <div class="form-row-3">
+          <div class="form-group">
+            <label>Date de publication</label>
+            <input type="date" id="acDatePublication">
+          </div>
+          <div class="form-group">
+            <label>Catégorie</label>
+            <input type="text" id="acCategorie" placeholder="Ex: Parution, Annonce, Communiqué…">
+          </div>
+          <div class="form-group">
+            <label>Auteur</label>
+            <input type="text" id="acAuteur" placeholder="Ex: Cabinet Gbêmadoyomin">
+          </div>
+        </div>
+
+       <div class="form-row">
+  <div class="form-group">
+    <label>Épingler à la une ?</label>
+    <select id="acEpingle">
+      <option value="false">Non</option>
+      <option value="true">Oui</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label>Archivé ?</label>
+    <select id="acArchive">
+      <option value="false">Non</option>
+      <option value="true">Oui (masqué sur l'accueil)</option>
+    </select>
+  </div>
+</div>
+<div class="form-group">
+  <label>Résumé court</label>
+  <input type="text" id="acResume" placeholder="Résumé affiché dans les listes">
+</div>
+
+        <div class="form-group">
+          <label>Contenu complet <span class="req">*</span></label>
+          <textarea id="acContenu" rows="6" required placeholder="Texte complet de l'actualité"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>🖼️ Images (plusieurs possibles)</label>
+          <div class="dyn-list" id="acImagesList"></div>
+          <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
+            <button type="button" class="btn-add" id="acAddImage">➕ Ajouter une image</button>
+            <button type="button" class="btn-vert" onclick="uploadToCloudinary('acImagesList', true)">📤 Téléverser des images</button>
+            <a class="btn-tool" href="https://postimages.org/fr/" target="_blank" rel="noopener">📤 Ouvrir PostImage</a>
+            <a class="btn-tool" href="https://console.cloudinary.com/" target="_blank" rel="noopener">☁️ Ouvrir Cloudinary</a>
+            <a class="btn-tool" href="https://imgbb.com/" target="_blank" rel="noopener">🖼️ Ouvrir ImgBB</a>
+          </div>
+          <div class="hint">La première image servira d'image principale.</div>
+        </div>
+
+        <div class="form-group">
+          <label>🎬 Vidéo (optionnelle)</label>
+          <div class="url-row">
+            <input type="url" id="acVideoURL" placeholder="https://www.youtube.com/embed/ID">
+            <div class="url-tools">
+              <a class="btn-tool" href="https://www.youtube.com/" target="_blank" rel="noopener">YouTube</a>
+              <a class="btn-tool" href="https://drive.google.com/" target="_blank" rel="noopener">Drive</a>
+            </div>
+          </div>
+          <div class="url-validation" id="acVideoValidation"></div>
+          <div class="hint">Formats acceptés : YouTube (embed/), Google Drive, TikTok, Facebook, Vimeo, Dailymotion…</div>
+        </div>
+
+        <div style="display:flex; gap:12px; margin-top:20px; flex-wrap:wrap;">
+          <button type="submit" class="btn btn-or" id="btnSaveAc">
+            <span class="btn-text">💾 Enregistrer l'actualité</span>
+          </button>
+          <button type="button" class="btn btn-outline" id="btnCancelAc" style="display:none;">
+            ❌ Annuler la modification
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📋 Actualités enregistrées</div>
+      <div class="card-sub">Total : <span id="acCount">0</span></div>
+      <div class="search-wrap">
+        <input type="text" class="search-input" data-target="acList" placeholder="Rechercher une actualité…">
+      </div>
+      <div class="items-list" id="acList">
+        <div class="empty-state">Chargement…</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       TAB PHOTOS
+       ============================================================ -->
+  <div class="tab-pane" id="pane-photos">
+    <div class="alert alert-info">
+      <span>💡</span>
+      <span><strong>Astuce :</strong> Hébergez vos photos sur PostImage / Cloudinary / ImgBB puis collez le lien direct.</span>
+    </div>
+
+    <div class="card">
+      <div class="card-title">➕ Ajouter / modifier une photo</div>
+      <form id="formPhoto" autocomplete="off">
+        <input type="hidden" id="phId" value="">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Titre <span class="req">*</span></label>
+            <input type="text" id="phTitre" required placeholder="Ex: Cérémonie 2025">
+          </div>
+          <div class="form-group">
+            <label>Catégorie</label>
+            <select id="phCategorie">
+              <option value="galerie">Galerie</option>
+              <option value="portfolio">Portfolio</option>
+              <option value="evenement">Événement</option>
+              <option value="formation">Formation</option>
+              <option value="cérémonie">Cérémonie</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>URL de l'image <span class="req">*</span></label>
+             <div class="url-row">
+            <input type="url" id="phUrl" required placeholder="https://i.postimg.cc/... ou Cloudinary">
+            <button type="button" class="btn-vert btn-sm" onclick="uploadToCloudinary('phUrl', false)">📤</button>
+            <div class="url-tools">
+              <a class="btn-tool" href="https://postimages.org/fr/" target="_blank" rel="noopener">PostImage</a>
+              <a class="btn-tool" href="https://console.cloudinary.com/" target="_blank" rel="noopener">Cloudinary</a>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex; gap:12px; margin-top:16px; flex-wrap:wrap;">
+          <button type="submit" class="btn btn-or" id="btnSavePh">
+            <span class="btn-text">💾 Enregistrer la photo</span>
+          </button>
+          <button type="button" class="btn btn-outline" id="btnCancelPh" style="display:none;">❌ Annuler</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📋 Photos enregistrées</div>
+      <div class="card-sub">Total : <span id="phCount">0</span></div>
+      <div class="search-wrap">
+        <input type="text" class="search-input" data-target="phList" placeholder="Rechercher une photo…">
+      </div>
+      <div class="items-list" id="phList">
+        <div class="empty-state">Chargement…</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       TAB VIDÉOS
+       ============================================================ -->
+  <div class="tab-pane" id="pane-videos">
+    <div class="alert alert-info">
+      <span>💡</span>
+      <span><strong>Formats acceptés :</strong> YouTube (<code>https://www.youtube.com/embed/ID</code>), Google Drive, TikTok, Facebook, Vimeo, Dailymotion, Twitch…</span>
+    </div>
+
+    <div class="card">
+      <div class="card-title">➕ Ajouter / modifier une vidéo</div>
+      <form id="formVideo" autocomplete="off">
+        <input type="hidden" id="viId" value="">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Titre <span class="req">*</span></label>
+            <input type="text" id="viTitre" required placeholder="Ex: Intervention du Professeur">
+          </div>
+          <div class="form-group">
+            <label>Catégorie</label>
+            <select id="viCategorie">
+              <option value="intervention">Intervention</option>
+              <option value="cérémonie">Cérémonie</option>
+              <option value="documentaire">Documentaire</option>
+              <option value="formation">Formation</option>
+              <option value="reportage">Reportage</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>URL d'intégration <span class="req">*</span></label>
+          <div class="url-row">
+            <input type="url" id="viUrl" required placeholder="https://www.youtube.com/embed/ID">
+            <div class="url-tools">
+              <a class="btn-tool" href="https://www.youtube.com/" target="_blank" rel="noopener">YouTube</a>
+              <a class="btn-tool" href="https://drive.google.com/" target="_blank" rel="noopener">Drive</a>
+            </div>
+          </div>
+          <div class="url-validation" id="viUrlValidation"></div>
+          <div class="hint">Collez le lien d'intégration (embed) ou un lien direct YouTube / Drive / TikTok / Facebook / Vimeo.</div>
+        </div>
+
+        <div class="form-group">
+          <label>Vignette (image miniature)</label>
+          <div class="url-row">
+            <button type="button" class="btn-vert btn-sm" onclick="uploadToCloudinary('viVignetteURL', false)">📤</button>
+            <input type="url" id="viVignetteURL" placeholder="https://i.postimg.cc/... (optionnel)">
+            <div class="url-tools">
+              <a class="btn-tool" href="https://postimages.org/fr/" target="_blank" rel="noopener">PostImage</a>
+              <a class="btn-tool" href="https://imgbb.com/" target="_blank" rel="noopener">ImgBB</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>🔁 Lien de secours (optionnel)</label>
+          <input type="url" id="viFallbackURL" placeholder="https://... (utilisé si l'iframe échoue)">
+          <div class="hint">Facultatif — sinon, le lien direct de la plateforme est utilisé.</div>
+        </div>
+
+        <div class="payant-block">
+          <div class="payant-block-title">💰 Cette vidéo est-elle payante ?</div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Vidéo payante ?</label>
+              <select id="viPayant">
+                <option value="false">Non — visible par tous</option>
+                <option value="true">Oui — accès par code</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Prix (FCFA)</label>
+              <input type="number" id="viPrix" min="0" step="500" placeholder="Ex: 5000">
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Slug (identifiant URL)</label>
+            <input type="text" id="viSlug" placeholder="Ex: formation-fa-2026">
+            <div class="hint">Utilisé pour l'URL : acces.html?type=video&amp;slug=…</div>
+          </div>
+          <div class="form-group">
+            <label>Description longue (fiche payante)</label>
+            <textarea id="viDescriptionPayante" rows="4" placeholder="Ce que le client voit avant d'acheter..."></textarea>
+          </div>
+          <div class="form-group">
+            <label>Affiche de présentation</label>
+            <div class="url-row">
+              <button type="button" class="btn-vert btn-sm" onclick="uploadToCloudinary('viAffiche', false)">📤</button>
+              <input type="url" id="viAffiche" placeholder="https://i.postimg.cc/... (image de présentation)">
+              <a class="btn-tool" href="https://postimages.org/fr/" target="_blank" rel="noopener">PostImage</a>
+            </div>
+            <div class="hint">Utilisée uniquement si la vidéo est payante.</div>
+          </div>
+        </div>
+
+        <div style="display:flex; gap:12px; margin-top:16px; flex-wrap:wrap;">
+          <button type="submit" class="btn btn-or" id="btnSaveVi">
+            <span class="btn-text">💾 Enregistrer la vidéo</span>
+          </button>
+          <button type="button" class="btn btn-outline" id="btnCancelVi" style="display:none;">❌ Annuler</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📋 Vidéos enregistrées</div>
+      <div class="card-sub">Total : <span id="viCount">0</span></div>
+      <div class="search-wrap">
+        <input type="text" class="search-input" data-target="viList" placeholder="Rechercher une vidéo…">
+      </div>
+      <div class="items-list" id="viList">
+        <div class="empty-state">Chargement…</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       TAB PRESSE
+       ============================================================ -->
+  <div class="tab-pane" id="pane-presse">
+    <div class="card">
+      <div class="card-title">➕ Ajouter / modifier un article de presse</div>
+      <form id="formPresse" autocomplete="off">
+        <input type="hidden" id="prId" value="">
+        <div class="form-group">
+          <label>Titre <span class="req">*</span></label>
+          <input type="text" id="prTitre" required placeholder="Titre de l'article">
+        </div>
+        <div class="form-group">
+          <label>Résumé</label>
+          <textarea id="prDescription" rows="2" placeholder="Extrait de l'article"></textarea>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>URL de l'article <span class="req">*</span></label>
+            <input type="url" id="prUrl" required placeholder="https://site-presse.com/article">
+          </div>
+          <div class="form-group">
+            <label>Date de publication</label>
+            <input type="date" id="prDate">
+          </div>
+        </div>
+        <div style="display:flex; gap:12px; margin-top:16px; flex-wrap:wrap;">
+          <button type="submit" class="btn btn-or" id="btnSavePr">
+            <span class="btn-text">💾 Enregistrer l'article</span>
+          </button>
+          <button type="button" class="btn btn-outline" id="btnCancelPr" style="display:none;">❌ Annuler</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📋 Articles enregistrés</div>
+      <div class="card-sub">Total : <span id="prCount">0</span></div>
+      <div class="search-wrap">
+        <input type="text" class="search-input" data-target="prList" placeholder="Rechercher un article…">
+      </div>
+      <div class="items-list" id="prList">
+        <div class="empty-state">Chargement…</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       TAB PRODUITS
+       ============================================================ -->
+  <div class="tab-pane" id="pane-produits">
+
+    <div class="alert alert-info">
+      <span>🛍️</span>
+      <span>Gérez ici tous les produits de la boutique <strong>TODAAA SHOP</strong>. Les nouveaux produits apparaîtront automatiquement sur le site.</span>
+    </div>
+
+    <div class="card">
+      <div class="card-title">➕ Ajouter / modifier un produit</div>
+      <div class="card-sub">Tous les champs marqués d'un <span style="color: var(--or);">*</span> sont obligatoires.</div>
+
+      <form id="formProduit" autocomplete="off">
+        <input type="hidden" id="prdId" value="">
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Titre <span class="req">*</span></label>
+            <input type="text" id="prdTitre" required placeholder="Ex: Le Livre du Fa">
+          </div>
+          <div class="form-group">
+            <label>Slug (identifiant) <span class="req">*</span></label>
+            <input type="text" id="prdSlug" required placeholder="Ex: livre-du-fa">
+            <div class="hint">Sans espaces, minuscules. Utilisé dans les liens.</div>
+          </div>
+        </div>
+
+        <div class="form-row-3">
+          <div class="form-group">
+            <label>Catégorie <span class="req">*</span></label>
+            <select id="prdCategorie" required>
+              <option value="">— Choisir —</option>
+              <option value="livres">📚 Livres &amp; Éditions</option>
+              <option value="mode">👕 Mode TODAAA</option>
+              <option value="spiritualite">✨ Spiritualité &amp; Objets</option>
+              <option value="bijoux">💍 Bijoux &amp; Symbolique</option>
+              <option value="sceaux">🔯 Sceaux &amp; Symboles</option>
+              <option value="art">🖼️ Art &amp; Décoration</option>
+              <option value="coffrets">🎁 Coffrets</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Prix (FCFA)</label>
+            <input type="number" id="prdPrix" min="0" step="500" placeholder="0 = Prix sur demande" value="0">
+            <div class="hint">Laissez 0 pour « Prix sur demande ».</div>
+          </div>
+          <div class="form-group">
+            <label>Ordre d'affichage</label>
+            <input type="number" id="prdOrdre" min="0" value="100">
+            <div class="hint">Plus petit = affiché en premier.</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Description</label>
+          <textarea id="prdDescription" rows="3" placeholder="Courte description du produit qui apparaîtra sur la carte."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>🖼️ Image du produit</label>
+           <div class="url-row">
+            <input type="url" id="prdImage" placeholder="https://i.postimg.cc/... ou Cloudinary">
+            <button type="button" class="btn-vert btn-sm" onclick="uploadToCloudinary('prdImage', false)">📤</button>
+            <div class="url-tools">
+              <a class="btn-tool" href="https://postimages.org/fr/" target="_blank" rel="noopener">📤 PostImage</a>
+              <a class="btn-tool" href="https://console.cloudinary.com/" target="_blank" rel="noopener">☁️ Cloudinary</a>
+            </div>
+          </div>
+          <div class="hint">Laissez vide si le produit n'a pas d'image (carte sans visuel).</div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Produit actif ?</label>
+            <select id="prdActif">
+              <option value="true">✅ Oui — visible sur le site</option>
+              <option value="false">🚫 Non — caché</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Carte sans visuel ?</label>
+            <select id="prdSansVisuel">
+              <option value="false">Non — carte avec image normale</option>
+              <option value="true">Oui — carte avec symbole doré (sans image)</option>
+            </select>
+            <div class="hint">À cocher si le produit n'a pas de photo (ex: coffrets, polo).</div>
+          </div>
+        </div>
+
+        <div class="produit-preview" id="prdPreview" style="display:none;">
+          <div class="produit-preview-img" id="prdPreviewImg">Aperçu</div>
+          <div class="produit-preview-info">
+            <div class="produit-preview-title" id="prdPreviewTitle">Titre du produit</div>
+            <div class="produit-preview-desc" id="prdPreviewDesc">Description…</div>
+            <div class="produit-preview-prix" id="prdPreviewPrix">Prix</div>
+          </div>
+        </div>
+
+        <div style="display:flex; gap:12px; margin-top:20px; flex-wrap:wrap;">
+          <button type="submit" class="btn btn-or" id="btnSavePrd">
+            <span class="btn-text">💾 Enregistrer le produit</span>
+          </button>
+          <button type="button" class="btn btn-outline" id="btnCancelPrd" style="display:none;">❌ Annuler la modification</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📋 Produits enregistrés</div>
+      <div class="card-sub">Total : <span id="prdCount">0</span></div>
+      <div class="search-wrap">
+        <input type="text" class="search-input" data-target="prdList" placeholder="Rechercher un produit…">
+      </div>
+      <div class="items-list" id="prdList">
+        <div class="empty-state">Chargement…</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       TAB LIVE
+       ============================================================ -->
+  <div class="tab-pane" id="pane-live">
+    <div class="alert alert-warn">
+      <span>⚠️</span>
+      <span>Un <strong>seul live</strong> peut être actif à la fois. Désactivez-le quand le direct est terminé.</span>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🔴 Gestion du live</div>
+      <div class="card-sub">Configurez le live en cours. Il apparaîtra automatiquement sur l'accueil, les événements, médias, etc.</div>
+
+      <div class="live-status-box">
+        <span class="live-dot" id="liveDot"></span>
+        <span class="live-status-text" id="liveStatusText">Aucun live configuré</span>
+      </div>
+
+      <form id="formLive" autocomplete="off">
+        <input type="hidden" id="liId" value="">
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>État du live</label>
+            <select id="liActif">
+              <option value="false">❌ Inactif (aucun live)</option>
+              <option value="true">✅ Actif (live en cours)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Plateforme</label>
+            <select id="liPlateforme">
+              <option value="youtube">YouTube</option>
+              <option value="facebook">Facebook</option>
+              <option value="tiktok">TikTok</option>
+              <option value="drive">Google Drive</option>
+              <option value="vimeo">Vimeo</option>
+              <option value="autre">Autre</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Titre du live</label>
+          <input type="text" id="liTitre" placeholder="Ex: Live – Cérémonie 2026">
+        </div>
+
+        <div class="form-group">
+          <label>URL d'intégration du live <span class="req">*</span></label>
+          <div class="url-row">
+            <input type="url" id="liEmbedURL" placeholder="https://www.youtube.com/embed/ID_LIVE" required>
+            <div class="url-tools">
+              <a class="btn-tool" href="https://www.youtube.com/" target="_blank" rel="noopener">YouTube</a>
+              <a class="btn-tool" href="https://www.facebook.com/" target="_blank" rel="noopener">Facebook</a>
+              <a class="btn-tool" href="https://www.tiktok.com/" target="_blank" rel="noopener">TikTok</a>
+            </div>
+          </div>
+          <div class="url-validation" id="liEmbedValidation"></div>
+          <div class="hint">
+            YouTube : <code>https://www.youtube.com/embed/ID</code><br>
+            Facebook : <code>https://www.facebook.com/plugins/video.php?href=URL</code><br>
+            TikTok : <code>https://www.tiktok.com/@user/video/ID</code><br>
+            Drive : <code>https://drive.google.com/file/d/ID/preview</code>
+          </div>
+        </div>
+
+        <div class="payant-block">
+          <div class="payant-block-title">💰 Ce live est-il payant ?</div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Live payant ?</label>
+              <select id="liPayant">
+                <option value="false">Non — visible par tous</option>
+                <option value="true">Oui — accès par code</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Prix (FCFA)</label>
+              <input type="number" id="liPrix" min="0" step="500" placeholder="Ex: 5000">
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Slug (identifiant URL)</label>
+            <input type="text" id="liSlug" placeholder="Ex: ceremonie-vodoun-2026">
+            <div class="hint">Utilisé pour l'URL : acces.html?type=live&amp;slug=…</div>
+          </div>
+          <div class="form-group">
+            <label>Description longue (fiche payante)</label>
+            <textarea id="liDescriptionPayante" rows="4" placeholder="Ce que le client voit avant d'acheter..."></textarea>
+          </div>
+          <div class="form-group">
+            <label>Affiche de présentation</label>
+            <div class="url-row">
+              <button type="button" class="btn-vert btn-sm" onclick="uploadToCloudinary('liAffiche', false)">📤</button>
+              <input type="url" id="liAffiche" placeholder="https://i.postimg.cc/... (image de présentation)">
+              <a class="btn-tool" href="https://postimages.org/fr/" target="_blank" rel="noopener">PostImage</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="fallback-section">
+          <div class="fallback-section-title">🔁 Liens de secours (si l'iframe refuse de se connecter)</div>
+          <div class="hint" style="margin-bottom: 12px;">Laissez vide pour utiliser les liens par défaut du site (config/site).</div>
+
+          <div class="form-group">
+            <label style="font-size: 0.7rem;">Lien direct YouTube</label>
+            <input type="url" id="liFallbackYouTube" placeholder="https://www.youtube.com/watch?v=...">
+          </div>
+          <div class="form-group">
+            <label style="font-size: 0.7rem;">Page Facebook</label>
+            <input type="url" id="liFallbackFacebook" placeholder="https://www.facebook.com/...">
+          </div>
+          <div class="form-group">
+            <label style="font-size: 0.7rem;">Compte TikTok</label>
+            <input type="url" id="liFallbackTikTok" placeholder="https://www.tiktok.com/@...">
+          </div>
+        </div>
+
+        <div style="display:flex; gap:12px; margin-top:20px; flex-wrap:wrap;">
+          <button type="submit" class="btn btn-or" id="btnSaveLive">
+            <span class="btn-text">💾 Enregistrer le live</span>
+          </button>
+          <button type="button" class="btn btn-outline btn-danger" id="btnDeleteLive" style="display:none;">
+            🗑️ Supprimer le live
+          </button>
+        </div>
+      </form>
+
+      <div id="livePreview" style="display:none; margin-top:20px;">
+        <label style="display:block; margin-bottom:8px; font-size:0.78rem; color:var(--text-muted); text-transform:uppercase;">Prévisualisation</label>
+        <div style="aspect-ratio:16/9; background:var(--noir); border:1px solid var(--border); border-radius:4px; overflow:hidden;">
+          <iframe id="liveFrame" style="width:100%; height:100%; border:none;" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       TAB ACCÈS PAYANT
+       ============================================================ -->
+  <div class="tab-pane" id="pane-acces">
+
+    <div class="alert alert-tip">
+      <span>🔐</span>
+      <span><strong>Fonctionnement :</strong> L'acheteur vous paie (MoMo/Wave/virement), vous lui envoyez un <strong>code unique</strong> par WhatsApp, il le saisit sur <code>acces.html</code> et accède au contenu.</span>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📊 Aperçu des codes</div>
+      <div class="card-sub">Répartition en temps réel de tous les codes générés.</div>
+      <div class="codes-counter">
+        <div class="counter-box counter-actif">
+          <span class="num" id="cntActif">0</span>
+          <span class="lbl">✅ Actifs</span>
+        </div>
+        <div class="counter-box counter-utilise">
+          <span class="num" id="cntUtilise">0</span>
+          <span class="lbl">✔️ Utilisés</span>
+        </div>
+        <div class="counter-box counter-expire">
+          <span class="num" id="cntExpire">0</span>
+          <span class="lbl">⏰ Expirés</span>
+        </div>
+        <div class="counter-box counter-inactif">
+          <span class="num" id="cntInactif">0</span>
+          <span class="lbl">🚫 Désactivés</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">➕ Générer un nouveau code d'accès</div>
+      <div class="card-sub">Le code sert d'identifiant unique. Il sera <strong>impossible à deviner</strong>.</div>
+
+      <form id="formAcces" autocomplete="off">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Titre du contenu <span class="req">*</span></label>
+            <input type="text" id="accTitre" required placeholder="Ex: Live Cérémonie 2026">
+          </div>
+          <div class="form-group">
+            <label>Type <span class="req">*</span></label>
+            <select id="accType" required>
+              <option value="live">🔴 Live</option>
+              <option value="livre">📚 Livre</option>
+              <option value="video">🎬 Vidéo</option>
+              <option value="produit">🛍️ Produit</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Lien vers le contenu <span class="req">*</span></label>
+          <input type="url" id="accLien" required placeholder="https://... (URL du live, du livre, etc.)">
+        </div>
+
+        <div class="form-row-3">
+          <div class="form-group">
+            <label>Durée de validité (jours)</label>
+            <input type="number" id="accDuree" value="0" min="0" placeholder="0 = illimité">
+            <div class="hint">0 = pas d'expiration</div>
+          </div>
+          <div class="form-group">
+            <label>Usage unique ?</label>
+            <select id="accUsageUnique">
+              <option value="true">Oui (1 seule utilisation)</option>
+              <option value="false">Non (utilisable plusieurs fois)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Code personnalisé</label>
+            <input type="text" id="accCodeManuel" placeholder="Laisser vide = auto">
+            <div class="hint">Format conseillé : GG-XXX-XXXX</div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Email de l'acheteur (optionnel)</label>
+            <input type="email" id="accEmail" placeholder="client@example.com">
+          </div>
+          <div class="form-group">
+            <label>Note interne (optionnel)</label>
+            <input type="text" id="accNote" placeholder="Ex: payé par Wave le 15/03">
+          </div>
+        </div>
+
+        <div style="display:flex; gap:12px; margin-top:20px; flex-wrap:wrap;">
+          <button type="submit" class="btn btn-or" id="btnSaveAcc">
+            <span class="btn-text">🔐 Générer le code</span>
+          </button>
+          <button type="button" class="btn btn-outline" id="btnResetAcc">
+            🔄 Réinitialiser
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📋 Codes générés</div>
+      <div class="card-sub">Total : <span id="accCount">0</span></div>
+      <div class="search-wrap">
+        <input type="text" class="search-input" data-target="accList" placeholder="Rechercher un code, un titre, une note…">
+      </div>
+      <div class="list-actions">
+        <button type="button" class="btn btn-outline btn-sm" id="btnCopyAllCodes">📋 Tout copier (codes actifs)</button>
+        <button type="button" class="btn btn-outline btn-sm" id="btnExportCsv">📥 Exporter CSV</button>
+      </div>
+      <div class="items-list" id="accList">
+        <div class="empty-state">Chargement…</div>
+      </div>
+    </div>
+  </div>
+
+<!-- ============================================================
+     TAB DÉCOUVRIR
+     ============================================================ -->
+<div class="tab-pane" id="pane-decouvrir">
+
+  <div class="alert alert-info">
+    <span>📖</span>
+    <span><strong>Contenus « Découvrir » :</strong> Fa, Vodun, types de Vodun, feuilles &amp; vertus, astuces, signes du Fa, principes de vie… Tout apparaîtra automatiquement sur la page <code>decouvrir.html</code>, groupé par catégorie.</span>
+  </div>
+
+  <div class="card">
+    <div class="card-title">➕ Ajouter / modifier un contenu</div>
+    <div class="card-sub">Les champs marqués d'un <span style="color: var(--or);">*</span> sont obligatoires.</div>
+
+    <form id="formDecouvrir" autocomplete="off">
+      <input type="hidden" id="decId" value="">
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Titre <span class="req">*</span></label>
+          <input type="text" id="decTitre" required placeholder="Ex: Le Fâ, système de connaissance">
+        </div>
+        <div class="form-group">
+          <label>Slug (identifiant URL) <span class="req">*</span></label>
+          <input type="text" id="decSlug" required placeholder="Ex: le-fa-systeme-connaissance">
+          <div class="hint">Utilisé pour l'ancre : decouvrir.html#le-fa-systeme-connaissance</div>
+        </div>
+      </div>
+
+      <div class="form-row-3">
+        <div class="form-group">
+          <label>Catégorie <span class="req">*</span></label>
+          <select id="decCategorie" required>
+            <option value="">— Choisir —</option>
+            <option value="fa">🔮 Le Fa</option>
+            <option value="vodoun">⚱️ Le Vodoun</option>
+            <option value="types-vodoun">🏛️ Types de Vodoun </option>
+            <option value="feuilles">🌿 Feuilles &amp; Vertus</option>
+            <option value="astuces">✨ Astuces</option>
+            <option value="signes-fa">🔯 Signes du Fa</option>
+            <option value="principes">🧭 Principes de vie</option>
+            <option value="symboles">📐 Systèmes symboliques</option>
+            <option value="spiritualite">🌍 Spiritualité &amp; Tradition</option>
+            <option value="autre">📖 Autre</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Sous-catégorie (facultatif)</label>
+          <input type="text" id="decSousCategorie" placeholder="Ex: Vodoun Dan, Sakpata…">
+        </div>
+        <div class="form-group">
+          <label>Ordre d'affichage</label>
+          <input type="number" id="decOrdre" min="0" value="100">
+          <div class="hint">Plus petit = en premier.</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Résumé court</label>
+        <textarea id="decResume" rows="2" placeholder="Une ou deux phrases pour la carte."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Contenu complet <span class="req">*</span></label>
+        <textarea id="decContenu" rows="12" required placeholder="Texte complet…&#10;&#10;Séparez les paragraphes par une ligne vide.&#10;Pour une liste, commencez chaque ligne par « — »."></textarea>
+        <div class="hint">Les sauts de ligne et les listes « — » sont automatiquement convertis en paragraphes et puces.</div>
+      </div>
+
+      <div class="form-group">
+        <label>🖼️ Image (optionnelle)</label>
+                <div class="url-row">
+          <input type="url" id="decImage" placeholder="https://i.postimg.cc/...">
+          <button type="button" class="btn-vert btn-sm" onclick="uploadToCloudinary('decImage', false)">📤</button>
+          <div class="url-tools">
+            <a class="btn-tool" href="https://postimages.org/fr/" target="_blank" rel="noopener">📤 PostImage</a>
+            <a class="btn-tool" href="https://console.cloudinary.com/" target="_blank" rel="noopener">☁️ Cloudinary</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Contenu actif ?</label>
+          <select id="decActif">
+            <option value="true">✅ Oui — visible</option>
+            <option value="false">🚫 Non — masqué</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Archivé ?</label>
+          <select id="decArchive">
+            <option value="false">Non</option>
+            <option value="true">Oui (caché du site)</option>
+          </select>
+        </div>
+      </div>
+
+      <div style="display:flex; gap:12px; margin-top:20px; flex-wrap:wrap;">
+        <button type="submit" class="btn btn-or" id="btnSaveDec">
+          <span class="btn-text">💾 Enregistrer</span>
+        </button>
+        <button type="button" class="btn btn-outline" id="btnCancelDec" style="display:none;">
+          ❌ Annuler la modification
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📋 Contenus enregistrés</div>
+    <div class="card-sub" style="display:flex; align-items:center; gap:14px; flex-wrap:wrap;">
+      <span>Total : <span id="decCount">0</span></span>
+      <label style="display:inline-flex; align-items:center; gap:6px; font-size:0.78rem; cursor:pointer; color:var(--text-muted);">
+        <input type="checkbox" id="decShowArchived" style="width:auto;"> Afficher les archivés
+      </label>
+    </div>
+    <div class="search-wrap">
+      <input type="text" class="search-input" data-target="decList" placeholder="Rechercher un contenu…">
+    </div>
+    <div class="items-list" id="decList">
+      <div class="empty-state">Chargement…</div>
+    </div>
+  </div>
+</div>
+
+  
+   <!-- ============================================================
+       TAB ONG — ACTIONS
+       ============================================================ -->
+  <div class="tab-pane" id="pane-ong">
+
+    <div class="alert alert-info">
+      <span>🌍</span>
+      <span><strong>Actions ONG :</strong> Ce que tu publies ici apparaît immédiatement sur <code>ong.html</code>. Chaque action aura ses boutons <strong>❤️ J'aime</strong>, <strong>💬 Commenter</strong>, <strong>📤 Partager</strong> — ce qui incite aux dons.</span>
+    </div>
+
+    <div class="card">
+      <div class="card-title">➕ Ajouter / modifier une action ONG</div>
+      <div class="card-sub">Tous les champs marqués d'un <span style="color: var(--or);">*</span> sont obligatoires.</div>
+
+      <form id="formOng" autocomplete="off">
+        <input type="hidden" id="ongId" value="">
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Titre <span class="req">*</span></label>
+            <input type="text" id="ongTitre" required placeholder="Ex: Distribution de kits scolaires 2026">
+          </div>
+          <div class="form-group">
+            <label>Slug (identifiant URL) <span class="req">*</span></label>
+            <input type="text" id="ongSlug" required placeholder="distribution-kits-scolaires-2026">
+            <div class="hint">Sans espaces, minuscules. Utilisé pour l'ancre : ong.html#slug</div>
+          </div>
+        </div>
+
+        <div class="form-row-3">
+          <div class="form-group">
+            <label>Date <span class="req">*</span></label>
+            <input type="date" id="ongDate" required>
+          </div>
+          <div class="form-group">
+            <label>Lieu</label>
+            <input type="text" id="ongLieu" placeholder="Abomey-Calavi, Bénin">
+          </div>
+          <div class="form-group">
+            <label>Catégorie <span class="req">*</span></label>
+            <select id="ongCategorie" required>
+              <option value="">— Choisir —</option>
+              <option value="solidarite">🤝 Solidarité</option>
+              <option value="education">📚 Éducation</option>
+              <option value="culture">🎭 Culture</option>
+              <option value="sante">💊 Santé</option>
+              <option value="accompagnement">🌱 Accompagnement</option>
+              <option value="autre">📖 Autre</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Résumé court <span class="req">*</span></label>
+          <textarea id="ongResume" rows="2" required placeholder="Une ou deux phrases qui résument l'action"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Description complète</label>
+          <textarea id="ongContenu" rows="5" placeholder="Détails : bénéficiaires, résultats, contexte…"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>🖼️ Photos (plusieurs possibles)</label>
+          <div class="dyn-list" id="ongImagesList"></div>
+            <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <button type="button" class="btn-add" id="ongAddImage">➕ Ajouter une image</button>
+            <button type="button" class="btn-vert" onclick="uploadToCloudinary('ongImagesList', true)">📤 Téléverser des images</button>
+            <a class="btn-tool" href="https://postimages.org/fr/" target="_blank" rel="noopener">📤 PostImage</a>
+            <a class="btn-tool" href="https://console.cloudinary.com/" target="_blank" rel="noopener">☁️ Cloudinary</a>
+            <a class="btn-tool" href="https://imgbb.com/" target="_blank" rel="noopener">🖼️ ImgBB</a>
+          </div>
+          <div class="hint">La première image sera la photo principale.</div>
+        </div>
+
+        <div class="form-group">
+          <label>🎬 Vidéos (plusieurs possibles)</label>
+          <div class="dyn-list" id="ongVideosList"></div>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <button type="button" class="btn-add" id="ongAddVideo">➕ Ajouter une vidéo</button>
+            <a class="btn-tool" href="https://www.youtube.com/" target="_blank" rel="noopener">▶️ YouTube</a>
+            <a class="btn-tool" href="https://drive.google.com/" target="_blank" rel="noopener">📁 Drive</a>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>À la une ?</label>
+            <select id="ongALaUne">
+              <option value="false">Non</option>
+              <option value="true">Oui</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Archivé ?</label>
+            <select id="ongArchive">
+              <option value="false">Non (visible)</option>
+              <option value="true">Oui (masqué)</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="display:flex; gap:12px; margin-top:20px; flex-wrap:wrap;">
+          <button type="submit" class="btn btn-or" id="btnSaveOng">
+            <span class="btn-text">💾 Enregistrer l'action</span>
+          </button>
+          <button type="button" class="btn btn-outline" id="btnCancelOng" style="display:none;">
+            ❌ Annuler la modification
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📋 Actions enregistrées</div>
+      <div class="card-sub">Total : <span id="ongCount">0</span></div>
+      <div class="search-wrap">
+        <input type="text" class="search-input" data-target="ongList" placeholder="Rechercher une action…">
+      </div>
+      <div class="items-list" id="ongList">
+        <div class="empty-state">Chargement…</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       TAB COMMENTAIRES — MODÉRATION & RÉPONSES
+       ============================================================ -->
+  <div class="tab-pane" id="pane-comments">
+
+    <div class="alert alert-tip">
+      <span>💬</span>
+      <span><strong>Modération :</strong> Voici tous les commentaires postés sur le site (Découvrir, ONG, etc.). Tu peux <strong>répondre</strong> (en tant que Gbêmadoyomin) ou <strong>supprimer</strong> un commentaire inapproprié.</span>
+    </div>
+
+    <div class="card">
+      <div class="card-title">💬 Tous les commentaires du site</div>
+      <div class="card-sub">
+        <span>Total : <span id="commentsCount">0</span></span>
+        <button type="button" class="btn btn-outline btn-sm" id="btnRefreshComments" style="margin-left:12px;">🔄 Rafraîchir</button>
+      </div>
+      <div class="search-wrap">
+        <input type="text" class="search-input" data-target="commentsList" placeholder="Rechercher dans les commentaires…">
+      </div>
+      <div class="items-list" id="commentsList">
+        <div class="empty-state">Chargement…</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       TAB CONFIGURATION
+       ============================================================ -->
+  <div class="tab-pane" id="pane-config">
+
+    <div class="alert alert-info">
+      <span>⚙️</span>
+      <span>Ces réglages sont utilisés partout sur le site : boutons de secours, WhatsApp, réseaux sociaux, chatbot.</span>
+    </div>
+
+    <div class="card">
+      <div class="card-title">⚙️ Configuration du site</div>
+      <div class="card-sub">Modifiez les valeurs puis cliquez sur « Enregistrer ». <span id="configLastUpdate" style="color:var(--or-clair);"></span></div>
+
+      <form id="formConfig" autocomplete="off">
+
+        <h3 style="color:var(--or); font-size:0.9rem; margin-bottom:14px; margin-top:8px;">🔁 Liens de secours (fallback)</h3>
+        <div class="form-group">
+          <label>URL Facebook</label>
+          <input type="url" id="cfgFallbackFacebook" placeholder="https://www.facebook.com/...">
+        </div>
+        <div class="form-group">
+          <label>URL TikTok</label>
+          <input type="url" id="cfgFallbackTiktok" placeholder="https://www.tiktok.com/@...">
+        </div>
+        <div class="form-group">
+          <label>URL YouTube</label>
+          <input type="url" id="cfgFallbackYoutube" placeholder="https://www.youtube.com/...">
+        </div>
+
+        <h3 style="color:var(--or); font-size:0.9rem; margin-bottom:14px; margin-top:20px;">📞 Contact</h3>
+        <div class="form-row">
+          <div class="form-group">
+            <label>WhatsApp admin</label>
+            <input type="text" id="cfgWhatsappAdmin" placeholder="22967668799">
+          </div>
+          <div class="form-group">
+            <label>WhatsApp développeur</label>
+            <input type="text" id="cfgWhatsappDev" placeholder="229015252106">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Email de contact</label>
+          <input type="email" id="cfgEmailContact" placeholder="cabinetgbemadoyomin@gmail.com">
+        </div>
+
+        <h3 style="color:var(--or); font-size:0.9rem; margin-bottom:14px; margin-top:20px;">💳 Paiement</h3>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Numéro MoMo</label>
+            <input type="text" id="cfgPaiementMoMo" placeholder="+229 ...">
+          </div>
+          <div class="form-group">
+            <label>Numéro Wave</label>
+            <input type="text" id="cfgPaiementWave" placeholder="+229 ...">
+          </div>
+        </div>
+
+        <h3 style="color:var(--or); font-size:0.9rem; margin-bottom:14px; margin-top:20px;">💬 Chatbot</h3>
+        <div class="form-group">
+          <label>Message d'accueil du chatbot</label>
+          <textarea id="cfgMessageAccueil" rows="2" placeholder="Bonjour ! Je suis l'assistant du Groupe Gbêmadoyomin. Que recherchez-vous ?"></textarea>
+        </div>
+
+        <div style="display:flex; gap:12px; margin-top:24px; flex-wrap:wrap;">
+          <button type="submit" class="btn btn-or" id="btnSaveConfig">
+            <span class="btn-text">💾 Enregistrer la configuration</span>
+          </button>
+          <button type="button" class="btn btn-outline" id="btnReloadConfig">
+            🔄 Recharger
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       ⭐ AJOUT 3 : TAB STATISTIQUES
+       ============================================================ -->
+  <div class="tab-pane" id="pane-stats">
+    <div class="alert alert-tip">
+      <span>📊</span>
+      <span><strong>Statistiques en temps réel.</strong> Les chiffres se mettent à jour automatiquement. Le compteur de vues exclut la page admin.</span>
+    </div>
+
+    <div class="stats-actions">
+      <button type="button" class="btn btn-outline btn-sm" id="btnRefreshStats">🔄 Rafraîchir</button>
+      <button type="button" class="btn btn-outline btn-sm" id="btnResetTodayStats">🧹 Réinitialiser aujourd'hui</button>
+    </div>
+
+    <div class="stats-kpis">
+      <div class="kpi-card">
+        <span class="kpi-icon">👁️</span>
+        <span class="kpi-value" id="kpiVues">0</span>
+        <span class="kpi-label">Vues totales</span>
+      </div>
+      <div class="kpi-card">
+        <span class="kpi-icon">🖱️</span>
+        <span class="kpi-value" id="kpiClics">0</span>
+        <span class="kpi-label">Clics totaux</span>
+      </div>
+      <div class="kpi-card">
+        <span class="kpi-icon">📅</span>
+        <span class="kpi-value" id="kpiVuesJour">0</span>
+        <span class="kpi-label">Vues aujourd'hui</span>
+      </div>
+      <div class="kpi-card">
+        <span class="kpi-icon">🔥</span>
+        <span class="kpi-value" id="kpiClicsJour">0</span>
+        <span class="kpi-label">Clics aujourd'hui</span>
+      </div>
+    </div>
+
+    <div class="stats-chart-box">
+      <div class="stats-chart-header">
+        <h3>📈 Activité des 30 derniers jours</h3>
+        <div style="font-size:0.75rem; color:var(--text-muted);">
+          <span style="display:inline-block; width:10px; height:10px; background:#d4af5a; border-radius:50%; margin-right:4px; vertical-align:middle;"></span>Vues
+          &nbsp;&nbsp;
+          <span style="display:inline-block; width:10px; height:10px; background:#c73a3a; border-radius:50%; margin-right:4px; vertical-align:middle;"></span>Clics
+        </div>
+      </div>
+      <div class="stats-chart-inner">
+        <canvas id="adminStatsGraph"></canvas>
+      </div>
+    </div>
+
+    <div class="ranking-grid">
+      <div class="ranking-box">
+        <h3>🏆 Pages les plus vues</h3>
+        <div class="ranking-list" id="rankingPages">
+          <div class="stats-empty">Chargement…</div>
+        </div>
+      </div>
+      <div class="ranking-box">
+        <h3>🎯 Boutons les plus cliqués</h3>
+        <div class="ranking-list" id="rankingBtns">
+          <div class="stats-empty">Chargement…</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- ============================================================
+     SCRIPTS FIREBASE
+     ============================================================ -->
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+
+<script>
+// ============================================================
+// CONFIG FIREBASE
+// ============================================================
+const firebaseConfig = {
+  apiKey: "AIzaSyBkn-26DnNoQBBfiR4-rRrPfOszW24KRRc",
+  authDomain: "groupe-gbemadoyomin.firebaseapp.com",
+  projectId: "groupe-gbemadoyomin",
+  storageBucket: "groupe-gbemadoyomin.firebasestorage.app",
+  messagingSenderId: "113133757650",
+  appId: "1:113133757650:web:71a07f05cca0e78e28390b"
+};
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.firestore();
+
+// Cache local de la config
+let CONFIG = {
+  fallbackFacebook: '',
+  fallbackTiktok: '',
+  fallbackYoutube: '',
+  whatsappAdmin: '22967668799',
+  whatsappDev: '229015252106',
+  emailContact: 'cabinetgbemadoyomin@gmail.com',
+  paiementMoMo: '',
+  paiementWave: '',
+  messageAccueil: ''
+};
+
+// ============================================================
+// VALIDATION VIDÉO — TOUTES PLATEFORMES
+// ============================================================
+function detecterPlateforme(url) {
+  if (!url || typeof url !== 'string') {
+    return { nom: 'Inconnu', icone: '🔗', lienDirect: '#', embed: '' };
+  }
+  const u = url.toLowerCase().trim();
+
+    if (u.includes('youtube.com') || u.includes('youtu.be')) {
+    const m = url.match(/(?:[?&]v=|youtu\.be\/|embed\/|shorts\/|live\/|v\/)([A-Za-z0-9_-]{5,})/);
+    const id = m ? m[1] : '';
+    return {
+      nom: 'YouTube', icone: '▶️',
+      lienDirect: id ? 'https://www.youtube.com/watch?v=' + id : 'https://www.youtube.com/',
+      embed: id ? 'https://www.youtube.com/embed/' + id : ''
+    };
+  }
+  if (u.includes('drive.google.com')) {
+    const m = url.match(/\/d\/([^/]+)/);
+    const id = m ? m[1] : '';
+    return { nom: 'Google Drive', icone: '📁', lienDirect: url, embed: id ? 'https://drive.google.com/file/d/' + id + '/preview' : '' };
+  }
+  if (u.includes('tiktok.com')) return { nom: 'TikTok', icone: '🎵', lienDirect: url, embed: url };
+  if (u.includes('facebook.com') || u.includes('fb.watch')) {
+    let embed = url;
+    if (u.includes('facebook.com') && !u.includes('plugins/video')) {
+      embed = 'https://www.facebook.com/plugins/video.php?href=' + encodeURIComponent(url);
+    }
+    return { nom: 'Facebook', icone: '📘', lienDirect: url, embed: embed };
+  }
+  if (u.includes('vimeo.com')) {
+    const m = url.match(/vimeo\.com\/(\d+)/);
+    const id = m ? m[1] : '';
+    return { nom: 'Vimeo', icone: '🎬', lienDirect: url, embed: id ? 'https://player.vimeo.com/video/' + id : '' };
+  }
+  if (u.includes('dailymotion.com') || u.includes('dai.ly')) return { nom: 'Dailymotion', icone: '🎥', lienDirect: url, embed: url };
+  if (u.includes('twitch.tv')) {
+    const m = url.match(/twitch\.tv\/([^?&/]+)/);
+    const chaine = m ? m[1] : '';
+    return { nom: 'Twitch', icone: '🎮', lienDirect: url, embed: chaine ? 'https://player.twitch.tv/?channel=' + chaine + '&parent=groupegbemadoyomin.com' : '' };
+  }
+  if (u.includes('instagram.com')) return { nom: 'Instagram', icone: '📸', lienDirect: url, embed: url };
+  if (u.includes('twitter.com') || u.includes('x.com')) return { nom: 'Twitter/X', icone: '🐦', lienDirect: url, embed: url };
+  return { nom: 'Vidéo', icone: '🔗', lienDirect: url, embed: url };
+}
+
+function validerEmbedURL(url, plateforme) {
+  if (!url || typeof url !== 'string' || url.trim() === '') {
+    return { valide: false, raison: 'URL manquante ou vide' };
+  }
+   if (plateforme.nom === 'YouTube') {
+    if (!plateforme.embed || plateforme.embed === 'https://www.youtube.com/embed/') {
+      return { valide: false, raison: 'ID de vidéo YouTube manquant' };
+    }
+    return { valide: true };
+  }
+  if (plateforme.nom === 'Google Drive') {
+    const m = url.match(/\/d\/([^/]+)/);
+    if (!m || !m[1] || m[1].length < 10) return { valide: false, raison: 'ID de fichier Drive manquant' };
+    return { valide: true };
+  }
+  if (plateforme.nom === 'Vimeo') {
+    const m = url.match(/vimeo\.com\/(\d+)/);
+    if (!m || !m[1]) return { valide: false, raison: 'ID de vidéo Vimeo manquant' };
+    return { valide: true };
+  }
+  if (plateforme.nom === 'TikTok') {
+    if (!url.toLowerCase().includes('/video/') && !url.toLowerCase().includes('/live/')) {
+      return { valide: false, raison: 'Lien TikTok invalide (doit contenir /video/ ou /live/)' };
+    }
+    return { valide: true };
+  }
+  if (plateforme.nom === 'Facebook') {
+    if (!url.toLowerCase().includes('facebook.com') && !url.toLowerCase().includes('fb.watch')) {
+      return { valide: false, raison: 'Lien Facebook invalide' };
+    }
+    return { valide: true };
+  }
+  return { valide: true };
+}
+
+function validerChampURL(inputEl, validationEl) {
+  if (!inputEl || !validationEl) return;
+  const url = inputEl.value.trim();
+  if (!url) {
+    validationEl.className = 'url-validation';
+    validationEl.innerHTML = '';
+    return;
+  }
+  const plateforme = detecterPlateforme(url);
+  const validation = validerEmbedURL(url, plateforme);
+  validationEl.className = 'url-validation visible ' + (validation.valide ? 'valide' : 'invalide');
+  if (validation.valide) {
+    validationEl.innerHTML = '✅ URL valide — Plateforme : <strong>' + plateforme.nom + '</strong>';
+  } else {
+    validationEl.innerHTML = '❌ URL invalide : ' + validation.raison;
+  }
+}
+
+// ============================================================
+// HELPERS — TOASTS
+// ============================================================
+function toast(type, title, msg) {
+  const icons = { success: '✅', error: '❌', info: 'ℹ️', warning: '⚠️' };
+  const container = document.getElementById('toastContainer');
+  const el = document.createElement('div');
+  el.className = 'toast ' + type;
+  el.innerHTML = `
+    <span class="toast-icon">${icons[type] || 'ℹ️'}</span>
+    <div class="toast-content">
+      <div class="toast-title">${title}</div>
+      ${msg ? `<div class="toast-msg">${msg}</div>` : ''}
+    </div>`;
+  container.appendChild(el);
+  setTimeout(() => {
+    el.style.transition = 'all 0.4s ease';
+    el.style.opacity = '0';
+    el.style.transform = 'translateX(100%)';
+    setTimeout(() => el.remove(), 400);
+  }, 4500);
+}
+
+// ============================================================
+// HELPERS — LOADING BUTTON
+// ============================================================
+function setLoading(btn, isLoading, textLoading = 'Enregistrement…') {
+  if (!btn) return;
+  const textEl = btn.querySelector('.btn-text');
+  if (isLoading) {
+    btn.disabled = true;
+    btn.dataset.originalText = textEl ? textEl.textContent : btn.textContent;
+    if (textEl) textEl.innerHTML = `<span class="spinner"></span> ${textLoading}`;
+    else btn.innerHTML = `<span class="spinner"></span> ${textLoading}`;
+  } else {
+    btn.disabled = false;
+    if (textEl) textEl.textContent = btn.dataset.originalText || 'Enregistrer';
+    else btn.textContent = btn.dataset.originalText || 'Enregistrer';
+  }
+}
+
+// ============================================================
+// HELPERS — DATE
+// ============================================================
+function formatDateInput(d) {
+  if (!d) return '';
+  if (typeof d === 'string') return d.slice(0, 10);
+  return '';
+}
+function formatDateReadable(d) {
+  if (!d) return '';
+  const dt = new Date(d + 'T00:00:00');
+  if (isNaN(dt.getTime())) return d;
+  return dt.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short', year: 'numeric' });
+}
+function formatTimestamp(ts) {
+  if (!ts) return '';
+  try {
+    const date = ts.toDate ? ts.toDate() : new Date(ts);
+    return date.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+  } catch (e) { return ''; }
+}
+
+// ============================================================
+// HELPERS — GÉNÉRATION DE CODE UNIQUE
+// ============================================================
+function genererCode(type) {
+  const prefixes = { live: 'LIVE', livre: 'LIVRE', video: 'VIDEO', produit: 'PROD' };
+  const prefix = prefixes[type] || 'ACC';
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  let random = '';
+  for (let i = 0; i < 6; i++) random += chars.charAt(Math.floor(Math.random() * chars.length));
+  return 'GG-' + prefix + '-' + random;
+}
+
+// ============================================================
+// SEARCH BAR GLOBAL
+// ============================================================
+function initSearchBars() {
+  document.querySelectorAll('.search-input').forEach(input => {
+    input.addEventListener('input', () => {
+      const targetId = input.dataset.target;
+      const target = document.getElementById(targetId);
+      if (!target) return;
+      const query = input.value.trim().toLowerCase();
+      const rows = target.querySelectorAll('.item-row');
+      let visibleCount = 0;
+
+      rows.forEach(row => {
+        const text = row.textContent.toLowerCase();
+        const match = !query || text.includes(query);
+        row.style.display = match ? '' : 'none';
+        if (match) visibleCount++;
+      });
+
+      let emptyMsg = target.querySelector('.empty-search-result');
+      if (visibleCount === 0 && query) {
+        if (!emptyMsg) {
+          emptyMsg = document.createElement('div');
+          emptyMsg.className = 'empty-state empty-search-result';
+          emptyMsg.textContent = 'Aucun résultat pour « ' + input.value.trim() + ' »';
+          target.appendChild(emptyMsg);
+        } else {
+          emptyMsg.textContent = 'Aucun résultat pour « ' + input.value.trim() + ' »';
+        }
+      } else if (emptyMsg) {
+        emptyMsg.remove();
+      }
+    });
+  });
+}
+
+// ============================================================
+// AUTH
+// ============================================================
+const loginWrap = document.getElementById('loginWrap');
+const dashboard = document.getElementById('dashboard');
+const adminUser = document.getElementById('adminUser');
+const userEmailDisplay = document.getElementById('userEmailDisplay');
+
+document.getElementById('loginForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = document.getElementById('btnLogin');
+  const email = document.getElementById('loginEmail').value.trim();
+  const password = document.getElementById('loginPassword').value;
+  if (!email || !password) { toast('warning', 'Champs manquants', 'Remplissez tous les champs.'); return; }
+  setLoading(btn, true, 'Connexion…');
+  try {
+    await auth.signInWithEmailAndPassword(email, password);
+    toast('success', 'Connexion réussie', 'Bienvenue !');
+  } catch (err) {
+    toast('error', 'Connexion échouée', err.message);
+  } finally {
+    setLoading(btn, false);
+  }
+});
+
+document.getElementById('btnLogout').addEventListener('click', async () => {
+  await auth.signOut();
+  toast('info', 'Déconnecté', 'À bientôt !');
+});
+
+auth.onAuthStateChanged(async (user) => {
+  if (user) {
+    loginWrap.style.display = 'none';
+    dashboard.style.display = 'block';
+    adminUser.style.display = 'flex';
+    userEmailDisplay.textContent = user.email;
+    await chargerConfig();
+    loadAll();
+    initSearchBars();
+  } else {
+    loginWrap.style.display = 'flex';
+    dashboard.style.display = 'none';
+    adminUser.style.display = 'none';
+  }
+});
+
+// ============================================================
+// TABS
+// ============================================================
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    const pane = document.getElementById('pane-' + btn.dataset.tab);
+    if (pane) pane.classList.add('active');
+    // ⭐ Chargement automatique des stats quand on ouvre l'onglet
+    if (btn.dataset.tab === 'stats') {
+      setTimeout(loadAllStats, 100);
+    }
+  });
+});
+
+// ============================================================
+// DYNAMIC LISTS
+// ============================================================
+function addImageRow(container, value = '') {
+  const row = document.createElement('div');
+  row.className = 'url-row';
+  row.innerHTML = `
+    <input type="url" class="img-input" placeholder="https://i.postimg.cc/..." value="${value}">
+    <button type="button" class="btn-remove" title="Supprimer">✕</button>`;
+  row.querySelector('.btn-remove').addEventListener('click', () => row.remove());
+  container.appendChild(row);
+}
+
+function addVideoRow(container, value = '') {
+  const wrapper = document.createElement('div');
+  wrapper.style.marginBottom = '8px';
+  wrapper.innerHTML = `
+    <div class="url-row" style="margin-bottom:0;">
+      <input type="url" class="vid-input" placeholder="https://www.youtube.com/embed/..." value="${value}">
+      <button type="button" class="btn-remove" title="Supprimer">✕</button>
+    </div>
+    <div class="url-validation vid-validation"></div>`;
+  const input = wrapper.querySelector('.vid-input');
+  const validation = wrapper.querySelector('.vid-validation');
+  const valider = () => validerChampURL(input, validation);
+  input.addEventListener('input', valider);
+  input.addEventListener('blur', valider);
+  wrapper.querySelector('.btn-remove').addEventListener('click', () => wrapper.remove());
+  container.appendChild(wrapper);
+  if (value) valider();
+}
+
+document.getElementById('evAddImage').addEventListener('click', () => addImageRow(document.getElementById('evImagesList')));
+document.getElementById('evAddVideo').addEventListener('click', () => addVideoRow(document.getElementById('evVideosList')));
+document.getElementById('acAddImage').addEventListener('click', () => addImageRow(document.getElementById('acImagesList')));
+
+function getImages(containerId) {
+  return Array.from(document.querySelectorAll(`#${containerId} .img-input`))
+    .map(i => i.value.trim()).filter(Boolean);
+}
+function getVideos(containerId) {
+  return Array.from(document.querySelectorAll(`#${containerId} .vid-input`))
+    .map(i => i.value.trim()).filter(Boolean);
+}
+function clearImages(containerId) { document.getElementById(containerId).innerHTML = ''; }
+function clearVideos(containerId) { document.getElementById(containerId).innerHTML = ''; }
+
+function verifierVideos(containerId) {
+  const inputs = document.querySelectorAll(`#${containerId} .vid-input`);
+  for (const input of inputs) {
+    const url = input.value.trim();
+    if (!url) continue;
+    const plateforme = detecterPlateforme(url);
+    const validation = validerEmbedURL(url, plateforme);
+    if (!validation.valide) return { valide: false, raison: validation.raison, url: url };
+  }
+  return { valide: true };
+}
+
+// ============================================================
+// VALIDATION LIVE / VIDÉO / ACTUALITÉ
+// ============================================================
+const liEmbedInput = document.getElementById('liEmbedURL');
+const liValidationBox = document.getElementById('liEmbedValidation');
+liEmbedInput.addEventListener('input', () => validerChampURL(liEmbedInput, liValidationBox));
+liEmbedInput.addEventListener('blur', () => validerChampURL(liEmbedInput, liValidationBox));
+
+const viUrlInput = document.getElementById('viUrl');
+const viUrlValidation = document.getElementById('viUrlValidation');
+viUrlInput.addEventListener('input', () => validerChampURL(viUrlInput, viUrlValidation));
+viUrlInput.addEventListener('blur', () => validerChampURL(viUrlInput, viUrlValidation));
+
+const acVideoInput = document.getElementById('acVideoURL');
+const acVideoValidation = document.getElementById('acVideoValidation');
+acVideoInput.addEventListener('input', () => validerChampURL(acVideoInput, acVideoValidation));
+acVideoInput.addEventListener('blur', () => validerChampURL(acVideoInput, acVideoValidation));
+
+// ============================================================
+// LOAD ALL
+// ============================================================
+function loadAll() {
+  loadEvenements();
+  loadActualites();
+  loadPhotos();
+  loadVideos();
+  loadPresse();
+  loadProduits();
+  loadLive();
+  loadAcces();
+  loadConfigForm();
+  loadDecouvrir();
+  loadOng();
+  loadCommentsModeration();
+}
+// ============================================================
+// ÉVÉNEMENTS
+// ============================================================
+async function loadEvenements() {
+  const list = document.getElementById('evList');
+  list.innerHTML = '<div class="empty-state">Chargement…</div>';
+  try {
+    const snap = await db.collection('evenements').get();
+    document.getElementById('evCount').textContent = snap.size;
+    if (snap.empty) { list.innerHTML = '<div class="empty-state">Aucun événement pour le moment.</div>'; return; }
+    const docs = snap.docs.slice().sort((a, b) => {
+      const da = a.data().date || '';
+      const db_ = b.data().date || '';
+      return db_.localeCompare(da);
+    });
+    list.innerHTML = '';
+    docs.forEach(doc => {
+      const d = doc.data();
+      const affiche = (d.images && d.images[0]) || d.afficheURL || '';
+      const thumb = affiche ? `style="background-image:url('${affiche}')"` : '';
+      const row = document.createElement('div');
+      row.className = 'item-row';
+      row.innerHTML = `
+        <div class="item-thumb" ${thumb}></div>
+        <div class="item-info">
+          <div class="item-title">${d.titre || 'Sans titre'}</div>
+          <div class="item-meta">
+            ${d.date ? formatDateReadable(d.date) : ''}
+            ${d.lieu ? ' • ' + d.lieu : ''}
+            ${d.categorie ? ' • ' + d.categorie : ''}
+            ${d.archive ? ' • <span style="color:#f59e0b;">Archivé</span>' : ''}
+          </div>
+        </div>
+        <div class="item-actions">
+          <a class="btn btn-outline btn-sm" href="article.html?type=evenement&slug=${encodeURIComponent(d.slug || doc.id)}" target="_blank">👁 Voir</a>
+          <button class="btn btn-outline btn-sm" data-edit="${doc.id}">✏️ Modifier</button>
+          <button class="btn btn-outline btn-danger btn-sm" data-del="${doc.id}">🗑️</button>
+        </div>`;
+      row.querySelector('[data-edit]').addEventListener('click', () => editEvenement(doc.id));
+      row.querySelector('[data-del]').addEventListener('click', () => deleteEvenement(doc.id));
+      list.appendChild(row);
+    });
+  } catch (err) {
+    list.innerHTML = `<div class="empty-state">Erreur : ${err.message}</div>`;
+  }
+}
+
+async function editEvenement(id) {
+  try {
+    const doc = await db.collection('evenements').doc(id).get();
+    if (!doc.exists) { toast('error', 'Introuvable'); return; }
+    const d = doc.data();
+    document.getElementById('evId').value = id;
+    document.getElementById('evTitre').value = d.titre || '';
+    document.getElementById('evSlug').value = d.slug || '';
+    document.getElementById('evDate').value = formatDateInput(d.date);
+    document.getElementById('evHeure').value = d.heure || '';
+    document.getElementById('evCategorie').value = d.categorie || '';
+    document.getElementById('evLieu').value = d.lieu || '';
+    document.getElementById('evParticipation').value = d.participation || '';
+    document.getElementById('evALaUne').value = d.aLaUne ? 'true' : 'false';
+    document.getElementById('evArchive').value = d.archive ? 'true' : 'false';
+    document.getElementById('evDescription').value = d.description || '';
+    document.getElementById('evContenu').value = d.contenu || '';
+    clearImages('evImagesList');
+    const imgs = d.images && d.images.length ? d.images : (d.afficheURL ? [d.afficheURL] : []);
+    if (imgs.length === 0) addImageRow(document.getElementById('evImagesList'));
+    else imgs.forEach(u => addImageRow(document.getElementById('evImagesList'), u));
+    clearVideos('evVideosList');
+    const vids = d.videos && d.videos.length ? d.videos : (d.videoURL ? [d.videoURL] : []);
+    if (vids.length === 0) addVideoRow(document.getElementById('evVideosList'));
+    else vids.forEach(u => addVideoRow(document.getElementById('evVideosList'), u));
+    document.getElementById('btnCancelEv').style.display = 'inline-flex';
+    document.getElementById('btnSaveEv').querySelector('.btn-text').textContent = '💾 Mettre à jour';
+    document.getElementById('formEvenement').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    toast('info', 'Mode modification', 'Modifiez puis enregistrez.');
+  } catch (err) { toast('error', 'Erreur', err.message); }
+}
+
+async function deleteEvenement(id) {
+  if (!confirm('Confirmer la suppression de cet événement ?')) return;
+  try {
+    await db.collection('evenements').doc(id).delete();
+    toast('success', 'Événement supprimé');
+    loadEvenements();
+  } catch (err) { toast('error', 'Erreur', err.message); }
+}
+
+document.getElementById('formEvenement').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = document.getElementById('btnSaveEv');
+  const id = document.getElementById('evId').value;
+  const images = getImages('evImagesList');
+  const videos = getVideos('evVideosList');
+  const validationVideos = verifierVideos('evVideosList');
+  if (!validationVideos.valide) {
+    toast('error', 'Vidéo invalide', validationVideos.raison);
+    return;
+  }
+  const data = {
+    titre: document.getElementById('evTitre').value.trim(),
+    slug: document.getElementById('evSlug').value.trim(),
+    date: document.getElementById('evDate').value,
+    heure: document.getElementById('evHeure').value.trim(),
+    categorie: document.getElementById('evCategorie').value,
+    lieu: document.getElementById('evLieu').value.trim(),
+    participation: document.getElementById('evParticipation').value.trim(),
+    aLaUne: document.getElementById('evALaUne').value === 'true',
+    archive: document.getElementById('evArchive').value === 'true',
+    description: document.getElementById('evDescription').value.trim(),
+    contenu: document.getElementById('evContenu').value.trim(),
+    images: images, videos: videos,
+    afficheURL: images[0] || '',
+    videoURL: videos[0] || '',
+    dateAjout: firebase.firestore.FieldValue.serverTimestamp()
+  };
+  if (!data.titre || !data.slug || !data.date || !data.contenu) {
+    toast('warning', 'Champs manquants', 'Titre, slug, date et contenu sont obligatoires.');
+    return;
+  }
+  setLoading(btn, true);
+  try {
+    if (id) { delete data.dateAjout; await db.collection('evenements').doc(id).update(data); toast('success', 'Événement mis à jour ✅'); }
+    else { await db.collection('evenements').add(data); toast('success', 'Événement ajouté ✅'); }
+    resetEvenementForm(); loadEvenements();
+  } catch (err) { toast('error', 'Erreur d\'enregistrement', err.message); }
+  finally { setLoading(btn, false); }
+});
+
+document.getElementById('btnCancelEv').addEventListener('click', () => {
+  resetEvenementForm();
+  toast('info', 'Modification annulée');
+});
+
+function resetEvenementForm() {
+  document.getElementById('formEvenement').reset();
+  document.getElementById('evId').value = '';
+  clearImages('evImagesList'); addImageRow(document.getElementById('evImagesList'));
+  clearVideos('evVideosList'); addVideoRow(document.getElementById('evVideosList'));
+  document.getElementById('btnCancelEv').style.display = 'none';
+  document.getElementById('btnSaveEv').querySelector('.btn-text').textContent = '💾 Enregistrer l\'événement';
+}
+addImageRow(document.getElementById('evImagesList'));
+addVideoRow(document.getElementById('evVideosList'));
+
+// ============================================================
+// ACTUALITÉS
+// ============================================================
+async function loadActualites() {
+  const list = document.getElementById('acList');
+  list.innerHTML = '<div class="empty-state">Chargement…</div>';
+  try {
+    const snap = await db.collection('actualites').get();
+    document.getElementById('acCount').textContent = snap.size;
+    if (snap.empty) { list.innerHTML = '<div class="empty-state">Aucune actualité pour le moment.</div>'; return; }
+    list.innerHTML = '';
+    snap.forEach(doc => {
+      const d = doc.data();
+      const img = (d.images && d.images[0]) || d.imageURL || '';
+      const thumb = img ? `style="background-image:url('${img}')"` : '';
+      const epingle = (d.epingle === true || d.epingle === 'true');
+      const row = document.createElement('div');
+      row.className = 'item-row';
+      row.innerHTML = `
+        <div class="item-thumb" ${thumb}></div>
+        <div class="item-info">
+          <div class="item-title">${epingle ? '📌 ' : ''}${d.titre || 'Sans titre'}</div>
+          <div class="item-meta">
+            ${d.datePublication ? formatDateReadable(d.datePublication) : ''}
+            ${d.categorie ? ' • ' + d.categorie : ''}
+            ${d.auteur ? ' • ' + d.auteur : ''}
+            ${(d.archive === true || d.archive === 'true') ? ' • <span style="color:#f59e0b;">Archivé</span>' : ''}
+          </div>
+        </div>
+        <div class="item-actions">
+          <a class="btn btn-outline btn-sm" href="article.html?type=actualite&slug=${encodeURIComponent(d.slug || doc.id)}" target="_blank">👁 Voir</a>
+          <button class="btn btn-outline btn-sm" data-edit="${doc.id}">✏️ Modifier</button>
+          <button class="btn btn-outline btn-danger btn-sm" data-del="${doc.id}">🗑️</button>
+        </div>`;
+      row.querySelector('[data-edit]').addEventListener('click', () => editActualite(doc.id));
+      row.querySelector('[data-del]').addEventListener('click', () => deleteActualite(doc.id));
+      list.appendChild(row);
+    });
+  } catch (err) { list.innerHTML = `<div class="empty-state">Erreur : ${err.message}</div>`; }
+}
+
+async function editActualite(id) {
+  try {
+    const doc = await db.collection('actualites').doc(id).get();
+    if (!doc.exists) { toast('error', 'Introuvable'); return; }
+    const d = doc.data();
+    document.getElementById('acId').value = id;
+    document.getElementById('acTitre').value = d.titre || '';
+    document.getElementById('acSlug').value = d.slug || '';
+    document.getElementById('acDatePublication').value = formatDateInput(d.datePublication);
+    document.getElementById('acCategorie').value = d.categorie || '';
+    document.getElementById('acAuteur').value = d.auteur || '';
+    document.getElementById('acEpingle').value = (d.epingle === true || d.epingle === 'true') ? 'true' : 'false';
+    document.getElementById('acArchive').value = (d.archive === true || d.archive === 'true') ? 'true' : 'false';
+    document.getElementById('acResume').value = d.resume || '';
+    document.getElementById('acContenu').value = d.contenu || '';
+    acVideoInput.value = d.videoURL || '';
+    clearImages('acImagesList');
+    const imgs = d.images && d.images.length ? d.images : (d.imageURL ? [d.imageURL] : []);
+    if (imgs.length === 0) addImageRow(document.getElementById('acImagesList'));
+    else imgs.forEach(u => addImageRow(document.getElementById('acImagesList'), u));
+    document.getElementById('btnCancelAc').style.display = 'inline-flex';
+    document.getElementById('btnSaveAc').querySelector('.btn-text').textContent = '💾 Mettre à jour';
+    document.getElementById('formActualite').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    toast('info', 'Mode modification', 'Modifiez puis enregistrez.');
+  } catch (err) { toast('error', 'Erreur', err.message); }
+}
+
+async function deleteActualite(id) {
+  if (!confirm('Confirmer la suppression de cette actualité ?')) return;
+  try {
+    await db.collection('actualites').doc(id).delete();
+    toast('success', 'Actualité supprimée');
+    loadActualites();
+  } catch (err) { toast('error', 'Erreur', err.message); }
+}
+
+document.getElementById('formActualite').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = document.getElementById('btnSaveAc');
+  const id = document.getElementById('acId').value;
+  const images = getImages('acImagesList');
+  const videoURL = acVideoInput.value.trim();
+  if (videoURL) {
+    const plateforme = detecterPlateforme(videoURL);
+    const validation = validerEmbedURL(videoURL, plateforme);
+    if (!validation.valide) { toast('error', 'Vidéo invalide', validation.raison); return; }
+  }
+  const data = {
+    titre: document.getElementById('acTitre').value.trim(),
+    slug: document.getElementById('acSlug').value.trim(),
+    datePublication: document.getElementById('acDatePublication').value,
+    categorie: document.getElementById('acCategorie').value.trim(),
+    auteur: document.getElementById('acAuteur').value.trim(),
+    epingle: document.getElementById('acEpingle').value === 'true',
+    archive: document.getElementById('acArchive').value === 'true',
+    resume: document.getElementById('acResume').value.trim(),
+    contenu: document.getElementById('acContenu').value.trim(),
+    images: images,
+    imageURL: images[0] || '',
+    videoURL: videoURL,
+    dateAjout: firebase.firestore.FieldValue.serverTimestamp()
+  };
+  if (!data.titre || !data.slug || !data.contenu) {
+    toast('warning', 'Champs manquants', 'Titre, slug et contenu sont obligatoires.');
+    return;
+  }
+  setLoading(btn, true);
+  try {
+    if (id) { delete data.dateAjout; await db.collection('actualites').doc(id).update(data); toast('success', 'Actualité mise à jour ✅'); }
+    else { await db.collection('actualites').add(data); toast('success', 'Actualité ajoutée ✅'); }
+    resetActualiteForm(); loadActualites();
+  } catch (err) { toast('error', 'Erreur', err.message); }
+  finally { setLoading(btn, false); }
+});
+
+document.getElementById('btnCancelAc').addEventListener('click', () => { resetActualiteForm(); toast('info', 'Annulé'); });
+function resetActualiteForm() {
+  document.getElementById('formActualite').reset();
+  document.getElementById('acId').value = '';
+  clearImages('acImagesList'); addImageRow(document.getElementById('acImagesList'));
+  acVideoValidation.className = 'url-validation';
+  acVideoValidation.innerHTML = '';
+  document.getElementById('btnCancelAc').style.display = 'none';
+  document.getElementById('btnSaveAc').querySelector('.btn-text').textContent = '💾 Enregistrer l\'actualité';
+}
+addImageRow(document.getElementById('acImagesList'));
+
+// ============================================================
+// PHOTOS
+// ============================================================
+async function loadPhotos() {
+  const list = document.getElementById('phList');
+  list.innerHTML = '<div class="empty-state">Chargement…</div>';
+  try {
+    const snap = await db.collection('medias_photos').get();
+    document.getElementById('phCount').textContent = snap.size;
+    if (snap.empty) { list.innerHTML = '<div class="empty-state">Aucune photo.</div>'; return; }
+    list.innerHTML = '';
+    snap.forEach(doc => {
+      const d = doc.data();
+      const row = document.createElement('div');
+      row.className = 'item-row';
+      row.innerHTML = `
+        <div class="item-thumb" style="background-image:url('${d.url || ''}')"></div>
+        <div class="item-info">
+          <div class="item-title">${d.titre || 'Sans titre'}</div>
+          <div class="item-meta">${d.categorie || ''}</div>
+        </div>
+        <div class="item-actions">
+          <button class="btn btn-outline btn-sm" data-edit="${doc.id}">✏️</button>
+          <button class="btn btn-outline btn-danger btn-sm" data-del="${doc.id}">🗑️</button>
+        </div>`;
+      row.querySelector('[data-edit]').addEventListener('click', () => editPhoto(doc.id));
+      row.querySelector('[data-del]').addEventListener('click', () => deletePhoto(doc.id));
+      list.appendChild(row);
+    });
+  } catch (err) { list.innerHTML = `<div class="empty-state">Erreur : ${err.message}</div>`; }
+}
+
+async function editPhoto(id) {
+  const doc = await db.collection('medias_photos').doc(id).get();
+  if (!doc.exists) return;
+  const d = doc.data();
+  document.getElementById('phId').value = id;
+  document.getElementById('phTitre').value = d.titre || '';
+  document.getElementById('phCategorie').value = d.categorie || 'galerie';
+  document.getElementById('phUrl').value = d.url || '';
+  document.getElementById('btnCancelPh').style.display = 'inline-flex';
+  document.getElementById('btnSavePh').querySelector('.btn-text').textContent = '💾 Mettre à jour';
+  document.getElementById('formPhoto').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+async function deletePhoto(id) {
+  if (!confirm('Supprimer cette photo ?')) return;
+  await db.collection('medias_photos').doc(id).delete();
+  toast('success', 'Photo supprimée');
+  loadPhotos();
+}
+
+document.getElementById('formPhoto').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = document.getElementById('btnSavePh');
+  const id = document.getElementById('phId').value;
+  const data = {
+    titre: document.getElementById('phTitre').value.trim(),
+    categorie: document.getElementById('phCategorie').value,
+    url: document.getElementById('phUrl').value.trim(),
+    dateAjout: firebase.firestore.FieldValue.serverTimestamp()
+  };
+  if (!data.titre || !data.url) { toast('warning', 'Champs manquants', 'Titre et URL obligatoires.'); return; }
+  setLoading(btn, true);
+  try {
+    if (id) { delete data.dateAjout; await db.collection('medias_photos').doc(id).update(data); toast('success', 'Photo mise à jour ✅'); }
+    else { await db.collection('medias_photos').add(data); toast('success', 'Photo ajoutée ✅'); }
+    resetPhotoForm(); loadPhotos();
+  } catch (err) { toast('error', 'Erreur', err.message); }
+  finally { setLoading(btn, false); }
+});
+
+document.getElementById('btnCancelPh').addEventListener('click', () => { resetPhotoForm(); toast('info', 'Annulé'); });
+function resetPhotoForm() {
+  document.getElementById('formPhoto').reset();
+  document.getElementById('phId').value = '';
+  document.getElementById('btnCancelPh').style.display = 'none';
+  document.getElementById('btnSavePh').querySelector('.btn-text').textContent = '💾 Enregistrer la photo';
+}
+
+// ============================================================
+// VIDÉOS
+// ============================================================
+async function loadVideos() {
+  const list = document.getElementById('viList');
+  list.innerHTML = '<div class="empty-state">Chargement…</div>';
+  try {
+    const snap = await db.collection('medias_videos').get();
+    document.getElementById('viCount').textContent = snap.size;
+    if (snap.empty) { list.innerHTML = '<div class="empty-state">Aucune vidéo.</div>'; return; }
+    list.innerHTML = '';
+    snap.forEach(doc => {
+      const d = doc.data();
+      const payant = d.payant === true;
+      const badge = payant
+        ? `<span class="badge badge-payant">💰 ${d.prix || 0} FCFA</span>`
+        : `<span class="badge badge-gratuit">Gratuit</span>`;
+      const row = document.createElement('div');
+      row.className = 'item-row';
+      row.innerHTML = `
+        <div class="item-thumb" style="background-image:url('${d.vignetteURL || d.affiche || ''}')"></div>
+        <div class="item-info">
+          <div class="item-title">${d.titre || 'Sans titre'} ${badge}</div>
+          <div class="item-meta">${d.categorie || ''}${payant && d.slug ? ' • /' + d.slug : ''}</div>
+        </div>
+        <div class="item-actions">
+          <button class="btn btn-outline btn-sm" data-edit="${doc.id}">✏️</button>
+          <button class="btn btn-outline btn-danger btn-sm" data-del="${doc.id}">🗑️</button>
+        </div>`;
+      row.querySelector('[data-edit]').addEventListener('click', () => editVideo(doc.id));
+      row.querySelector('[data-del]').addEventListener('click', () => deleteVideo(doc.id));
+      list.appendChild(row);
+    });
+  } catch (err) { list.innerHTML = `<div class="empty-state">Erreur : ${err.message}</div>`; }
+}
+
+async function editVideo(id) {
+  const doc = await db.collection('medias_videos').doc(id).get();
+  if (!doc.exists) return;
+  const d = doc.data();
+  document.getElementById('viId').value = id;
+  document.getElementById('viTitre').value = d.titre || '';
+  document.getElementById('viCategorie').value = d.categorie || 'intervention';
+  viUrlInput.value = d.url || '';
+  document.getElementById('viVignetteURL').value = d.vignetteURL || '';
+  document.getElementById('viFallbackURL').value = d.fallbackURL || '';
+  document.getElementById('viPayant').value = d.payant === true ? 'true' : 'false';
+  document.getElementById('viPrix').value = d.prix || '';
+  document.getElementById('viSlug').value = d.slug || '';
+  document.getElementById('viDescriptionPayante').value = d.descriptionPayante || '';
+  document.getElementById('viAffiche').value = d.affiche || '';
+  validerChampURL(viUrlInput, viUrlValidation);
+  document.getElementById('btnCancelVi').style.display = 'inline-flex';
+  document.getElementById('btnSaveVi').querySelector('.btn-text').textContent = '💾 Mettre à jour';
+  document.getElementById('formVideo').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+async function deleteVideo(id) {
+  if (!confirm('Supprimer cette vidéo ?')) return;
+  await db.collection('medias_videos').doc(id).delete();
+  toast('success', 'Vidéo supprimée');
+  loadVideos();
+}
+
+document.getElementById('formVideo').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = document.getElementById('btnSaveVi');
+  const id = document.getElementById('viId').value;
+  const url = viUrlInput.value.trim();
+  const payant = document.getElementById('viPayant').value === 'true';
+  if (url) {
+    const plateforme = detecterPlateforme(url);
+    const validation = validerEmbedURL(url, plateforme);
+    if (!validation.valide) { toast('error', 'Vidéo invalide', validation.raison); return; }
+  }
+  const slug = document.getElementById('viSlug').value.trim();
+  if (payant && !slug) { toast('warning', 'Slug manquant', 'Une vidéo payante doit avoir un slug.'); return; }
+  const data = {
+    titre: document.getElementById('viTitre').value.trim(),
+    categorie: document.getElementById('viCategorie').value,
+    url: url,
+    vignetteURL: document.getElementById('viVignetteURL').value.trim(),
+    fallbackURL: document.getElementById('viFallbackURL').value.trim(),
+    payant: payant,
+    prix: parseInt(document.getElementById('viPrix').value, 10) || 0,
+    slug: slug,
+    descriptionPayante: document.getElementById('viDescriptionPayante').value.trim(),
+    affiche: document.getElementById('viAffiche').value.trim(),
+    dateAjout: firebase.firestore.FieldValue.serverTimestamp()
+  };
+  if (!data.titre || !data.url) { toast('warning', 'Champs manquants', 'Titre et URL obligatoires.'); return; }
+  setLoading(btn, true);
+  try {
+    if (id) { delete data.dateAjout; await db.collection('medias_videos').doc(id).update(data); toast('success', 'Vidéo mise à jour ✅'); }
+    else { await db.collection('medias_videos').add(data); toast('success', 'Vidéo ajoutée ✅'); }
+    resetVideoForm(); loadVideos();
+  } catch (err) { toast('error', 'Erreur', err.message); }
+  finally { setLoading(btn, false); }
+});
+
+document.getElementById('btnCancelVi').addEventListener('click', () => { resetVideoForm(); toast('info', 'Annulé'); });
+function resetVideoForm() {
+  document.getElementById('formVideo').reset();
+  document.getElementById('viId').value = '';
+  viUrlValidation.className = 'url-validation';
+  viUrlValidation.innerHTML = '';
+  document.getElementById('btnCancelVi').style.display = 'none';
+  document.getElementById('btnSaveVi').querySelector('.btn-text').textContent = '💾 Enregistrer la vidéo';
+}
+
+// ============================================================
+// PRESSE
+// ============================================================
+async function loadPresse() {
+  const list = document.getElementById('prList');
+  list.innerHTML = '<div class="empty-state">Chargement…</div>';
+  try {
+    const snap = await db.collection('presse').get();
+    document.getElementById('prCount').textContent = snap.size;
+    if (snap.empty) { list.innerHTML = '<div class="empty-state">Aucun article.</div>'; return; }
+    list.innerHTML = '';
+    snap.forEach(doc => {
+      const d = doc.data();
+      const row = document.createElement('div');
+      row.className = 'item-row';
+      row.innerHTML = `
+        <div class="item-info">
+          <div class="item-title">${d.titre || 'Sans titre'}</div>
+          <div class="item-meta">${d.datePublication ? formatDateReadable(d.datePublication) : ''}</div>
+        </div>
+        <div class="item-actions">
+          <a class="btn btn-outline btn-sm" href="${d.url || '#'}" target="_blank">🔗 Ouvrir</a>
+          <button class="btn btn-outline btn-sm" data-edit="${doc.id}">✏️</button>
+          <button class="btn btn-outline btn-danger btn-sm" data-del="${doc.id}">🗑️</button>
+        </div>`;
+      row.querySelector('[data-edit]').addEventListener('click', () => editPresse(doc.id));
+      row.querySelector('[data-del]').addEventListener('click', () => deletePresse(doc.id));
+      list.appendChild(row);
+    });
+  } catch (err) { list.innerHTML = `<div class="empty-state">Erreur : ${err.message}</div>`; }
+}
+
+async function editPresse(id) {
+  const doc = await db.collection('presse').doc(id).get();
+  if (!doc.exists) return;
+  const d = doc.data();
+  document.getElementById('prId').value = id;
+  document.getElementById('prTitre').value = d.titre || '';
+  document.getElementById('prDescription').value = d.description || '';
+  document.getElementById('prUrl').value = d.url || '';
+  document.getElementById('prDate').value = formatDateInput(d.datePublication);
+  document.getElementById('btnCancelPr').style.display = 'inline-flex';
+  document.getElementById('btnSavePr').querySelector('.btn-text').textContent = '💾 Mettre à jour';
+  document.getElementById('formPresse').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+async function deletePresse(id) {
+  if (!confirm('Supprimer cet article ?')) return;
+  await db.collection('presse').doc(id).delete();
+  toast('success', 'Article supprimé');
+  loadPresse();
+}
+
+document.getElementById('formPresse').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = document.getElementById('btnSavePr');
+  const id = document.getElementById('prId').value;
+  const data = {
+    titre: document.getElementById('prTitre').value.trim(),
+    description: document.getElementById('prDescription').value.trim(),
+    url: document.getElementById('prUrl').value.trim(),
+    datePublication: document.getElementById('prDate').value,
+    dateAjout: firebase.firestore.FieldValue.serverTimestamp()
+  };
+  if (!data.titre || !data.url) { toast('warning', 'Champs manquants', 'Titre et URL obligatoires.'); return; }
+  setLoading(btn, true);
+  try {
+    if (id) { delete data.dateAjout; await db.collection('presse').doc(id).update(data); toast('success', 'Article mis à jour ✅'); }
+    else { await db.collection('presse').add(data); toast('success', 'Article ajouté ✅'); }
+    resetPresseForm(); loadPresse();
+  } catch (err) { toast('error', 'Erreur', err.message); }
+  finally { setLoading(btn, false); }
+});
+
+document.getElementById('btnCancelPr').addEventListener('click', () => { resetPresseForm(); toast('info', 'Annulé'); });
+function resetPresseForm() {
+  document.getElementById('formPresse').reset();
+  document.getElementById('prId').value = '';
+  document.getElementById('btnCancelPr').style.display = 'none';
+  document.getElementById('btnSavePr').querySelector('.btn-text').textContent = '💾 Enregistrer l\'article';
+}
+
+// ============================================================
+// PRODUITS
+// ============================================================
+async function loadProduits() {
+  const list = document.getElementById('prdList');
+  list.innerHTML = '<div class="empty-state">Chargement…</div>';
+  try {
+    const snap = await db.collection('produits').get();
+    document.getElementById('prdCount').textContent = snap.size;
+    if (snap.empty) {
+      list.innerHTML = '<div class="empty-state">Aucun produit pour le moment. Ajoutez-en un ci-dessus.</div>';
+      return;
+    }
+    const docs = snap.docs.slice().sort((a, b) => {
+      const da = a.data();
+      const db_ = b.data();
+      const oa = typeof da.ordre === 'number' ? da.ordre : 999;
+      const ob = typeof db_.ordre === 'number' ? db_.ordre : 999;
+      if (oa !== ob) return oa - ob;
+      return (da.titre || '').localeCompare(db_.titre || '');
+    });
+    list.innerHTML = '';
+
+    const catLabels = {
+      livres: '📚 Livres',
+      mode: '👕 Mode',
+      spiritualite: '✨ Spiritualité',
+      bijoux: '💍 Bijoux',
+      sceaux: '🔯 Sceaux',
+      art: '🖼️ Art',
+      coffrets: '🎁 Coffrets'
+    };
+
+    docs.forEach(doc => {
+      const d = doc.data();
+      const img = d.image || '';
+      const thumb = img ? `style="background-image:url('${img}')"` : '';
+      const catLabel = catLabels[d.categorie] || d.categorie || '';
+      const prix = typeof d.prix === 'number' && d.prix > 0
+        ? d.prix.toLocaleString('fr-FR') + ' FCFA'
+        : '<em>Prix sur demande</em>';
+      const actif = d.actif !== false;
+      const sansVisuel = d.sansVisuel === true;
+      const badgeActif = actif
+        ? '<span class="badge badge-actif">✅ Actif</span>'
+        : '<span class="badge badge-inactifprod">🚫 Inactif</span>';
+
+      const row = document.createElement('div');
+      row.className = 'item-row';
+      row.innerHTML = `
+        <div class="item-thumb" ${thumb}>
+          ${!img && sansVisuel ? '<div style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;font-size:1.2rem;color:var(--or);">✦</div>' : ''}
+        </div>
+        <div class="item-info">
+          <div class="item-title">${d.titre || 'Sans titre'} ${badgeActif}</div>
+          <div class="item-meta">
+            <span class="badge badge-cat">${catLabel}</span>
+            • ${prix}
+            ${typeof d.ordre === 'number' ? ' • ordre ' + d.ordre : ''}
+            ${d.slug ? ' • /' + d.slug : ''}
+          </div>
+        </div>
+        <div class="item-actions">
+          <button class="btn btn-outline btn-sm" data-edit="${doc.id}">✏️ Modifier</button>
+          <button class="btn btn-outline btn-danger btn-sm" data-del="${doc.id}">🗑️</button>
+        </div>`;
+      row.querySelector('[data-edit]').addEventListener('click', () => editProduit(doc.id));
+      row.querySelector('[data-del]').addEventListener('click', () => deleteProduit(doc.id));
+      list.appendChild(row);
+    });
+  } catch (err) {
+    list.innerHTML = `<div class="empty-state">Erreur : ${err.message}</div>`;
+    console.error('Erreur loadProduits:', err);
+  }
+}
+
+async function editProduit(id) {
+  try {
+    const doc = await db.collection('produits').doc(id).get();
+    if (!doc.exists) { toast('error', 'Produit introuvable'); return; }
+    const d = doc.data();
+    document.getElementById('prdId').value = id;
+    document.getElementById('prdTitre').value = d.titre || '';
+    document.getElementById('prdSlug').value = d.slug || '';
+    document.getElementById('prdCategorie').value = d.categorie || '';
+    document.getElementById('prdPrix').value = typeof d.prix === 'number' ? d.prix : 0;
+    document.getElementById('prdOrdre').value = typeof d.ordre === 'number' ? d.ordre : 100;
+    document.getElementById('prdDescription').value = d.description || '';
+    document.getElementById('prdImage').value = d.image || '';
+    document.getElementById('prdActif').value = d.actif === false ? 'false' : 'true';
+    document.getElementById('prdSansVisuel').value = d.sansVisuel === true ? 'true' : 'false';
+    updatePrdPreview();
+    document.getElementById('btnCancelPrd').style.display = 'inline-flex';
+    document.getElementById('btnSavePrd').querySelector('.btn-text').textContent = '💾 Mettre à jour';
+    document.getElementById('formProduit').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    toast('info', 'Mode modification', 'Modifiez puis enregistrez.');
+  } catch (err) { toast('error', 'Erreur', err.message); }
+}
+
+async function deleteProduit(id) {
+  if (!confirm('Confirmer la suppression de ce produit ?')) return;
+  try {
+    await db.collection('produits').doc(id).delete();
+    toast('success', 'Produit supprimé');
+    loadProduits();
+  } catch (err) { toast('error', 'Erreur', err.message); }
+}
+
+document.getElementById('formProduit').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = document.getElementById('btnSavePrd');
+  const id = document.getElementById('prdId').value;
+
+  const data = {
+    titre: document.getElementById('prdTitre').value.trim(),
+    slug: document.getElementById('prdSlug').value.trim(),
+    categorie: document.getElementById('prdCategorie').value,
+    prix: parseInt(document.getElementById('prdPrix').value, 10) || 0,
+    ordre: parseInt(document.getElementById('prdOrdre').value, 10) || 0,
+    description: document.getElementById('prdDescription').value.trim(),
+    image: document.getElementById('prdImage').value.trim(),
+    actif: document.getElementById('prdActif').value === 'true',
+    sansVisuel: document.getElementById('prdSansVisuel').value === 'true'
+  };
+
+  if (!data.titre || !data.slug || !data.categorie) {
+    toast('warning', 'Champs manquants', 'Titre, slug et catégorie sont obligatoires.');
+    return;
+  }
+
+  try {
+    const existing = await db.collection('produits').where('slug', '==', data.slug).get();
+    if (!existing.empty) {
+      const conflit = existing.docs.find(d => d.id !== id);
+      if (conflit) {
+        toast('error', 'Slug déjà utilisé', 'Un autre produit utilise déjà ce slug. Changez-le.');
+        return;
+      }
+    }
+  } catch (err) {
+    console.warn('Vérif slug:', err);
+  }
+
+  setLoading(btn, true);
+  try {
+    if (id) {
+      await db.collection('produits').doc(id).update(data);
+      toast('success', 'Produit mis à jour ✅');
+    } else {
+      data.dateAjout = firebase.firestore.FieldValue.serverTimestamp();
+      await db.collection('produits').add(data);
+      toast('success', 'Produit ajouté ✅');
+    }
+    resetProduitForm();
+    loadProduits();
+  } catch (err) {
+    toast('error', 'Erreur d\'enregistrement', err.message);
+  } finally {
+    setLoading(btn, false);
+  }
+});
+
+document.getElementById('btnCancelPrd').addEventListener('click', () => {
+  resetProduitForm();
+  toast('info', 'Modification annulée');
+});
+
+function resetProduitForm() {
+  document.getElementById('formProduit').reset();
+  document.getElementById('prdId').value = '';
+  document.getElementById('prdOrdre').value = 100;
+  document.getElementById('prdPrix').value = 0;
+  document.getElementById('prdActif').value = 'true';
+  document.getElementById('prdSansVisuel').value = 'false';
+  document.getElementById('prdPreview').style.display = 'none';
+  document.getElementById('btnCancelPrd').style.display = 'none';
+  document.getElementById('btnSavePrd').querySelector('.btn-text').textContent = '💾 Enregistrer le produit';
+}
+
+function updatePrdPreview() {
+  const titre = document.getElementById('prdTitre').value.trim();
+  const desc = document.getElementById('prdDescription').value.trim();
+  const img = document.getElementById('prdImage').value.trim();
+  const prix = parseInt(document.getElementById('prdPrix').value, 10) || 0;
+  const preview = document.getElementById('prdPreview');
+
+  if (!titre && !img && !desc) {
+    preview.style.display = 'none';
+    return;
+  }
+  preview.style.display = 'flex';
+  document.getElementById('prdPreviewTitle').textContent = titre || 'Titre du produit';
+  document.getElementById('prdPreviewDesc').textContent = desc || 'Description…';
+  document.getElementById('prdPreviewPrix').textContent = prix > 0
+    ? prix.toLocaleString('fr-FR') + ' FCFA'
+    : 'Prix sur demande';
+  const imgEl = document.getElementById('prdPreviewImg');
+  if (img) {
+    imgEl.style.backgroundImage = `url('${img}')`;
+    imgEl.textContent = '';
+  } else {
+    imgEl.style.backgroundImage = '';
+    imgEl.textContent = 'Aperçu';
+  }
+}
+
+['prdTitre','prdDescription','prdImage','prdPrix'].forEach(fid => {
+  const el = document.getElementById(fid);
+  if (el) el.addEventListener('input', updatePrdPreview);
+});
+
+// ============================================================
+// LIVE
+// ============================================================
+async function loadLive() {
+  try {
+    const snap = await db.collection('live').get();
+    const dot = document.getElementById('liveDot');
+    const statusText = document.getElementById('liveStatusText');
+    const preview = document.getElementById('livePreview');
+    const previewFrame = document.getElementById('liveFrame');
+    const deleteBtn = document.getElementById('btnDeleteLive');
+
+    if (snap.empty) {
+      document.getElementById('liId').value = '';
+      document.getElementById('liActif').value = 'false';
+      document.getElementById('liPlateforme').value = 'youtube';
+      document.getElementById('liTitre').value = '';
+      liEmbedInput.value = '';
+      document.getElementById('liFallbackYouTube').value = '';
+      document.getElementById('liFallbackFacebook').value = '';
+      document.getElementById('liFallbackTikTok').value = '';
+      document.getElementById('liPayant').value = 'false';
+      document.getElementById('liPrix').value = '';
+      document.getElementById('liSlug').value = '';
+      document.getElementById('liDescriptionPayante').value = '';
+      document.getElementById('liAffiche').value = '';
+      liValidationBox.className = 'url-validation';
+      liValidationBox.innerHTML = '';
+      dot.classList.remove('on');
+      statusText.textContent = 'Aucun live configuré';
+      preview.style.display = 'none';
+      deleteBtn.style.display = 'none';
+      return;
+    }
+    const doc = snap.docs[0];
+    const d = doc.data();
+    document.getElementById('liId').value = doc.id;
+    document.getElementById('liActif').value = d.actif ? 'true' : 'false';
+    document.getElementById('liPlateforme').value = d.plateforme || 'youtube';
+    document.getElementById('liTitre').value = d.titre || '';
+    liEmbedInput.value = d.embedURL || '';
+    document.getElementById('liFallbackYouTube').value = d.fallbackYouTube || '';
+    document.getElementById('liFallbackFacebook').value = d.fallbackFacebook || '';
+    document.getElementById('liFallbackTikTok').value = d.fallbackTikTok || '';
+    document.getElementById('liPayant').value = d.payant === true ? 'true' : 'false';
+    document.getElementById('liPrix').value = d.prix || '';
+    document.getElementById('liSlug').value = d.slug || '';
+    document.getElementById('liDescriptionPayante').value = d.descriptionPayante || '';
+    document.getElementById('liAffiche').value = d.affiche || '';
+
+    validerChampURL(liEmbedInput, liValidationBox);
+    const plateforme = detecterPlateforme(d.embedURL);
+    const validation = validerEmbedURL(d.embedURL, plateforme);
+
+    if (d.actif && d.embedURL && validation.valide && d.payant !== true) {
+      dot.classList.add('on');
+      statusText.innerHTML = `🔴 <strong>EN DIRECT</strong> — ${d.titre || 'Live en cours'}`;
+      preview.style.display = 'block';
+      previewFrame.src = plateforme.embed || d.embedURL;
+    } else if (d.actif && d.payant === true) {
+      dot.classList.add('on');
+      statusText.innerHTML = `💰 <strong>LIVE PAYANT</strong> — ${d.titre || 'Live'} (${d.prix || 0} FCFA)`;
+      preview.style.display = 'none';
+      previewFrame.src = '';
+    } else if (d.actif && !validation.valide) {
+      dot.classList.add('on');
+      statusText.innerHTML = `⚠️ <strong>Live activé mais URL invalide</strong>`;
+      preview.style.display = 'none';
+      previewFrame.src = '';
+    } else {
+      dot.classList.remove('on');
+      statusText.textContent = 'Live désactivé';
+      preview.style.display = 'none';
+      previewFrame.src = '';
+    }
+    deleteBtn.style.display = 'inline-flex';
+  } catch (err) {
+    console.error('Erreur live:', err);
+  }
+}
+
+document.getElementById('formLive').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = document.getElementById('btnSaveLive');
+  const id = document.getElementById('liId').value;
+  const url = liEmbedInput.value.trim();
+  const payant = document.getElementById('liPayant').value === 'true';
+  const slug = document.getElementById('liSlug').value.trim();
+
+  if (payant && !slug) {
+    toast('warning', 'Slug manquant', 'Un live payant doit avoir un slug.');
+    return;
+  }
+
+  const data = {
+    actif: document.getElementById('liActif').value === 'true',
+    plateforme: document.getElementById('liPlateforme').value,
+    titre: document.getElementById('liTitre').value.trim(),
+    embedURL: url,
+    fallbackYouTube: document.getElementById('liFallbackYouTube').value.trim(),
+    fallbackFacebook: document.getElementById('liFallbackFacebook').value.trim(),
+    fallbackTikTok: document.getElementById('liFallbackTikTok').value.trim(),
+    payant: payant,
+    prix: parseInt(document.getElementById('liPrix').value, 10) || 0,
+    slug: slug,
+    descriptionPayante: document.getElementById('liDescriptionPayante').value.trim(),
+    affiche: document.getElementById('liAffiche').value.trim()
+  };
+
+  if (data.actif && !payant) {
+    if (!url) {
+      toast('warning', 'URL manquante', 'Un live actif et gratuit doit avoir une URL.');
+      return;
+    }
+    const plateforme = detecterPlateforme(url);
+    const validation = validerEmbedURL(url, plateforme);
+    if (!validation.valide) {
+      toast('error', 'URL invalide', validation.raison);
+      return;
+    }
+  }
+
+  setLoading(btn, true);
+  try {
+    if (id) {
+      await db.collection('live').doc(id).update(data);
+      toast('success', 'Live mis à jour ✅');
+    } else {
+      await db.collection('live').add(data);
+      toast('success', 'Live créé ✅');
+    }
+    loadLive();
+  } catch (err) {
+    toast('error', 'Erreur', err.message);
+  } finally {
+    setLoading(btn, false);
+  }
+});
+
+document.getElementById('btnDeleteLive').addEventListener('click', async () => {
+  const id = document.getElementById('liId').value;
+  if (!id) return;
+  if (!confirm('Supprimer la configuration du live ?')) return;
+  try {
+    await db.collection('live').doc(id).delete();
+    toast('success', 'Live supprimé');
+    loadLive();
+  } catch (err) { toast('error', 'Erreur', err.message); }
+});
+
+// ============================================================
+// ACCÈS PAYANT
+// ============================================================
+let codesCache = [];
+
+async function loadAcces() {
+  const list = document.getElementById('accList');
+  list.innerHTML = '<div class="empty-state">Chargement…</div>';
+  try {
+    const snap = await db.collection('acces').get();
+    document.getElementById('accCount').textContent = snap.size;
+    if (snap.empty) {
+      list.innerHTML = '<div class="empty-state">Aucun code généré pour le moment.</div>';
+      updateCounter(0, 0, 0, 0);
+      codesCache = [];
+      return;
+    }
+
+    const docs = snap.docs.slice().sort((a, b) => {
+      const da = a.data().dateCreation;
+      const db_ = b.data().dateCreation;
+      const ta = da && da.toDate ? da.toDate().getTime() : 0;
+      const tb = db_ && db_.toDate ? db_.toDate().getTime() : 0;
+      return tb - ta;
+    });
+
+    let countActif = 0, countUtilise = 0, countExpire = 0, countInactif = 0;
+    const now = Date.now();
+
+    codesCache = [];
+
+    list.innerHTML = '';
+    docs.forEach(doc => {
+      const code = doc.id;
+      const d = doc.data();
+      const expire = d.dateExpiration && d.dateExpiration.toDate ? d.dateExpiration.toDate().getTime() : null;
+      const estExpire = expire && expire < now && d.dureeValidite > 0;
+
+      let badge = '';
+      if (!d.actif) {
+        badge = '<span class="badge badge-inactif">🚫 Désactivé</span>';
+        countInactif++;
+      } else if (estExpire) {
+        badge = '<span class="badge badge-expire">⏰ Expiré</span>';
+        countExpire++;
+      } else if (d.usageUnique && d.utilise) {
+        badge = '<span class="badge badge-utilise">✔️ Utilisé</span>';
+        countUtilise++;
+      } else {
+        badge = '<span class="badge badge-actif">✅ Actif</span>';
+        countActif++;
+      }
+
+      codesCache.push({
+        code: code,
+        titre: d.titre || '',
+        type: d.type || '',
+        lien: d.lien || '',
+        actif: d.actif ? 'OUI' : 'NON',
+        utilise: d.utilise ? 'OUI' : 'NON',
+        expire: estExpire ? 'OUI' : 'NON',
+        duree: d.dureeValidite || 0,
+        email: d.email || '',
+        note: d.note || '',
+        statut: badge.replace(/<[^>]+>/g, '').trim()
+      });
+
+      const row = document.createElement('div');
+      row.className = 'item-row';
+      row.innerHTML = `
+        <div class="item-info" style="flex:1; min-width:0;">
+          <div class="item-title">
+            <span class="code-mono">${code}</span>
+            ${badge}
+          </div>
+          <div class="item-meta">
+            ${d.titre || 'Sans titre'}
+            ${d.type ? ' • ' + d.type : ''}
+            ${d.dureeValidite > 0 ? ' • expire dans ' + d.dureeValidite + 'j' : ' • illimité'}
+            ${d.dateCreation ? ' • créé le ' + formatTimestamp(d.dateCreation) : ''}
+          </div>
+          ${d.lien ? `<div class="item-meta" style="word-break:break-all; margin-top:4px; color:var(--text-muted);">🔗 ${d.lien}</div>` : ''}
+          ${d.note ? `<div class="item-meta" style="margin-top:4px; font-style:italic;">📝 ${d.note}</div>` : ''}
+        </div>
+        <div class="item-actions">
+          <button class="btn btn-outline btn-sm" data-copy="${code}">📋 Copier</button>
+          <button class="btn btn-outline btn-sm" data-wa="${code}">📱 WhatsApp</button>
+          <button class="btn btn-outline btn-sm" data-toggle="${code}" data-actif="${d.actif ? 'true' : 'false'}">${d.actif ? '🚫' : '✅'}</button>
+          <button class="btn btn-outline btn-danger btn-sm" data-del="${code}">🗑️</button>
+        </div>`;
+
+      row.querySelector('[data-copy]').addEventListener('click', () => {
+        navigator.clipboard.writeText(code);
+        toast('success', 'Code copié', code);
+      });
+
+      row.querySelector('[data-wa]').addEventListener('click', () => {
+        const msg = 'Bonjour ! Voici votre code d\'accès pour « ' + (d.titre || 'contenu') + ' » : ' + code + '\n\nRendez-vous sur acces.html pour l\'utiliser.';
+        const num = CONFIG.whatsappAdmin || '22967668799';
+        window.open('https://wa.me/' + num + '?text=' + encodeURIComponent(msg), '_blank');
+      });
+
+      row.querySelector('[data-toggle]').addEventListener('click', async (ev) => {
+        const actif = ev.currentTarget.dataset.actif === 'true';
+        try {
+          await db.collection('acces').doc(code).update({ actif: !actif });
+          toast('success', 'Statut modifié', !actif ? 'Code activé' : 'Code désactivé');
+          loadAcces();
+        } catch (err) { toast('error', 'Erreur', err.message); }
+      });
+
+      row.querySelector('[data-del]').addEventListener('click', async () => {
+        if (!confirm('Supprimer définitivement le code ' + code + ' ?')) return;
+        try {
+          await db.collection('acces').doc(code).delete();
+          toast('success', 'Code supprimé');
+          loadAcces();
+        } catch (err) { toast('error', 'Erreur', err.message); }
+      });
+
+      list.appendChild(row);
+    });
+
+    updateCounter(countActif, countUtilise, countExpire, countInactif);
+
+  } catch (err) {
+    list.innerHTML = `<div class="empty-state">Erreur : ${err.message}</div>`;
+  }
+}
+
+function updateCounter(actif, utilise, expire, inactif) {
+  document.getElementById('cntActif').textContent = actif;
+  document.getElementById('cntUtilise').textContent = utilise;
+  document.getElementById('cntExpire').textContent = expire;
+  document.getElementById('cntInactif').textContent = inactif;
+}
+
+document.getElementById('btnCopyAllCodes').addEventListener('click', () => {
+  const actifs = codesCache.filter(c => c.statut.includes('Actif'));
+  if (actifs.length === 0) {
+    toast('warning', 'Aucun code actif', 'Il n\'y a aucun code actif à copier.');
+    return;
+  }
+  const texte = actifs.map(c => `${c.code}  —  ${c.titre}`).join('\n');
+  navigator.clipboard.writeText(texte).then(() => {
+    toast('success', actifs.length + ' code(s) copié(s)', 'Collez-les où vous voulez.');
+  }).catch(err => {
+    toast('error', 'Erreur de copie', err.message);
+  });
+});
+
+document.getElementById('btnExportCsv').addEventListener('click', () => {
+  if (codesCache.length === 0) {
+    toast('warning', 'Aucun code', 'Il n\'y a rien à exporter.');
+    return;
+  }
+  const headers = ['Code', 'Titre', 'Type', 'Statut', 'Actif', 'Utilisé', 'Expiré', 'Durée (jours)', 'Email', 'Note', 'Lien'];
+  const rows = codesCache.map(c => [
+    c.code, c.titre, c.type, c.statut, c.actif, c.utilise, c.expire, c.duree, c.email, c.note, c.lien
+  ]);
+  const csv = [headers, ...rows]
+    .map(row => row.map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(','))
+    .join('\n');
+  const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'codes-acces-' + new Date().toISOString().slice(0, 10) + '.csv';
+  a.click();
+  URL.revokeObjectURL(url);
+  toast('success', 'CSV exporté', codesCache.length + ' ligne(s)');
+});
+
+document.getElementById('formAcces').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = document.getElementById('btnSaveAcc');
+  const titre = document.getElementById('accTitre').value.trim();
+  const type = document.getElementById('accType').value;
+  const lien = document.getElementById('accLien').value.trim();
+  const duree = parseInt(document.getElementById('accDuree').value, 10) || 0;
+  const usageUnique = document.getElementById('accUsageUnique').value === 'true';
+  const codeManuel = document.getElementById('accCodeManuel').value.trim();
+  const email = document.getElementById('accEmail').value.trim();
+  const note = document.getElementById('accNote').value.trim();
+
+  if (!titre || !lien) { toast('warning', 'Champs manquants', 'Titre et lien obligatoires.'); return; }
+
+  let code = codeManuel || genererCode(type);
+  setLoading(btn, true, 'Génération…');
+  try {
+    const existing = await db.collection('acces').doc(code).get();
+    if (existing.exists) {
+      if (!codeManuel) {
+        code = genererCode(type) + Math.floor(Math.random() * 100);
+      } else {
+        toast('error', 'Code déjà utilisé', 'Choisissez un autre code.');
+        setLoading(btn, false);
+        return;
+      }
+    }
+
+    const data = {
+      titre: titre, type: type, lien: lien,
+      actif: true, utilise: false,
+      usageUnique: usageUnique,
+      dureeValidite: duree,
+      email: email, note: note,
+      dateCreation: firebase.firestore.FieldValue.serverTimestamp(),
+      dateUtilisation: null
+    };
+    if (duree > 0) {
+      const exp = new Date();
+      exp.setDate(exp.getDate() + duree);
+      data.dateExpiration = firebase.firestore.Timestamp.fromDate(exp);
+    } else {
+      data.dateExpiration = null;
+    }
+
+    await db.collection('acces').doc(code).set(data);
+    toast('success', 'Code créé : ' + code, 'Copiez-le et envoyez-le au client.');
+    document.getElementById('formAcces').reset();
+    document.getElementById('accDuree').value = '0';
+    document.getElementById('accUsageUnique').value = 'true';
+    loadAcces();
+  } catch (err) {
+    toast('error', 'Erreur', err.message);
+  } finally {
+    setLoading(btn, false);
+  }
+});
+
+document.getElementById('btnResetAcc').addEventListener('click', () => {
+  document.getElementById('formAcces').reset();
+  document.getElementById('accDuree').value = '0';
+  document.getElementById('accUsageUnique').value = 'true';
+  toast('info', 'Formulaire réinitialisé');
+});
+
+// ============================================================
+// CONFIGURATION
+// ============================================================
+async function chargerConfig() {
+  try {
+    const doc = await db.collection('config').doc('site').get();
+    if (doc.exists) {
+      const d = doc.data();
+      CONFIG = {
+        fallbackFacebook: d.fallbackFacebook || '',
+        fallbackTiktok: d.fallbackTiktok || '',
+        fallbackYoutube: d.fallbackYoutube || '',
+        whatsappAdmin: d.whatsappAdmin || '22967668799',
+        whatsappDev: d.whatsappDev || '229015252106',
+        emailContact: d.emailContact || 'cabinetgbemadoyomin@gmail.com',
+        paiementMoMo: d.paiementMoMo || '',
+        paiementWave: d.paiementWave || '',
+        messageAccueil: d.messageAccueil || ''
+      };
+    }
+  } catch (err) {
+    console.error('Erreur chargement config:', err);
+  }
+}
+
+function loadConfigForm() {
+  document.getElementById('cfgFallbackFacebook').value = CONFIG.fallbackFacebook;
+  document.getElementById('cfgFallbackTiktok').value = CONFIG.fallbackTiktok;
+  document.getElementById('cfgFallbackYoutube').value = CONFIG.fallbackYoutube;
+  document.getElementById('cfgWhatsappAdmin').value = CONFIG.whatsappAdmin;
+  document.getElementById('cfgWhatsappDev').value = CONFIG.whatsappDev;
+  document.getElementById('cfgEmailContact').value = CONFIG.emailContact;
+  document.getElementById('cfgPaiementMoMo').value = CONFIG.paiementMoMo;
+  document.getElementById('cfgPaiementWave').value = CONFIG.paiementWave;
+  document.getElementById('cfgMessageAccueil').value = CONFIG.messageAccueil;
+}
+
+document.getElementById('formConfig').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = document.getElementById('btnSaveConfig');
+  const data = {
+    fallbackFacebook: document.getElementById('cfgFallbackFacebook').value.trim(),
+    fallbackTiktok: document.getElementById('cfgFallbackTiktok').value.trim(),
+    fallbackYoutube: document.getElementById('cfgFallbackYoutube').value.trim(),
+    whatsappAdmin: document.getElementById('cfgWhatsappAdmin').value.trim(),
+    whatsappDev: document.getElementById('cfgWhatsappDev').value.trim(),
+    emailContact: document.getElementById('cfgEmailContact').value.trim(),
+    paiementMoMo: document.getElementById('cfgPaiementMoMo').value.trim(),
+    paiementWave: document.getElementById('cfgPaiementWave').value.trim(),
+    messageAccueil: document.getElementById('cfgMessageAccueil').value.trim(),
+    dateMaj: firebase.firestore.FieldValue.serverTimestamp()
+  };
+  setLoading(btn, true);
+  try {
+    await db.collection('config').doc('site').set(data, { merge: true });
+    CONFIG = { ...CONFIG, ...data };
+    toast('success', 'Configuration enregistrée ✅');
+    document.getElementById('configLastUpdate').textContent = 'Dernière mise à jour : à l\'instant';
+  } catch (err) {
+    toast('error', 'Erreur', err.message);
+  } finally {
+    setLoading(btn, false);
+  }
+});
+
+document.getElementById('btnReloadConfig').addEventListener('click', async () => {
+  await chargerConfig();
+  loadConfigForm();
+  toast('info', 'Configuration rechargée');
+});
+
+// ============================================================
+// ⭐ AJOUT 4 : STATISTIQUES — ADMIN
+// ============================================================
+let adminStatsChart = null;
+
+function todayKeyAdmin() {
+  const d = new Date();
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return y + '-' + m + '-' + day;
+}
+
+function setText(id, val) {
+  const el = document.getElementById(id);
+  if (el) el.textContent = (parseInt(val || 0, 10)).toLocaleString('fr-FR');
+}
+
+async function loadStatsGlobal() {
+  try {
+    const snap = await db.collection('stats').doc('global').get();
+    const d = snap.exists ? snap.data() : { vues: 0, clics: 0 };
+    setText('kpiVues', d.vues);
+    setText('kpiClics', d.clics);
+  } catch (err) { console.warn('Stats globales:', err); }
+}
+
+async function loadStatsJour() {
+  try {
+    const dateId = todayKeyAdmin();
+    const snap = await db.collection('stats_par_jour').doc(dateId).get();
+    const d = snap.exists ? snap.data() : { vues: 0, clics: 0 };
+    setText('kpiVuesJour', d.vues);
+    setText('kpiClicsJour', d.clics);
+  } catch (err) { console.warn('Stats jour:', err); }
+}
+
+async function loadStatsGraphe() {
+  const canvas = document.getElementById('adminStatsGraph');
+  if (!canvas || typeof Chart === 'undefined') return;
+
+  const jours = [], labels = [];
+  const now = new Date();
+  for (let i = 29; i >= 0; i--) {
+    const d = new Date(now); d.setDate(d.getDate() - i);
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    jours.push(y + '-' + m + '-' + day);
+    labels.push(d.toLocaleDateString('fr-FR', { day: '2-digit', month: 'short' }));
+  }
+
+  let docs = [];
+  try {
+    const snap = await db.collection('stats_par_jour')
+      .where(firebase.firestore.FieldPath.documentId(), '>=', jours[0])
+      .get();
+    docs = snap.docs;
+  } catch (err) { console.warn('Graphe admin:', err); }
+
+  const map = {};
+  docs.forEach(d => { map[d.id] = d.data(); });
+
+  const vuesData = jours.map(j => (map[j] && map[j].vues) || 0);
+  const clicsData = jours.map(j => (map[j] && map[j].clics) || 0);
+
+  const ctx = canvas.getContext('2d');
+  const gV = ctx.createLinearGradient(0, 0, 0, 300);
+  gV.addColorStop(0, 'rgba(212, 175, 90, 0.35)');
+  gV.addColorStop(1, 'rgba(212, 175, 90, 0.02)');
+  const gC = ctx.createLinearGradient(0, 0, 0, 300);
+  gC.addColorStop(0, 'rgba(199, 58, 58, 0.30)');
+  gC.addColorStop(1, 'rgba(199, 58, 58, 0.02)');
+
+  if (adminStatsChart) adminStatsChart.destroy();
+  adminStatsChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [
+        { label: 'Vues', data: vuesData, borderColor: '#d4af5a', backgroundColor: gV, fill: true, tension: 0.35, borderWidth: 2, pointRadius: 3, pointHoverRadius: 6 },
+        { label: 'Clics', data: clicsData, borderColor: '#c73a3a', backgroundColor: gC, fill: true, tension: 0.35, borderWidth: 2, pointRadius: 3, pointHoverRadius: 6 }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      interaction: { intersect: false, mode: 'index' },
+      plugins: {
+        legend: { labels: { color: '#c8c0b0', font: { family: 'Lato', size: 12 } } },
+        tooltip: {
+          backgroundColor: 'rgba(17,17,17,0.96)',
+          borderColor: '#b8922e', borderWidth: 1,
+          titleColor: '#f0ebe0', bodyColor: '#c8c0b0',
+          padding: 10, cornerRadius: 4
+        }
+      },
+      scales: {
+        x: { ticks: { color: '#7a7060', font: { size: 10 }, maxRotation: 0, autoSkip: true }, grid: { color: 'rgba(184,146,46,0.06)' } },
+        y: { beginAtZero: true, ticks: { color: '#7a7060', font: { size: 10 }, precision: 0 }, grid: { color: 'rgba(184,146,46,0.06)' } }
+      }
+    }
+  });
+}
+
+async function loadStatsRankings() {
+  try {
+    const snapP = await db.collection('stats_pages').get();
+    const pages = snapP.docs.map(d => ({ id: d.id, ...d.data() }))
+      .sort((a, b) => (b.vues || 0) - (a.vues || 0)).slice(0, 10);
+    const zoneP = document.getElementById('rankingPages');
+    if (!pages.length) { zoneP.innerHTML = '<div class="stats-empty">Aucune donnée.</div>'; }
+    else {
+      zoneP.innerHTML = pages.map((p, i) =>
+        '<div class="ranking-item">' +
+          '<span class="ranking-rank">#' + (i + 1) + '</span>' +
+          '<span class="ranking-label">' + (p.page || p.id) + '</span>' +
+          '<span class="ranking-value">' + (p.vues || 0).toLocaleString('fr-FR') + ' vues</span>' +
+        '</div>'
+      ).join('');
+    }
+  } catch (err) { console.warn('Rankings pages:', err); }
+
+  try {
+    const snapB = await db.collection('stats_boutons').get();
+    const btns = snapB.docs.map(d => ({ id: d.id, ...d.data() }))
+      .sort((a, b) => (b.clics || 0) - (a.clics || 0)).slice(0, 10);
+    const zoneB = document.getElementById('rankingBtns');
+    if (!btns.length) { zoneB.innerHTML = '<div class="stats-empty">Aucune donnée.</div>'; }
+    else {
+      zoneB.innerHTML = btns.map((b, i) =>
+        '<div class="ranking-item">' +
+          '<span class="ranking-rank">#' + (i + 1) + '</span>' +
+          '<span class="ranking-label">' + (b.btn || b.id) + '</span>' +
+          '<span class="ranking-value">' + (b.clics || 0).toLocaleString('fr-FR') + ' clics</span>' +
+        '</div>'
+      ).join('');
+    }
+  } catch (err) { console.warn('Rankings boutons:', err); }
+}
+
+async function loadAllStats() {
+  await Promise.all([
+    loadStatsGlobal(),
+    loadStatsJour(),
+    loadStatsGraphe(),
+    loadStatsRankings()
+  ]);
+}
+
+// Boutons d'action
+document.addEventListener('click', async (e) => {
+  if (e.target.id === 'btnRefreshStats') {
+    toast('info', 'Rafraîchissement…');
+    await loadAllStats();
+    toast('success', 'Statistiques à jour');
+  }
+  if (e.target.id === 'btnResetTodayStats') {
+    if (!confirm('Réinitialiser les compteurs du jour ? (les vues/clics d\'aujourd\'hui seront remis à 0)')) return;
+    try {
+      const dateId = todayKeyAdmin();
+      await db.collection('stats_par_jour').doc(dateId).set({ date: dateId, vues: 0, clics: 0 });
+      toast('success', 'Compteurs du jour réinitialisés');
+      loadAllStats();
+    } catch (err) { toast('error', 'Erreur', err.message); }
+  }
+});
+
+console.log('✅ Admin prête — version complète avec Produits + Compteur + Search + Tout copier + Statistiques');
+
+// ============================================================
+// ⚡ TÉLÉVERSEMENT CLOUDINARY (Multiple et Simple)
+// ============================================================
+const CLOUDINARY_CLOUD_NAME = 'bvcdjwg7';
+const CLOUDINARY_UPLOAD_PRESET = 'test_ong';
+
+/**
+ * @param {string} targetId L'ID du champ cible (ex: 'evImagesList', 'phUrl')
+ * @param {boolean} isMultiple Vrai si on téléverse plusieurs images à la fois
+ */
+function uploadToCloudinary(targetId, isMultiple) {
+  const input = document.getElementById('cloudinaryInput');
+  input.value = ''; // Réinitialiser l'input
+  input.multiple = isMultiple;
+  
+  input.onchange = async (e) => {
+    const files = e.target.files;
+    if (!files.length) return;
+
+    toast('info', 'Téléversement...', 'Envoi de ' + files.length + ' image(s)');
+    let successCount = 0;
+
+    // On boucle sur chaque image choisie
+    for (const file of files) {
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+
+      try {
+        const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`, {
+          method: 'POST',
+          body: formData
+        });
+        
+        const data = await res.json();
+        
+        if (data.secure_url) {
+          successCount++;
+          // Si c'est un champ de type "liste" (plusieurs images possibles)
+          if (targetId.endsWith('List') || targetId === 'evImagesList' || targetId === 'acImagesList' || targetId === 'ongImagesList') {
+            addImageRow(document.getElementById(targetId), data.secure_url);
+          } 
+          // Si c'est un champ unique (une seule image)
+          else {
+            const inputField = document.getElementById(targetId);
+            if (inputField) inputField.value = data.secure_url;
+          }
+        }
+      } catch (err) {
+        toast('error', 'Erreur', 'Impossible de téléverser ' + file.name);
+      }
+    }
+    
+    if (successCount > 0) {
+      toast('success', 'Terminé !', successCount + ' image(s) ajoutée(s) avec succès.');
+    }
+  };
+  
+  input.click(); // Ouvre la fenêtre des fichiers
+}
+
+// ============================================================
+// ONG — ACTIONS (collection "ong_actions")
+// ============================================================
+document.getElementById('ongAddImage').addEventListener('click', () => addImageRow(document.getElementById('ongImagesList')));
+document.getElementById('ongAddVideo').addEventListener('click', () => addVideoRow(document.getElementById('ongVideosList')));
+addImageRow(document.getElementById('ongImagesList'));
+addVideoRow(document.getElementById('ongVideosList'));
+
+async function loadOng() {
+  const list = document.getElementById('ongList');
+  list.innerHTML = '<div class="empty-state">Chargement…</div>';
+  try {
+    const snap = await db.collection('ong_actions').get();
+    document.getElementById('ongCount').textContent = snap.size;
+    if (snap.empty) {
+      list.innerHTML = '<div class="empty-state">Aucune action pour le moment. Ajoute la première ci-dessus.</div>';
+      return;
+    }
+    const docs = snap.docs.slice().sort((a, b) => (b.data().date || '').localeCompare(a.data().date || ''));
+    list.innerHTML = '';
+    const catLabels = {
+      solidarite: '🤝 Solidarité',
+      education: '📚 Éducation',
+      culture: '🎭 Culture',
+      sante: '💊 Santé',
+      accompagnement: '🌱 Accompagnement',
+      autre: '📖 Autre'
+    };
+    docs.forEach(doc => {
+      const d = doc.data();
+      const img = (d.images && d.images[0]) || '';
+      const thumb = img ? `style="background-image:url('${img}')"` : '';
+      const badgeArch = d.archive
+        ? '<span class="badge badge-inactif">📦 Archivé</span>'
+        : '<span class="badge badge-actif">✅ Actif</span>';
+      const row = document.createElement('div');
+      row.className = 'item-row';
+      row.innerHTML = `
+        <div class="item-thumb" ${thumb}></div>
+        <div class="item-info">
+          <div class="item-title">${d.titre || 'Sans titre'} ${badgeArch}</div>
+          <div class="item-meta">
+            <span class="badge badge-cat">${catLabels[d.categorie] || d.categorie || '—'}</span>
+            ${d.date ? ' • ' + d.date : ''}
+            ${d.lieu ? ' • ' + d.lieu : ''}
+          </div>
+        </div>
+        <div class="item-actions">
+          <a class="btn btn-outline btn-sm" href="ong.html#${encodeURIComponent(d.slug || doc.id)}" target="_blank">👁 Voir</a>
+          <button class="btn btn-outline btn-sm" data-edit="${doc.id}">✏️ Modifier</button>
+          <button class="btn btn-outline btn-danger btn-sm" data-del="${doc.id}">🗑️</button>
+        </div>`;
+      row.querySelector('[data-edit]').addEventListener('click', () => editOng(doc.id));
+      row.querySelector('[data-del]').addEventListener('click', () => deleteOng(doc.id));
+      list.appendChild(row);
+    });
+  } catch (err) {
+    list.innerHTML = `<div class="empty-state">Erreur : ${err.message}</div>`;
+  }
+}
+
+async function editOng(id) {
+  try {
+    const doc = await db.collection('ong_actions').doc(id).get();
+    if (!doc.exists) { toast('error', 'Introuvable'); return; }
+    const d = doc.data();
+    document.getElementById('ongId').value = id;
+    document.getElementById('ongTitre').value = d.titre || '';
+    document.getElementById('ongSlug').value = d.slug || '';
+    document.getElementById('ongDate').value = d.date || '';
+    document.getElementById('ongLieu').value = d.lieu || '';
+    document.getElementById('ongCategorie').value = d.categorie || '';
+    document.getElementById('ongResume').value = d.resume || '';
+    document.getElementById('ongContenu').value = d.contenu || '';
+    document.getElementById('ongALaUne').value = d.aLaUne ? 'true' : 'false';
+    document.getElementById('ongArchive').value = d.archive ? 'true' : 'false';
+    clearImages('ongImagesList');
+    const imgs = d.images || [];
+    if (imgs.length === 0) addImageRow(document.getElementById('ongImagesList'));
+    else imgs.forEach(u => addImageRow(document.getElementById('ongImagesList'), u));
+    clearVideos('ongVideosList');
+    const vids = d.videos || [];
+    if (vids.length === 0) addVideoRow(document.getElementById('ongVideosList'));
+    else vids.forEach(u => addVideoRow(document.getElementById('ongVideosList'), u));
+    document.getElementById('btnCancelOng').style.display = 'inline-flex';
+    document.getElementById('btnSaveOng').querySelector('.btn-text').textContent = '💾 Mettre à jour';
+    document.getElementById('formOng').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    toast('info', 'Mode modification', 'Modifie puis enregistre.');
+  } catch (err) { toast('error', 'Erreur', err.message); }
+}
+
+async function deleteOng(id) {
+  if (!confirm('Confirmer la suppression de cette action ?')) return;
+  try {
+    await db.collection('ong_actions').doc(id).delete();
+    toast('success', 'Action supprimée');
+    loadOng();
+  } catch (err) { toast('error', 'Erreur', err.message); }
+}
+
+document.getElementById('formOng').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = document.getElementById('btnSaveOng');
+  const id = document.getElementById('ongId').value;
+  const data = {
+    titre: document.getElementById('ongTitre').value.trim(),
+    slug: document.getElementById('ongSlug').value.trim(),
+    date: document.getElementById('ongDate').value,
+    lieu: document.getElementById('ongLieu').value.trim(),
+    categorie: document.getElementById('ongCategorie').value,
+    resume: document.getElementById('ongResume').value.trim(),
+    contenu: document.getElementById('ongContenu').value.trim(),
+    images: getImages('ongImagesList'),
+    videos: getVideos('ongVideosList'),
+    aLaUne: document.getElementById('ongALaUne').value === 'true',
+    archive: document.getElementById('ongArchive').value === 'true',
+    dateAjout: firebase.firestore.FieldValue.serverTimestamp()
+  };
+  if (!data.titre || !data.slug || !data.date || !data.resume) {
+    toast('warning', 'Champs manquants', 'Titre, slug, date et résumé sont obligatoires.');
+    return;
+  }
+  setLoading(btn, true);
+  try {
+    if (id) {
+      delete data.dateAjout;
+      await db.collection('ong_actions').doc(id).update(data);
+      toast('success', 'Action mise à jour ✅');
+    } else {
+      await db.collection('ong_actions').add(data);
+      toast('success', 'Action ajoutée ✅');
+    }
+    resetOngForm();
+    loadOng();
+  } catch (err) {
+    toast('error', "Erreur d'enregistrement", err.message);
+  } finally {
+    setLoading(btn, false);
+  }
+});
+
+document.getElementById('btnCancelOng').addEventListener('click', () => {
+  resetOngForm();
+  toast('info', 'Modification annulée');
+});
+
+function resetOngForm() {
+  document.getElementById('formOng').reset();
+  document.getElementById('ongId').value = '';
+  clearImages('ongImagesList');
+  addImageRow(document.getElementById('ongImagesList'));
+  clearVideos('ongVideosList');
+  addVideoRow(document.getElementById('ongVideosList'));
+  document.getElementById('btnCancelOng').style.display = 'none';
+  document.getElementById('btnSaveOng').querySelector('.btn-text').textContent = "💾 Enregistrer l'action";
+}
+
+// ============================================================
+// COMMENTAIRES — MODÉRATION + RÉPONSES
+// ============================================================
+const COMMENTS_SOURCES = {
+  ong:       { collection: 'ong_actions', label: '🌍 ONG' },
+  decouvrir: { collection: 'decouvrir',   label: '📖 Découvrir' }
+};
+
+let commentsCache = [];
+
+async function loadCommentsModeration() {
+  const list = document.getElementById('commentsList');
+  list.innerHTML = '<div class="empty-state">Chargement des commentaires…</div>';
+  try {
+    const engSnap = await db.collection('engagements').get();
+    const allComments = [];
+
+    for (const engDoc of engSnap.docs) {
+      const engId = engDoc.id;
+      const firstU = engId.indexOf('_');
+      if (firstU === -1) continue;
+      const type = engId.substring(0, firstU);
+      const itemId = engId.substring(firstU + 1);
+      if (!COMMENTS_SOURCES[type]) continue;
+
+      try {
+        const commSnap = await engDoc.ref.collection('commentaires').orderBy('date', 'desc').limit(100).get();
+        commSnap.forEach(c => {
+          allComments.push({
+            commentId: c.id,
+            engRef: engDoc.ref,
+            type: type,
+            itemId: itemId,
+            auteur: c.data().auteur || 'Anonyme',
+            texte: c.data().texte || '',
+            date: c.data().date
+          });
+        });
+      } catch (e) {
+        console.warn('Erreur sous-collection', engId, e);
+      }
+    }
+
+    allComments.sort((a, b) => {
+      const da = a.date && a.date.toDate ? a.date.toDate().getTime() : 0;
+      const db2 = b.date && b.date.toDate ? b.date.toDate().getTime() : 0;
+      return db2 - da;
+    });
+
+    document.getElementById('commentsCount').textContent = allComments.length;
+    commentsCache = allComments;
+
+    if (allComments.length === 0) {
+      list.innerHTML = '<div class="empty-state">Aucun commentaire pour le moment.</div>';
+      return;
+    }
+
+    const titlesCache = {};
+    async function getItemTitle(type, itemId) {
+      const key = type + '::' + itemId;
+      if (titlesCache[key]) return titlesCache[key];
+      const src = COMMENTS_SOURCES[type];
+      if (!src) return itemId;
+      try {
+        const snap = await db.collection(src.collection).where('slug', '==', itemId).limit(1).get();
+        if (!snap.empty) {
+          titlesCache[key] = snap.docs[0].data().titre || itemId;
+          return titlesCache[key];
+        }
+      } catch (e) {}
+      titlesCache[key] = itemId;
+      return itemId;
+    }
+
+    list.innerHTML = '';
+    for (const c of allComments) {
+      const itemTitle = await getItemTitle(c.type, c.itemId);
+      const sourceLabel = COMMENTS_SOURCES[c.type].label;
+      const dateStr = c.date && c.date.toDate
+        ? c.date.toDate().toLocaleString('fr-FR', { dateStyle: 'short', timeStyle: 'short' })
+        : '';
+
+      const row = document.createElement('div');
+      row.className = 'item-row';
+      row.style.alignItems = 'flex-start';
+      row.innerHTML = `
+        <div class="item-info" style="flex:1;">
+          <div class="item-meta" style="margin-bottom:6px;">
+            <span class="badge badge-cat">${sourceLabel}</span>
+            • <em>${itemTitle}</em>
+            • ${dateStr}
+          </div>
+          <div class="item-title" style="white-space:normal; font-size:0.85rem; color:var(--or-clair);">
+            👤 ${c.auteur}
+          </div>
+          <div style="font-size:0.88rem; color:var(--blanc-doux); margin-top:4px; line-height:1.5;">
+            ${(c.texte || '').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, '<br>')}
+          </div>
+        </div>
+        <div class="item-actions" style="flex-shrink:0;">
+          <button class="btn btn-outline btn-sm" data-reply="${c.commentId}">💬 Répondre</button>
+          <button class="btn btn-outline btn-danger btn-sm" data-delcomment="${c.commentId}">🗑️</button>
+        </div>`;
+
+      row.querySelector('[data-reply]').addEventListener('click', async () => {
+        const replyText = prompt('Réponse publique en tant que Gbêmadoyomin :');
+        if (!replyText || !replyText.trim()) return;
+        try {
+          await c.engRef.collection('commentaires').add({
+            auteur: 'Gbêmadoyomin (réponse)',
+            texte: '↳ Réponse à ' + c.auteur + ' : ' + replyText.trim(),
+            date: firebase.firestore.FieldValue.serverTimestamp()
+          });
+          await c.engRef.set({ nbCommentaires: firebase.firestore.FieldValue.increment(1) }, { merge: true });
+          toast('success', 'Réponse publiée ✅');
+          loadCommentsModeration();
+        } catch (err) {
+          toast('error', 'Erreur', err.message);
+        }
+      });
+
+      row.querySelector('[data-delcomment]').addEventListener('click', async () => {
+        if (!confirm('Supprimer ce commentaire ?')) return;
+        try {
+          await c.engRef.collection('commentaires').doc(c.commentId).delete();
+          await c.engRef.set({ nbCommentaires: firebase.firestore.FieldValue.increment(-1) }, { merge: true });
+          toast('success', 'Commentaire supprimé');
+          loadCommentsModeration();
+        } catch (err) {
+          toast('error', 'Erreur', err.message);
+        }
+      });
+
+      list.appendChild(row);
+    }
+  } catch (err) {
+    list.innerHTML = `<div class="empty-state">Erreur : ${err.message}</div>`;
+  }
+}
+
+const btnRefreshComments = document.getElementById('btnRefreshComments');
+if (btnRefreshComments) {
+  btnRefreshComments.addEventListener('click', () => {
+    toast('info', 'Rafraîchissement…');
+    loadCommentsModeration();
+  });
+}
+
+// ============================================================
+// DÉCOUVRIR — contenus riches
+// ============================================================
+async function loadDecouvrir() {
+  const list = document.getElementById('decList');
+  const showArchived = document.getElementById('decShowArchived')?.checked;
+  list.innerHTML = '<div class="empty-state">Chargement…</div>';
+  try {
+    const snap = await db.collection('decouvrir').get();
+    let docs = snap.docs.slice();
+
+    if (!showArchived) {
+      docs = docs.filter(d => {
+        const v = d.data().archive;
+        return !(v === true || v === 'true');
+      });
+    }
+    document.getElementById('decCount').textContent = docs.length;
+
+    if (docs.length === 0) {
+      list.innerHTML = '<div class="empty-state">Aucun contenu pour le moment.</div>';
+      return;
+    }
+
+    docs.sort((a, b) => {
+      const da = a.data(), db_ = b.data();
+      const oa = typeof da.ordre === 'number' ? da.ordre : 999;
+      const ob = typeof db_.ordre === 'number' ? db_.ordre : 999;
+      if (oa !== ob) return oa - ob;
+      return (da.titre || '').localeCompare(db_.titre || '');
+    });
+
+    const catLabels = {
+      fa: '🔮 Fa', vodoun: '⚱️ Vodoun', 'types-vodoun': '🏛️ Types Vodoun',
+      feuilles: '🌿 Feuilles', astuces: '✨ Astuces', 'signes-fa': '🔯 Signes Fa',
+      principes: '🧭 Principes', symboles: '📐 Symboles',
+      spiritualite: '🌍 Spiritualité', autre: '📖 Autre'
+    };
+
+    list.innerHTML = '';
+    docs.forEach(doc => {
+      const d = doc.data();
+      const archived = (d.archive === true || d.archive === 'true');
+      const actif = d.actif !== false;
+      const badge = archived
+        ? '<span class="badge badge-inactif">📦 Archivé</span>'
+        : (actif
+            ? '<span class="badge badge-actif">✅ Actif</span>'
+            : '<span class="badge badge-inactif">🚫 Masqué</span>');
+
+      const row = document.createElement('div');
+      row.className = 'item-row';
+      row.innerHTML = `
+        <div class="item-thumb" style="background-image:url('${d.image || ''}')"></div>
+        <div class="item-info">
+          <div class="item-title">${d.titre || 'Sans titre'} ${badge}</div>
+          <div class="item-meta">
+            <span class="badge badge-cat">${catLabels[d.categorie] || d.categorie || '—'}</span>
+            ${d.sousCategorie ? ' • ' + d.sousCategorie : ''}
+            • ordre ${d.ordre || 0}
+            ${d.slug ? ' • /' + d.slug : ''}
+          </div>
+        </div>
+        <div class="item-actions">
+          <a class="btn btn-outline btn-sm" href="decouvrir.html#${encodeURIComponent(d.slug || doc.id)}" target="_blank">👁</a>
+          <button class="btn btn-outline btn-sm" data-edit="${doc.id}">✏️</button>
+          <button class="btn btn-outline btn-danger btn-sm" data-del="${doc.id}">🗑️</button>
+        </div>`;
+      row.querySelector('[data-edit]').addEventListener('click', () => editDecouvrir(doc.id));
+      row.querySelector('[data-del]').addEventListener('click', () => deleteDecouvrir(doc.id));
+      list.appendChild(row);
+    });
+  } catch (err) {
+    list.innerHTML = `<div class="empty-state">Erreur : ${err.message}</div>`;
+  }
+}
+
+async function editDecouvrir(id) {
+  try {
+    const doc = await db.collection('decouvrir').doc(id).get();
+    if (!doc.exists) { toast('error', 'Introuvable'); return; }
+    const d = doc.data();
+    document.getElementById('decId').value = id;
+    document.getElementById('decTitre').value = d.titre || '';
+    document.getElementById('decSlug').value = d.slug || '';
+    document.getElementById('decCategorie').value = d.categorie || '';
+    document.getElementById('decSousCategorie').value = d.sousCategorie || '';
+    document.getElementById('decOrdre').value = d.ordre || 100;
+    document.getElementById('decResume').value = d.resume || '';
+    document.getElementById('decContenu').value = d.contenu || '';
+    document.getElementById('decImage').value = d.image || '';
+    document.getElementById('decActif').value = d.actif === false ? 'false' : 'true';
+    document.getElementById('decArchive').value =
+      (d.archive === true || d.archive === 'true') ? 'true' : 'false';
+    document.getElementById('btnCancelDec').style.display = 'inline-flex';
+    document.getElementById('btnSaveDec').querySelector('.btn-text').textContent = '💾 Mettre à jour';
+    document.getElementById('formDecouvrir').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    toast('info', 'Mode modification', 'Modifiez puis enregistrez.');
+  } catch (err) { toast('error', 'Erreur', err.message); }
+}
+
+async function deleteDecouvrir(id) {
+  if (!confirm('Confirmer la suppression de ce contenu ?')) return;
+  try {
+    await db.collection('decouvrir').doc(id).delete();
+    toast('success', 'Contenu supprimé');
+    loadDecouvrir();
+  } catch (err) { toast('error', 'Erreur', err.message); }
+}
+
+document.getElementById('formDecouvrir').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = document.getElementById('btnSaveDec');
+  const id = document.getElementById('decId').value;
+  const data = {
+    titre: document.getElementById('decTitre').value.trim(),
+    slug: document.getElementById('decSlug').value.trim(),
+    categorie: document.getElementById('decCategorie').value,
+    sousCategorie: document.getElementById('decSousCategorie').value.trim(),
+    ordre: parseInt(document.getElementById('decOrdre').value, 10) || 100,
+    resume: document.getElementById('decResume').value.trim(),
+    contenu: document.getElementById('decContenu').value.trim(),
+    image: document.getElementById('decImage').value.trim(),
+    actif: document.getElementById('decActif').value === 'true',
+    archive: document.getElementById('decArchive').value === 'true',
+    dateAjout: firebase.firestore.FieldValue.serverTimestamp()
+  };
+  if (!data.titre || !data.slug || !data.categorie || !data.contenu) {
+    toast('warning', 'Champs manquants', 'Titre, slug, catégorie et contenu sont obligatoires.');
+    return;
+  }
+  setLoading(btn, true);
+  try {
+    if (id) {
+      delete data.dateAjout;
+      await db.collection('decouvrir').doc(id).update(data);
+      toast('success', 'Contenu mis à jour ✅');
+    } else {
+      await db.collection('decouvrir').add(data);
+      toast('success', 'Contenu ajouté ✅');
+    }
+    resetDecouvrirForm();
+    loadDecouvrir();
+  } catch (err) {
+    toast('error', 'Erreur', err.message);
+  } finally {
+    setLoading(btn, false);
+  }
+});
+
+document.getElementById('btnCancelDec').addEventListener('click', () => {
+  resetDecouvrirForm();
+  toast('info', 'Modification annulée');
+});
+
+function resetDecouvrirForm() {
+  document.getElementById('formDecouvrir').reset();
+  document.getElementById('decId').value = '';
+  document.getElementById('decOrdre').value = 100;
+  document.getElementById('decActif').value = 'true';
+  document.getElementById('decArchive').value = 'false';
+  document.getElementById('btnCancelDec').style.display = 'none';
+  document.getElementById('btnSaveDec').querySelector('.btn-text').textContent = '💾 Enregistrer';
+}
+
+document.getElementById('decShowArchived')?.addEventListener('change', loadDecouvrir);
+  
+</script>
+
+</body>
+</html>
