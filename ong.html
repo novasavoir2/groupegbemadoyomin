@@ -1070,39 +1070,24 @@ section { padding-block: var(--espace-xl); }
 </section>
 
 <!-- ============================================================
-   NOS ACTIONS — VIDÉOS & PHOTOS
+   NOS ACTIONS — DYNAMIQUE FIRESTORE + ENGAGEMENT
    ============================================================ -->
-<section>
+<section id="nos-actions">
   <div class="conteneur">
     <div class="ong-bloc reveal">
-      <h2>Nos actions en images</h2>
-      <p>Découvrez quelques-unes de nos actions sociales menées sur le terrain.</p>
+      <h2>Nos actions sur le terrain</h2>
+      <p>Découvrez les actions sociales menées par l'ONG Gbêmadoyomin — et partagez celles qui vous touchent. Chaque partage soutient la cause.</p>
+    </div>
 
-      <!-- Vidéos -->
-      <div class="actions-videos">
-        <div class="video-placeholder reveal-stagger">
-          <iframe src="https://www.youtube.com/embed/PLACEHOLDER_ID" title="Action sociale 1" allowfullscreen loading="lazy"></iframe>
-        </div>
-        <div class="video-placeholder reveal-stagger">
-          <iframe src="https://www.youtube.com/embed/PLACEHOLDER_ID" title="Action sociale 2" allowfullscreen loading="lazy"></iframe>
-        </div>
-      </div>
+    <div id="ongActionsZone">
+      <div style="text-align:center; padding:40px; color:var(--text-discret);">Chargement des actions…</div>
+    </div>
 
-      <!-- Galerie photos -->
-      <div class="actions-galerie">
-        <div class="galerie-placeholder reveal-stagger">
-          <img class="img-cover" src="ong-action-1.jpeg" alt="Action sociale ONG Gbêmadoyomin 1" width="400" height="400" loading="lazy">
-        </div>
-        <div class="galerie-placeholder reveal-stagger">
-          <img class="img-cover" src="ong-action-2.jpeg" alt="Action sociale ONG Gbêmadoyomin 2" width="400" height="400" loading="lazy">
-        </div>
-        <div class="galerie-placeholder reveal-stagger">
-          <img class="img-cover" src="ong-action-3.jpeg" alt="Action sociale ONG Gbêmadoyomin 3" width="400" height="400" loading="lazy">
-        </div>
-        <div class="galerie-placeholder reveal-stagger">
-          <img class="img-cover" src="ong-action-4.jpeg" alt="Action sociale ONG Gbêmadoyomin 4" width="400" height="400" loading="lazy">
-        </div>
-      </div>
+    <!-- Bloc de partage global (incite aux dons) -->
+    <div style="margin-top:var(--espace-lg); padding:var(--espace-md); background:linear-gradient(135deg, rgba(184,146,46,0.06), rgba(122,21,21,0.06)); border:1px solid var(--border); border-radius:6px; text-align:center;">
+      <p class="eyebrow" style="font-size:0.95rem; margin-bottom:8px;">Soutenir la cause</p>
+      <p style="color:var(--blanc-doux); max-width:520px; margin-inline:auto; margin-bottom:16px; font-size:0.92rem;">Partagez nos actions autour de vous, ou soutenez directement l'ONG par un don.</p>
+      <div id="ongShareGlobal"></div>
     </div>
   </div>
 </section>
@@ -1582,6 +1567,158 @@ if ('serviceWorker' in navigator) {
     .then(() => console.log('✅ Service Worker enregistré'))
     .catch(() => console.log('⚠️ Service Worker non enregistré'));
 }
+</script>
+
+<!-- ============================================================
+   CHARGEMENT DYNAMIQUE DES ACTIONS ONG + ENGAGEMENT
+   ============================================================ -->
+<script src="engagement.js"></script>
+<script>
+(function () {
+  if (typeof firebase === 'undefined' || !firebase.firestore) {
+    console.warn('[ONG] Firebase non prêt');
+    return;
+  }
+  var db = firebase.firestore();
+
+  function esc(s) {
+    return String(s || '').replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+
+  function detectVideo(url) {
+    if (!url) return '';
+    var u = url.toLowerCase();
+    if (u.indexOf('youtube') !== -1 || u.indexOf('youtu.be') !== -1) {
+      var m = url.match(/(?:v=|youtu\.be\/|embed\/|shorts\/|live\/)([A-Za-z0-9_-]{5,})/);
+      return m ? 'https://www.youtube.com/embed/' + m[1] : '';
+    }
+    if (u.indexOf('drive.google.com') !== -1) {
+      var md = url.match(/\/d\/([^/]+)/);
+      return md ? 'https://drive.google.com/file/d/' + md[1] + '/preview' : '';
+    }
+    return url;
+  }
+
+  async function chargerActions() {
+    var zone = document.getElementById('ongActionsZone');
+    if (!zone) return;
+    try {
+      var snap = await db.collection('ong_actions').get();
+      var actions = snap.docs
+        .map(function (d) { return Object.assign({ id: d.id }, d.data()); })
+        .filter(function (a) { return !a.archive; })
+        .sort(function (a, b) { return (b.date || '').localeCompare(a.date || ''); });
+
+      if (actions.length === 0) {
+        zone.innerHTML =
+          '<div style="text-align:center;padding:40px;color:var(--text-muted);border:1px dashed var(--border);border-radius:6px;">' +
+            '<div style="font-size:2rem;margin-bottom:10px;">🌍</div>' +
+            '<div style="font-weight:600;">Les actions arrivent bientôt</div>' +
+          '</div>';
+        return;
+      }
+
+      var catLabels = {
+        solidarite: '🤝 Solidarité',
+        education: '📚 Éducation',
+        culture: '🎭 Culture',
+        sante: '💊 Santé',
+        accompagnement: '🌱 Accompagnement',
+        autre: '📖 Autre'
+      };
+
+      zone.innerHTML = actions.map(function (a) {
+        var images = (a.images || []).filter(Boolean);
+        var videos = (a.videos || []).map(detectVideo).filter(Boolean);
+        var galerieHTML = images.length
+          ? '<div class="actions-galerie" style="margin-top:16px;">' + images.map(function (u) {
+              return '<div class="galerie-placeholder"><img class="img-cover" src="' + esc(u) + '" alt="' + esc(a.titre) + '" loading="lazy"></div>';
+            }).join('') + '</div>'
+          : '';
+        var videosHTML = videos.length
+          ? '<div class="actions-videos" style="margin-top:16px;">' + videos.map(function (u) {
+              return '<div class="video-placeholder" style="padding:0;"><iframe src="' + esc(u) + '" allowfullscreen loading="lazy" style="width:100%;height:100%;border:none;border-radius:4px;"></iframe></div>';
+            }).join('') + '</div>'
+          : '';
+        var itemId = a.slug || a.id;
+        var itemUrl = window.location.origin + window.location.pathname + '#' + itemId;
+
+        return '<article class="ong-action-carte" id="' + esc(itemId) + '" style="background:var(--noir-2);border:1px solid var(--border);border-radius:6px;padding:24px;margin-bottom:28px;">' +
+          '<div style="display:flex;flex-wrap:wrap;gap:12px;align-items:baseline;margin-bottom:10px;">' +
+            '<h3 style="margin:0; font-size:1.25rem;">' + esc(a.titre) + '</h3>' +
+            '<span style="font-size:0.78rem;color:var(--or-clair);">' +
+              (catLabels[a.categorie] || esc(a.categorie || '')) +
+              (a.date ? ' • ' + esc(a.date) : '') +
+              (a.lieu ? ' • ' + esc(a.lieu) : '') +
+            '</span>' +
+          '</div>' +
+          '<p style="color:var(--blanc-doux); font-size:1rem;">' + esc(a.resume) + '</p>' +
+          (a.contenu ? '<p style="color:var(--text-muted);font-size:0.9rem; margin-top:8px;">' + esc(a.contenu) + '</p>' : '') +
+          galerieHTML +
+          videosHTML +
+          '<div class="eng-inline" data-type="ong" data-id="' + esc(itemId) + '" data-url="' + esc(itemUrl) + '" data-titre="' + esc(a.titre) + '"></div>' +
+          '</article>';
+      }).join('');
+
+      // Injecter les barres + enregistrer les vues
+      if (window.Engagement) {
+        document.querySelectorAll('.eng-inline').forEach(function (el) {
+          if (el.dataset.ready) return;
+          el.dataset.ready = '1';
+          window.Engagement.view(el.dataset.type, el.dataset.id);
+          window.Engagement.buildBar(
+            el,
+            el.dataset.type,
+            el.dataset.id,
+            el.dataset.url,
+            el.dataset.titre,
+            { compact: true }
+          );
+        });
+      }
+
+      // Bloc de partage global
+      var globalShare = document.getElementById('ongShareGlobal');
+      if (globalShare && window.Engagement) {
+        var pageUrl = window.location.origin + window.location.pathname;
+        var share = window.Engagement.shareLinks(pageUrl, 'ONG Gbêmadoyomin — Actions sociales');
+        globalShare.innerHTML =
+          '<div style="display:flex; flex-wrap:wrap; justify-content:center; gap:8px;">' +
+            '<a href="' + share.whatsapp + '" target="_blank" rel="noopener" class="eng-share-btn wa">📱 WhatsApp</a>' +
+            '<a href="' + share.facebook + '" target="_blank" rel="noopener" class="eng-share-btn fb">📘 Facebook</a>' +
+            '<a href="' + share.twitter + '" target="_blank" rel="noopener" class="eng-share-btn tw">🐦 X</a>' +
+            '<a href="' + share.telegram + '" target="_blank" rel="noopener" class="eng-share-btn tg">✈️ Telegram</a>' +
+            '<button type="button" class="eng-share-btn cp" id="ongShareCopy">🔗 Copier le lien</button>' +
+          '</div>';
+        var copyBtn = document.getElementById('ongShareCopy');
+        if (copyBtn) {
+          copyBtn.addEventListener('click', async function () {
+            try {
+              await navigator.clipboard.writeText(pageUrl);
+              copyBtn.textContent = '✅ Copié !';
+              setTimeout(function () { copyBtn.textContent = '🔗 Copier le lien'; }, 1500);
+            } catch (e) {}
+          });
+        }
+      }
+
+      // Scroll automatique si ancre dans l'URL
+      if (window.location.hash) {
+        setTimeout(function () {
+          var target = document.getElementById(window.location.hash.slice(1));
+          if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 300);
+      }
+    } catch (err) {
+      zone.innerHTML = '<div style="text-align:center;padding:40px;color:#ff8888;">Erreur de chargement : ' + esc(err.message) + '</div>';
+      console.error('[ONG] Erreur:', err);
+    }
+  }
+
+  chargerActions();
+})();
 </script>
 
 </body>
