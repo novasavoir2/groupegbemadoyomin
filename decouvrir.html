@@ -1458,20 +1458,24 @@ if ('serviceWorker' in navigator) {
           '</div>' +
           '<div class="dec-details-list">';
 
-        groups[cat].forEach(function (item) {
+            groups[cat].forEach(function (item) {
+          var itemId = item.slug || item.id;
+          var itemUrl = location.origin + location.pathname + '#' + itemId;
           var img = item.image
             ? '<div class="dec-detail-image"><img src="' + escapeHtml(item.image) + '" alt="' + escapeHtml(item.titre) + '" loading="lazy"></div>'
             : '';
           var resume = item.resume
             ? '<p class="dec-detail-resume"><em>' + escapeHtml(item.resume) + '</em></p>'
             : '';
-          html += '<details class="dec-detail" id="' + escapeHtml(item.slug || item.id) + '">' +
+          html += '<details class="dec-detail" id="' + escapeHtml(itemId) + '">' +
             '<summary>' +
               '<span class="dec-detail-title">' + escapeHtml(item.titre) + '</span>' +
               (item.sousCategorie ? '<span class="dec-detail-sub">' + escapeHtml(item.sousCategorie) + '</span>' : '') +
             '</summary>' +
             '<div class="dec-detail-body">' +
               img + resume + renderContenu(item.contenu) +
+              '<div class="eng-inline" data-type="decouvrir" data-id="' + escapeHtml(itemId) + '" data-url="' + escapeHtml(itemUrl) + '" data-titre="' + escapeHtml(item.titre) + '"></div>' +
+              '<div class="eng-comments-zone" data-type="decouvrir" data-id="' + escapeHtml(itemId) + '"></div>' +
             '</div>' +
           '</details>';
         });
@@ -1479,8 +1483,34 @@ if ('serviceWorker' in navigator) {
         html += '</div></section>';
       });
 
-      zone.innerHTML = html;
+           zone.innerHTML = html;
       console.log('[Découvrir] Rendu terminé ✅');
+
+      // ✅ Injecter les barres likes / commentaires / partage
+      if (window.Engagement) {
+        document.querySelectorAll('.eng-inline').forEach(function (el) {
+          if (el.dataset.ready) return;
+          el.dataset.ready = '1';
+          window.Engagement.buildBar(
+            el,
+            el.dataset.type,
+            el.dataset.id,
+            el.dataset.url,
+            el.dataset.titre,
+            { compact: true }
+          );
+        });
+        document.querySelectorAll('.eng-comments-zone').forEach(function (el) {
+          window.Engagement.buildComments(el, el.dataset.type, el.dataset.id);
+        });
+
+        // Enregistrer une  vue quand l'utilisateur ouvre un article
+        document.addEventListener('toggle', function (ev) {
+          if (ev.target.tagName === 'DETAILS' && ev.target.open && ev.target.id) {
+            window.Engagement.view('decouvrir', ev.target.id);
+          }
+        }, true);
+      }
 
       if (location.hash) {
         var target = document.getElementById(location.hash.slice(1));
@@ -1514,5 +1544,10 @@ if ('serviceWorker' in navigator) {
   });
 })();
 </script>
+
+<!-- ============================================================
+   ENGAGEMENT — Likes, Commentaires, Partages, Vues
+   ============================================================ -->
+<script src="engagement.js"></script>
 </body>
 </html>
