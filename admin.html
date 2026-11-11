@@ -336,6 +336,8 @@ h1, h2, h3 { font-family: var(--font-titres); font-weight: 700; color: var(--bla
     <button class="tab-btn" data-tab="videos">🎬 Vidéos</button>
     <button class="tab-btn" data-tab="presse">📰 Presse</button>
     <button class="tab-btn" data-tab="decouvrir">📖 Découvrir</button>
+    <button class="tab-btn" data-tab="ong">🌍 ONG</button>
+    <button class="tab-btn" data-tab="comments">💬 Commentaires</button>
     <button class="tab-btn" data-tab="produits">🛍️ Produits</button>
     <button class="tab-btn" data-tab="live">🔴 Live</button>
     <button class="tab-btn" data-tab="acces">🔐 Accès payant</button>
@@ -1320,6 +1322,155 @@ h1, h2, h3 { font-family: var(--font-titres); font-weight: 700; color: var(--bla
 </div>
 
   
+   <!-- ============================================================
+       TAB ONG — ACTIONS
+       ============================================================ -->
+  <div class="tab-pane" id="pane-ong">
+
+    <div class="alert alert-info">
+      <span>🌍</span>
+      <span><strong>Actions ONG :</strong> Ce que tu publies ici apparaît immédiatement sur <code>ong.html</code>. Chaque action aura ses boutons <strong>❤️ J'aime</strong>, <strong>💬 Commenter</strong>, <strong>📤 Partager</strong> — ce qui incite aux dons.</span>
+    </div>
+
+    <div class="card">
+      <div class="card-title">➕ Ajouter / modifier une action ONG</div>
+      <div class="card-sub">Tous les champs marqués d'un <span style="color: var(--or);">*</span> sont obligatoires.</div>
+
+      <form id="formOng" autocomplete="off">
+        <input type="hidden" id="ongId" value="">
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Titre <span class="req">*</span></label>
+            <input type="text" id="ongTitre" required placeholder="Ex: Distribution de kits scolaires 2026">
+          </div>
+          <div class="form-group">
+            <label>Slug (identifiant URL) <span class="req">*</span></label>
+            <input type="text" id="ongSlug" required placeholder="distribution-kits-scolaires-2026">
+            <div class="hint">Sans espaces, minuscules. Utilisé pour l'ancre : ong.html#slug</div>
+          </div>
+        </div>
+
+        <div class="form-row-3">
+          <div class="form-group">
+            <label>Date <span class="req">*</span></label>
+            <input type="date" id="ongDate" required>
+          </div>
+          <div class="form-group">
+            <label>Lieu</label>
+            <input type="text" id="ongLieu" placeholder="Abomey-Calavi, Bénin">
+          </div>
+          <div class="form-group">
+            <label>Catégorie <span class="req">*</span></label>
+            <select id="ongCategorie" required>
+              <option value="">— Choisir —</option>
+              <option value="solidarite">🤝 Solidarité</option>
+              <option value="education">📚 Éducation</option>
+              <option value="culture">🎭 Culture</option>
+              <option value="sante">💊 Santé</option>
+              <option value="accompagnement">🌱 Accompagnement</option>
+              <option value="autre">📖 Autre</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Résumé court <span class="req">*</span></label>
+          <textarea id="ongResume" rows="2" required placeholder="Une ou deux phrases qui résument l'action"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Description complète</label>
+          <textarea id="ongContenu" rows="5" placeholder="Détails : bénéficiaires, résultats, contexte…"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>🖼️ Photos (plusieurs possibles)</label>
+          <div class="dyn-list" id="ongImagesList"></div>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <button type="button" class="btn-add" id="ongAddImage">➕ Ajouter une image</button>
+            <a class="btn-tool" href="https://postimages.org/fr/" target="_blank" rel="noopener">📤 PostImage</a>
+            <a class="btn-tool" href="https://console.cloudinary.com/" target="_blank" rel="noopener">☁️ Cloudinary</a>
+            <a class="btn-tool" href="https://imgbb.com/" target="_blank" rel="noopener">🖼️ ImgBB</a>
+          </div>
+          <div class="hint">La première image sera la photo principale.</div>
+        </div>
+
+        <div class="form-group">
+          <label>🎬 Vidéos (plusieurs possibles)</label>
+          <div class="dyn-list" id="ongVideosList"></div>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <button type="button" class="btn-add" id="ongAddVideo">➕ Ajouter une vidéo</button>
+            <a class="btn-tool" href="https://www.youtube.com/" target="_blank" rel="noopener">▶️ YouTube</a>
+            <a class="btn-tool" href="https://drive.google.com/" target="_blank" rel="noopener">📁 Drive</a>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>À la une ?</label>
+            <select id="ongALaUne">
+              <option value="false">Non</option>
+              <option value="true">Oui</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Archivé ?</label>
+            <select id="ongArchive">
+              <option value="false">Non (visible)</option>
+              <option value="true">Oui (masqué)</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="display:flex; gap:12px; margin-top:20px; flex-wrap:wrap;">
+          <button type="submit" class="btn btn-or" id="btnSaveOng">
+            <span class="btn-text">💾 Enregistrer l'action</span>
+          </button>
+          <button type="button" class="btn btn-outline" id="btnCancelOng" style="display:none;">
+            ❌ Annuler la modification
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📋 Actions enregistrées</div>
+      <div class="card-sub">Total : <span id="ongCount">0</span></div>
+      <div class="search-wrap">
+        <input type="text" class="search-input" data-target="ongList" placeholder="Rechercher une action…">
+      </div>
+      <div class="items-list" id="ongList">
+        <div class="empty-state">Chargement…</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       TAB COMMENTAIRES — MODÉRATION & RÉPONSES
+       ============================================================ -->
+  <div class="tab-pane" id="pane-comments">
+
+    <div class="alert alert-tip">
+      <span>💬</span>
+      <span><strong>Modération :</strong> Voici tous les commentaires postés sur le site (Découvrir, ONG, etc.). Tu peux <strong>répondre</strong> (en tant que Gbêmadoyomin) ou <strong>supprimer</strong> un commentaire inapproprié.</span>
+    </div>
+
+    <div class="card">
+      <div class="card-title">💬 Tous les commentaires du site</div>
+      <div class="card-sub">
+        <span>Total : <span id="commentsCount">0</span></span>
+        <button type="button" class="btn btn-outline btn-sm" id="btnRefreshComments" style="margin-left:12px;">🔄 Rafraîchir</button>
+      </div>
+      <div class="search-wrap">
+        <input type="text" class="search-input" data-target="commentsList" placeholder="Rechercher dans les commentaires…">
+      </div>
+      <div class="items-list" id="commentsList">
+        <div class="empty-state">Chargement…</div>
+      </div>
+    </div>
+  </div>
+
   <!-- ============================================================
        TAB CONFIGURATION
        ============================================================ -->
@@ -1869,8 +2020,9 @@ function loadAll() {
   loadAcces();
   loadConfigForm();
   loadDecouvrir();
+  loadOng();
+  loadCommentsModeration();
 }
-
 // ============================================================
 // ÉVÉNEMENTS
 // ============================================================
@@ -3254,6 +3406,311 @@ document.addEventListener('click', async (e) => {
 });
 
 console.log('✅ Admin prête — version complète avec Produits + Compteur + Search + Tout copier + Statistiques');
+
+// ============================================================
+// ONG — ACTIONS (collection "ong_actions")
+// ============================================================
+document.getElementById('ongAddImage').addEventListener('click', () => addImageRow(document.getElementById('ongImagesList')));
+document.getElementById('ongAddVideo').addEventListener('click', () => addVideoRow(document.getElementById('ongVideosList')));
+addImageRow(document.getElementById('ongImagesList'));
+addVideoRow(document.getElementById('ongVideosList'));
+
+async function loadOng() {
+  const list = document.getElementById('ongList');
+  list.innerHTML = '<div class="empty-state">Chargement…</div>';
+  try {
+    const snap = await db.collection('ong_actions').get();
+    document.getElementById('ongCount').textContent = snap.size;
+    if (snap.empty) {
+      list.innerHTML = '<div class="empty-state">Aucune action pour le moment. Ajoute la première ci-dessus.</div>';
+      return;
+    }
+    const docs = snap.docs.slice().sort((a, b) => (b.data().date || '').localeCompare(a.data().date || ''));
+    list.innerHTML = '';
+    const catLabels = {
+      solidarite: '🤝 Solidarité',
+      education: '📚 Éducation',
+      culture: '🎭 Culture',
+      sante: '💊 Santé',
+      accompagnement: '🌱 Accompagnement',
+      autre: '📖 Autre'
+    };
+    docs.forEach(doc => {
+      const d = doc.data();
+      const img = (d.images && d.images[0]) || '';
+      const thumb = img ? `style="background-image:url('${img}')"` : '';
+      const badgeArch = d.archive
+        ? '<span class="badge badge-inactif">📦 Archivé</span>'
+        : '<span class="badge badge-actif">✅ Actif</span>';
+      const row = document.createElement('div');
+      row.className = 'item-row';
+      row.innerHTML = `
+        <div class="item-thumb" ${thumb}></div>
+        <div class="item-info">
+          <div class="item-title">${d.titre || 'Sans titre'} ${badgeArch}</div>
+          <div class="item-meta">
+            <span class="badge badge-cat">${catLabels[d.categorie] || d.categorie || '—'}</span>
+            ${d.date ? ' • ' + d.date : ''}
+            ${d.lieu ? ' • ' + d.lieu : ''}
+          </div>
+        </div>
+        <div class="item-actions">
+          <a class="btn btn-outline btn-sm" href="ong.html#${encodeURIComponent(d.slug || doc.id)}" target="_blank">👁 Voir</a>
+          <button class="btn btn-outline btn-sm" data-edit="${doc.id}">✏️ Modifier</button>
+          <button class="btn btn-outline btn-danger btn-sm" data-del="${doc.id}">🗑️</button>
+        </div>`;
+      row.querySelector('[data-edit]').addEventListener('click', () => editOng(doc.id));
+      row.querySelector('[data-del]').addEventListener('click', () => deleteOng(doc.id));
+      list.appendChild(row);
+    });
+  } catch (err) {
+    list.innerHTML = `<div class="empty-state">Erreur : ${err.message}</div>`;
+  }
+}
+
+async function editOng(id) {
+  try {
+    const doc = await db.collection('ong_actions').doc(id).get();
+    if (!doc.exists) { toast('error', 'Introuvable'); return; }
+    const d = doc.data();
+    document.getElementById('ongId').value = id;
+    document.getElementById('ongTitre').value = d.titre || '';
+    document.getElementById('ongSlug').value = d.slug || '';
+    document.getElementById('ongDate').value = d.date || '';
+    document.getElementById('ongLieu').value = d.lieu || '';
+    document.getElementById('ongCategorie').value = d.categorie || '';
+    document.getElementById('ongResume').value = d.resume || '';
+    document.getElementById('ongContenu').value = d.contenu || '';
+    document.getElementById('ongALaUne').value = d.aLaUne ? 'true' : 'false';
+    document.getElementById('ongArchive').value = d.archive ? 'true' : 'false';
+    clearImages('ongImagesList');
+    const imgs = d.images || [];
+    if (imgs.length === 0) addImageRow(document.getElementById('ongImagesList'));
+    else imgs.forEach(u => addImageRow(document.getElementById('ongImagesList'), u));
+    clearVideos('ongVideosList');
+    const vids = d.videos || [];
+    if (vids.length === 0) addVideoRow(document.getElementById('ongVideosList'));
+    else vids.forEach(u => addVideoRow(document.getElementById('ongVideosList'), u));
+    document.getElementById('btnCancelOng').style.display = 'inline-flex';
+    document.getElementById('btnSaveOng').querySelector('.btn-text').textContent = '💾 Mettre à jour';
+    document.getElementById('formOng').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    toast('info', 'Mode modification', 'Modifie puis enregistre.');
+  } catch (err) { toast('error', 'Erreur', err.message); }
+}
+
+async function deleteOng(id) {
+  if (!confirm('Confirmer la suppression de cette action ?')) return;
+  try {
+    await db.collection('ong_actions').doc(id).delete();
+    toast('success', 'Action supprimée');
+    loadOng();
+  } catch (err) { toast('error', 'Erreur', err.message); }
+}
+
+document.getElementById('formOng').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = document.getElementById('btnSaveOng');
+  const id = document.getElementById('ongId').value;
+  const data = {
+    titre: document.getElementById('ongTitre').value.trim(),
+    slug: document.getElementById('ongSlug').value.trim(),
+    date: document.getElementById('ongDate').value,
+    lieu: document.getElementById('ongLieu').value.trim(),
+    categorie: document.getElementById('ongCategorie').value,
+    resume: document.getElementById('ongResume').value.trim(),
+    contenu: document.getElementById('ongContenu').value.trim(),
+    images: getImages('ongImagesList'),
+    videos: getVideos('ongVideosList'),
+    aLaUne: document.getElementById('ongALaUne').value === 'true',
+    archive: document.getElementById('ongArchive').value === 'true',
+    dateAjout: firebase.firestore.FieldValue.serverTimestamp()
+  };
+  if (!data.titre || !data.slug || !data.date || !data.resume) {
+    toast('warning', 'Champs manquants', 'Titre, slug, date et résumé sont obligatoires.');
+    return;
+  }
+  setLoading(btn, true);
+  try {
+    if (id) {
+      delete data.dateAjout;
+      await db.collection('ong_actions').doc(id).update(data);
+      toast('success', 'Action mise à jour ✅');
+    } else {
+      await db.collection('ong_actions').add(data);
+      toast('success', 'Action ajoutée ✅');
+    }
+    resetOngForm();
+    loadOng();
+  } catch (err) {
+    toast('error', "Erreur d'enregistrement", err.message);
+  } finally {
+    setLoading(btn, false);
+  }
+});
+
+document.getElementById('btnCancelOng').addEventListener('click', () => {
+  resetOngForm();
+  toast('info', 'Modification annulée');
+});
+
+function resetOngForm() {
+  document.getElementById('formOng').reset();
+  document.getElementById('ongId').value = '';
+  clearImages('ongImagesList');
+  addImageRow(document.getElementById('ongImagesList'));
+  clearVideos('ongVideosList');
+  addVideoRow(document.getElementById('ongVideosList'));
+  document.getElementById('btnCancelOng').style.display = 'none';
+  document.getElementById('btnSaveOng').querySelector('.btn-text').textContent = "💾 Enregistrer l'action";
+}
+
+// ============================================================
+// COMMENTAIRES — MODÉRATION + RÉPONSES
+// ============================================================
+const COMMENTS_SOURCES = {
+  ong:       { collection: 'ong_actions', label: '🌍 ONG' },
+  decouvrir: { collection: 'decouvrir',   label: '📖 Découvrir' }
+};
+
+let commentsCache = [];
+
+async function loadCommentsModeration() {
+  const list = document.getElementById('commentsList');
+  list.innerHTML = '<div class="empty-state">Chargement des commentaires…</div>';
+  try {
+    const engSnap = await db.collection('engagements').get();
+    const allComments = [];
+
+    for (const engDoc of engSnap.docs) {
+      const engId = engDoc.id;
+      const firstU = engId.indexOf('_');
+      if (firstU === -1) continue;
+      const type = engId.substring(0, firstU);
+      const itemId = engId.substring(firstU + 1);
+      if (!COMMENTS_SOURCES[type]) continue;
+
+      try {
+        const commSnap = await engDoc.ref.collection('commentaires').orderBy('date', 'desc').limit(100).get();
+        commSnap.forEach(c => {
+          allComments.push({
+            commentId: c.id,
+            engRef: engDoc.ref,
+            type: type,
+            itemId: itemId,
+            auteur: c.data().auteur || 'Anonyme',
+            texte: c.data().texte || '',
+            date: c.data().date
+          });
+        });
+      } catch (e) {
+        console.warn('Erreur sous-collection', engId, e);
+      }
+    }
+
+    allComments.sort((a, b) => {
+      const da = a.date && a.date.toDate ? a.date.toDate().getTime() : 0;
+      const db2 = b.date && b.date.toDate ? b.date.toDate().getTime() : 0;
+      return db2 - da;
+    });
+
+    document.getElementById('commentsCount').textContent = allComments.length;
+    commentsCache = allComments;
+
+    if (allComments.length === 0) {
+      list.innerHTML = '<div class="empty-state">Aucun commentaire pour le moment.</div>';
+      return;
+    }
+
+    const titlesCache = {};
+    async function getItemTitle(type, itemId) {
+      const key = type + '::' + itemId;
+      if (titlesCache[key]) return titlesCache[key];
+      const src = COMMENTS_SOURCES[type];
+      if (!src) return itemId;
+      try {
+        const snap = await db.collection(src.collection).where('slug', '==', itemId).limit(1).get();
+        if (!snap.empty) {
+          titlesCache[key] = snap.docs[0].data().titre || itemId;
+          return titlesCache[key];
+        }
+      } catch (e) {}
+      titlesCache[key] = itemId;
+      return itemId;
+    }
+
+    list.innerHTML = '';
+    for (const c of allComments) {
+      const itemTitle = await getItemTitle(c.type, c.itemId);
+      const sourceLabel = COMMENTS_SOURCES[c.type].label;
+      const dateStr = c.date && c.date.toDate
+        ? c.date.toDate().toLocaleString('fr-FR', { dateStyle: 'short', timeStyle: 'short' })
+        : '';
+
+      const row = document.createElement('div');
+      row.className = 'item-row';
+      row.style.alignItems = 'flex-start';
+      row.innerHTML = `
+        <div class="item-info" style="flex:1;">
+          <div class="item-meta" style="margin-bottom:6px;">
+            <span class="badge badge-cat">${sourceLabel}</span>
+            • <em>${itemTitle}</em>
+            • ${dateStr}
+          </div>
+          <div class="item-title" style="white-space:normal; font-size:0.85rem; color:var(--or-clair);">
+            👤 ${c.auteur}
+          </div>
+          <div style="font-size:0.88rem; color:var(--blanc-doux); margin-top:4px; line-height:1.5;">
+            ${(c.texte || '').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, '<br>')}
+          </div>
+        </div>
+        <div class="item-actions" style="flex-shrink:0;">
+          <button class="btn btn-outline btn-sm" data-reply="${c.commentId}">💬 Répondre</button>
+          <button class="btn btn-outline btn-danger btn-sm" data-delcomment="${c.commentId}">🗑️</button>
+        </div>`;
+
+      row.querySelector('[data-reply]').addEventListener('click', async () => {
+        const replyText = prompt('Réponse publique en tant que Gbêmadoyomin :');
+        if (!replyText || !replyText.trim()) return;
+        try {
+          await c.engRef.collection('commentaires').add({
+            auteur: 'Gbêmadoyomin (réponse)',
+            texte: '↳ Réponse à ' + c.auteur + ' : ' + replyText.trim(),
+            date: firebase.firestore.FieldValue.serverTimestamp()
+          });
+          await c.engRef.set({ nbCommentaires: firebase.firestore.FieldValue.increment(1) }, { merge: true });
+          toast('success', 'Réponse publiée ✅');
+          loadCommentsModeration();
+        } catch (err) {
+          toast('error', 'Erreur', err.message);
+        }
+      });
+
+      row.querySelector('[data-delcomment]').addEventListener('click', async () => {
+        if (!confirm('Supprimer ce commentaire ?')) return;
+        try {
+          await c.engRef.collection('commentaires').doc(c.commentId).delete();
+          await c.engRef.set({ nbCommentaires: firebase.firestore.FieldValue.increment(-1) }, { merge: true });
+          toast('success', 'Commentaire supprimé');
+          loadCommentsModeration();
+        } catch (err) {
+          toast('error', 'Erreur', err.message);
+        }
+      });
+
+      list.appendChild(row);
+    }
+  } catch (err) {
+    list.innerHTML = `<div class="empty-state">Erreur : ${err.message}</div>`;
+  }
+}
+
+const btnRefreshComments = document.getElementById('btnRefreshComments');
+if (btnRefreshComments) {
+  btnRefreshComments.addEventListener('click', () => {
+    toast('info', 'Rafraîchissement…');
+    loadCommentsModeration();
+  });
+}
 
 // ============================================================
 // DÉCOUVRIR — contenus riches
