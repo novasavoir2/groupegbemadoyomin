@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calendrier Fêzan — Groupe Gbêmadoyomin</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+:root { --noir: #0d0d0d; --noir-2: #111; --or: #b8922e; --or-clair: #d4af5a; --blanc: #f0ebe0; --blanc-doux: #c8c0b0; --border: rgba(184,146,46,0.2); --vert: #22c55e; --rouge: #ef4444; }
+body { background: var(--noir); color: var(--blanc); font-family: 'Lato', sans-serif; margin: 0; padding: 0; overflow-x: hidden; }
+.conteneur { max-width: 1000px; margin-inline: auto; padding: 40px 20px; }
+h1, h2, h3 { font-family: 'Cinzel', serif; color: var(--or); text-align: center; }
+a { color: var(--or-clair); text-decoration: none; }
+
+/* INTRO VIDÉO */
+#video-splash { position: fixed; inset: 0; background: #000; z-index: 9999; display: flex; align-items: center; justify-content: center; transition: opacity 0.8s ease; }
+#video-splash.hidden { opacity: 0; pointer-events: none; }
+#fezan-video { width: 100%; height: 100%; object-fit: cover; }
+.btn-skip { position: absolute; bottom: 40px; right: 40px; background: rgba(0,0,0,0.7); color: var(--or); border: 1px solid var(--or); padding: 12px 24px; border-radius: 4px; cursor: pointer; font-family: 'Cinzel', serif; font-weight: bold; transition: 0.3s; z-index: 10000; font-size: 1rem; }
+.btn-skip:hover { background: var(--or); color: var(--noir); }
+
+/* HERO */
+.hero { text-align: center; padding: 80px 20px; background: radial-gradient(circle at center, #1a1a1a, var(--noir)); border-bottom: 1px solid var(--border); }
+.hero h1 { font-size: 3rem; margin-bottom: 10px; }
+.hero p { font-size: 1.1rem; color: var(--blanc-doux); max-width: 600px; margin: auto; }
+
+/* CARTE AUJOURD'HUI */
+.today-card { background: var(--noir-2); border: 2px solid var(--or); border-radius: 10px; padding: 40px 30px; text-align: center; margin: -50px auto 50px; max-width: 700px; box-shadow: 0 15px 40px rgba(0,0,0,0.6); position: relative; z-index: 2; }
+.today-card .date { font-size: 1.2rem; color: var(--blanc-doux); margin-bottom: 15px; letter-spacing: 1px; }
+.today-card .jour { font-size: 3rem; font-family: 'Cinzel', serif; color: var(--or-clair); font-weight: 700; margin: 15px 0; text-shadow: 0 0 20px rgba(184,146,46,0.3); }
+.today-card .statut { display: inline-block; padding: 8px 20px; border-radius: 20px; font-weight: bold; font-size: 1rem; text-transform: uppercase; letter-spacing: 1px; }
+.statut.favorable { background: rgba(34,197,94,0.15); color: #4ade80; border: 1px solid #4ade80; box-shadow: 0 0 15px rgba(34,197,94,0.2); }
+.statut.defavorable { background: rgba(239,68,68,0.15); color: #ff8888; border: 1px solid #ef4444; box-shadow: 0 0 15px rgba(239,68,68,0.2); }
+
+/* GRILLE DES 9 JOURS */
+.grille-jours { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top: 50px; }
+.jour-item { background: var(--noir-2); border: 1px solid var(--border); border-radius: 8px; padding: 25px; display: flex; align-items: flex-start; gap: 20px; transition: all 0.3s ease; }
+.jour-item:hover { transform: translateY(-5px); border-color: var(--or); box-shadow: 0 10px 30px rgba(184,146,46,0.15); }
+.jour-num { font-size: 2.5rem; font-family: 'Cinzel', serif; color: var(--or); font-weight: 700; width: 50px; text-align: center; flex-shrink: 0; opacity: 0.8; }
+.jour-info h3 { text-align: left; margin: 0 0 8px 0; font-size: 1.3rem; }
+.jour-info p { margin: 0; font-size: 0.95rem; color: var(--blanc-doux); line-height: 1.6; }
+.jour-badge { display: inline-block; margin-top: 12px; font-size: 0.8rem; font-weight: bold; padding: 4px 12px; border-radius: 12px; }
+
+/* TABLEAU CALENDRIER */
+.table-responsive { overflow-x: auto; margin-top: 60px; background: var(--noir-2); border-radius: 8px; border: 1px solid var(--border); padding: 20px; }
+table { width: 100%; border-collapse: collapse; text-align: left; }
+th { background: var(--noir); color: var(--or); padding: 15px; font-family: 'Cinzel', serif; border-bottom: 2px solid var(--or); }
+td { padding: 12px 15px; border-bottom: 1px solid var(--border); color: var(--blanc-doux); font-size: 0.95rem; }
+tr:hover td { background: rgba(184,146,46,0.05); }
+.theme-success { color: #4ade80; font-weight: bold; }
+.theme-danger { color: #ff8888; font-weight: bold; }
+.mois-titre { background: rgba(184,146,46,0.1); color: var(--or-clair); font-weight: bold; text-align: center; font-family: 'Cinzel', serif; }
+</style>
+</head>
+<body>
+
+<!-- INTRO VIDÉO -->
+<div id="video-splash">
+  <video id="fezan-video" src="fezan.mp4" autoplay muted playsinline></video>
+  <button class="btn-skip" onclick="skipIntro()">Passer l'introduction ✕</button>
+</div>
+
+<!-- HERO -->
+<header class="hero">
+  <h1>Calendrier Fêzan</h1>
+  <p>Le calendrier traditionnel du Bénin — 9 jours pour guider vos pas, en harmonie avec la Lune.</p>
+</header>
+
+<div class="conteneur">
+  <!-- CARTE AUJOURD'HUI -->
+  <div class="today-card" id="todayWidget">
+    <div class="date" id="todayDate">Calcul en cours...</div>
+    <div class="jour" id="todayJour">...</div>
+    <div class="statut" id="todayStatut">...</div>
+    <p style="margin-top:20px; font-size:1rem; color:var(--blanc-doux); font-style:italic;" id="todayMessage">...</p>
+  </div>
+
+  <!-- GRILLE DES 9 JOURS -->
+  <h2>Les 9 jours du Fêzan</h2>
+  <div class="grille-jours" id="grilleFezan"></div>
+
+  <!-- TABLEAU CALENDRIER 2026 -->
+  <h2 style="margin-top: 80px;">Calendrier Fêzan 2026</h2>
+  <p style="text-align:center; color:var(--blanc-doux); font-size:0.9rem; margin-bottom:20px;">(Fuseau horaire du Bénin UTC+1)</p>
+  <div class="table-responsive">
+    <table>
+      <thead>
+        <tr><th>Date</th><th>Jour</th><th>Fêzan</th><th>Type de jour</th></tr>
+      </thead>
+      <tbody id="calendrierTableBody">
+        <!-- Rempli par JS -->
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+<script>
+  // --- INTRO VIDÉO ---
+  const video = document.getElementById('fezan-video');
+  const splash = document.getElementById('video-splash');
+  function skipIntro() { splash.classList.add('hidden'); video.pause(); }
+  video.addEventListener('ended', skipIntro);
+
+  // --- DONNÉES FÊZAN ---
+  const fezanData = [
+    { nom: "Mêdjo", statut: "Favorable", desc: "La naissance, le point de départ de la vie. Idéal pour entreprendre, surtout le jeudi." },
+    { nom: "Mêkou", statut: "Défavorable", desc: "La mort, le deuil. Déconseillé pour les projets, mais adapté aux enterrements." },
+    { nom: "Vodoun", statut: "Favorable", desc: "Le sacré, l'esprit. Recommandé pour démarrer des cérémonies cultuelles, surtout le dimanche." },
+    { nom: "Azon", statut: "Défavorable", desc: "La maladie. Mauvais jour, risque de malédiction." },
+    { nom: "Vo", statut: "Favorable", desc: "Le sacrifice. Permet de conjurer le mauvais sort." },
+    { nom: "Akoue / Houé", statut: "Défavorable", desc: "Le jugement. Risque de disputes et conflits." },
+    { nom: "Bô", statut: "Favorable", desc: "Le sort. Propice pour jeter des sorts (bons ou mauvais), surtout le mardi." },
+    { nom: "Hin / Fô", statut: "Défavorable", desc: "La misère. Déconseillé d'entreprendre quelque chose d'important." },
+    { nom: "Fâ", statut: "Favorable", desc: "L'oracle. Jour parfait pour consulter et combattre les malheurs." }
+  ];
+
+  // --- LOGIQUE DE CALCUL ---
+  // Date par défaut : 18 Novembre 2026 (Nouvelle lune / Medjo)
+  const DEFAULT_ANCHOR = "2026-11-18"; 
+  let currentFezanIndex = 0;
+
+  function getFezanIndex(baseDateStr, dateObj) {
+    const start = new Date(baseDateStr);
+    const today = new Date(dateObj);
+    start.setHours(0,0,0,0); today.setHours(0,0,0,0);
+    const diffDays = Math.floor((today - start) / (1000 * 60 * 60 * 24));
+    return ((diffDays % 9) + 9) % 9; // Modulo positif
+  }
+
+  async function initFezan() {
+    // 1. Remplir la grille des 9 jours
+    document.getElementById('grilleFezan').innerHTML = fezanData.map((j, i) => `
+      <div class="jour-item">
+        <div class="jour-num">${i + 1}</div>
+        <div class="jour-info">
+          <h3>${j.nom}</h3>
+          <p>${j.desc}</p>
+          <span class="jour-badge statut ${j.statut === 'Favorable' ? 'favorable' : 'defavorable'}">${j.statut}</span>
+        </div>
+      </div>
+    `).join('');
+
+    // 2. Calcul du jour d'aujourd'hui
+    let anchorDate = DEFAULT_ANCHOR;
+    let overrideIndex = null;
+
+    try {
+      if (typeof firebase !== 'undefined' && !firebase.apps.length) {
+        firebase.initializeApp({ projectId: "groupe-gbemadoyomin" });
+      }
+      if (typeof firebase !== 'undefined') {
+        const doc = await firebase.firestore().collection('config').doc('fezan').get();
+        if (doc.exists) {
+          const d = doc.data();
+          if (d.startDate) anchorDate = d.startDate;
+          if (d.override !== null && d.override !== undefined) overrideIndex = d.override;
+        }
+      }
+    } catch(e) { console.log("Mode hors-ligne pour le Fêzan"); }
+
+    if (overrideIndex !== null) {
+      currentFezanIndex = overrideIndex;
+    } else {
+      currentFezanIndex = getFezanIndex(anchorDate, new Date());
+    }
+
+    const jourActuel = fezanData[currentFezanIndex];
+    const dateStr = new Date().toLocaleDateString('fr-FR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+    
+    document.getElementById('todayDate').textContent = "Aujourd'hui, le " + dateStr;
+    document.getElementById('todayJour').textContent = jourActuel.nom;
+    
+    const statutEl = document.getElementById('todayStatut');
+    statutEl.textContent = jourActuel.statut;
+    statutEl.className = "statut " + (jourActuel.statut === 'Favorable' ? 'favorable' : 'defavorable');
+    document.getElementById('todayMessage').textContent = jourActuel.desc;
+
+    // 3. Générer le tableau de l'année en cours
+    generateTable(anchorDate);
+  }
+
+  function generateTable(anchorDate) {
+    const tbody = document.getElementById('calendrierTableBody');
+    const year = new Date().getFullYear();
+    let html = '';
+    let currentMonth = -1;
+
+    for (let m = 0; m < 12; m++) {
+      const daysInMonth = new Date(year, m + 1, 0).getDate();
+      const monthName = new Date(year, m, 1).toLocaleDateString('fr-FR', { month: 'long' }).toUpperCase();
+      
+      html += `<tr><td colspan="4" class="mois-titre">${monthName} ${year}</td></tr>`;
+
+      for (let d = 1; d <= daysInMonth; d++) {
+        const dateObj = new Date(year, m, d);
+        const index = getFezanIndex(anchorDate, dateObj);
+        const jour = fezanData[index];
+        const dateStr = d === 1 ? `1<sup>er</sup> ${dateObj.toLocaleDateString('fr-FR', { month: 'long' })} ${year}` : dateObj.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+        const dayName = dateObj.toLocaleDateString('fr-FR', { weekday: 'long' });
+        const isToday = dateObj.toDateString() === new Date().toDateString();
+        const rowStyle = isToday ? 'style="background: rgba(184,146,46,0.15); font-weight: bold;"' : '';
+
+        html += `<tr ${rowStyle}>
+          <td>${dateStr}</td>
+          <td>${dayName}</td>
+          <td>${jour.nom}</td>
+          <td class="${jour.statut === 'Favorable' ? 'theme-success' : 'theme-danger'}">${jour.statut}</td>
+        </tr>`;
+      }
+    }
+    tbody.innerHTML = html;
+  }
+
+  initFezan();
+</script>
+</body>
+</html>
