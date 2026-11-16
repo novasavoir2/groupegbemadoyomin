@@ -1715,7 +1715,59 @@ section { padding-block: var(--espace-xl); }
     </div>
   </div>
 </section>
+<!-- SECTION FÊZAN ACCUEIL -->
+<section style="padding: 60px 20px; text-align: center; background: #0d0d0d;">
+  <div style="max-width: 600px; margin-inline: auto; background: #111; border: 1px solid rgba(184,146,46,0.4); border-radius: 12px; padding: 40px; box-shadow: 0 15px 40px rgba(0,0,0,0.5);">
+    <span style="font-size: 2.5rem; filter: drop-shadow(0 0 10px rgba(212,175,90,0.5));">🌙</span>
+    <h2 style="font-family: 'Cinzel', serif; color: #d4af5a; margin: 15px 0 10px;">Le Fêzan d'aujourd'hui</h2>
+    <p style="color: #c8c0b0; font-size: 0.95rem; margin-bottom: 25px;">Découvrez le jour du calendrier traditionnel béninois.</p>
+    
+    <div id="fezanHomeWidget" style="font-family: 'Cinzel', serif; font-size: 1.8rem; color: #f0ebe0; margin-bottom: 25px;">
+      Chargement...
+    </div>
+    
+    <a href="fezan.html" style="display: inline-block; padding: 12px 28px; background: linear-gradient(135deg, #d4af5a, #8a6a1f); color: #0d0d0d; text-decoration: none; border-radius: 4px; font-weight: bold; font-family: 'Cinzel', serif; letter-spacing: 1px;">Voir le calendrier complet →</a>
+  </div>
+</section>
 
+<!-- SCRIPT POUR LE WIDGET ACCUEIL -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // Même date d'ancrage par défaut que la page dédiée
+  const DEFAULT_ANCHOR = "2026-11-18"; 
+  const jours = ["Mêdjo (Favorable)", "Mêkou (Défavorable)", "Vodoun (Favorable)", "Azon (Défavorable)", "Vo (Favorable)", "Akoue / Houe (Défavorable)", "Bô (Favorable)", "Hin / Fo (Défavorable)", "Fâ (Favorable)"];
+
+  function getFezanIndex(baseDateStr, dateObj) {
+    const start = new Date(baseDateStr);
+    const today = new Date(dateObj);
+    start.setHours(0,0,0,0); today.setHours(0,0,0,0);
+    const diffDays = Math.floor((today - start) / (1000 * 60 * 60 * 24));
+    return ((diffDays % 9) + 9) % 9;
+  }
+
+  // Calcul de base (fonctionne sans admin)
+  let index = getFezanIndex(DEFAULT_ANCHOR, new Date());
+  document.getElementById('fezanHomeWidget').textContent = jours[index];
+
+  // Si Firebase est chargé sur l'accueil, on vérifie les surcharges admin
+  if (typeof firebase !== 'undefined') {
+    if (!firebase.apps.length) firebase.initializeApp({ projectId: "groupe-gbemadoyomin" });
+    
+    firebase.firestore().collection('config').doc('fezan').get().then(doc => {
+      if (doc.exists) {
+        const d = doc.data();
+        if (d.override !== null && d.override !== undefined) {
+          index = d.override;
+          document.getElementById('fezanHomeWidget').textContent = jours[index];
+        } else if (d.startDate) {
+          index = getFezanIndex(d.startDate, new Date());
+          document.getElementById('fezanHomeWidget').textContent = jours[index];
+        }
+      }
+    }).catch(() => {});
+  }
+});
+</script>
 <!-- ===================== SECTION STATISTIQUES ===================== -->
 <section id="stats-site">
   <div class="conteneur">
